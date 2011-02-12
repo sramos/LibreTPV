@@ -1,6 +1,6 @@
 <!--- Listado de productos --->
 
-<% unless @movies.empty? %>
+<% unless @productos.empty? %>
   <%= cabecera_listado ["nombre", "descripcion", "precio"] %>
   <% for producto in @productos %>
     <%= fila_listado producto%>
@@ -8,4 +8,4 @@
   <%= final_listado @productos %>
 <% end %>
 
-<%= link_to 'Nuevo producto', new_productos_path %>
+<%# link_to 'Nuevo producto', new_productos_path %>
