@@ -1,13 +1,9 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  codigo: 1
   nombre: MyString
-  descripcion: MyString
-  url_imagen: MyString
+  valor: 1
 
 two:
-  codigo: 1
   nombre: MyString
-  descripcion: MyString
-  url_imagen: MyString
+  valor: 1

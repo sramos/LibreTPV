@@ -52,6 +52,8 @@ margin-top:15px;
     text-decoration: none;
 }
 
+.listado_derecha { float: right;}
+
 .listado_campo {
     float: left;
     width:200px;

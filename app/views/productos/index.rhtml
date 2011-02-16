@@ -1,0 +1,7 @@
+<!--- Listado de productos --->
+
+<%= cabecera_listado ["nombre", "descripcion", "precio"] %>
+<% for producto in @productos %>
+  <%= fila_listado producto%>
+<% end %>
+<%= final_listado @productos %>

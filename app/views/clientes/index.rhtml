@@ -1,0 +1,8 @@
+<!--- Listado de clientes --->
+
+<%= cabecera_listado ["nombre", "cif"] %>
+<% for cliente in @clientes %>
+  <%= fila_listado cliente%>
+<% end %>
+<%= final_listado @clientes %>
+

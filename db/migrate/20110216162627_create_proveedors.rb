@@ -1,6 +1,6 @@
-class CreateProveedores < ActiveRecord::Migration
+class CreateProveedors < ActiveRecord::Migration
   def self.up
-    create_table :proveedores do |t|
+    create_table :proveedors do |t|
       t.string :nombre
       t.string :cif
 
@@ -9,6 +9,6 @@ class CreateProveedores < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :proveedores
+    drop_table :proveedors
   end
 end

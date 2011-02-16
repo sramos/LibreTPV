@@ -9,20 +9,53 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110214195354) do
+ActiveRecord::Schema.define(:version => 20110216172026) do
 
-  create_table "productos", :force => true do |t|
+  create_table "albaran_lineas", :force => true do |t|
+    t.integer  "cantidad"
+    t.integer  "descuento"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "albarans", :force => true do |t|
+    t.string   "codigo"
+    t.date     "fecha"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "clientes", :force => true do |t|
+    t.string   "nombre"
+    t.string   "cif"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "familias", :force => true do |t|
+    t.string   "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ivas", :force => true do |t|
+    t.string   "nombre"
+    t.integer  "valor"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "productos", :force => true do |t|
     t.integer  "codigo"
     t.string   "nombre"
     t.string   "descripcion"
-    t.string   "imagen"
-    t.integer  "cantidad"
-    t.integer  "precio",      :limit => 10, :precision => 10, :scale => 0
+    t.string   "url_imagen"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.decimal  "precio",      :precision => 8, :scale => 2, :default => 0.0
   end
 
-  create_table "proveedores", :force => true do |t|
+  create_table "proveedors", :force => true do |t|
     t.string   "nombre"
     t.string   "cif"
     t.datetime "created_at"

@@ -1,0 +1,20 @@
+<h1>Editing albaran_linea</h1>
+
+<% form_for(@albaran_linea) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :cantidad %><br />
+    <%= f.text_field :cantidad %>
+  </p>
+  <p>
+    <%= f.label :descuento %><br />
+    <%= f.text_field :descuento %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @albaran_linea %> |
+<%= link_to 'Back', albaran_lineas_path %>

@@ -1,0 +1,7 @@
+<!--- Listado de proveedores --->
+
+<%= cabecera_listado ["nombre", "cif"] %>
+<% for proveedor in @proveedors %>
+  <%= fila_listado proveedor%>
+<% end %>
+<%= final_listado @proveedors %>

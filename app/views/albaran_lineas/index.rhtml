@@ -1,0 +1,7 @@
+<!--- Sublistado de lineas de albaran --->
+
+<%= cabecera_listado ["cantidad","descuento"] %>
+<% for linea in @albaran_lineas %>
+  <%= fila_listado linea%>
+<% end %>
+<%= final_listado @albaran_lineas %>

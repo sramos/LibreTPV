@@ -1,6 +1,10 @@
 class CreateProductos < ActiveRecord::Migration
   def self.up
     create_table :productos do |t|
+      t.integer :codigo
+      t.string :nombre
+      t.string :descripcion
+      t.string :url_imagen
 
       t.timestamps
     end

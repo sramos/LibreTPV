@@ -8,14 +8,16 @@ module ApplicationHelper
     for campo in campos
       cadena += "<div class='listado_campo'>" + campo + "</div>"
     end
-    cadena += "</div>"
+    cadena += "<div class='listado_derecha'>"
+    cadena += link_to '(+)', {:action => 'new'}
+    cadena += "</div></div>"
     return cadena
   end
 
   def fila_listado objeto
     cadena = "<div class='listadofila'>"
     for campo in @campos_listado
-      cadena += "<div class='listado_campo'>" + objeto.send(campo) + '</div>' if objeto.send(campo)
+      cadena += "<div class='listado_campo'>" + objeto.send(campo).to_s + '</div>' if objeto.send(campo)
     end
     cadena += "</div>"
     return cadena

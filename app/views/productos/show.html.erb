@@ -1,0 +1,23 @@
+<p>
+  <b>Codigo:</b>
+  <%=h @producto.codigo %>
+</p>
+
+<p>
+  <b>Nombre:</b>
+  <%=h @producto.nombre %>
+</p>
+
+<p>
+  <b>Descripcion:</b>
+  <%=h @producto.descripcion %>
+</p>
+
+<p>
+  <b>Url imagen:</b>
+  <%=h @producto.url_imagen %>
+</p>
+
+
+<%= link_to 'Edit', edit_producto_path(@producto) %> |
+<%= link_to 'Back', productos_path %>

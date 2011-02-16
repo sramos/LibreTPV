@@ -1,0 +1,8 @@
+<!--- Listado de familias --->
+
+<%= cabecera_listado ["nombre"] %>
+<% for familia in @familias %>
+  <%= fila_listado familia %>
+<% end %>
+<%= final_listado @familias %>
+

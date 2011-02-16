@@ -1,0 +1,8 @@
+<!--- Listado de tipos de iva --->
+
+<%= cabecera_listado ["nombre","valor"] %>
+<% for iva in @ivas %>
+  <%= fila_listado iva %>
+<% end %>
+<%= final_listado @ivas %>
+

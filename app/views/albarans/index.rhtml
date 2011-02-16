@@ -1,0 +1,8 @@
+<!--- Listado de albaranes --->
+
+<%= cabecera_listado ["codigo", "fecha"] %>
+<% for albaran in @albarans%>
+  <%= fila_listado albaran%>
+<% end %>
+<%= final_listado @albarans%>
+
