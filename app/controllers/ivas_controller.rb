@@ -1,27 +1,12 @@
 class IvasController < ApplicationController
 
   def index
-    #@ivas = Iva.all
     flash[:mensaje] = "Listado de tipos de IVA"
     redirect_to :action => :listado
   end
 
   def listado
     @ivas = Iva.all
-  end
-
-  def create
-    @iva = Iva.new(params[:iva])
-
-    respond_to do |format|
-      if @iva.save
-        flash[:mensaje] = 'Iva was successfully created.'
-        redirect_to :action => "index"
-      else
-        flash[:error] = @iva
-        redirect_to :action => "new"
-      end
-    end
   end
 
   def editar
