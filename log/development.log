@@ -18058,3 +18058,462 @@ Rendering familias/listado
   [4;35;1mIva Load (0.3ms)[0m   [0mSELECT * FROM "ivas" WHERE ("ivas"."id" = 12) [0m
   [4;36;1mIva Load (0.3ms)[0m   [0;1mSELECT * FROM "ivas" WHERE ("ivas"."id" = 13) [0m
 Completed in 19ms (View: 13, DB: 1) | 200 OK [http://localhost/familias/listado]
+
+
+Processing AlbaransController#index (for 127.0.0.1 at 2011-02-17 17:35:04) [GET]
+Redirected to http://localhost:3000/albarans/listado
+Completed in 2ms (DB: 0) | 302 Found [http://localhost/albarans]
+
+
+Processing AlbaransController#listado (for 127.0.0.1 at 2011-02-17 17:35:04) [GET]
+  [4;35;1mAlbaran Load (0.7ms)[0m   [0mSELECT * FROM "albarans" [0m
+Rendering template within layouts/application
+Rendering albarans/listado
+Completed in 73ms (View: 67, DB: 1) | 200 OK [http://localhost/albarans/listado]
+
+
+Processing AlbaransController#edit (for 127.0.0.1 at 2011-02-17 17:35:16) [GET]
+  Parameters: {"id"=>"1"}
+Rendering template within layouts/application
+Rendering albarans/edit
+
+ActionView::TemplateError (Called id for nil, which would mistakenly be 4 -- if you really wanted the id of nil, use object_id) on line #3 of app/views/albarans/edit.html.erb:
+1: <h1>Editing albaran</h1>
+2: 
+3: <% form_for(@albaran) do |f| %>
+4:   <%= f.error_messages %>
+5: 
+6:   <p>
+
+    /usr/lib/ruby/1.8/action_controller/record_identifier.rb:76:in `dom_id'
+    /usr/lib/ruby/1.8/action_view/helpers/record_identification_helper.rb:16:in `dom_id'
+    /usr/lib/ruby/1.8/action_view/helpers/form_helper.rb:293:in `apply_form_for_options!'
+    /usr/lib/ruby/1.8/action_view/helpers/form_helper.rb:277:in `form_for'
+    app/views/albarans/edit.html.erb:3
+    /usr/lib/ruby/1.8/action_view/renderable.rb:34:in `send'
+    /usr/lib/ruby/1.8/action_view/renderable.rb:34:in `render'
+    /usr/lib/ruby/1.8/action_view/base.rb:306:in `with_template'
+    /usr/lib/ruby/1.8/action_view/renderable.rb:30:in `render'
+    /usr/lib/ruby/1.8/action_view/template.rb:205:in `render_template'
+    /usr/lib/ruby/1.8/action_view/base.rb:265:in `render'
+    /usr/lib/ruby/1.8/action_view/base.rb:348:in `_render_with_layout'
+    /usr/lib/ruby/1.8/action_view/base.rb:262:in `render'
+    /usr/lib/ruby/1.8/action_controller/base.rb:1250:in `render_for_file'
+    /usr/lib/ruby/1.8/action_controller/base.rb:945:in `render_without_benchmark'
+    /usr/lib/ruby/1.8/action_controller/benchmarking.rb:51:in `render'
+    /usr/lib/ruby/1.8/action_controller/benchmarking.rb:51:in `render'
+    /usr/lib/ruby/1.8/action_controller/base.rb:1326:in `default_render'
+    /usr/lib/ruby/1.8/action_controller/base.rb:1338:in `perform_action_without_filters'
+    /usr/lib/ruby/1.8/action_controller/filters.rb:617:in `call_filters'
+    /usr/lib/ruby/1.8/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+    /usr/lib/ruby/1.8/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /usr/lib/ruby/1.8/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /usr/lib/ruby/1.8/action_controller/rescue.rb:160:in `perform_action_without_flash'
+    /usr/lib/ruby/1.8/action_controller/flash.rb:146:in `perform_action'
+    /usr/lib/ruby/1.8/action_controller/base.rb:532:in `send'
+    /usr/lib/ruby/1.8/action_controller/base.rb:532:in `process_without_filters'
+    /usr/lib/ruby/1.8/action_controller/filters.rb:606:in `process'
+    /usr/lib/ruby/1.8/action_controller/base.rb:391:in `process'
+    /usr/lib/ruby/1.8/action_controller/base.rb:386:in `call'
+    /usr/lib/ruby/1.8/action_controller/routing/route_set.rb:437:in `call'
+    /usr/lib/ruby/1.8/action_controller/dispatcher.rb:87:in `dispatch'
+    /usr/lib/ruby/1.8/action_controller/dispatcher.rb:121:in `_call'
+    /usr/lib/ruby/1.8/action_controller/dispatcher.rb:130:in `build_middleware_stack'
+    /usr/lib/ruby/1.8/active_record/query_cache.rb:29:in `call'
+    /usr/lib/ruby/1.8/active_record/query_cache.rb:29:in `call'
+    /usr/lib/ruby/1.8/active_record/connection_adapters/abstract/query_cache.rb:34:in `cache'
+    /usr/lib/ruby/1.8/active_record/query_cache.rb:9:in `cache'
+    /usr/lib/ruby/1.8/active_record/query_cache.rb:28:in `call'
+    /usr/lib/ruby/1.8/active_record/connection_adapters/abstract/connection_pool.rb:361:in `call'
+    /usr/lib/ruby/1.8/action_controller/string_coercion.rb:25:in `call'
+    /usr/lib/ruby/1.8/rack/head.rb:9:in `call'
+    /usr/lib/ruby/1.8/rack/methodoverride.rb:24:in `call'
+    /usr/lib/ruby/1.8/action_controller/params_parser.rb:15:in `call'
+    /usr/lib/ruby/1.8/action_controller/session/cookie_store.rb:93:in `call'
+    /usr/lib/ruby/1.8/action_controller/failsafe.rb:26:in `call'
+    /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+    /usr/lib/ruby/1.8/rack/lock.rb:11:in `synchronize'
+    /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+    /usr/lib/ruby/1.8/action_controller/dispatcher.rb:114:in `call'
+    /usr/lib/ruby/1.8/action_controller/reloader.rb:34:in `run'
+    /usr/lib/ruby/1.8/action_controller/dispatcher.rb:108:in `call'
+    /usr/lib/ruby/1.8/rack/urlmap.rb:47:in `call'
+    /usr/lib/ruby/1.8/rack/urlmap.rb:41:in `each'
+    /usr/lib/ruby/1.8/rack/urlmap.rb:41:in `call'
+    /usr/lib/ruby/1.8/rack/content_length.rb:13:in `call'
+    /usr/lib/ruby/1.8/rack/handler/webrick.rb:48:in `service'
+    /usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    /usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    /usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    /usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+    /usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+    /usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+    /usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+    /usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+    /usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+    /usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+    /usr/lib/ruby/1.8/rack/handler/webrick.rb:14:in `run'
+
+Rendered rescues/_trace (27.0ms)
+Rendered rescues/_request_and_response (0.3ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing AlbaransController#listado (for 127.0.0.1 at 2011-02-17 17:36:27) [GET]
+  [4;36;1mAlbaran Load (0.7ms)[0m   [0;1mSELECT * FROM "albarans" [0m
+Rendering template within layouts/application
+Rendering albarans/listado
+Completed in 18ms (View: 12, DB: 1) | 200 OK [http://localhost/albarans/listado]
+
+
+Processing AlbaransController#listado (for 127.0.0.1 at 2011-02-17 17:36:43) [GET]
+  [4;35;1mAlbaran Load (0.7ms)[0m   [0mSELECT * FROM "albarans" [0m
+Rendering template within layouts/application
+Rendering albarans/listado
+Completed in 19ms (View: 13, DB: 1) | 200 OK [http://localhost/albarans/listado]
+
+
+Processing AlbaranLineasController#listado (for 127.0.0.1 at 2011-02-17 17:37:01) [GET]
+  Parameters: {"albaran_id"=>"1"}
+
+ActionController::UnknownAction (No action responded to listado. Actions: create, destroy, edit, index, new, show, and update):
+  /usr/lib/ruby/1.8/action_controller/filters.rb:617:in `call_filters'
+  /usr/lib/ruby/1.8/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+  /usr/lib/ruby/1.8/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+  /usr/lib/ruby/1.8/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+  /usr/lib/ruby/1.8/action_controller/rescue.rb:160:in `perform_action_without_flash'
+  /usr/lib/ruby/1.8/action_controller/flash.rb:146:in `perform_action'
+  /usr/lib/ruby/1.8/action_controller/base.rb:532:in `send'
+  /usr/lib/ruby/1.8/action_controller/base.rb:532:in `process_without_filters'
+  /usr/lib/ruby/1.8/action_controller/filters.rb:606:in `process'
+  /usr/lib/ruby/1.8/action_controller/base.rb:391:in `process'
+  /usr/lib/ruby/1.8/action_controller/base.rb:386:in `call'
+  /usr/lib/ruby/1.8/action_controller/routing/route_set.rb:437:in `call'
+  /usr/lib/ruby/1.8/action_controller/dispatcher.rb:87:in `dispatch'
+  /usr/lib/ruby/1.8/action_controller/dispatcher.rb:121:in `_call'
+  /usr/lib/ruby/1.8/action_controller/dispatcher.rb:130:in `build_middleware_stack'
+  /usr/lib/ruby/1.8/active_record/query_cache.rb:29:in `call'
+  /usr/lib/ruby/1.8/active_record/query_cache.rb:29:in `call'
+  /usr/lib/ruby/1.8/active_record/connection_adapters/abstract/query_cache.rb:34:in `cache'
+  /usr/lib/ruby/1.8/active_record/query_cache.rb:9:in `cache'
+  /usr/lib/ruby/1.8/active_record/query_cache.rb:28:in `call'
+  /usr/lib/ruby/1.8/active_record/connection_adapters/abstract/connection_pool.rb:361:in `call'
+  /usr/lib/ruby/1.8/action_controller/string_coercion.rb:25:in `call'
+  /usr/lib/ruby/1.8/rack/head.rb:9:in `call'
+  /usr/lib/ruby/1.8/rack/methodoverride.rb:24:in `call'
+  /usr/lib/ruby/1.8/action_controller/params_parser.rb:15:in `call'
+  /usr/lib/ruby/1.8/action_controller/session/cookie_store.rb:93:in `call'
+  /usr/lib/ruby/1.8/action_controller/failsafe.rb:26:in `call'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `synchronize'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+  /usr/lib/ruby/1.8/action_controller/dispatcher.rb:114:in `call'
+  /usr/lib/ruby/1.8/action_controller/reloader.rb:34:in `run'
+  /usr/lib/ruby/1.8/action_controller/dispatcher.rb:108:in `call'
+  /usr/lib/ruby/1.8/rack/urlmap.rb:47:in `call'
+  /usr/lib/ruby/1.8/rack/urlmap.rb:41:in `each'
+  /usr/lib/ruby/1.8/rack/urlmap.rb:41:in `call'
+  /usr/lib/ruby/1.8/rack/content_length.rb:13:in `call'
+  /usr/lib/ruby/1.8/rack/handler/webrick.rb:48:in `service'
+  /usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+  /usr/lib/ruby/1.8/rack/handler/webrick.rb:14:in `run'
+
+Rendering rescues/layout (not_found)
+
+
+Processing AlbaransController#editar (for 127.0.0.1 at 2011-02-17 17:37:08) [GET]
+  Parameters: {"id"=>"1"}
+  [4;36;1mAlbaran Load (0.2ms)[0m   [0;1mSELECT * FROM "albarans" WHERE ("albarans"."id" = 1) [0m
+
+ActionView::MissingTemplate (Missing template albarans/editar.erb in view path app/views):
+  /usr/lib/ruby/1.8/action_view/paths.rb:66:in `find_template'
+  /usr/lib/ruby/1.8/action_controller/base.rb:1389:in `default_template'
+  /usr/lib/ruby/1.8/action_controller/base.rb:905:in `render_without_benchmark'
+  /usr/lib/ruby/1.8/action_controller/benchmarking.rb:51:in `render'
+  /usr/lib/ruby/1.8/action_controller/benchmarking.rb:51:in `render'
+  /usr/lib/ruby/1.8/action_controller/base.rb:1326:in `default_render'
+  /usr/lib/ruby/1.8/action_controller/base.rb:1332:in `perform_action_without_filters'
+  /usr/lib/ruby/1.8/action_controller/filters.rb:617:in `call_filters'
+  /usr/lib/ruby/1.8/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+  /usr/lib/ruby/1.8/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+  /usr/lib/ruby/1.8/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+  /usr/lib/ruby/1.8/action_controller/rescue.rb:160:in `perform_action_without_flash'
+  /usr/lib/ruby/1.8/action_controller/flash.rb:146:in `perform_action'
+  /usr/lib/ruby/1.8/action_controller/base.rb:532:in `send'
+  /usr/lib/ruby/1.8/action_controller/base.rb:532:in `process_without_filters'
+  /usr/lib/ruby/1.8/action_controller/filters.rb:606:in `process'
+  /usr/lib/ruby/1.8/action_controller/base.rb:391:in `process'
+  /usr/lib/ruby/1.8/action_controller/base.rb:386:in `call'
+  /usr/lib/ruby/1.8/action_controller/routing/route_set.rb:437:in `call'
+  /usr/lib/ruby/1.8/action_controller/dispatcher.rb:87:in `dispatch'
+  /usr/lib/ruby/1.8/action_controller/dispatcher.rb:121:in `_call'
+  /usr/lib/ruby/1.8/action_controller/dispatcher.rb:130:in `build_middleware_stack'
+  /usr/lib/ruby/1.8/active_record/query_cache.rb:29:in `call'
+  /usr/lib/ruby/1.8/active_record/query_cache.rb:29:in `call'
+  /usr/lib/ruby/1.8/active_record/connection_adapters/abstract/query_cache.rb:34:in `cache'
+  /usr/lib/ruby/1.8/active_record/query_cache.rb:9:in `cache'
+  /usr/lib/ruby/1.8/active_record/query_cache.rb:28:in `call'
+  /usr/lib/ruby/1.8/active_record/connection_adapters/abstract/connection_pool.rb:361:in `call'
+  /usr/lib/ruby/1.8/action_controller/string_coercion.rb:25:in `call'
+  /usr/lib/ruby/1.8/rack/head.rb:9:in `call'
+  /usr/lib/ruby/1.8/rack/methodoverride.rb:24:in `call'
+  /usr/lib/ruby/1.8/action_controller/params_parser.rb:15:in `call'
+  /usr/lib/ruby/1.8/action_controller/session/cookie_store.rb:93:in `call'
+  /usr/lib/ruby/1.8/action_controller/failsafe.rb:26:in `call'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `synchronize'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+  /usr/lib/ruby/1.8/action_controller/dispatcher.rb:114:in `call'
+  /usr/lib/ruby/1.8/action_controller/reloader.rb:34:in `run'
+  /usr/lib/ruby/1.8/action_controller/dispatcher.rb:108:in `call'
+  /usr/lib/ruby/1.8/rack/urlmap.rb:47:in `call'
+  /usr/lib/ruby/1.8/rack/urlmap.rb:41:in `each'
+  /usr/lib/ruby/1.8/rack/urlmap.rb:41:in `call'
+  /usr/lib/ruby/1.8/rack/content_length.rb:13:in `call'
+  /usr/lib/ruby/1.8/rack/handler/webrick.rb:48:in `service'
+  /usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+  /usr/lib/ruby/1.8/rack/handler/webrick.rb:14:in `run'
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing AlbaransController#listado (for 127.0.0.1 at 2011-02-17 17:45:12) [GET]
+  [4;35;1mAlbaran Load (0.6ms)[0m   [0mSELECT * FROM "albarans" [0m
+Rendering template within layouts/application
+Rendering albarans/listado
+Completed in 17ms (View: 12, DB: 1) | 200 OK [http://localhost/albarans/listado]
+
+
+Processing AlbaransController#editar (for 127.0.0.1 at 2011-02-17 17:45:14) [GET]
+  Parameters: {"id"=>"1"}
+  [4;36;1mAlbaran Load (0.3ms)[0m   [0;1mSELECT * FROM "albarans" WHERE ("albarans"."id" = 1) [0m
+Rendering template within layouts/application
+Rendering albarans/editar
+Completed in 115ms (View: 58, DB: 0) | 200 OK [http://localhost/albarans/editar/1]
+
+
+Processing AlbaransController#editar (for 127.0.0.1 at 2011-02-17 17:45:32) [GET]
+  Parameters: {"id"=>"1"}
+  [4;35;1mAlbaran Load (0.2ms)[0m   [0mSELECT * FROM "albarans" WHERE ("albarans"."id" = 1) [0m
+Rendering template within layouts/application
+Rendering albarans/editar
+Completed in 22ms (View: 15, DB: 0) | 200 OK [http://localhost/albarans/editar/1]
+
+
+Processing AlbaransController#editar (for 127.0.0.1 at 2011-02-17 17:45:45) [GET]
+Rendering template within layouts/application
+Rendering albarans/editar
+Completed in 10ms (View: 9, DB: 0) | 200 OK [http://localhost/albarans/editar]
+
+
+Processing AlbaransController#modificar (for 127.0.0.1 at 2011-02-17 17:45:53) [POST]
+  Parameters: {"albaran"=>{"codigo"=>"1111111111111"}, "authenticity_token"=>"5uJ7CAU4T3vrAqbktWFYkQFrDjtT/O+xL6JRhzmaiz4=", "fecha(1i)"=>"2011", "fecha(2i)"=>"2", "fecha(3i)"=>"19"}
+
+NameError (uninitialized constant AlbaransController::Alvaran):
+  /usr/lib/ruby/1.8/active_support/dependencies.rb:105:in `const_missing'
+  app/controllers/albarans_controller.rb:18:in `modificar'
+  /usr/lib/ruby/1.8/action_controller/base.rb:1331:in `send'
+  /usr/lib/ruby/1.8/action_controller/base.rb:1331:in `perform_action_without_filters'
+  /usr/lib/ruby/1.8/action_controller/filters.rb:617:in `call_filters'
+  /usr/lib/ruby/1.8/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+  /usr/lib/ruby/1.8/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+  /usr/lib/ruby/1.8/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+  /usr/lib/ruby/1.8/action_controller/rescue.rb:160:in `perform_action_without_flash'
+  /usr/lib/ruby/1.8/action_controller/flash.rb:146:in `perform_action'
+  /usr/lib/ruby/1.8/action_controller/base.rb:532:in `send'
+  /usr/lib/ruby/1.8/action_controller/base.rb:532:in `process_without_filters'
+  /usr/lib/ruby/1.8/action_controller/filters.rb:606:in `process'
+  /usr/lib/ruby/1.8/action_controller/base.rb:391:in `process'
+  /usr/lib/ruby/1.8/action_controller/base.rb:386:in `call'
+  /usr/lib/ruby/1.8/action_controller/routing/route_set.rb:437:in `call'
+  /usr/lib/ruby/1.8/action_controller/dispatcher.rb:87:in `dispatch'
+  /usr/lib/ruby/1.8/action_controller/dispatcher.rb:121:in `_call'
+  /usr/lib/ruby/1.8/action_controller/dispatcher.rb:130:in `build_middleware_stack'
+  /usr/lib/ruby/1.8/active_record/query_cache.rb:29:in `call'
+  /usr/lib/ruby/1.8/active_record/query_cache.rb:29:in `call'
+  /usr/lib/ruby/1.8/active_record/connection_adapters/abstract/query_cache.rb:34:in `cache'
+  /usr/lib/ruby/1.8/active_record/query_cache.rb:9:in `cache'
+  /usr/lib/ruby/1.8/active_record/query_cache.rb:28:in `call'
+  /usr/lib/ruby/1.8/active_record/connection_adapters/abstract/connection_pool.rb:361:in `call'
+  /usr/lib/ruby/1.8/action_controller/string_coercion.rb:25:in `call'
+  /usr/lib/ruby/1.8/rack/head.rb:9:in `call'
+  /usr/lib/ruby/1.8/rack/methodoverride.rb:24:in `call'
+  /usr/lib/ruby/1.8/action_controller/params_parser.rb:15:in `call'
+  /usr/lib/ruby/1.8/action_controller/session/cookie_store.rb:93:in `call'
+  /usr/lib/ruby/1.8/action_controller/failsafe.rb:26:in `call'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `synchronize'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+  /usr/lib/ruby/1.8/action_controller/dispatcher.rb:114:in `call'
+  /usr/lib/ruby/1.8/action_controller/reloader.rb:34:in `run'
+  /usr/lib/ruby/1.8/action_controller/dispatcher.rb:108:in `call'
+  /usr/lib/ruby/1.8/rack/urlmap.rb:47:in `call'
+  /usr/lib/ruby/1.8/rack/urlmap.rb:41:in `each'
+  /usr/lib/ruby/1.8/rack/urlmap.rb:41:in `call'
+  /usr/lib/ruby/1.8/rack/content_length.rb:13:in `call'
+  /usr/lib/ruby/1.8/rack/handler/webrick.rb:48:in `service'
+  /usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+  /usr/lib/ruby/1.8/rack/handler/webrick.rb:14:in `run'
+
+Rendered rescues/_trace (23.3ms)
+Rendered rescues/_request_and_response (0.4ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing AlbaransController#editar (for 127.0.0.1 at 2011-02-17 17:46:43) [GET]
+Rendering template within layouts/application
+Rendering albarans/editar
+Completed in 15ms (View: 13, DB: 0) | 200 OK [http://localhost/albarans/editar]
+
+
+Processing AlbaransController#modificar (for 127.0.0.1 at 2011-02-17 17:46:46) [POST]
+  Parameters: {"albaran"=>{"codigo"=>"11111111111111111111111", "fecha(1i)"=>"2011", "fecha(2i)"=>"2", "fecha(3i)"=>"17"}, "authenticity_token"=>"5uJ7CAU4T3vrAqbktWFYkQFrDjtT/O+xL6JRhzmaiz4="}
+
+NameError (uninitialized constant AlbaransController::Alvaran):
+  /usr/lib/ruby/1.8/active_support/dependencies.rb:105:in `const_missing'
+  app/controllers/albarans_controller.rb:18:in `modificar'
+  /usr/lib/ruby/1.8/action_controller/base.rb:1331:in `send'
+  /usr/lib/ruby/1.8/action_controller/base.rb:1331:in `perform_action_without_filters'
+  /usr/lib/ruby/1.8/action_controller/filters.rb:617:in `call_filters'
+  /usr/lib/ruby/1.8/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+  /usr/lib/ruby/1.8/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+  /usr/lib/ruby/1.8/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+  /usr/lib/ruby/1.8/action_controller/rescue.rb:160:in `perform_action_without_flash'
+  /usr/lib/ruby/1.8/action_controller/flash.rb:146:in `perform_action'
+  /usr/lib/ruby/1.8/action_controller/base.rb:532:in `send'
+  /usr/lib/ruby/1.8/action_controller/base.rb:532:in `process_without_filters'
+  /usr/lib/ruby/1.8/action_controller/filters.rb:606:in `process'
+  /usr/lib/ruby/1.8/action_controller/base.rb:391:in `process'
+  /usr/lib/ruby/1.8/action_controller/base.rb:386:in `call'
+  /usr/lib/ruby/1.8/action_controller/routing/route_set.rb:437:in `call'
+  /usr/lib/ruby/1.8/action_controller/dispatcher.rb:87:in `dispatch'
+  /usr/lib/ruby/1.8/action_controller/dispatcher.rb:121:in `_call'
+  /usr/lib/ruby/1.8/action_controller/dispatcher.rb:130:in `build_middleware_stack'
+  /usr/lib/ruby/1.8/active_record/query_cache.rb:29:in `call'
+  /usr/lib/ruby/1.8/active_record/query_cache.rb:29:in `call'
+  /usr/lib/ruby/1.8/active_record/connection_adapters/abstract/query_cache.rb:34:in `cache'
+  /usr/lib/ruby/1.8/active_record/query_cache.rb:9:in `cache'
+  /usr/lib/ruby/1.8/active_record/query_cache.rb:28:in `call'
+  /usr/lib/ruby/1.8/active_record/connection_adapters/abstract/connection_pool.rb:361:in `call'
+  /usr/lib/ruby/1.8/action_controller/string_coercion.rb:25:in `call'
+  /usr/lib/ruby/1.8/rack/head.rb:9:in `call'
+  /usr/lib/ruby/1.8/rack/methodoverride.rb:24:in `call'
+  /usr/lib/ruby/1.8/action_controller/params_parser.rb:15:in `call'
+  /usr/lib/ruby/1.8/action_controller/session/cookie_store.rb:93:in `call'
+  /usr/lib/ruby/1.8/action_controller/failsafe.rb:26:in `call'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `synchronize'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+  /usr/lib/ruby/1.8/action_controller/dispatcher.rb:114:in `call'
+  /usr/lib/ruby/1.8/action_controller/reloader.rb:34:in `run'
+  /usr/lib/ruby/1.8/action_controller/dispatcher.rb:108:in `call'
+  /usr/lib/ruby/1.8/rack/urlmap.rb:47:in `call'
+  /usr/lib/ruby/1.8/rack/urlmap.rb:41:in `each'
+  /usr/lib/ruby/1.8/rack/urlmap.rb:41:in `call'
+  /usr/lib/ruby/1.8/rack/content_length.rb:13:in `call'
+  /usr/lib/ruby/1.8/rack/handler/webrick.rb:48:in `service'
+  /usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+  /usr/lib/ruby/1.8/rack/handler/webrick.rb:14:in `run'
+
+Rendered rescues/_trace (21.4ms)
+Rendered rescues/_request_and_response (0.4ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing AlbaransController#editar (for 127.0.0.1 at 2011-02-17 17:48:41) [GET]
+Rendering template within layouts/application
+Rendering albarans/editar
+Completed in 64ms (View: 62, DB: 0) | 200 OK [http://localhost/albarans/editar]
+
+
+Processing AlbaransController#editar (for 127.0.0.1 at 2011-02-17 17:48:43) [GET]
+Rendering template within layouts/application
+Rendering albarans/editar
+Completed in 11ms (View: 10, DB: 0) | 200 OK [http://localhost/albarans/editar]
+
+
+Processing AlbaransController#editar (for 127.0.0.1 at 2011-02-17 17:48:45) [GET]
+Rendering template within layouts/application
+Rendering albarans/editar
+Completed in 10ms (View: 9, DB: 0) | 200 OK [http://localhost/albarans/editar]
+
+
+Processing AlbaransController#modificar (for 127.0.0.1 at 2011-02-17 17:48:49) [POST]
+  Parameters: {"albaran"=>{"codigo"=>"1111111111111", "fecha(1i)"=>"2011", "fecha(2i)"=>"2", "fecha(3i)"=>"17"}, "authenticity_token"=>"5uJ7CAU4T3vrAqbktWFYkQFrDjtT/O+xL6JRhzmaiz4="}
+  [4;36;1mAlbaran Create (0.3ms)[0m   [0;1mINSERT INTO "albarans" ("created_at", "updated_at", "codigo", "fecha") VALUES('2011-02-17 16:48:49', '2011-02-17 16:48:49', '1111111111111', '2011-02-17')[0m
+Redirected to http://localhost:3000/albarans/listado
+Completed in 27ms (DB: 0) | 302 Found [http://localhost/albarans/modificar]
+
+
+Processing AlbaransController#listado (for 127.0.0.1 at 2011-02-17 17:48:49) [GET]
+  [4;35;1mAlbaran Load (0.7ms)[0m   [0mSELECT * FROM "albarans" [0m
+Rendering template within layouts/application
+Rendering albarans/listado
+Completed in 16ms (View: 11, DB: 1) | 200 OK [http://localhost/albarans/listado]
+
+
+Processing AlbaransController#editar (for 127.0.0.1 at 2011-02-17 17:48:53) [GET]
+  Parameters: {"id"=>"1"}
+  [4;36;1mAlbaran Load (0.2ms)[0m   [0;1mSELECT * FROM "albarans" WHERE ("albarans"."id" = 1) [0m
+Rendering template within layouts/application
+Rendering albarans/editar
+Completed in 63ms (View: 56, DB: 0) | 200 OK [http://localhost/albarans/editar/1]
+
+
+Processing AlbaransController#modificar (for 127.0.0.1 at 2011-02-17 17:48:56) [POST]
+  Parameters: {"albaran"=>{"codigo"=>"112312222", "fecha(1i)"=>"2011", "fecha(2i)"=>"2", "fecha(3i)"=>"4"}, "authenticity_token"=>"5uJ7CAU4T3vrAqbktWFYkQFrDjtT/O+xL6JRhzmaiz4=", "id"=>"1"}
+  [4;35;1mAlbaran Load (0.3ms)[0m   [0mSELECT * FROM "albarans" WHERE ("albarans"."id" = 1) [0m
+  [4;36;1mAlbaran Update (0.3ms)[0m   [0;1mUPDATE "albarans" SET "updated_at" = '2011-02-17 16:48:56', "fecha" = '2011-02-04' WHERE "id" = 1[0m
+Redirected to http://localhost:3000/albarans/listado
+Completed in 25ms (DB: 1) | 302 Found [http://localhost/albarans/modificar/1]
+
+
+Processing AlbaransController#listado (for 127.0.0.1 at 2011-02-17 17:48:56) [GET]
+  [4;35;1mAlbaran Load (0.8ms)[0m   [0mSELECT * FROM "albarans" [0m
+Rendering template within layouts/application
+Rendering albarans/listado
+Completed in 17ms (View: 11, DB: 1) | 200 OK [http://localhost/albarans/listado]
+
+
+Processing AlbaransController#editar (for 127.0.0.1 at 2011-02-17 17:48:58) [GET]
+  Parameters: {"id"=>"1"}
+  [4;36;1mAlbaran Load (0.2ms)[0m   [0;1mSELECT * FROM "albarans" WHERE ("albarans"."id" = 1) [0m
+Rendering template within layouts/application
+Rendering albarans/editar
+Completed in 17ms (View: 10, DB: 0) | 200 OK [http://localhost/albarans/editar/1]

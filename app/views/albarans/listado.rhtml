@@ -1,0 +1,15 @@
+<!--- Listado de albaranes --->
+
+<%= cabecera_listado ["codigo", "fecha"] %>
+<% for objeto in @albarans%>
+  <div class="listadofila">
+    <%= fila_listado objeto %>
+    <div class="listado_derecha">
+      <%= link_to icono('Search',{:title => "Ver líneas"}), { :controller => 'albaran_lineas', :action => 'listado', :albaran_id => objeto.id } %>
+      <%= link_to icono('Write',{:title => "Editar"}), :action => :editar, :id => objeto %>
+      <%= link_to icono('Trash',{:title => "Borrar"}), :action => :borrar, :id => objeto %>
+    </div>
+  </div>
+<% end %>
+<%= final_listado @ivas %>
+
