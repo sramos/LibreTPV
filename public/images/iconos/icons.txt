@@ -1,0 +1,214 @@
+Collection name: Light Grey Square Icons
+Author: Axialis Team
+Author homepage: http://www.axialis.com/
+Services: 
+License: CC Attribution 2.5 Generic
+License URL: http://creativecommons.org/licenses/by/2.5/
+License description: 
+Commercial usage: Allowed
+Readme: ReadMe.txt
+0: 0
+1: 1
+2: 2
+3: 3
+4: 4
+5: 5
+6: 6
+7: 7
+8: 8
+9: 9
+Alarme: Alarme
+Ampersand: Ampersand
+Application: Application
+Applications: Applications
+Arrow1 Down: Arrow 1 Down
+Arrow1 DownLeft: Arrow 1 Down Left
+Arrow1 DownRight: Arrow 1 Down Right
+Arrow1 Left: Arrow 1 Left
+Arrow1 Right: Arrow 1 Right
+Arrow1 Up: Arrow 1 Up
+Arrow1 UpLeft: Arrow 1 Up Left
+Arrow1 UpRight: Arrow 1 Up Right
+Arrow2 Down: Arrow 2 Down
+Arrow2 DownLeft: Arrow 2 Down Left
+Arrow2 DownRight: Arrow 2 Down Right
+Arrow2 Left: Arrow 2 Left
+Arrow2 Right: Arrow 2 Right
+Arrow2 Up: Arrow 2 Up
+Arrow2 UpLeft: Arrow 2 Up Left
+Arrow2 UpRight: Arrow 2 Up Right
+Arrow3 Down: Arrow 3 Down
+Arrow3 Left: Arrow 3 Left
+Arrow3 Right: Arrow 3 Right
+Arrow3 Up: Arrow 3 Up
+Attach: Attach
+Audio Message: Audio Message
+Back Top: Back Top
+Back: Back
+Bubble 1: Bubble 1
+Bubble 3: Bubble 3
+Burn: Burn
+Calc: Calc
+Calendar: Calendar
+Cancel: Cancel
+Car: Car
+Card1: Card 1
+Card2: Card 2
+Card3: Card 3
+Card4: Card 4
+Cart: Cart 1
+Cart2: Cart 2
+Cd: CD
+Clipboard Copy: Clipboard Copy
+Clipboard Cut: Clipboard Cut
+Clipboard Paste: Clipboard Paste
+Clock: Clock
+Computer: Computer
+Contact: Contact
+Copyright: Copyright
+Cube: Cube
+Currency Dollar: Currency Dollar
+Currency Euro: Currency Euro
+Currency Pound: Currency Pound
+Database: Database
+Direction Diag1: Direction Diagram 1
+Direction Diag2: Direction Diagram 2
+Direction Horz: Direction Horizontal
+Direction Vert: Direction Vertical
+Directions: Directions
+Discuss: Discuss
+Document New: Document New
+Document: Document 1
+Document2: Document 2
+Dots Down: Dots Down
+Dots Up: Dots Up
+Dots: Dots
+Download: Download
+Email: Email
+Exclamation: Exclamation
+Fbook: Fbook
+Flag: Flag
+Folder: Folder 1
+Folder2: Folder 2
+Folder3: Folder 3
+Footprint: Footprint
+Forbidden: Forbidden
+Full Screen: Full Screen
+Full Size: Full Size
+Game: Game
+Gear: Gear
+Globe: Globe
+Go In: Go In
+Go Out: Go Out
+Graph: Graph
+Hand: Hand
+Hdd Network: Hdd Network
+Hdd: HDD
+Health: Health
+Heart: Heart
+Home: Home 1
+Home2: Home 2
+Info: Info 1
+Info2: Info 2
+Ipod: iPod
+Key: Key
+Light: Light
+Link: Link
+Lock Open: Lock Open
+Lock: Lock
+Loop: Loop
+Luggage: Luggage
+Mail: Mail
+Man: Man
+Microphone: Microphone
+Minus: Minus
+Mobile: Mobile
+Mouse: Mouse
+Movie: Movie
+Music: Music 1
+Music2: Music 2
+Nuke: Nuke
+Ok: Ok
+Paragraph: Paragraph
+Percent: Percent
+Phone: Phone
+Photo: Photo
+Picture: Picture
+Player Eject: Player Eject
+Player FastFwd: Player Fast Forward
+Player FastRev: Player Fast Rewind
+Player Next: Player Next
+Player Pause: Player Pause
+Player Play: Player Play
+Player Previous: Player Previous
+Player Record: Player Record
+Player Stop: Player Stop
+Plus: Plus
+Podcast: Podcast
+Pointer: Pointer
+Poll: Poll
+Printer: Printer
+Puzzle: Puzzle
+Question: Question
+Reduced Size: Reduced Size
+Refresh: Refresh
+Rss 1: RSS 1
+Rss 2: RSS 2
+Save: Save
+Screen: Screen
+Search: Search
+Security: Security
+Sitemap: Sitemap
+Size Diag1: Size Diagram 1
+Size Diag2: Size Diagram 2
+Size Horz: Size Horizontal
+Size Vert: Size Vertical
+Sleep: Sleep
+Smiley1: Smiley 1
+Smiley2: Smiley 2
+Smiley3: Smiley 3
+Sound Minus: Sound Minus
+Sound Off: Sound Off
+Sound On: Sound On
+Sound Plus: Sound Plus
+Standby: Standby
+Star: Star
+Start: Start
+Stats 3: Stats 3
+Stats: Stats 1
+Stats2: Stats 2
+Table: Table
+Tag: Tag
+Tape: Tape
+Target: Target
+Text Large: Text Large
+Text Meduim: Text Meduim
+Text Minus: Text Minus
+Text Plus: Text Plus
+Text Small: Text Small
+Thumb Down: Thumb Down
+Thumb Up: Thumb Up
+Tool: Tool 1
+Tool2: Tool 2
+Trackback: Trackback
+Trash: Trash
+Travel: Travel
+Tree: Tree
+Tv: TV
+User: User
+Video: Video
+Wait: Wait
+Warning: Warning
+Weather Cloud: Weather Cloud
+Weather Could Sun: Weather Could Sun
+Weather Rain: Weather Rain
+Weather Snow: Weather Snow
+Weather Sun: Weather Sun
+Wizard: Wizard
+Woman: Woman
+Wordpress: Wordpress
+Write: Write 1
+Write2: Write 2
+Write3: Write 3
+Zoom In: Zoom In
+Zoom Out: Zoom Out

@@ -1,8 +1,14 @@
 <!--- Listado de clientes --->
 
 <%= cabecera_listado ["nombre", "cif"] %>
-<% for cliente in @clientes %>
-  <%= fila_listado cliente%>
+<% for objeto in @clientes %>
+  <div class="listadofila">
+    <%= fila_listado objeto %>
+    <div class="listado_derecha">
+      <%= link_to icono('Write',{:title => "Editar"}), {:action => 'edit', :id => objeto.id } %>
+      <%= link_to icono('Trash',{:title => "Borrar"}), {:action => 'delete', :id => objeto.id } %>
+    </div>
+  </div>
 <% end %>
 <%= final_listado @clientes %>
 

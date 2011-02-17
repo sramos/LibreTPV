@@ -1,0 +1,20 @@
+<h1>Nueva familia</h1>
+
+<% form_for(@familia) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+    <%= f.label "IVA:" %>
+
+    <%# selector _("Pais"), 'proyecto', 'pais_id',  @paises , false, "1"  %>
+    <%# select( "iva", "id" , @ivas.map {|u| [u.nombre,u.id]} ) %>
+    <%= select( "familia", "iva_id", @ivas.map {|u| [u.nombre,u.id]} ) %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', familias_path %>

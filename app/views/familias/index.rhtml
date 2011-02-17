@@ -1,8 +1,14 @@
 <!--- Listado de familias --->
 
-<%= cabecera_listado ["nombre"] %>
-<% for familia in @familias %>
-  <%= fila_listado familia %>
+<%= cabecera_listado ["nombre", "iva.nombre"] %>
+<% for objeto in @familias %>
+  <div class="listadofila">
+    <%= fila_listado objeto %>
+    <div class="listado_derecha">
+      <%= link_to icono('Write',{:title => "Editar"}), {:action => 'edit', :id => objeto.id } %>
+      <%= link_to icono('Trash',{:title => "Borrar"}), {:action => 'delete', :id => objeto.id } %>
+    </div>
+  </div>
 <% end %>
 <%= final_listado @familias %>
 

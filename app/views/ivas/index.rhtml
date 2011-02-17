@@ -1,8 +1,14 @@
 <!--- Listado de tipos de iva --->
 
 <%= cabecera_listado ["nombre","valor"] %>
-<% for iva in @ivas %>
-  <%= fila_listado iva %>
+<% for objeto in @ivas %>
+  <div class="listadofila">
+    <%= fila_listado objeto %>
+    <div class="listado_derecha">
+      <%= link_to icono('Write',{:title => "Editar"}), {:action => 'edit', :id => objeto.id } %>
+      <%= link_to icono('Trash',{:title => "Borrar"}), {:action => 'delete', :id => objeto.id } %>
+    </div>
+  </div>
 <% end %>
 <%= final_listado @ivas %>
 

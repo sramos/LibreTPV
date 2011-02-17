@@ -25,6 +25,7 @@ class FamiliasController < ApplicationController
   # GET /familias/new.xml
   def new
     @familia = Familia.new
+    @ivas = Iva.find(:all)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -44,12 +45,12 @@ class FamiliasController < ApplicationController
 
     respond_to do |format|
       if @familia.save
-        flash[:notice] = 'Familia was successfully created.'
-        format.html { redirect_to(@familia) }
-        format.xml  { render :xml => @familia, :status => :created, :location => @familia }
+        flash[:mensaje] = "Familia " + @familia.nombre + " se ha creado."
+        #redirect_to( :action => "index") 
+        format.html { redirect_to( :action => "index") }
       else
+        flash[:error] = @familia
         format.html { render :action => "new" }
-        format.xml  { render :xml => @familia.errors, :status => :unprocessable_entity }
       end
     end
   end

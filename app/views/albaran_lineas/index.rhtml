@@ -1,7 +1,13 @@
 <!--- Sublistado de lineas de albaran --->
 
 <%= cabecera_listado ["cantidad","descuento"] %>
-<% for linea in @albaran_lineas %>
-  <%= fila_listado linea%>
+<% for objeto in @albaran_lineas %>
+  <div class="listadofila">
+    <%= fila_listado objeto %>
+    <div class="listado_derecha">
+      <%= link_to icono('Write',{:title => "Editar"}), {:action => 'edit', :id => objeto.id } %>
+      <%= link_to icono('Trash',{:title => "Borrar"}), {:action => 'delete', :id => objeto.id } %>
+    </div>
+  </div>
 <% end %>
 <%= final_listado @albaran_lineas %>

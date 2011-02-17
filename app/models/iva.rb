@@ -1,5 +1,5 @@
 class Iva < ActiveRecord::Base
 
-  belongs_to :familia
+  has_many :familia
 
 end

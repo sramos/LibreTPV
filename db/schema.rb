@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20110216172026) do
 
   create_table "familias", :force => true do |t|
     t.string   "nombre"
+    t.integer  "iva_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
