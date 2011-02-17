@@ -1,0 +1,6 @@
+
+<%= inicio_formulario( { :action => 'modificar', :id => @familia }, false ) %>
+    <%= texto "Nombre", 'familia', 'nombre' %>
+    IVA: <%= select( "familia", "iva_id", @ivas.map {|u| [u.nombre,u.id]} ) %>
+<%= final_formulario %>
+

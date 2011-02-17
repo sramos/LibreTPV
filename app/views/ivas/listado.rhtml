@@ -5,8 +5,8 @@
   <div class="listadofila">
     <%= fila_listado objeto %>
     <div class="listado_derecha">
-      <%= link_to icono('Write',{:title => "Editar"}), {:action => 'edit', :id => objeto.id } %>
-      <%= link_to icono('Trash',{:title => "Borrar"}), {:action => 'delete', :id => objeto.id } %>
+      <%= link_to icono('Write',{:title => "Editar"}), :action => :editar, :id => objeto %>
+      <%= link_to icono('Trash',{:title => "Borrar"}), :action => :borrar, :id => objeto %>
     </div>
   </div>
 <% end %>

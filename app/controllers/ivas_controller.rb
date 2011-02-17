@@ -1,85 +1,45 @@
 class IvasController < ApplicationController
-  # GET /ivas
-  # GET /ivas.xml
+
   def index
+    #@ivas = Iva.all
+    flash[:mensaje] = "Listado de tipos de IVA"
+    redirect_to :action => :listado
+  end
+
+  def listado
     @ivas = Iva.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @ivas }
-    end
   end
 
-  # GET /ivas/1
-  # GET /ivas/1.xml
-  def show
-    @iva = Iva.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @iva }
-    end
-  end
-
-  # GET /ivas/new
-  # GET /ivas/new.xml
-  def new
-    @iva = Iva.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @iva }
-    end
-  end
-
-  # GET /ivas/1/edit
-  def edit
-    @iva = Iva.find(params[:id])
-  end
-
-  # POST /ivas
-  # POST /ivas.xml
   def create
     @iva = Iva.new(params[:iva])
 
     respond_to do |format|
       if @iva.save
-        flash[:notice] = 'Iva was successfully created.'
-        format.html { redirect_to(@iva) }
-        format.xml  { render :xml => @iva, :status => :created, :location => @iva }
+        flash[:mensaje] = 'Iva was successfully created.'
+        redirect_to :action => "index"
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @iva.errors, :status => :unprocessable_entity }
+        flash[:error] = @iva
+        redirect_to :action => "new"
       end
     end
   end
 
-  # PUT /ivas/1
-  # PUT /ivas/1.xml
-  def update
-    @iva = Iva.find(params[:id])
-
-    respond_to do |format|
-      if @iva.update_attributes(params[:iva])
-        flash[:notice] = 'Iva was successfully updated.'
-        format.html { redirect_to(@iva) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @iva.errors, :status => :unprocessable_entity }
-      end
-    end
+  def editar
+    @iva = params[:id] ?  Iva.find(params[:id]) : nil
   end
 
-  # DELETE /ivas/1
-  # DELETE /ivas/1.xml
-  def destroy
+  def modificar 
+    @iva = params[:id] ?  Iva.find(params[:id]) : Iva.new
+    @iva.update_attributes params[:iva]
+    flash[:error] = @iva
+    redirect_to :action => :listado
+  end
+  
+  def borrar 
     @iva = Iva.find(params[:id])
     @iva.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(ivas_url) }
-      format.xml  { head :ok }
-    end
+    flash[:error] = @iva
+    redirect_to :action => :listado
   end
+
 end
