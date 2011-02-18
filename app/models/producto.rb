@@ -6,7 +6,7 @@ class Producto < ActiveRecord::Base
 #	:message => 'debe ser una URL de GIF, JPG ' +
 #	'o PNG.(gif|jpg|png)'
 
-  has_one :familia
-  belongs_to :albaran_linea
+  belongs_to :familia
+  has_many :albaran_linea
 
 end

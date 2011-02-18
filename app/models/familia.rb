@@ -1,6 +1,6 @@
 class Familia < ActiveRecord::Base
 
   belongs_to :iva
-  belongs_to :producto
+  has_many :producto
 
 end

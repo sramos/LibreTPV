@@ -1,0 +1,9 @@
+
+<%= inicio_formulario( { :action => 'modificar', :id => @producto }, false ) %>
+    <%= texto "Codigo o ISBN", 'producto', 'codigo' %>
+    <%= texto "Nombre", 'producto', 'nombre' %>
+    <%= texto "Descripcion", 'producto', 'descripcion' %>
+    <%= texto "Precio", 'producto', 'precio' %>
+    Familia: <%= select( "producto", "familia_id", @familias.map {|u| [u.nombre,u.id]} ) %>
+<%= final_formulario %>
+

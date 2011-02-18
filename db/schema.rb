@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(:version => 20110216172026) do
     t.string   "nombre"
     t.string   "descripcion"
     t.string   "url_imagen"
+    t.integer  "familia_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "precio",      :precision => 8, :scale => 2, :default => 0.0

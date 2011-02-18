@@ -1,11 +1,14 @@
 <!--- Listado de productos --->
 
-<% unless @productos.empty? %>
-  <%= cabecera_listado ["nombre", "descripcion", "precio"] %>
-  <% for producto in @productos %>
-    <%= fila_listado producto%>
-  <% end %>
-  <%= final_listado @productos %>
+<%= cabecera_listado ["codigo", "familia.nombre", "nombre", "precio"] %>
+<% for objeto in @productos %>
+  <div class="listadofila">
+    <%= fila_listado objeto %>
+    <div class="listado_derecha">
+      <%= link_to icono('Write',{:title => "Editar"}), :action => :editar, :id => objeto %>
+      <%= link_to icono('Trash',{:title => "Borrar"}), :action => :borrar, :id => objeto %>
+    </div>
+  </div>
 <% end %>
+<%= final_listado @productos %>
 
-<%# link_to 'Nuevo producto', new_productos_path %>

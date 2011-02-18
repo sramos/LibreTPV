@@ -5,6 +5,7 @@ class CreateProductos < ActiveRecord::Migration
       t.string :nombre
       t.string :descripcion
       t.string :url_imagen
+      t.integer :familia_id
 
       t.timestamps
     end
