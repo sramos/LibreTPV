@@ -18,15 +18,25 @@ en cualquier otro sistema operativo, aunque algunos pasos es posible que sean di
 
 Convenciones
 
-Una linea que empieza por "#" indica el prompt bash en consola.
+Una linea que empieza por "$" indica el prompt bash en consola.
 
 
 *********************************************************************************************
 
 Indice
-1.- Instalación de TPV 
+1.- BBDD y servidor web
 2.- Instalación de dependencias
+3.- Instalación de TPV 
 
 *********************************************************************************************
 
+1.- BBDD y servidor web
+
+
+2.- Instalación de dependencias
+
+  $ apt-get install libnokogiri-ruby 
+
+
+3.- Instalación de TPV
 
