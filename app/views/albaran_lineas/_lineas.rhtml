@@ -1,0 +1,22 @@
+<!--- Sublistado de lineas de albaran --->
+
+<%= cabecera_sublistado "Lineas", ["cantidad","descuento"], params[:update] %>
+<div class="listado_derecha">
+<%= link_to icono( "Plus",{:title=>"Editar"} ), {:action => 'nuevo_editar_linea', :albaran_id => @albaran_id, :update => @update} %>
+</div>
+<div class="fila">
+<% i = 0 %>
+<% for linea in @albaran_lineas %>
+  <div id="<%= params[:update] %>_lineas_<%= (i += 1).to_s %>" class="fila" >
+    <div class="listadofila">
+      <%= fila_listado objeto %>
+      <div class="listado_derecha">
+        <%= link_to icono('Write',{:title => "Editar"}), {:action => 'edit', :id => objeto.id } %>
+        <%= link_to icono('Trash',{:title => "Borrar"}), {:action => 'delete', :id => objeto.id } %>
+      </div>
+  </div>
+<% end %>
+<%= final_sublistado %>
+
+<br/>
+

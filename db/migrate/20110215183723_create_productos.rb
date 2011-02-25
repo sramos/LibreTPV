@@ -3,8 +3,12 @@ class CreateProductos < ActiveRecord::Migration
     create_table :productos do |t|
       t.integer :codigo
       t.string :nombre
+      t.string :autor
+      t.string :editor
+      t.string :anno
       t.string :descripcion
       t.string :url_imagen
+      t.integer :cantidad
       t.integer :familia_id
 
       t.timestamps

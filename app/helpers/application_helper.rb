@@ -6,7 +6,7 @@ module ApplicationHelper
     @campos_listado = campos
     cadena = "<div class='listado'><div class='listadocabecera'>"
     for campo in campos
-      cadena += "<div class='listado_campo'>" + campo + "</div>"
+      cadena += "<div class='listado_campo'>" + campo.capitalize + "</div>"
     end
     cadena += "<div class='listado_derecha'>"
     cadena += link_to icono('Plus',{:title => "Nuevo"}), {:action => 'editar'}
@@ -19,7 +19,7 @@ module ApplicationHelper
     for campo in @campos_listado
       valor=objeto
       campo.split('.').each { |metodo| valor = valor.send(metodo) if valor }
-      cadena += "<div class='listado_campo'>" + valor.to_s + '</div>'
+      cadena += "<div class='listado_campo' id='listado_campo_" + campo + "'>" + valor.to_s + '</div>'
     end
     #cadena += "</div>"
     return cadena
@@ -28,6 +28,34 @@ module ApplicationHelper
   def final_listado objeto
     cadena = "</div>"
     return cadena
+  end
+
+  def cabecera_sublistado rotulo, campos, sub_id
+    @campos_sublistado = campos     
+    script = "document.getElementById('" +  sub_id + "').innerHTML=\"\";"
+    cadena = '<br><fieldset class="sublistado"> <legend>'+ rotulo +'</legend>'
+    cadena << '<div class="linea"><div class="listado_derecha" id="cerrarsublistado">'
+    cadena << link_to_function( icono('Cancel',{:Title => "Ocultar"}), script, {:id => sub_id + "_ocultar_sublistado"} )
+    cadena << "</div></div><div class='listadocabecera'>"
+    for campo in campos
+      cadena << "<div class='listado_campo'>" + campo.capitalize + "</div>"
+    end
+    cadena << '</div>'
+  end
+
+  def fila_sublistado objeto
+    cadena = ""
+    for campo in @campos_sublistado
+      valor=objeto
+      campo.split('.').each { |metodo| valor = valor.send(metodo) if valor }
+      cadena += "<div class='listado_campo' id='listado_campo_" + campo + "'>" + valor.to_s + '</div>'
+    end
+    return cadena
+  end
+
+  # Dibuja los elementos del final del sublistado.
+  def final_sublistado
+      return "</fieldset>"
   end
 
   def icono tipo, propiedades={} 
@@ -41,9 +69,9 @@ module ApplicationHelper
     return cadena
   end
 
-  def texto rotulo, objeto, atributo
+  def texto rotulo, objeto, atributo, valor=nil
     cadena = "<div class='elemento'>" + rotulo +"<br/>"
-    cadena << text_field( objeto, atributo , {:class => "texto", :type => "d"})
+    cadena << text_field( objeto, atributo , {:class => "texto", :id => "formulario_campo_" + atributo, :type => "d", :value => valor })
     return cadena << "</div>"
   end
 

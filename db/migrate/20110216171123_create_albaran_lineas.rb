@@ -3,6 +3,8 @@ class CreateAlbaranLineas < ActiveRecord::Migration
     create_table :albaran_lineas do |t|
       t.integer :cantidad
       t.integer :descuento
+      t.integer :producto_id
+      t.integer :albaran_id
 
       t.timestamps
     end

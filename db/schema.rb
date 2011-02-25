@@ -9,11 +9,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110216172026) do
+ActiveRecord::Schema.define(:version => 20110220192155) do
 
   create_table "albaran_lineas", :force => true do |t|
     t.integer  "cantidad"
     t.integer  "descuento"
+    t.integer  "producto_id"
+    t.integer  "albaran_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -21,6 +23,15 @@ ActiveRecord::Schema.define(:version => 20110216172026) do
   create_table "albarans", :force => true do |t|
     t.string   "codigo"
     t.date     "fecha"
+    t.integer  "proveedor_id"
+    t.integer  "cliente_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "campos", :force => true do |t|
+    t.string   "nombre"
+    t.string   "tipo"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -49,8 +60,12 @@ ActiveRecord::Schema.define(:version => 20110216172026) do
   create_table "productos", :force => true do |t|
     t.integer  "codigo"
     t.string   "nombre"
+    t.string   "autor"
+    t.string   "editor"
+    t.string   "anno"
     t.string   "descripcion"
     t.string   "url_imagen"
+    t.integer  "cantidad"
     t.integer  "familia_id"
     t.datetime "created_at"
     t.datetime "updated_at"

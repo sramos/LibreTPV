@@ -12,6 +12,7 @@ class AlbaransController < ApplicationController
 
   def editar
     @albaran = params[:id] ?  Albaran.find(params[:id]) : nil
+    @proveedores = Proveedor.all
   end
 
   def modificar

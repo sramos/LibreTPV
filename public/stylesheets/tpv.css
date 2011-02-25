@@ -34,6 +34,37 @@ margin-top:15px;
  /*border-bottom:dotted 1px #ccc;*/
 }
 
+.sublistado .fila {
+    padding: 3 3 0 3;
+    border-bottom:dotted 1px #ccc;
+    min-height: 20px;
+
+ }
+
+.sublistado {
+  border:dotted 0px #ccc;
+  /*margin-bottom: 10px;
+  -moz-border-radius-bottomleft: 7px;
+   -moz-border-radius-bottomright: 7px;
+   -moz-border-radius-topleft: 5px;
+   -moz-border-radius-topright: 7px;*/
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  border-radius: 4px;
+  padding: 5px 15px 15px 15px;
+  -moz-box-shadow: 2px 2px 4px  gray;
+  -webkit-box-shadow: 2px 2px 4px  gray;
+  box-shadow: 2px 2px 4px  gray;
+  width: 800px;
+  margin: 10 auto 10 auto;
+
+}
+
+.sublistado legend{
+  font-weight:bold;
+  padding: 5 0 0 0;
+  color: gray;
+}
 
 
 .listadocabecera{
@@ -56,7 +87,7 @@ margin-top:15px;
 
 .listado_campo {
     float: left;
-    width:200px;
+    width:150px;
 }
 
 
@@ -92,5 +123,10 @@ margin-top:15px;
   border-color:#DD0000;
   color:#550000;
 
+}
+
+#spinner, .spinner {
+  padding: 2em;
+  background: transparent url(/images/spinner.gif) 50% 0 no-repeat;
 }
 

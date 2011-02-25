@@ -1,6 +1,8 @@
 
 <%= inicio_formulario( { :action => 'modificar', :id => @albaran }, false ) %>
     <%= texto "Código", 'albaran', 'codigo' %>
+    Proveedor: <%= select( "albaran", "proveedor_id", @proveedores.map {|u| [u.nombre,u.id]} ) %>
+    <br>
     <%# f.date_select :fecha %>
     Fecha: <%= date_select('albaran', 'fecha') %>
 <%= final_formulario %>

@@ -1,14 +1,17 @@
 <!--- Listado de albaranes --->
 
-<%= cabecera_listado ["codigo", "fecha"] %>
+<%= cabecera_listado ["proveedor.nombre", "codigo", "fecha"] %>
+<% i = 0 %>
 <% for objeto in @albarans%>
-  <div class="listadofila">
+  <div id="albaran_<%= i +=1 %>" class="listadofila">
     <%= fila_listado objeto %>
     <div class="listado_derecha">
-      <%= link_to icono('Search',{:title => "Ver líneas"}), { :controller => 'albaran_lineas', :action => 'listado', :albaran_id => objeto.id } %>
+      <%= link_to_remote icono('Search',{:title => "Ver líneas"}), :url => { :controller => 'albaran_lineas', :action => 'lineas', :albaran_id => objeto.id, :update => "albaran_sub_" + i.to_s } %>
       <%= link_to icono('Write',{:title => "Editar"}), :action => :editar, :id => objeto %>
       <%= link_to icono('Trash',{:title => "Borrar"}), :action => :borrar, :id => objeto %>
     </div>
+  </div>
+  <div id="albaran_sub_<%= i.to_s %>">
   </div>
 <% end %>
 <%= final_listado @ivas %>

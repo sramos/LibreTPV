@@ -1,6 +1,6 @@
 class Proveedor < ActiveRecord::Base
 
-  validates_presence_of :nombre, :nif
+  validates_presence_of :nombre, :cif
 
   has_many :albarans
 

@@ -1,7 +1,7 @@
-<!--- Listado de productos --->
+<!--- Listado de tipos de campos --->
 
-<%= cabecera_listado ["codigo", "familia.nombre", "nombre", "autor", "precio"] %>
-<% for objeto in @productos %>
+<%= cabecera_listado ["nombre","tipo"] %>
+<% for objeto in @campos %>
   <div class="listadofila">
     <%= fila_listado objeto %>
     <div class="listado_derecha">
@@ -10,5 +10,5 @@
     </div>
   </div>
 <% end %>
-<%= final_listado @productos %>
+<%= final_listado @campos %>
 

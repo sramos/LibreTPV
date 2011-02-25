@@ -1,0 +1,17 @@
+<%= cabecera_sublistado "Campos", ["nombre"], params[:update] %>
+<div class="fila">
+<%# modal icono("anadir"), {:controller => 'usuario', :action => 'asignar_usuario', :update =>  params[:update], :id => params[:id], :objeto => params[:objeto] }, _("Asignar campo a " + @objeto.nombre), {:id => params[:update] + "_usuario_anadir" } %>
+</div>
+<% i = 0 %>
+<% for campo in @campos %>
+   <div  id="<%= params[:update] %>_campos_<%= (i += 1).to_s%>" class="fila" >
+    <%= fila_listado usuario_x, campos_listado ("usuario_x"), params[:update] + "_usuarios_" + i.to_s %>
+    <div class="elementoderecha">
+       <%= modal_borrado icono(( "borrar"), _('Eliminar proyecto')),  { :controller => 'usuario', :action => 'desasignar_usuario', :update =>  params[:update], :id => params[:id], :usuario_x_objeto_id => usuario_x.id, :objeto => params[:objeto]  } , _('Desasignar usuario'),  usuario_x.usuario.nombre,  :id => (params[:update] + "_usuarios_" + i.to_s + "_borrar"), :ajax => true %>
+    </div>
+    <div class="linea"></div>
+    </div>
+<% end if !@campos.nil?%> 
+<%= final_sublistado %>
+
+<BR>

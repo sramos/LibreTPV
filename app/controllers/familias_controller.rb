@@ -28,4 +28,12 @@ class FamiliasController < ApplicationController
     redirect_to :action => :listado
   end
 
+  def listar_familias
+    @familia = params[:id] ?  Familia.find(params[:id]) : nil
+    @campos = @familia.campo  
+    render :update do |page|
+      page.replace_html params[:update], :partial => "campos"
+    end
+  end
+
 end

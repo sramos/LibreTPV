@@ -3,6 +3,8 @@ class CreateAlbarans < ActiveRecord::Migration
     create_table :albarans do |t|
       t.string :codigo
       t.date :fecha
+      t.integer :proveedor_id
+      t.integer :cliente_id
 
       t.timestamps
     end
