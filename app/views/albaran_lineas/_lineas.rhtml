@@ -1,22 +1,23 @@
 <!--- Sublistado de lineas de albaran --->
 
-<%= cabecera_sublistado "Lineas", ["cantidad","descuento"], params[:update] %>
-<div class="listado_derecha">
-<%= link_to icono( "Plus",{:title=>"Editar"} ), {:action => 'nuevo_editar_linea', :albaran_id => @albaran_id, :update => @update} %>
-</div>
-<div class="fila">
+<br/><br/>
+<div id="<%= params[:update] %>_linea_editar"></div>
+
+<%= render(:partial => "albaran_lineas/editar_linea") %>
+
+
+<%= cabecera_sublistado "Lineas", ["producto.codigo","producto.nombre","cantidad","descuento"], params[:update] %>
 <% i = 0 %>
 <% for linea in @albaran_lineas %>
-  <div id="<%= params[:update] %>_lineas_<%= (i += 1).to_s %>" class="fila" >
-    <div class="listadofila">
-      <%= fila_listado objeto %>
-      <div class="listado_derecha">
-        <%= link_to icono('Write',{:title => "Editar"}), {:action => 'edit', :id => objeto.id } %>
-        <%= link_to icono('Trash',{:title => "Borrar"}), {:action => 'delete', :id => objeto.id } %>
-      </div>
+  <div id="<%= params[:update] %>_linea_<%= (i += 1).to_s %>" class="fila" >
+    <%= fila_sublistado linea %>
+    <div class="listado_derecha">
+      <%# link_to_remote icono('Write',{:title => "Editar"}), :url => {:controller => 'albaran_lineas', :action => 'editar_linea', :id => linea.id, :albaran_id => params[:albaran_id], :update => params[:update] + "_editar_linea_" + linea.id.to_s } %>
+      <%= link_to_remote icono('Trash',{:title => "Borrar"}), :url => {:controller => 'albaran_lineas', :action => 'eliminar_linea', :update => params[:update], :id => linea.id, :albaran_id => params[:albaran_id] } %>
+    </div>
   </div>
+  <div class="<%= params[:update] %>_editar_linea_<%= linea.id.to_s %>" class="fila"></div>
 <% end %>
 <%= final_sublistado %>
-
 <br/>
 

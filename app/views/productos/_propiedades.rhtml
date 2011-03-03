@@ -1,17 +1,16 @@
+
 <div id="propiedades">
+<%= inicio_formulario( { :action => 'modificar', :id => @producto }, true ) %>
+  <%= hidden_field('producto', 'codigo')%>
+  Familia: <%= select( "producto", "familia_id", @familias.map {|u| [u.nombre,u.id]} ) %>
+    <%# observe_field( "producto_familia_id" , :update => "propiedades", :with => "'producto_familia_id='+value", :url => {:action => :cambio_familia, :id => @producto} ) %>
+  <%= texto "Nombre", 'producto', 'nombre' %>
+  <%= texto "Autor", 'producto', 'autor' %>
+  <%= texto "Editor", 'producto', 'editor' %>
+  <%= texto "Año", 'producto', 'anno' %>
 
-Familia: <%= select( "producto", "familia_id", @familias.map {|u| [u.nombre,u.id]} ) %>
-<%# observe_field( "producto_familia_id" , :update => "propiedades", :with => "'producto_familia_id='+value", :url => {:action => :cambio_familia, :id => @producto} ) %>
-
-<%= texto "Nombre", 'producto', 'nombre' %>
-<%= texto "Autor", 'producto', 'autor' %>
-<%= texto "Editor", 'producto', 'editor' %>
-<%= texto "Año", 'producto', 'anno' %>
-
-<% if @producto_familia_id.to_s == "1" || !@producto_familia_id %>
-  <%# texto "Autor", 'producto', 'autor' %>
-  <%# texto "Editor", 'producto', 'editor' %>
-  <%# texto "Año", 'producto', 'anno' %>
-<% end %>
-
+  <%= texto "Descripcion", 'producto', 'descripcion' %>
+  <%= texto "Precio", 'producto', 'precio' %>
+<%= final_formulario %>
 </div>
+

@@ -32,11 +32,11 @@ module ApplicationHelper
 
   def cabecera_sublistado rotulo, campos, sub_id
     @campos_sublistado = campos     
-    script = "document.getElementById('" +  sub_id + "').innerHTML=\"\";"
+    script = "document.getElementById('" +  sub_id + "').innerHTML=\"\";" if sub_id
     cadena = '<br><fieldset class="sublistado"> <legend>'+ rotulo +'</legend>'
     cadena << '<div class="linea"><div class="listado_derecha" id="cerrarsublistado">'
-    cadena << link_to_function( icono('Cancel',{:Title => "Ocultar"}), script, {:id => sub_id + "_ocultar_sublistado"} )
-    cadena << "</div></div><div class='listadocabecera'>"
+    cadena << link_to_function( icono('Cancel',{:Title => "Ocultar"}), script, {:id => sub_id + "_ocultar_sublistado"} ) if sub_id
+    cadena << "</div></div><br/><br/><div class='listadocabecera'>"
     for campo in campos
       cadena << "<div class='listado_campo'>" + campo.capitalize + "</div>"
     end
@@ -63,8 +63,11 @@ module ApplicationHelper
   end
 
   def inicio_formulario url, ajax
-    cadena = form_tag( url, :multipart => true, :class => "formulario" )
-    cadena << "<div class='fila' id='spinner' style='display:none'></div>"
+    if ajax
+      cadena = form_remote_tag( :url => url, :html => {:id => "formulario", :class => "formulario"}, :multipart => true, :before => "tinyMCE.triggerSave(true, true);", :loading => "Element.show('spinner'); Element.hide('botonguardar');", :complete => "Element.hide('spinner')")
+    else
+      cadena = form_tag( url, :multipart => true, :id => "formulario", :class => "formulario" )
+    end
     cadena << "<div class='fila'></div>\n"
     return cadena
   end
@@ -79,6 +82,7 @@ module ApplicationHelper
     cadena = '<div class="fila" id="botonguardar" > <div class="elementoderecha">'
     cadena << submit_tag( "Guardar", :class => "boton", :onclick => "this.disabled=true")
     cadena << "</div></div>"
+    cadena << "<div class='fila' id='spinner' style='display:none'></div>"
     cadena << "</FORM>"
   end
 
@@ -104,6 +108,31 @@ module ApplicationHelper
       end
     end
     return cadena << "</div>"
+  end
+
+  # Ventana modal (*otros para futuro uso)
+  def modal( rotulo, url, titulo, otros={} )
+    link_to rotulo, url, :title => titulo, :onclick => "Modalbox.show(this.href, {title: '" + titulo + "', width:820 }); return false;", :id => (otros[:id] || "")
+  end
+
+  def producto_x_codigo_isbn isbn 
+    producto = Producto.new
+    output = Net::HTTP.get('books.google.com', '/books/download/libro.ris?vid=' + isbn + '&output=ris').split("\r\n")
+    propiedades={}
+    output.each{|a|
+      a=~ /^([\S]{2})\s+-\s+(.+)$/
+      propiedades[$1]? propiedades[$1] += " - " + $2 : propiedades[$1] = $2
+    }
+    if propiedades["SN"]
+      producto.nombre = propiedades["T1"]
+      producto.autor = propiedades["A1"]
+      producto.anno = propiedades["Y1"]
+      producto.editor = propiedades["PB"]
+      producto.familia_id = 1
+    end
+    producto.codigo = params[:codigo]
+
+    return producto
   end
 
 end

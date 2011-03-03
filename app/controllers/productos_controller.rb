@@ -10,8 +10,14 @@ class ProductosController < ApplicationController
   end
 
   def editar
-    @producto = params[:id] ?  Producto.find(params[:id]) : nil
-    @producto_familia_id = params[:id] ? @producto.familia.id : nil
+    if params[:id]
+      @producto = Producto.find(params[:id])
+    elsif params[:codigo]
+      @producto = producto_x_codigo_isbn(params[:codigo])
+    else
+      @producto = nil
+    end
+    @producto_familia_id = @producto.familia_id
     @familias = Familia.all
   end
 
@@ -38,6 +44,45 @@ class ProductosController < ApplicationController
     render :partial => "propiedades"
   end
 
+  def producto_x_codigo
+    @producto = Producto.find_by_codigo(params[:codigo]) 
+
+    if params[:codigo]==""
+      render :inline => ""
+ 
+    # Si existe el libro coge los datos
+    elsif !@producto.nil?
+      render :partial => "listado_propiedades"
+
+    # Si no existe el libro lo busca y se prepara para guardarlos
+    else
+      @producto = producto_x_codigo_isbn(params[:codigo])
+      @familias = Familia.all
+      render :partial => "listado_propiedades" 
+    end
+  end
+
+  private
+    def producto_x_codigo_isbn isbn
+      producto = Producto.new
+      output = Net::HTTP.get('books.google.com', '/books/download/libro.ris?vid=' + isbn + '&output=ris').split("\r\n")
+      propiedades={}
+      output.each{|a|
+        a=~ /^([\S]{2})\s+-\s+(.+)$/
+        propiedades[$1]? propiedades[$1] += " - " + $2 : propiedades[$1] = $2
+      }
+      if propiedades["SN"]
+        producto.nombre = propiedades["T1"]
+        producto.autor = propiedades["A1"]
+        producto.anno = propiedades["Y1"]
+        producto.editor = propiedades["PB"]
+        producto.familia_id = 1
+      end
+      producto.codigo = params[:codigo]
+  
+      return producto
+    end
+
   def libro_x_isbn_google
     #isbn = "9788467426373"
     @producto = params[:id] ? Producto.find(params[:id]) : Producto.new
@@ -61,7 +106,7 @@ class ProductosController < ApplicationController
       @producto.editor = @propiedades["PB"]
       @producto.familia_id = 1
     end
-    
+    @producto.codigo = params[:codigo] 
     render :partial => "propiedades"
     #render "editar"
   end

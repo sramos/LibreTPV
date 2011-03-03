@@ -11,11 +11,25 @@ class AlbaransController < ApplicationController
   end
 
   def editar
-    @albaran = params[:id] ?  Albaran.find(params[:id]) : nil
-    @proveedores = Proveedor.all
+    if params[:id]
+      @albaran = Albaran.find(params[:id])
+      @albaran_lineas = @albaran.albaran_lineas
+      params[:update] = 'lineas_albaran'
+      params[:albaran_id] = @albaran.id
+      render :action => :modificar
+    else
+      @proveedores = Proveedor.all
+    end
   end
 
   def modificar
+    @albaran = params[:id] ? Albaran.find(params[:id]) : Albaran.new
+    @albaran.update_attributes params[:albaran]
+    flash[:error] = @albaran
+    redirect_to :action => :editar, :id => @albaran.id
+  end
+
+  def modificar_viejo
     @albaran = params[:id] ?  Albaran.find(params[:id]) : Albaran.new
     @albaran.update_attributes params[:albaran]
     flash[:error] = @albaran

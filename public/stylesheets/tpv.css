@@ -1,5 +1,5 @@
 body {
-         text-align: center;
+   text-align: center;
    margin: 0px 0px 0px 0px;
    font-size: 11px; /* el font-size no se puede tocar porque los truncates estan calculado con eso */
 
@@ -38,7 +38,6 @@ margin-top:15px;
     padding: 3 3 0 3;
     border-bottom:dotted 1px #ccc;
     min-height: 20px;
-
  }
 
 .sublistado {
@@ -64,6 +63,7 @@ margin-top:15px;
   font-weight:bold;
   padding: 5 0 0 0;
   color: gray;
+  float: left;
 }
 
 
@@ -90,6 +90,36 @@ margin-top:15px;
     width:150px;
 }
 
+.formulario_izqda {
+    float: left;
+    width:390px;
+    height:150px;
+}
+
+.formulario_dcha {
+    float: right;
+    width:390px;
+    height:150px;
+}
+
+fieldset {
+  border:dotted 0px #ccc;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  border-radius: 4px;
+  padding: 5px 15px 15px 15px;
+  -moz-box-shadow: 2px 2px 4px  gray;
+  -webkit-box-shadow: 2px 2px 4px  gray;
+  box-shadow: 2px 2px 4px  gray;
+  margin: 20 auto 0 auto;
+  overflow-x: auto;
+}
+
+legend{
+  font-weight:bold;
+  color: gray;
+  padding: 5 0 0 0;
+}
 
 /* MENSAJES DE LA APLICACION */
 #mensaje, #mensajeok, #mensajeerror {

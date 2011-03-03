@@ -1,0 +1,13 @@
+
+<%= inicio_formulario( { :controller => :albaran_lineas, :action => :asignar_linea }, true ) %>
+  <div id="formulario_linea" class="formulario_izqda">
+    <%= texto "Codigo/ISBN", 'producto', 'codigo' %>
+      <%= observe_field( "formulario_campo_codigo", :frequency => 2, :update => "propiedades_producto", :with => :codigo, :url => {:controller => 'productos', :action => :producto_x_codigo}, :before => "Element.show('spinner')", :success => "Element.hide('spinner')") %>
+    <%= texto "Cantidad", 'albaranlinea', 'cantidad', '1' %>
+    <%= texto "% Descuento", 'albaranlinea', 'descuento', '0' %>
+    <%= hidden_field('albaranlinea', 'albaran_id', :value => params[:albaran_id])%>
+  </div>
+  <div id="propiedades_producto" class="formulario_dcha">
+  </div>
+<%= final_formulario %>
+

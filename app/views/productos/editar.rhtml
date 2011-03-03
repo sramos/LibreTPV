@@ -1,12 +1,6 @@
 
-<div id="spinner" class="spinner" style="display:none" ></div>
+<%= texto "Codigo o ISBN", 'producto', 'codigo' %>
+  <%= observe_field( "formulario_campo_codigo", :frequency => 1, :update => "propiedades", :with => :codigo, :url => {:action => :libro_x_isbn_google, :id => @producto}, :before => "Element.show('spinner')", :success => "Element.hide('spinner')") %>
 
-<%= inicio_formulario( { :action => 'modificar', :id => @producto }, false ) %>
-    <%= texto "Codigo o ISBN", 'producto', 'codigo' %>
-      <%= observe_field( "formulario_campo_codigo" , :update => "propiedades", :with => :codigo, :url => {:action => :libro_x_isbn_google, :id => @producto}, :before => "Element.show('spinner')", :success => "Element.hide('spinner')") %>
+<%= render(:partial => "propiedades", :locals => { :producto => @producto, :producto_familia_id => @producto_familia_id }) %>
 
-    <%= render(:partial => "propiedades", :locals => { :producto => @producto, :producto_familia_id => @producto_familia_id }) %>
-
-    <%= texto "Descripcion", 'producto', 'descripcion' %>
-    <%= texto "Precio", 'producto', 'precio' %>
-<%= final_formulario %>
