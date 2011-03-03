@@ -7,6 +7,11 @@
     <br/>
   <% end %>
   <%= hidden_field('producto','id') %><br/>
+  <% if @producto.id %>
+    <script type="text/javascript">
+      document.forms["formulario_linea"].submit();
+    </script> 
+  <% end %>
   <%= "Nombre: " + @producto.nombre if @producto.nombre %><br/>
   <%= "Autor: " + @producto.autor if @producto.autor %><br/>
   <%= "Editor: " + @producto.editor if @producto.editor %><br/>

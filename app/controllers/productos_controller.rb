@@ -52,6 +52,9 @@ class ProductosController < ApplicationController
  
     # Si existe el libro coge los datos y envia el formulario
     elsif !@producto.nil?
+      #render(:update) do |page|
+      #   page[dom_id(@item)].remove
+      #end
       render :partial => "listado_propiedades"
 
     # Si no existe el libro lo busca y se prepara para guardarlos
