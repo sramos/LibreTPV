@@ -6,7 +6,7 @@
     <%= modal( "Añadir Libro", { :controller => 'productos', :action => 'editar', :codigo => params[:codigo] }, "Nuevo Libro" ) %>
     <br/>
   <% end %>
-  <%= hidden_field('producto','id', { :onchange => 'this.form.onsubmit()' }) %><br/>
+  <%= hidden_field('producto','id') %><br/>
   <%= "Nombre: " + @producto.nombre if @producto.nombre %><br/>
   <%= "Autor: " + @producto.autor if @producto.autor %><br/>
   <%= "Editor: " + @producto.editor if @producto.editor %><br/>

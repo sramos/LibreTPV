@@ -115,24 +115,8 @@ module ApplicationHelper
     link_to rotulo, url, :title => titulo, :onclick => "Modalbox.show(this.href, {title: '" + titulo + "', width:820 }); return false;", :id => (otros[:id] || "")
   end
 
-  def producto_x_codigo_isbn isbn 
-    producto = Producto.new
-    output = Net::HTTP.get('books.google.com', '/books/download/libro.ris?vid=' + isbn + '&output=ris').split("\r\n")
-    propiedades={}
-    output.each{|a|
-      a=~ /^([\S]{2})\s+-\s+(.+)$/
-      propiedades[$1]? propiedades[$1] += " - " + $2 : propiedades[$1] = $2
-    }
-    if propiedades["SN"]
-      producto.nombre = propiedades["T1"]
-      producto.autor = propiedades["A1"]
-      producto.anno = propiedades["Y1"]
-      producto.editor = propiedades["PB"]
-      producto.familia_id = 1
-    end
-    producto.codigo = params[:codigo]
-
-    return producto
-  end
+  def set_focus_to_id(id)
+    javascript_tag("$('#{id}').focus()");
+  end 
 
 end

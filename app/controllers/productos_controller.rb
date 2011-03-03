@@ -50,14 +50,13 @@ class ProductosController < ApplicationController
     if params[:codigo]==""
       render :inline => ""
  
-    # Si existe el libro coge los datos
+    # Si existe el libro coge los datos y envia el formulario
     elsif !@producto.nil?
       render :partial => "listado_propiedades"
 
     # Si no existe el libro lo busca y se prepara para guardarlos
     else
       @producto = producto_x_codigo_isbn(params[:codigo])
-      @familias = Familia.all
       render :partial => "listado_propiedades" 
     end
   end
