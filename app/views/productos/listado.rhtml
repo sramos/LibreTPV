@@ -1,6 +1,6 @@
 <!--- Listado de productos --->
 
-<%= cabecera_listado ["codigo", "familia.nombre", "nombre", "autor", "precio"] %>
+<%= cabecera_listado ["codigo", "familia.nombre", "nombre", "autor", "cantidad", "precio"] %>
 <% for objeto in @productos %>
   <div class="listadofila">
     <%= fila_listado objeto %>

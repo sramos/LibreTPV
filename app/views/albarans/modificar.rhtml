@@ -1,13 +1,29 @@
 
 <div class='caja_completa'>
+  <div class='contenido'>
   Código: <%= @albaran.codigo %><br/>
   Fecha: <%= @albaran.fecha %><br/>
-  Proveedor: <%= @albaran.proveedor.nombre %><br/>
+  <% if @albaran.proveedor %>
+    Proveedor: <%= @albaran.proveedor.nombre %>
+  <% else %>
+    Cliente: <%= @albaran.cliente.nombre %>
+  <% end %>
+  </div>
+  <div class='lateral'>
+    Estado:
+    <% if @albaran.cerrado %>
+      CERRADO 
+    <% else %>
+      ABIERTO 
+    <% end %>
+  </div>
 </div>
 <div id='lineas_albaran' class='linea'>
   <div class='lateral'>
     <div class='caja_lateral'><%= render :partial => "importe_total" %></div>
-    <div class='caja_lateral'><%= render :partial => "albaran_lineas/editar_linea" %></div>
+    <% if ! @albaran.cerrado %>
+      <div class='caja_lateral'><%= render :partial => "albaran_lineas/editar_linea" %></div>
+    <% end %>
   </div>
   <div class='contenido'>
     <%= render :partial => "albaran_lineas/lineas" %>

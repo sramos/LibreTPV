@@ -1,8 +1,8 @@
 class CreateAlbaranLineas < ActiveRecord::Migration
   def self.up
     create_table :albaran_lineas do |t|
-      t.integer :cantidad
-      t.integer :descuento
+      t.integer :cantidad, :default => 1
+      t.integer :descuento, :default => 0
       t.integer :producto_id
       t.integer :albaran_id
 

@@ -8,7 +8,9 @@
     <div class="listado_derecha">
       <%# link_to_remote icono('Write',{:title => "Editar"}), :url => {:controller => 'albaran_lineas', :action => 'editar_linea', :id => linea.id, :albaran_id => params[:albaran_id], :update => params[:update] + "_editar_linea_" + linea.id.to_s } %>
       <%# link_to_remote icono('Trash',{:title => "Borrar"}), :url => {:controller => 'albaran_lineas', :action => 'eliminar_linea', :update => params[:update], :id => linea.id, :albaran_id => params[:albaran_id] } %>
-      <%= link_to icono('Trash',{:title => "Borrar"}), :controller => 'albaran_lineas', :action => 'eliminar_linea', :update => params[:update], :id => linea.id, :albaran_id => params[:albaran_id] %>
+      <% if ! Albaran.find_by_id(params[:albaran_id]).cerrado %>
+        <%= link_to icono('Trash',{:title => "Borrar"}), :controller => 'albaran_lineas', :action => 'eliminar_linea', :update => params[:update], :id => linea.id, :albaran_id => params[:albaran_id] %>
+      <% end %>
     </div>
   </div>
   <div class="<%= params[:update] %>_editar_linea_<%= linea.id.to_s %>" class="fila"></div>

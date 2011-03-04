@@ -3,8 +3,10 @@
 Total<br/><%= @importe_total %> €
 </div>
 <div class='elemento_derecha'>
-  <%= link_to icono('Currency Euro',{:title => "Aceptar Pago", :size => "grande"}), :controller => 'albarans', :action => 'aceptar_albaran', :id => params[:albaran_id] %>
+  <% if ! @albaran.cerrado %>
+    <%= link_to icono((@albaran.cliente_id ? 'Currency Euro' : 'Ok'),{:title => (@albaran.cliente_id ? "Aceptar Pago" : "Cerrar Albaran" ), :size => "grande"}), :controller => 'albarans', :action => 'aceptar_albaran', :id => params[:albaran_id] %>
+  <% end %>
   <br/>
-  <%= link_to icono('Trash',{:title => "Eliminar Albaran", :size => "grande"}), :controller => 'albarans', :action => 'eliminar_albaran', :id => params[:albaran_id] %>
+  <%= link_to icono('Trash',{:title => "Eliminar Albaran", :size => "grande"}), :controller => 'albarans', :action => 'borrar', :id => params[:albaran_id] %>
 </div>
 

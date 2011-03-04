@@ -8,7 +8,7 @@ class CreateProductos < ActiveRecord::Migration
       t.string :anno
       t.string :descripcion
       t.string :url_imagen
-      t.integer :cantidad
+      t.integer :cantidad, :default => 0
       t.integer :familia_id
 
       t.timestamps

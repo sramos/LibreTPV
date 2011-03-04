@@ -114,6 +114,7 @@ margin-top:15px;
 .importe_grande {
     color: red;
     font-size: 25px;
+    width:160px;
     font-weight: bold;
     text-align: center;
     position: relative;
