@@ -1,0 +1,10 @@
+
+<div id="importe_total" class="importe_grande">
+Total<br/><%= @importe_total %> €
+</div>
+<div class='elemento_derecha'>
+  <%= link_to icono('Currency Euro',{:title => "Aceptar Pago", :size => "grande"}), :controller => 'albarans', :action => 'aceptar_albaran', :id => params[:albaran_id] %>
+  <br/>
+  <%= link_to icono('Trash',{:title => "Eliminar Albaran", :size => "grande"}), :controller => 'albarans', :action => 'eliminar_albaran', :id => params[:albaran_id] %>
+</div>
+

@@ -7,12 +7,20 @@ body {
 
 .centro {
     clear:both;
-    width:1014px;
+    /* width:1014px; */
+    width:1200px;
     margin:10px auto 0 auto;
     background-color:#fff;
     text-align:left;
   }
 
+.lateral {
+    float: right;
+}
+
+.contenido {
+    float: left;
+}
 
 .listado .listadofila, .filaDos, .filaDos{
     padding: 4 5 0 5;
@@ -21,7 +29,7 @@ body {
     border-bottom:dotted 1px #ccc;
  }
 
-.listadofila, listadocabecera, .ralla {clear: both;}
+.listadofila, listadocabecera, .caja_completa, .ralla {clear: both;}
 
 .listado div:hover, .tabla div:hover {
  /* background-color:#FFFFDD;*/
@@ -110,17 +118,30 @@ margin-top:15px;
     font-size: 25px;
     font-weight: bold;
     text-align: center;
+    vertical-align: middle;
+    float: left;
+}
+
+.caja_lateral, .caja_completa {
+  border:dotted 0px #ccc;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  border-radius: 4px;
+  padding: 5px 15px 15px 15px;
+  -moz-box-shadow: 2px 2px 4px  gray;
+  -webkit-box-shadow: 2px 2px 4px  gray;
+  box-shadow: 2px 2px 4px  gray;
+  margin: 20 auto 0 auto;
+  overflow-x: auto;
 }
 
 .formulario_izqda {
     float: left;
-    width:390px;
-    height:150px;
+    /* height:150px; */
 }
 
 .formulario_dcha {
     float: right;
-    width:390px;
     height:150px;
 }
 

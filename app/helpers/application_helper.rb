@@ -58,18 +58,18 @@ module ApplicationHelper
       return "</fieldset>"
   end
 
-  def icono tipo, propiedades={} 
-    image_tag("/images/iconos/16/" + tipo + ".png", :border => 0, :title => propiedades[:title] || "", :alt => propiedades[:title], :onmouseover => "this.src='/images/iconos/16/" + tipo + ".png';", :onmouseout => "this.src='/images/iconos/16/" + tipo + ".png';" )
+  def icono tipo, propiedades={}
+    size = propiedades[:size] == 'grande'? 32 : 16 
+    image_tag("/images/iconos/" + size.to_s + "/" + tipo + ".png", :border => 0, :title => propiedades[:title] || "", :alt => propiedades[:title], :onmouseover => "this.src='/images/iconos/" + size.to_s + "/" + tipo + ".png';", :onmouseout => "this.src='/images/iconos/" + size.to_s + "/" + tipo + ".png';" )
   end
 
   def inicio_formulario url, ajax, otros={}
     if ajax
-      #cadena = form_remote_tag( :url => url, :html => {:id => "formulario_ajax", :class => "formulario"}, :multipart => true, :before => "tinyMCE.triggerSave(true, true);", :loading => "Element.show('spinner'); Element.hide('botonguardar');", :complete => "Element.hide('spinner')")
-      cadena = form_remote_tag :url => url 
+      cadena = form_remote_tag( :url => url, :html => {:id => "formulario_ajax", :class => "formulario"}, :multipart => true, :before => "tinyMCE.triggerSave(true, true);", :loading => "Element.show('spinner'); Element.hide('botonguardar');", :complete => "Element.hide('spinner')")
+      cadena << "<div class='fila' id='spinner' style='display:none'></div>"
     else
       cadena = form_tag( url, :multipart => true, :id => "formulario", :class => "formulario" )
     end
-    cadena << "<div class='fila' id='spinner' style='display:none'></div>"
     cadena << "<div class='fila'></div>\n"
     return cadena
   end
