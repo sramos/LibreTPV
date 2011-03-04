@@ -64,10 +64,12 @@ module ApplicationHelper
 
   def inicio_formulario url, ajax, otros={}
     if ajax
-      cadena = form_remote_tag( :url => url, :html => {:name => otros[:id], :id => otros[:id]?otros[:id]:"formulario", :class => "formulario"}, :multipart => true, :before => "tinyMCE.triggerSave(true, true);", :loading => "Element.show('spinner'); Element.hide('botonguardar');", :complete => "Element.hide('spinner')")
+      #cadena = form_remote_tag( :url => url, :html => {:id => "formulario_ajax", :class => "formulario"}, :multipart => true, :before => "tinyMCE.triggerSave(true, true);", :loading => "Element.show('spinner'); Element.hide('botonguardar');", :complete => "Element.hide('spinner')")
+      cadena = form_remote_tag :url => url 
     else
       cadena = form_tag( url, :multipart => true, :id => "formulario", :class => "formulario" )
     end
+    cadena << "<div class='fila' id='spinner' style='display:none'></div>"
     cadena << "<div class='fila'></div>\n"
     return cadena
   end
@@ -79,7 +81,7 @@ module ApplicationHelper
   end
 
   def final_formulario boton={}
-    cadena = '<div class="fila" id="botonguardar" > <div class="elementoderecha">'
+    cadena = '<div class="fila" id="botonguardar" > <div class="elemento_derecha">'
     if boton[:submit_disabled] != true
       cadena << submit_tag( "Guardar", :class => "boton", :onclick => "this.disabled=true")
     end

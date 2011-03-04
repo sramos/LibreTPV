@@ -10,22 +10,28 @@ class ProductosController < ApplicationController
   end
 
   def editar
-    if params[:id]
-      @producto = Producto.find(params[:id])
-    elsif params[:codigo]
-      @producto = producto_x_codigo_isbn(params[:codigo])
-    else
-      @producto = nil
-    end
-    @producto_familia_id = @producto.familia_id
     @familias = Familia.all
+    if params[:codigo]
+      @producto = producto_x_codigo_isbn(params[:codigo])
+      @producto_familia_id = @producto.familia_id
+      render :partial => "propiedades", :update => params[:update]
+    else
+      @producto = params[:id]?Producto.find(params[:id]) : nil
+      @producto_familia_id = @producto.familia_id
+    end
   end
 
   def modificar
     @producto = params[:id] ?  Producto.find(params[:id]) : Producto.new
     @producto.update_attributes params[:producto]
-    flash[:error] = @producto
-    redirect_to :action => :listado
+    if (request.xhr? && params[:update])
+      render :update do |page|
+        page.replace_html params[:update], :partial => "listado_propiedades"
+        page.visual_effect :highlight, params[:update] , :duration => 6
+      end
+    else
+      redirect_to :action => :listado
+    end
   end
 
   def borrar

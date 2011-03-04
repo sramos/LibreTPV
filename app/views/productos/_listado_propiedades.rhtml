@@ -3,13 +3,13 @@
   <br/>
   <% if @producto.id.nil? %>
     El libro no existe. Se debe incluir en la BBDD: 
-    <%= modal( "Añadir Libro", { :controller => 'productos', :action => 'editar', :codigo => params[:codigo] }, "Nuevo Libro" ) %>
+    <%= modal( "Añadir Libro", { :controller => 'productos', :action => 'editar', :codigo => params[:codigo], :update => 'propiedades_producto' }, "Nuevo Libro" ) %>
     <br/>
   <% end %>
   <%= hidden_field('producto','id') %><br/>
   <% if @producto.id %>
     <script type="text/javascript">
-      document.forms["formulario_linea"].submit();
+      document.forms["formulario"].submit();
     </script> 
   <% end %>
   <%= "Nombre: " + @producto.nombre if @producto.nombre %><br/>
@@ -19,4 +19,4 @@
   <%= "Descripción: " + @producto.descripcion if @producto.descripcion %><br/>
   <%= "Precio: " + @producto.precio.to_s if @producto.nombre %> 
 </div>
-
+<br>

@@ -6,7 +6,7 @@
 <%= render(:partial => "albaran_lineas/editar_linea") %>
 
 
-<%= cabecera_sublistado "Lineas", ["producto.codigo","producto.nombre","cantidad","descuento"], params[:update] %>
+<%= cabecera_sublistado "Lineas", ["producto.codigo","producto.nombre","cantidad","descuento","producto.precio"], params[:update] %>
 <% i = 0 %>
 <% for linea in @albaran_lineas %>
   <div id="<%= params[:update] %>_linea_<%= (i += 1).to_s %>" class="fila" >

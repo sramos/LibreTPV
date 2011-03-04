@@ -90,6 +90,20 @@ margin-top:15px;
     width:150px;
 }
 
+.elemento {
+    float: left;
+    width:190px;
+    font-size:11px;
+ }
+
+.texto {
+    height: 21px;
+    font-size:11px;
+    width:180px; 
+}
+
+.elemento_derecha { float: right;}
+
 .formulario_izqda {
     float: left;
     width:390px;
