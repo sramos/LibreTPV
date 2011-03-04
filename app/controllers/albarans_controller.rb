@@ -14,6 +14,8 @@ class AlbaransController < ApplicationController
     if params[:id]
       @albaran = Albaran.find(params[:id])
       @albaran_lineas = @albaran.albaran_lineas
+      @importe_total = 0;
+      @albaran_lineas.each { |linea| @importe_total += (linea.producto.precio * linea.cantidad * (1 - linea.descuento.to_f/100) ) }
       params[:update] = 'lineas_albaran'
       params[:albaran_id] = @albaran.id
       render :action => :modificar
@@ -25,7 +27,6 @@ class AlbaransController < ApplicationController
   def modificar
     @albaran = params[:id] ? Albaran.find(params[:id]) : Albaran.new
     @albaran.update_attributes params[:albaran]
-    flash[:error] = @albaran
     redirect_to :action => :editar, :id => @albaran.id
   end
 
@@ -39,7 +40,6 @@ class AlbaransController < ApplicationController
   def borrar
     @albaran = Albaran.find(params[:id])
     @albaran.destroy
-    flash[:error] = @albaran
     redirect_to :action => :listado
   end
 

@@ -3,5 +3,11 @@ Código: <%= @albaran.codigo %><br/>
 Fecha: <%= @albaran.fecha %><br/>
 Proveedor: <%= @albaran.proveedor.nombre %><br/>
 
-<div id='lineas_albaran' class="linea"><%= render :partial => "albaran_lineas/lineas" %></div>
+<br/><br/>
+<div id='lineas_albaran' class="linea">
+  <%= render :partial => "importe_total" %>
+  <div id="<%= params[:update] %>_linea_editar"></div>
+  <%= render :partial => "albaran_lineas/editar_linea" %>
+  <%= render :partial => "albaran_lineas/lineas" %>
+</div>
 

@@ -52,8 +52,8 @@ class AlbaranLineasController < ApplicationController
     params[:albaranlinea][:producto_id] = params[:producto][:id]
     albaranlinea = params[:id] ? AlbaranLinea.find(params[:id]) : AlbaranLinea.new
     albaranlinea.update_attributes params[:albaranlinea]
-    flash[:error] = albaranlinea
-    @albaran_lineas = Albaran.find(albaranlinea.albaran_id).albaran_lineas
+    #flash[:error] = albaranlinea
+    #@albaran_lineas = Albaran.find(albaranlinea.albaran_id).albaran_lineas
     #redirect_to :action => :lineas, :albaran_id => albaranlinea.albaran_id, :update => params[:update]
     #render :update do |page|
     #  page.replace_html params[:update], :partial => "lineas"
@@ -64,11 +64,12 @@ class AlbaranLineasController < ApplicationController
   def eliminar_linea
     albaranlinea = AlbaranLinea.find(params[:id])
     albaranlinea.destroy
-    flash[:error] = albaranlinea
-    @albaran_lineas = Albaran.find(params[:albaran_id]).albaran_lineas
-    render :update do |page|
-      page.replace_html params[:update], :partial => "lineas"
-    end
+    #flash[:error] = albaranlinea
+    #@albaran_lineas = Albaran.find(params[:albaran_id]).albaran_lineas
+    #render :update do |page|
+    #  page.replace_html params[:update], :partial => "lineas"
+    #end
+    redirect_to :controller => :albarans, :action => :editar, :id => params[:albaran_id]
   end
 
 end

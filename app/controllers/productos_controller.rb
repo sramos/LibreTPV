@@ -27,7 +27,6 @@ class ProductosController < ApplicationController
     if (request.xhr? && params[:update])
       render :update do |page|
         page.replace_html params[:update], :partial => "listado_propiedades"
-        page.visual_effect :highlight, params[:update] , :duration => 6
       end
     else
       redirect_to :action => :listado
