@@ -62,13 +62,17 @@ class AlbaranLineasController < ApplicationController
   end
 
   def eliminar_linea
-    albaranlinea = AlbaranLinea.find(params[:id])
-    albaranlinea.destroy
-    #flash[:error] = albaranlinea
-    #@albaran_lineas = Albaran.find(params[:albaran_id]).albaran_lineas
-    #render :update do |page|
-    #  page.replace_html params[:update], :partial => "lineas"
-    #end
+    albaranlinea = AlbaranLinea.find_by_id params[:id] 
+    if albaranlinea 
+      albaranlinea.destroy
+      #flash[:error] = albaranlinea
+      #@albaran_lineas = Albaran.find(params[:albaran_id]).albaran_lineas
+      #render :update do |page|
+      #  page.replace_html params[:update], :partial => "lineas"
+      #end
+    #else
+    #  render :nothing => true
+    end
     redirect_to :controller => :albarans, :action => :editar, :id => params[:albaran_id]
   end
 

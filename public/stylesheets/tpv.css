@@ -91,7 +91,7 @@ margin-top:15px;
     text-decoration: none;
 }
 
-.listado_derecha { float: right;}
+.listado_derecha, .elemento_derecha { float: right;}
 
 .listado_campo {
     float: left;
@@ -111,14 +111,12 @@ margin-top:15px;
     width:180px; 
 }
 
-.elemento_derecha { float: right;}
-
 .importe_grande {
     color: red;
     font-size: 25px;
     font-weight: bold;
     text-align: center;
-    vertical-align: middle;
+    position: relative;
     float: left;
 }
 
