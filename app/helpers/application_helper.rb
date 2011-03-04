@@ -6,7 +6,7 @@ module ApplicationHelper
     @campos_listado = campos
     cadena = "<div class='listado'><div class='listadocabecera'>"
     for campo in campos
-      cadena += "<div class='listado_campo'>" + campo.capitalize + "</div>"
+      cadena += "<div class='listado_campo' id='listado_campo_etiqueta_" + campo + "'>" + campo.capitalize + "</div>"
     end
     cadena += "<div class='listado_derecha'>"
     cadena += link_to icono('Plus',{:title => "Nuevo"}), {:action => 'editar'}
@@ -19,7 +19,7 @@ module ApplicationHelper
     for campo in @campos_listado
       valor=objeto
       campo.split('.').each { |metodo| valor = valor.send(metodo) if valor }
-      cadena += "<div class='listado_campo' id='listado_campo_" + campo + "'>" + valor.to_s + '</div>'
+      cadena += "<div class='listado_campo' id='listado_campo_valor_" + campo + "'>" + (valor && valor.to_s != "" ? truncate(valor.to_s, :length => 20):"&nbsp;") + '</div>'
     end
     #cadena += "</div>"
     return cadena
@@ -48,7 +48,7 @@ module ApplicationHelper
     for campo in @campos_sublistado
       valor=objeto
       campo.split('.').each { |metodo| valor = valor.send(metodo) if valor }
-      cadena += "<div class='listado_campo' id='listado_campo_" + campo + "'>" + valor.to_s + '</div>'
+      cadena += "<div class='listado_campo' id='listado_campo_valor_" + campo + "'>" + (valor && valor.to_s != "" ? truncate(valor.to_s, :length => 20):"&nbsp;") + '</div>'
     end
     return cadena
   end
