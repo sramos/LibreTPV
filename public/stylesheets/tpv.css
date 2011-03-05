@@ -202,3 +202,175 @@ legend{
   background: transparent url(/images/spinner.gif) 50% 0 no-repeat;
 }
 
+
+/* MENU SUPERIOR */
+
+#barrasuperior{
+  height:75px;
+  /*background: #333333;*/
+  background: #cacaca;
+  /* color: #ffffff;*/
+  color 0;
+}
+
+#logo{
+  background-image: url(/images/logo.png) ;
+  width: 80px;
+  height: 75px;
+  padding: 0px 0px 0px 0px;
+  margin: 0 20 0 20;
+  float: left;
+}
+
+#estado{
+  float:left;
+  width:750px;
+  font-size:25px;
+  font-weight: bold;
+  padding: 18px 0 0 0;
+}
+
+#estado div {
+  float:left;
+  margin-left:15px;
+}
+
+#noresaltado, #divisor {
+  color:gray;
+}
+
+#resaltado{
+  color:white;
+}
+
+#secciones{
+  list-style: none;
+  margin: 0 0px 0 0;
+  padding: 9 3;
+  height:38px;
+}
+
+#secciones li{
+  float:right;
+  width: 50px;
+  height: 38px;
+}
+
+#secciones li a{
+  text-decoration: none;
+}
+
+#secciones li a div{
+  padding: 50 0 0 0;
+  font-weight:bold;
+  font-size: 9px;
+  text-align: center;
+  color:gray;
+}
+
+
+#seccion_caja div {
+  background: url(/images/secciones/caja.png) no-repeat center top ;
+}
+
+#seccion_caja div:hover, #seccion_caja div.seleccionado{
+  background: url(/images/secciones/caja_seleccionado.png) no-repeat center top ; color: 0;
+}
+
+#seccion_productos div {
+  background: url(/images/secciones/productos.png) no-repeat center top ;
+}
+
+#seccion_productos div:hover, #seccion_productos div.seleccionado{
+  background: url(/images/secciones/productos_seleccionado.png) no-repeat center top ; color: 0;
+}
+
+#seccion_tesoreria div {
+  background: url(/images/secciones/tesoreria.png) no-repeat center top ;
+}
+
+#seccion_tesoreria div:hover, #seccion_tesoreria div.seleccionado{
+  background: url(/images/secciones/tesoreria_seleccionado.png) no-repeat center top ; color: 0;
+}
+
+#seccion_trueke div {
+  background: url(/images/secciones/trueke.png) no-repeat center top ;
+}
+
+#seccion_trueke div:hover, #seccion_trueke div.seleccionado{
+  background: url(/images/secciones/trueke_seleccionado.png) no-repeat center top ; color: 0;
+}
+
+#seccion_admin div {
+  background: url(/images/secciones/admin.png) no-repeat center top ;
+}
+
+#seccion_admin div:hover, #seccion_admin div.seleccionado{
+  background: url(/images/secciones/admin_seleccionado.png) no-repeat center top ; color: 0;
+}
+
+/*BARRA DE MENU DE CONTROLADORES*/
+
+#menucontroladores {
+  background:url(/images/submenu_fondo.jpg) repeat-x left top;
+  margin:0px auto 0px auto;
+  width:1030px;
+  height:36px;
+  color: #ffffff;
+  padding-left:10px;
+  -moz-border-radius-bottomleft: 7px;
+  -moz-border-radius-bottomright: 7px;
+  -webkit-border-radius: 7px;
+  border-radius: 4px;
+
+  /*-moz-box-shadow: 2px 2px 4px  gray;*/
+  -webkit-box-shadow: 2px 2px 4px  gray;
+  box-shadow: 2px 2px 4px  gray;
+
+}
+
+#menucontroladores div{
+  float: left;
+}
+
+#centromenucontroladores{
+  margin:0px auto 0px auto;
+}
+
+#menucontroladores a{
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+}
+
+#menucontroladores div.iz{
+  background:url(/images/menucontroladores_iz.png) no-repeat right top;
+  width:7px;
+  height:30px;
+}
+
+#menucontroladores div.dc{
+  background:url(/images/menucontroladores_dc.png) no-repeat left top;
+  width:7px;
+  height:30px;
+}
+
+#menucontroladores div.fondo{
+  padding:11px 15px 0px 15px;
+  height:28px;
+}
+#menucontroladores div.destacado{
+  /*    background:url(/images/background_seleccionado.jpg) repeat-x left top;*/
+  background: #333;
+  padding:11px 15px 0px 15px;
+  margin:0;
+  height:25px;
+}
+
+#menucontroladores div.separador{
+  background: url(/images/menucontroladores_separador.png) no-repeat center center;
+  padding:0;
+  margin:0;
+  height:34px;
+  width:1px;
+}

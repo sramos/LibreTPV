@@ -123,4 +123,37 @@ module ApplicationHelper
     javascript_tag("$('#{id}').focus()");
   end 
 
+  def controlador_rotulo controlador={}
+    rotulo=""
+    controladores.each{|elemento| rotulo = elemento[:rotulo] if elemento[:controlador] == controlador}
+    return rotulo
+  end
+
+  def controladores controlador={}
+    case params[:seccion]
+      when "caja"
+        controladores = [ { :rotulo => "Ventas" , :controlador => "albarans"},
+                          { :rotulo => "Devoluciones" , :controlador => "devoluciones"},
+                          { :rotulo => "Facturas" , :controlador => "facturas"},
+                          { :rotulo => "Salidas", :controlador => "salidas"},
+                          { :rotulo => "Pedidos", :controlador => "pedidos" } ]
+      when "productos"
+        controladores = [ { :rotulo => "Inventario", :controlador => "productos"},
+                          { :rotulo => "Albaranes de entrada", :controlador => "albarans"},
+                          { :rotulo => "Facturas", :controlador => "facturas"} ]
+      when "tesoreria"
+        controladores = [ { :rotulo => "Arqueo de caja", :controlador => "arqueo"},
+                          { :rotulo => "Informes", :controlador => "informes"},
+                          { :rotulo => "Libro diario", :controlador => "libro"} ]
+      when "trueke"
+        controladores = [ { :rotulo => "Cambios", :controlador => "cambios"} ]
+
+      when "admin"
+        controladores = [ { :rotulo => "Usuarios", :controlador => "usuarios"},
+                          { :rotulo => "Parametros", :controlador => "parametros"},
+                          { :rotulo => "Clientes", :controlador => "clientes"} ]
+    end
+    return controladores
+  end
+
 end
