@@ -132,15 +132,15 @@ module ApplicationHelper
   def controladores controlador={}
     case params[:seccion]
       when "caja"
-        controladores = [ { :rotulo => "Ventas" , :controlador => "albarans"},
-                          { :rotulo => "Devoluciones" , :controlador => "devoluciones"},
-                          { :rotulo => "Facturas" , :controlador => "facturas"},
+        controladores = [ { :rotulo => "Pedidos", :controlador => "pedidos" },
                           { :rotulo => "Salidas", :controlador => "salidas"},
-                          { :rotulo => "Pedidos", :controlador => "pedidos" } ]
+                          { :rotulo => "Facturas" , :controlador => "facturas"},
+                          { :rotulo => "Devoluciones" , :controlador => "devoluciones"},
+                          { :rotulo => "TPV", :controlador => "albarans" } ]
       when "productos"
-        controladores = [ { :rotulo => "Inventario", :controlador => "productos"},
+        controladores = [ { :rotulo => "Facturas", :controlador => "facturas"},
                           { :rotulo => "Albaranes de entrada", :controlador => "albarans"},
-                          { :rotulo => "Facturas", :controlador => "facturas"} ]
+                          { :rotulo => "Inventario", :controlador => "productos"} ]
       when "tesoreria"
         controladores = [ { :rotulo => "Arqueo de caja", :controlador => "arqueo"},
                           { :rotulo => "Informes", :controlador => "informes"},

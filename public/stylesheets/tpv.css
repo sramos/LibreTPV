@@ -219,7 +219,7 @@ legend{
   height: 75px;
   padding: 0px 0px 0px 0px;
   margin: 0 20 0 20;
-  float: left;
+  float: right;
 }
 
 #estado{
@@ -231,7 +231,7 @@ legend{
 }
 
 #estado div {
-  float:left;
+  float: left;
   margin-left:15px;
 }
 
@@ -248,11 +248,12 @@ legend{
   margin: 0 0px 0 0;
   padding: 9 3;
   height:38px;
+  float:left;
 }
 
 #secciones li{
-  float:right;
-  width: 50px;
+  float:left;
+  width: 60px;
   height: 38px;
 }
 
@@ -330,7 +331,7 @@ legend{
 }
 
 #menucontroladores div{
-  float: left;
+  float: right;
 }
 
 #centromenucontroladores{

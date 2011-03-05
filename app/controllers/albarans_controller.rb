@@ -1,14 +1,23 @@
 class AlbaransController < ApplicationController
 
   def index
-    flash[:mensaje] = "Listado de Albaranes de Proveedores" if :seccion == "proveedores"
-    flash[:mensaje] = "Listado de Compras" if :seccion == "clientes"
-    flash[:mensaje] = "Listado de Truekes" if :seccion == "trueke"
+    flash[:mensaje] = "Listado de Albaranes de Proveedores" if params[:seccion] == "productos"
+    flash[:mensaje] = "Listado de Ventas" if params[:seccion] == "caja"
+    flash[:mensaje] = "Listado de Truekes" if params[:seccion] == "trueke"
     redirect_to :action => :listado
   end
 
   def listado
-    @albarans = Albaran.all
+    case params[:seccion]
+      when "clientes"
+        condicion = "cliente_id"
+      when "productos"
+        condicion = "proveedor_id"
+      when "trueke"
+        condicion = "cliente_id"
+    end
+    #@albarans = Albaran.find :all, :order => 'fecha DESC', :conditions => { condicion => !nil }
+    @albarans = Albaran.find :all, :order => 'fecha DESC', :conditions => [ "? IS NOT ?", condicion, nil ]
   end
 
   def editar

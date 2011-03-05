@@ -25,18 +25,18 @@
 
 <div id="barrasuperior">
   <div class="fila">
-    <div id="logo"></div>
+    <div>
+    <ul id="secciones">
+        <li><a id="seccion_caja" href="/caja/albarans/editar"> <div class="<%= params[:seccion] == 'caja' ? 'seleccionado' : ''%>" > Caja </div> </a> </li>
+        <li><a id="seccion_productos" href="/productos/productos/"> <div class="<%= params[:seccion] == 'productos' ? 'seleccionado' : ''%>" > Productos </div> </a> </li>
+        <li><a id="seccion_trueke" href="/trueke/productos/"> <div class="<%= params[:seccion] == 'trueke' ? 'seleccionado' : ''%>" > Trueke </div> </a> </li>
+        <li><a id="seccion_tesoreria" href="/tesoreria/albarans/"> <div class="<%= params[:seccion] == 'tesoreria' ? 'seleccionado' : ''%>" > Tesoreria </div> </a> </li>
+        <li><a id="seccion_admin" href="/admin/albarans/"> <div class="<%= params[:seccion] == 'admin' ? 'seleccionado' : ''%>" > Admin </div> </a> </li>
+    </ul></div>
     <div id="estado">
       <%= params[:seccion].capitalize + " - " + controlador_rotulo(params[:controller]) %>
-     </div>
-     <ul id="secciones">
-        <li><a id="seccion_admin" href="/admin/albarans/"> <div class="<%= params[:seccion] == 'admin' ? 'seleccionado' : ''%>" > Admin </div> </a> </li>
-        <li><a id="seccion_tesoreria" href="/tesoreria/albarans/"> <div class="<%= params[:seccion] == 'tesoreria' ? 'seleccionado' : ''%>" > Tesoreria </div> </a> </li>
-        <li><a id="seccion_trueke" href="/trueke/productos/"> <div class="<%= params[:seccion] == 'trueke' ? 'seleccionado' : ''%>" > Trueke </div> </a> </li>
-        <li><a id="seccion_productos" href="/productos/productos/"> <div class="<%= params[:seccion] == 'productos' ? 'seleccionado' : ''%>" > Productos </div> </a> </li>
-        <li><a id="seccion_caja" href="/caja/albarans/"> <div class="<%= params[:seccion] == 'caja' ? 'seleccionado' : ''%>" > Caja </div> </a> </li>
-      </ul>
     </div>
+    <div id="logo"></div>
   </div>
 </div>
 
@@ -46,7 +46,7 @@
   <div id="menucontroladores" >
      <div id="centromenucontroladores">
       <% for controlador in controladores %>
-        <div id="controlador_<%= controlador[:controlador] %>" class="<%= controlador[:controlador] == params[:controller] ? "destacado"  : "fondo" %>" >
+        <div id="controlador_<%= controlador[:controlador] %>" class="<%= (controlador[:controlador] == params[:controller]) ? "destacado"  : "fondo" %>" >
           <%= link_to controlador[:rotulo], :controller => controlador[:controlador] %>
         </div>
         <%= "<div class='separador'></div>" unless controladores.last == controlador %>
