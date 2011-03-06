@@ -37,13 +37,13 @@ class AlbaransController < ApplicationController
       albaran.cerrado = true
       albaran.save
       lineas = albaran.albaran_lineas
-      if :seccion == "clientes" || :seccion == "trueke"
-        multiplicador = -1
-      else
+      if :seccion == "productos"
         multiplicador = 1
+      else
+        multiplicador = -1
       end
       lineas.each do |linea|
-        producto=Producto.find_by_id(linea.producto_id)
+        producto=linea.producto
         producto.cantidad += (linea.cantidad * multiplicador)
         producto.save 
       end
@@ -57,13 +57,13 @@ class AlbaransController < ApplicationController
     if albaran
       if albaran.cerrado
         lineas = albaran.albaran_lineas
-        if :seccion == "clientes" || :seccion == "trueke"
-          multiplicador = 1
-        else
+        if :seccion == "productos"
           multiplicador = -1
+        else
+          multiplicador = 1
         end
         lineas.each do |linea|
-          producto=Producto.find_by_id(linea.producto_id)
+          producto=linea.producto
           producto.cantidad += (linea.cantidad * multiplicador)
           producto.save  
         end

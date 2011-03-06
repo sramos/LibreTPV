@@ -4,5 +4,5 @@
     Cliente: <%= select( "albaran", "cliente_id", @clientes.map {|u| [u.nombre,u.id]} ) %>
     <%# f.date_select :fecha %>
     Fecha: <%= date_select('albaran', 'fecha') %>
-<%= final_formulario %>
+<%= final_formulario({:etiqueta => "Nueva Venta"})%>
 
