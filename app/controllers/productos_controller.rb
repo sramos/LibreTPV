@@ -24,13 +24,16 @@ class ProductosController < ApplicationController
     @producto = params[:id] ?  Producto.find(params[:id]) : Producto.new
     @producto.update_attributes params[:producto]
     puts "ES UNA PETICION AJAX!!!!!" if request.xhr?
-    puts request.to_s
-    if params[:update]
+    if params[:seccion] == "productos"
+      flash[:error] = @producto 
+      redirect_to :action => :listado
+    else
       render :update do |page|
         page.replace_html params[:update], :partial => "listado_propiedades"
+        page.visual_effect :highlight, params[:update] , :duration => 6
+        page.replace 'formulario_ajax', :inline => '<%= mensaje_error(@producto) %><br>'
+        page.call("Modalbox.resizeToContent")
       end
-    else
-      redirect_to :action => :listado
     end
   end
 

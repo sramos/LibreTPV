@@ -1,6 +1,6 @@
 
 <div id="propiedades">
-<%= inicio_formulario( { :action => 'modificar', :id => @producto, :update => params[:update] }, true ) %>
+<%= inicio_formulario( { :action => 'modificar', :id => @producto, :update => params[:update] }, params[:seccion]=='productos'?false:true ) %>
   <% if @producto %>
     Código/ISBN: <%= @producto.codigo %><br/><br/>
     <%= hidden_field('producto', 'codigo')%>
