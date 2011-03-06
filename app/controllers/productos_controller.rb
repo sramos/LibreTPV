@@ -23,7 +23,8 @@ class ProductosController < ApplicationController
   def modificar
     @producto = params[:id] ?  Producto.find(params[:id]) : Producto.new
     @producto.update_attributes params[:producto]
-    puts "ES UNA PETICION AJAX!!!!!" if request.xhr? 
+    puts "ES UNA PETICION AJAX!!!!!" if request.xhr?
+    puts request.to_s
     if params[:update]
       render :update do |page|
         page.replace_html params[:update], :partial => "listado_propiedades"

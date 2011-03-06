@@ -1,4 +1,3 @@
-
 <div class="formulario_izq">
 <% if @producto.codigo.nil? %>
 <%= texto "Codigo o ISBN", 'producto', 'codigo' %>
@@ -7,4 +6,3 @@
 
 <%= render(:partial => "propiedades", :locals => { :producto => @producto, :producto_familia_id => @producto_familia_id }) %>
 </div>
-
