@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110220192155) do
+ActiveRecord::Schema.define(:version => 20110306211139) do
 
   create_table "albaran_lineas", :force => true do |t|
     t.integer  "cantidad",    :default => 1
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20110220192155) do
     t.boolean  "cerrado",      :default => false
     t.integer  "proveedor_id"
     t.integer  "cliente_id"
+    t.boolean  "metalico",     :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -40,6 +41,14 @@ ActiveRecord::Schema.define(:version => 20110220192155) do
   create_table "clientes", :force => true do |t|
     t.string   "nombre"
     t.string   "cif"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "facturas", :force => true do |t|
+    t.date     "fecha",      :default => '2011-03-06', :null => false
+    t.integer  "albaran_id",                           :null => false
+    t.boolean  "metalico",   :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end

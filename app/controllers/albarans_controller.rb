@@ -39,8 +39,10 @@ class AlbaransController < ApplicationController
       lineas = albaran.albaran_lineas
       if :seccion == "productos"
         multiplicador = 1
+        flash[:mensaje] = "Albaran aceptado!"
       else
         multiplicador = -1
+        flash[:mensaje] = "Pago realizado!"
       end
       lineas.each do |linea|
         producto=linea.producto
@@ -48,7 +50,6 @@ class AlbaransController < ApplicationController
         producto.save 
       end
     end
-    flash[:mensaje] = "Albaran aceptado!"
     redirect_to :action => :listado
   end
 
