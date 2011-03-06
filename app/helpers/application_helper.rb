@@ -2,14 +2,15 @@
 module ApplicationHelper
 
 
-  def cabecera_listado campos
+  def cabecera_listado campos, otros={}
     @campos_listado = campos
     cadena = "<div class='listado'><div class='listadocabecera'>"
     for campo in campos
       cadena += "<div class='listado_campo' id='listado_campo_etiqueta_" + campo + "'>" + campo.capitalize + "</div>"
     end
     cadena += "<div class='listado_derecha'>"
-    cadena += link_to icono('Plus',{:title => "Nuevo"}), {:action => 'editar'}
+    #cadena += link_to icono('Plus',{:title => "Nuevo"}), {:action => 'editar'}
+    cadena += modal icono('Plus',{:title => "Nuevo"}), otros[:url], otros[:title] || "Nuevo" if otros[:url]
     cadena += "</div></div>"
     return cadena
   end

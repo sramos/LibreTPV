@@ -1,8 +1,12 @@
 
 <div id="propiedades">
 <%= inicio_formulario( { :action => 'modificar', :id => @producto, :update => params[:update] }, true ) %>
-  Código/ISBN: <%= @producto.codigo %><br/><br/>
-  <%= hidden_field('producto', 'codigo')%>
+  <% if @producto %>
+    Código/ISBN: <%= @producto.codigo %><br/><br/>
+    <%= hidden_field('producto', 'codigo')%>
+  <% else %>
+    <%= texto "Código/ISBN", 'producto', 'codigo' %>
+  <% end %>
   Familia: <%= select( "producto", "familia_id", @familias.map {|u| [u.nombre,u.id]} ) %>
   <div class="ralla"><br/></div>
     <%# observe_field( "producto_familia_id" , :update => "propiedades", :with => "'producto_familia_id='+value", :url => {:action => :cambio_familia, :id => @producto} ) %>

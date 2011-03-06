@@ -13,12 +13,11 @@ class ProductosController < ApplicationController
     @familias = Familia.all
     if params[:codigo]
       @producto = producto_x_codigo_isbn(params[:codigo])
-      @producto_familia_id = @producto.familia_id
-      render :partial => "propiedades", :update => params[:update]
     else
       @producto = params[:id]?Producto.find(params[:id]) : nil
-      @producto_familia_id = @producto.familia_id
     end
+    @producto_familia_id = @producto.familia_id if ! @producto.nil?
+    render :partial => "propiedades", :update => params[:update]
   end
 
   def modificar

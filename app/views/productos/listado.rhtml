@@ -1,11 +1,13 @@
 <!--- Listado de productos --->
 
-<%= cabecera_listado ["codigo", "familia.nombre", "nombre", "autor", "cantidad", "precio"] %>
+<%= cabecera_listado ["codigo", "familia.nombre", "nombre", "autor", "cantidad", "precio"], { :title => "Nuevo", :url => { :action => :editar } } %>
+<% i = 0 %>
 <% for objeto in @productos %>
-  <div class="listadofila">
+  <div id="productos_<% i += 1 %>" class="listadofila">
     <%= fila_listado objeto %>
     <div class="listado_derecha">
-      <%= link_to icono('Write',{:title => "Editar"}), :action => :editar, :id => objeto %>
+      <%# link_to icono('Write',{:title => "Editar"}), :action => :editar, :id => objeto %>
+      <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id, :update => 'productos_' + i.to_s }, "Nuevo Libro" %>
       <%= link_to icono('Trash',{:title => "Borrar"}), :action => :borrar, :id => objeto %>
     </div>
   </div>
