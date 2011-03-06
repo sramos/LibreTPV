@@ -83,7 +83,7 @@ module ApplicationHelper
   def final_formulario boton={}
     cadena = '<div class="fila" id="botonguardar" > <div class="elemento_derecha">'
     if boton[:submit_disabled] != true
-      cadena << submit_tag( "Guardar", :class => "boton", :onclick => "this.disabled=true")
+      cadena << submit_tag( boton[:etiqueta]?boton[:etiqueta]:"Guardar", :class => "boton", :onclick => "this.disabled=true")
     end
     cadena << "</div></div>"
     cadena << "<div class='fila' id='spinner' style='display:none'></div>"

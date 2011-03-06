@@ -18,3 +18,4 @@ Campo.create([		{ :nombre => 'Autor'}, { :nombre => 'Año'}, { :nombre => 'Edito
 
 Proveedor.create([	{ :nombre => 'Timadores Sin Fronteras', :cif => 'A-88554345-J' } ] )
 
+Cliente.create([	{ :nombre => 'Caja', :cif => 'O-000-O' } ] )

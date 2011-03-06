@@ -2,22 +2,12 @@ class AlbaransController < ApplicationController
 
   def index
     flash[:mensaje] = "Listado de Albaranes de Proveedores" if params[:seccion] == "productos"
-    flash[:mensaje] = "Listado de Ventas" if params[:seccion] == "caja"
     flash[:mensaje] = "Listado de Truekes" if params[:seccion] == "trueke"
     redirect_to :action => :listado
   end
 
   def listado
-    case params[:seccion]
-      when "clientes"
-        condicion = "cliente_id"
-      when "productos"
-        condicion = "proveedor_id"
-      when "trueke"
-        condicion = "cliente_id"
-    end
-    #@albarans = Albaran.find :all, :order => 'fecha DESC', :conditions => { condicion => !nil }
-    @albarans = Albaran.find :all, :order => 'fecha DESC', :conditions => [ "? IS NOT ?", condicion, nil ]
+    albaranes
   end
 
   def editar
@@ -84,4 +74,24 @@ class AlbaransController < ApplicationController
     redirect_to :action => :listado
   end
 
+  private
+    def albaranes
+      # Hace una limpieza de los albaranes vacios
+      case params[:seccion]
+        when "caja"
+          condicion = "cliente_id"
+          @clientes = Cliente.all
+        when "productos"
+          condicion = "proveedor_id"
+          @proveedores = Proveedor.all
+        when "trueke"
+          condicion = "cliente_id"
+      end
+      @albarans = Albaran.find :all, :conditions => { :cerrado => false } 
+      @albarans.each do |albaran|
+        limpiar = false
+        albaran.destroy if AlbaranLinea.find_by_albaran_id(albaran.id).nil?
+      end
+      @albarans = Albaran.find :all, :order => 'fecha DESC', :conditions => [ condicion + " IS NOT NULL AND cerrado IS ?", false ]
+    end
 end

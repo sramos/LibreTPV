@@ -1,7 +1,7 @@
 
 <div class='caja_completa'>
   <div class='contenido'>
-  Código: <%= @albaran.codigo %><br/>
+  <% if @albaran.codigo != "" %>Código: <%= @albaran.codigo.to_s %><br/><% end %>
   Fecha: <%= @albaran.fecha %><br/>
   <% if @albaran.proveedor %>
     Proveedor: <%= @albaran.proveedor.nombre %>

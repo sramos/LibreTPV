@@ -1,6 +1,17 @@
-<!--- Listado de albaranes --->
 
-<%= cabecera_listado ["proveedor.nombre", "codigo", "fecha"] %>
+<% if params[:seccion] == "caja" %>
+  <div class='sublistado'>
+    <%= render :partial => "nueva_venta" %>
+  </div>
+<% end %>
+
+<!--- Listado de albaranes --->
+<div class='fila'>
+<% if params[:seccion] == "caja" %>
+  <%= cabecera_listado ["cliente.nombre", "codigo", "fecha"] %>
+<% else %>
+  <%= cabecera_listado ["proveedor.nombre", "codigo", "fecha"] %>
+<% end %>
 <% i = 0 %>
 <% for objeto in @albarans%>
   <div id="albaran_<%= i +=1 %>" class="listadofila">
@@ -15,4 +26,5 @@
   </div>
 <% end %>
 <%= final_listado @ivas %>
+</div>
 
