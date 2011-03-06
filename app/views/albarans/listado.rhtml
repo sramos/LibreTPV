@@ -11,7 +11,7 @@
 <% if params[:seccion] == "caja" %>
   <%= cabecera_listado ["cliente.nombre", "codigo", "fecha"] %>
 <% else %>
-  <%= cabecera_listado ["proveedor.nombre", "codigo", "fecha"] %>
+  <%= cabecera_listado ["proveedor.nombre", "codigo", "fecha"], { :title => "Nuevo", :url => { :action => :editar } } %>
 <% end %>
 <% i = 0 %>
 <% for objeto in @albarans%>
