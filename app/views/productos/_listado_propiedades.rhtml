@@ -2,8 +2,8 @@
 <div id="propiedades">
   <br/>
   <% if @producto.id.nil? %>
-    El libro no existe. Se debe incluir en la BBDD: 
-    <%= modal( "Añadir Libro", { :controller => 'productos', :action => 'editar', :codigo => params[:codigo], :update => 'propiedades_producto' }, "Nuevo Libro" ) %>
+    El libro no existe.<br> 
+    <%= modal( "Incluir en la BBDD.", { :controller => 'productos', :action => 'editar', :codigo => params[:codigo], :update => 'propiedades_producto' }, "Nuevo Libro" ) %>
     <br/>
   <% end %>
   <%= hidden_field('producto','id') %><br/>

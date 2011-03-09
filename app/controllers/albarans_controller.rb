@@ -37,7 +37,7 @@ class AlbaransController < ApplicationController
       albaran.cerrado = true
       albaran.save
       lineas = albaran.albaran_lineas
-      if :seccion == "productos"
+      if params[:seccion] == "productos"
         multiplicador = 1
         flash[:mensaje] = "Albaran aceptado!"
       else
