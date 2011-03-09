@@ -1,7 +1,7 @@
 <!--- Listado de productos --->
 
 <div class="caja_completa" id="listado_productos">
-<%= cabecera_listado ["codigo", "familia.nombre", "nombre", "autor", "cantidad", "precio"], { :title => "Nuevo", :url => { :action => :editar } } %>
+<%= cabecera_listado ["codigo", "familia.nombre", "nombre", "autor", "cantidad", "precio"], { :title => "Nuevo", :url => { :action => :editar, :nuevo => true } } %>
 <% i = 0 %>
 <% for objeto in @productos %>
   <div id="productos_<% i += 1 %>" class="listadofila">

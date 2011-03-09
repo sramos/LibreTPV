@@ -9,6 +9,11 @@ class ProductosController < ApplicationController
     @productos = Producto.all
   end
 
+  def nuevo
+    @nuevo = true
+    redirect_to :action => :editar
+  end
+ 
   def editar
     @familias = Familia.all
     if params[:codigo]
@@ -17,14 +22,13 @@ class ProductosController < ApplicationController
       @producto = params[:id]?Producto.find(params[:id]) : nil
     end
     @producto_familia_id = @producto.familia_id if ! @producto.nil?
-    render :partial => "propiedades", :update => params[:update]
+    render :partial => "propiedades", :nuevo => @nuevo
   end
 
   def modificar
     @producto = params[:id] ?  Producto.find(params[:id]) : Producto.new
     @producto.update_attributes params[:producto]
-    puts "ES UNA PETICION AJAX!!!!!" if request.xhr?
-    if params[:seccion] == "productos"
+    if params[:seccion] == "productos" && params[:nuevo]
       flash[:error] = @producto 
       redirect_to :action => :listado
     else
@@ -55,6 +59,7 @@ class ProductosController < ApplicationController
 
   def producto_x_codigo
     @producto = Producto.find_by_codigo(params[:codigo]) 
+    @familias = Familia.all
 
     if params[:codigo]==""
       render :inline => ""
@@ -64,12 +69,17 @@ class ProductosController < ApplicationController
       #render(:update) do |page|
       #   page[dom_id(@item)].remove
       #end
-      render :partial => "listado_propiedades"
+      render :partial => params[:template] 
 
     # Si no existe el libro lo busca y se prepara para guardarlos
-    else
+    else 
       @producto = producto_x_codigo_isbn(params[:codigo])
-      render :partial => "listado_propiedades" 
+      puts "Es un producto nuevo!!!!!!!" if params[:nuevo]
+      if ( !@producto.nombre && params[:nuevo] )
+        @producto = nil 
+        @codigo_value = params[:codigo]
+      end
+      render :partial => params[:template]
     end
   end
 
