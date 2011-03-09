@@ -111,14 +111,22 @@ margin-top:15px;
     width:180px; 
 }
 
-.importe_grande {
-    color: red;
+.importe_grande, .devolver_grande {
     font-size: 25px;
-    width:160px;
     font-weight: bold;
     text-align: center;
     position: relative;
     float: left;
+}
+
+.importe_grande {
+    color: red;
+    width:160px;
+}
+
+.devolver_grande {
+    color: blue;
+    width:320px;
 }
 
 .caja_lateral, .caja_completa {
@@ -141,7 +149,6 @@ margin-top:15px;
 
 .formulario_dcha {
     float: right;
-    height:150px;
 }
 
 fieldset {

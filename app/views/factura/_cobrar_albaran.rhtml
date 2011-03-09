@@ -1,0 +1,24 @@
+
+<div id="importe_cobrar" class="importe_grande">
+  A Cobrar<br/><%= params[:importe] %> €
+</div>
+
+<div id="importe_devolver" class="devolver_grande">&nbsp;</div>
+
+<div class="formulario_dcha">
+
+<%= inicio_formulario( { :action => 'aceptar_cobro' }, false ) %>
+  <%= hidden_field 'factura', 'albaran_id', :value => params[:albaran_id] %>
+  <div class="ralla">            
+    Fecha de Pago<br/><%= date_select('factura', 'fecha') %>
+  </div>
+  <div class="ralla"><br/></div>
+  <div class="ralla">
+    <%= texto 'Recibido (€)', 'recibido', '' %>
+      <%= observe_field( "formulario_campo_" , :frequency => 1, :update => "importe_devolver", :with => "'recibido='+value", :url => {:action => :calcula_cambio, :importe => params[:importe]} ) %>
+  </div>
+  <div class="ralla"><br/></div>
+<%= final_formulario({:etiqueta => "Cobrar"})%>
+
+</div>
+

@@ -1,17 +1,15 @@
 
-<% if params[:seccion] == "caja" %>
-  <div class='caja_completa'>
-    <%= render :partial => "nueva_venta" %>
-  </div>
-<% end %>
-
+<div class='caja_completa'
+  <%= render :partial => params[:seccion] == "productos" ? "nueva_entrada" : "nueva_venta" %>
+</div>
 
 <!--- Listado de albaranes --->
 <div class='fila'>
 <% if params[:seccion] == "caja" %>
   <%= cabecera_listado ["cliente.nombre", "codigo", "fecha"] %>
 <% else %>
-  <%= cabecera_listado ["proveedor.nombre", "codigo", "fecha"], { :title => "Nuevo", :url => { :action => :editar } } %>
+  <%# cabecera_listado ["proveedor.nombre", "codigo", "fecha"], { :title => "Nuevo Albaran", :url => { :action => :editar } } %>
+  <%= cabecera_listado ["proveedor.nombre", "codigo", "fecha"] %>
 <% end %>
 <% i = 0 %>
 <% for objeto in @albarans%>

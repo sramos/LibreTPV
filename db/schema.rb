@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(:version => 20110306211139) do
     t.boolean  "cerrado",      :default => false
     t.integer  "proveedor_id"
     t.integer  "cliente_id"
-    t.boolean  "metalico",     :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -46,8 +45,8 @@ ActiveRecord::Schema.define(:version => 20110306211139) do
   end
 
   create_table "facturas", :force => true do |t|
-    t.date     "fecha",      :default => '2011-03-06', :null => false
-    t.integer  "albaran_id",                           :null => false
+    t.date     "fecha",                        :null => false
+    t.integer  "albaran_id",                   :null => false
     t.boolean  "metalico",   :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
