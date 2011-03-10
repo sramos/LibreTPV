@@ -38,4 +38,7 @@ Rails::Initializer.run do |config|
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
+
+  ENV['TPV-CIF'] = 'A-12345678-B'
+  ENV['TPV-DIRECCION'] = "c/ Aroyo del Olivar, 34"
 end

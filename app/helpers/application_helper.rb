@@ -134,12 +134,11 @@ module ApplicationHelper
     case params[:seccion]
       when "caja"
         controladores = [ { :rotulo => "Pedidos", :controlador => "pedidos" },
-                          { :rotulo => "Salidas", :controlador => "salidas"},
-                          { :rotulo => "Facturas" , :controlador => "facturas"},
+                          { :rotulo => "Facturas Clientes" , :controlador => "facturas"},
                           { :rotulo => "Devoluciones" , :controlador => "devoluciones"},
                           { :rotulo => "TPV", :controlador => "albarans" } ]
       when "productos"
-        controladores = [ { :rotulo => "Facturas", :controlador => "facturas"},
+        controladores = [ { :rotulo => "Facturas Proveedores", :controlador => "facturas"},
                           { :rotulo => "Albaranes de entrada", :controlador => "albarans"},
                           { :rotulo => "Inventario", :controlador => "productos"} ]
       when "tesoreria"
