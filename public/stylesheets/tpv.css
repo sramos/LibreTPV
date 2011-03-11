@@ -103,7 +103,13 @@ margin-top:15px;
     float: left;
     width:190px;
     font-size:11px;
- }
+}
+
+.elemento_c {
+    width:190px
+    font-size:11px;
+    text-align:center;
+}
 
 .texto {
     height: 21px;

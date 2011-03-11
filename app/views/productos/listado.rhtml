@@ -8,7 +8,8 @@
     <%= fila_listado objeto %>
     <div class="listado_derecha">
       <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id, :update => 'listado_productos' }, "Nuevo Libro" %>
-      <%= link_to icono('Trash',{:title => "Borrar"}), :action => :borrar, :id => objeto %>
+      <%# link_to icono('Trash',{:title => "Borrar"}), :action => :borrar, :id => objeto %>
+      <%= borrado icono('Trash',{:title => 'Borrar'}), { :action => 'borrar', :id => objeto.id } , 'Borrar Libro', objeto.nombre , :ajax => false %>
     </div>
   </div>
 <% end %>

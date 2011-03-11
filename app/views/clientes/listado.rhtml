@@ -6,8 +6,8 @@
   <div class="listadofila">
     <%= fila_listado objeto %>
     <div class="listado_derecha">
-      <%= modal icono("Write",{:title => "Editar Cliente"}), {:action => 'editar', :id => objeto.id}, "Editar Cliente" %>
-      <%= link_to icono('Trash',{:title => "Borrar Cliente"}), {:action => 'borrar', :id => objeto.id } %>
+      <%= modal icono('Write',{:title => 'Editar Cliente'}), {:action => 'editar', :id => objeto.id}, 'Editar Cliente' %>
+      <%= borrado icono('Trash',{:title => 'Borrar Cliente'}), { :action => 'borrar', :id => objeto.id } , 'Eliminar Cliente', "Cliente: " + objeto.nombre, :ajax => false %>
     </div>
   </div>
 <% end %>

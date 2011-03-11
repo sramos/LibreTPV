@@ -120,6 +120,21 @@ module ApplicationHelper
     link_to rotulo, url, :title => titulo, :onclick => "Modalbox.show(this.href, {title: '" + titulo + "', width:820 }); return false;", :id => (otros[:id] || "")
   end
 
+  # Ventana modal que pide confirmacion para el borrado de un elemento
+  def borrado ( rotulo, url, titulo, texto, otros={} )
+    # Falta añadir al titulo de la ventana modal el mismo texto superior que llevan las modales sobre la variable de session.
+    cadena = '<div style="display:none;" id="'+ (otros[:id] || url[:id].to_s ) +'_borrar" class="elemento_c">'
+    cadena << 'Va a eliminar: <br><B>' + texto + '<br><br>'
+    cadena << '<div class="fila"><a href="#" onclick="Modalbox.hide()"> Cancelar </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '
+    cadena << link_to( "Confirmar", url, :id => otros[:id].to_s + "_confirmar") unless otros[:ajax]
+    cadena << link_to_remote( "Confirmar", :url => url, :html =>  {:id => otros[:id].to_s + "_confirmar"}) if otros[:ajax]
+    cadena << '</b></div></div>'
+    cadena << "<a id=\"#{ (otros[:id] || url[:id].to_s )  }\" onclick=\"Modalbox.show($('#{ (otros[:id] || url[:id].to_s )  }_borrar'), {title: '" + titulo + "', width: 600}); return false;\" href=\"#\" title='"+ url[:action].to_s + "'>"
+    cadena << rotulo
+    cadena << "</a>"
+    return cadena
+  end
+
   def set_focus_to_id(id)
     javascript_tag("$('#{id}').focus()");
   end 
@@ -133,7 +148,7 @@ module ApplicationHelper
   def controladores controlador={}
     case params[:seccion]
       when "caja"
-        controladores = [ { :rotulo => "Pedidos", :controlador => "pedidos" },
+        controladores = [ #{ :rotulo => "Pedidos", :controlador => "pedidos" },
                           { :rotulo => "Facturas Clientes" , :controlador => "factura"},
                           { :rotulo => "Devoluciones" , :controlador => "devoluciones"},
                           { :rotulo => "TPV", :controlador => "albarans" } ]
@@ -149,8 +164,8 @@ module ApplicationHelper
         controladores = [ { :rotulo => "Cambios", :controlador => "cambios"} ]
 
       when "admin"
-        controladores = [ { :rotulo => "Usuarios", :controlador => "usuarios"},
-                          { :rotulo => "Parametros", :controlador => "parametros"},
+        controladores = [ #{ :rotulo => "Usuarios", :controlador => "usuarios"},
+                          #{ :rotulo => "Parametros", :controlador => "parametros"},
                           { :rotulo => "Proveedores", :controlador => "proveedors"},
                           { :rotulo => "Clientes", :controlador => "clientes"} ]
     end

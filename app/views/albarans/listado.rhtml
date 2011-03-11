@@ -3,8 +3,9 @@
   <%= render :partial => "nuevo_albaran" %>
 </div>
 
+<% if @albarans.size()>0 %>
 <!--- Listado de albaranes --->
-<div class='fila'>
+<div class='caja_completa'>
 <% if params[:seccion] == "caja" %>
   <%= cabecera_listado ["cliente.nombre", "codigo", "fecha"] %>
 <% else %>
@@ -18,12 +19,13 @@
     <div class="listado_derecha">
       <%= link_to_remote icono('Search',{:title => "Ver líneas"}), :url => { :controller => 'albaran_lineas', :action => 'lineas', :albaran_id => objeto.id, :update => "albaran_sub_" + i.to_s } %>
       <%= link_to icono('Write',{:title => "Editar"}), :action => :editar, :id => objeto %>
-      <%= link_to icono('Trash',{:title => "Borrar"}), :action => :borrar, :id => objeto %>
+      <%= borrado icono('Trash',{:title => 'Borrar'}), { :action => 'borrar', :id => objeto.id } , 'Eliminar Albaran', "Albaran Pendiente", :ajax => false %>
     </div>
   </div>
   <div id="albaran_sub_<%= i.to_s %>">
   </div>
 <% end %>
-<%= final_listado @ivas %>
+<%= final_listado @albarans %>
 </div>
+<% end %>
 
