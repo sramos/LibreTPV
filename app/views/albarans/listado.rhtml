@@ -6,11 +6,10 @@
 <% if @albarans.size()>0 %>
 <!--- Listado de albaranes --->
 <div class='caja_completa'>
-<% if params[:seccion] == "caja" %>
-  <%= cabecera_listado ["cliente.nombre", "codigo", "fecha"] %>
-<% else %>
-  <%# cabecera_listado ["proveedor.nombre", "codigo", "fecha"], { :title => "Nuevo Albaran", :url => { :action => :editar } } %>
+<% if params[:seccion] == "productos" %>
   <%= cabecera_listado ["proveedor.nombre", "codigo", "fecha"] %>
+<% else %>
+  <%= cabecera_listado ["cliente.nombre", "codigo", "fecha"] %>
 <% end %>
 <% i = 0 %>
 <% for objeto in @albarans%>
@@ -19,7 +18,7 @@
     <div class="listado_derecha">
       <%= link_to_remote icono('Search',{:title => "Ver líneas"}), :url => { :controller => 'albaran_lineas', :action => 'lineas', :albaran_id => objeto.id, :update => "albaran_sub_" + i.to_s } %>
       <%= link_to icono('Write',{:title => "Editar"}), :action => :editar, :id => objeto %>
-      <%= borrado icono('Trash',{:title => 'Borrar'}), { :action => 'borrar', :id => objeto.id } , 'Eliminar Albaran', "Albaran Pendiente", :ajax => false %>
+      <%= borrado icono('Trash',{:title => 'Borrar'}), { :action => 'borrar', :id => objeto.id } , 'Eliminar Albaran', "Albaran Pendiente de " + ( params[:seccion] == "productos" ? objeto.proveedor.nombre : objeto.cliente.nombre ), :ajax => false %>
     </div>
   </div>
   <div id="albaran_sub_<%= i.to_s %>">
