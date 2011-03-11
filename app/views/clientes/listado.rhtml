@@ -1,0 +1,16 @@
+<!--- Listado de clientes --->
+
+<div class="caja_completa"
+<%= cabecera_listado ["nombre", "cif"], { :title => "Nuevo Cliente", :url => { :action => :editar } } %>
+<% for objeto in @clientes %>
+  <div class="listadofila">
+    <%= fila_listado objeto %>
+    <div class="listado_derecha">
+      <%= modal icono("Write",{:title => "Editar Cliente"}), {:action => 'editar', :id => objeto.id}, "Editar Cliente" %>
+      <%= link_to icono('Trash',{:title => "Borrar Cliente"}), {:action => 'borrar', :id => objeto.id } %>
+    </div>
+  </div>
+<% end %>
+<%= final_listado @clientes %>
+</div>
+

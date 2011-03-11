@@ -1,13 +1,16 @@
 <!--- Listado de proveedores --->
 
-<%= cabecera_listado ["nombre", "cif"] %>
-<% for objeto in @proveedors %>
+<div class="caja_completa"
+<%= cabecera_listado ["nombre", "cif"], { :title => "Nuevo Proveedor", :url => { :action => :editar } } %>
+<% for objeto in @proveedores %>
   <div class="listadofila">
     <%= fila_listado objeto %>
     <div class="listado_derecha">
-      <%= link_to icono('Write',{:title => "Editar"}), {:action => 'edit', :id => objeto.id } %>
-      <%= link_to icono('Trash',{:title => "Borrar"}), {:action => 'delete', :id => objeto.id } %>
+      <%= modal icono("Write",{:title => "Editar Proveedor"}), {:action => 'editar', :id => objeto.id}, "Editar Proveedor" %>
+      <%= link_to icono('Trash',{:title => "Borrar Proveedor"}), {:action => 'borrar', :id => objeto.id } %>
     </div>
   </div>
 <% end %>
-<%= final_listado @proveedors %>
+<%= final_listado @proveedores %>
+</div>
+

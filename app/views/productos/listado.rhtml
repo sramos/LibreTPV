@@ -7,7 +7,6 @@
   <div id="productos_<% i += 1 %>" class="listadofila">
     <%= fila_listado objeto %>
     <div class="listado_derecha">
-      <%# link_to icono('Write',{:title => "Editar"}), :action => :editar, :id => objeto %>
       <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id, :update => 'listado_productos' }, "Nuevo Libro" %>
       <%= link_to icono('Trash',{:title => "Borrar"}), :action => :borrar, :id => objeto %>
     </div>
