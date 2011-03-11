@@ -2,7 +2,9 @@ class CreateFacturas < ActiveRecord::Migration
   def self.up
     create_table :facturas do |t|
       t.date :fecha, :null => false
+      t.string :codigo, :null => false
       t.integer :albaran_id, :null => false
+      t.boolean :pagado, :default => false
       t.boolean :metalico, :default => true
 
       t.timestamps

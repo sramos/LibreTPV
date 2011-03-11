@@ -1,13 +1,15 @@
 class AlbaransController < ApplicationController
 
+  # Hace una busqueda de "albaranes" eliminando los vacios 
+  before_filter :obtiene_albaranes, :only => [ :listado ]
+
   def index
-    flash[:mensaje] = "Listado de Albaranes de Proveedores" if params[:seccion] == "productos"
-    flash[:mensaje] = "Listado de Truekes" if params[:seccion] == "trueke"
+    flash[:mensaje] = "Listado de Albaranes de Proveedores pendientes de aceptar" if params[:seccion] == "productos"
+    flash[:mensaje] = "Listado de Truekes pendientes de aceptar" if params[:seccion] == "trueke"
     redirect_to :action => :listado
   end
 
   def listado
-    albaranes
   end
 
   def editar
@@ -76,7 +78,7 @@ class AlbaransController < ApplicationController
   end
 
   private
-    def albaranes
+    def obtiene_albaranes
       # Hace una limpieza de los albaranes vacios
       case params[:seccion]
         when "caja"

@@ -6,7 +6,7 @@ module ApplicationHelper
     @campos_listado = campos
     cadena = "<div class='listado'><div class='listadocabecera'>"
     for campo in campos
-      cadena += "<div class='listado_campo' id='listado_campo_etiqueta_" + campo + "'>" + campo.capitalize + "</div>"
+      cadena += "<div class='listado_campo' id='listado_campo_etiqueta_" + campo + "'>" + etiqueta(campo) + "</div>"
     end
     cadena += "<div class='listado_derecha'>"
     #cadena += link_to icono('Plus',{:title => "Nuevo"}), {:action => 'editar'}
@@ -39,7 +39,7 @@ module ApplicationHelper
     cadena << link_to_function( icono('Cancel',{:Title => "Ocultar"}), script, {:id => sub_id + "_ocultar_sublistado"} ) if sub_id
     cadena << "</div></div><br/><br/><div class='listadocabecera'>"
     for campo in campos
-      cadena << "<div class='listado_campo'>" + campo.capitalize + "</div>"
+      cadena << "<div class='listado_campo' id='sublistado_campo_valor_" + campo + "' >" + etiqueta(campo) + "</div>"
     end
     cadena << '</div>'
   end
@@ -134,11 +134,11 @@ module ApplicationHelper
     case params[:seccion]
       when "caja"
         controladores = [ { :rotulo => "Pedidos", :controlador => "pedidos" },
-                          { :rotulo => "Facturas Clientes" , :controlador => "facturas"},
+                          { :rotulo => "Facturas Clientes" , :controlador => "factura"},
                           { :rotulo => "Devoluciones" , :controlador => "devoluciones"},
                           { :rotulo => "TPV", :controlador => "albarans" } ]
       when "productos"
-        controladores = [ { :rotulo => "Facturas Proveedores", :controlador => "facturas"},
+        controladores = [ { :rotulo => "Facturas Proveedores", :controlador => "factura"},
                           { :rotulo => "Albaranes de entrada", :controlador => "albarans"},
                           { :rotulo => "Inventario", :controlador => "productos"} ]
       when "tesoreria"
@@ -151,9 +151,23 @@ module ApplicationHelper
       when "admin"
         controladores = [ { :rotulo => "Usuarios", :controlador => "usuarios"},
                           { :rotulo => "Parametros", :controlador => "parametros"},
+                          { :rotulo => "Proveedores", :controlador => "proveedors"},
                           { :rotulo => "Clientes", :controlador => "clientes"} ]
     end
     return controladores
+  end
+
+  def etiqueta campo
+    etiqueta = {	"albaran.cliente.nombre"	=> "Cliente",
+			"albaran.proveedor.nombre"	=> "Proveedor",
+			"cliente.nombre"		=> "Cliente",
+			"familia.nombre"		=> "Familia",
+			"proveedor.nombre"		=> "Proveedor",
+			"producto.codigo"		=> "Código/ISBN",
+			"producto.nombre"		=> "Nombre/Título",
+			"producto.precio"		=> "Precio"
+		}
+    return etiqueta[campo] || campo.capitalize
   end
 
 end

@@ -1,13 +1,24 @@
 class FacturaController < ApplicationController
 
+  # Hace una busqueda de "factura" para listado 
+  before_filter :obtiene_facturas, :only => [ :listado, :aceptar_cobro ]
+
   def index
     flash[:mensaje] = "Listado de Facturas de Proveedores" if params[:seccion] == "productos"
-    flash[:mensaje] = "Listado de Facturas de Clientes" if params[:seccion] == "trueke"
+    flash[:mensaje] = "Listado de Facturas de Clientes" if params[:seccion] == "caja"
     redirect_to :action => :listado
   end
 
   def listado
-    @facturas = Factura.find :all
+  end
+
+  def aceptar_albaran_proveedor
+    factura = Factura.new
+    factura.fecha = Time.now
+    factura.albaran_id = params[:albaran_id]
+    factura.codigo = "N/A"
+    factura.save
+    redirect_to :controller => :albarans, :action => :aceptar_albaran, :id => params[:albaran_id]
   end
 
   def cobrar_albaran
@@ -18,6 +29,8 @@ class FacturaController < ApplicationController
 
   def aceptar_cobro
     factura = Factura.new
+    factura.pagado = true
+    factura.codigo = codigo_factura_venta
     factura.update_attributes params[:factura]
     flash[:error] = factura
     imprime_ticket factura.albaran_id
@@ -27,6 +40,31 @@ class FacturaController < ApplicationController
   def calcula_cambio
     devolver = params[:recibido].to_f - params[:importe].to_f
     render :inline => devolver>=0 ? 'A Devolver<br/>' + devolver.to_s + ' €' : '&nbsp;'
+  end
+
+private
+
+  def obtiene_facturas 
+    # Hace una limpieza de los albaranes vacios
+    case params[:seccion]
+      when "caja"
+        condicion = "cliente_id"
+      when "productos"
+        condicion = "proveedor_id"
+      when "trueke"
+        condicion = "cliente_id"
+    end
+    @facturas = Factura.find :all, :order => 'facturas.fecha DESC', :include => "albaran", :conditions => [ 'albarans.' + condicion + ' IS NOT NULL' ]
+  end
+
+  def codigo_factura_venta
+    codigo = 0 
+    @facturas.each do |factura|
+      nuevo_codigo = /^#{ENV['TPV-FACTURA-PREFIX']}([0-9]+)$/.match(factura.codigo)
+      codigo = nuevo_codigo if nuevo_codigo[0] && nuevo_codigo[0].to_i > codigo
+    end 
+    puts ENV['TPV-FACTURA-PREFIX'] + format("%010d", (codigo+1).to_s)
+    return ENV['TPV-FACTURA-PREFIX'] + format("%010d", (codigo+1).to_s)
   end
 
   def imprime_ticket albaran_id

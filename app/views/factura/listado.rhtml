@@ -1,0 +1,19 @@
+<!--- Listado de productos --->
+
+<div class="caja_completa" id="listado_facturas">
+<%= cabecera_listado ["fecha", "codigo", params[:seccion] == "productos" ? "albaran.proveedor.nombre" : "albaran.cliente.nombre", "pagado"] %>
+<% i = 0 %>
+<% for objeto in @facturas %>
+  <div id="factura_<% i += 1 %>" class="listadofila">
+    <%= fila_listado objeto %>
+    <div class="listado_derecha">
+      <%# link_to icono('Write',{:title => "Editar"}), :action => :editar, :id => objeto %>
+      <%= link_to_remote icono('Search',{:title => "Ver líneas"}), :url => { :controller => 'albaran_lineas', :action => 'lineas', :albaran_id => objeto.albaran_id, :update => "factura_sub_" + i.to_s } %>
+      <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id, :update => 'listado_productos' }, "Editar factura" %>
+    </div>
+  </div>
+  <div id="factura_sub_<%= i.to_s %>"></div>
+<% end %>
+<%= final_listado @productos %>
+</div>
+

@@ -1,5 +1,6 @@
 class Factura < ActiveRecord::Base
 
-  has_one :albaran
+  belongs_to :albaran
+  has_many :pagos
 
 end
