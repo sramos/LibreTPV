@@ -1,0 +1,12 @@
+
+<%= inicio_formulario( { :action => 'modificar', :id => @factura }, false ) %>
+  <div class="linea">
+  <% if params[:seccion] == 'productos' %>
+    <div class="elemento" %>Proveedor<br/><%= proveedor %></div>
+    <%= texto "Código de Factura", 'factura', 'codigo' %>
+  <% else %>
+    <%= selector "Cliente", 'albaran', 'cliente_id', @clientes.map {|u| [u.nombre,u.id]} %>  
+  <% end %>
+  <%= fecha "Fecha", "factura", "fecha" %>
+  </div>
+<%= final_formulario %>

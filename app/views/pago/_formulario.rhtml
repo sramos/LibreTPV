@@ -1,6 +1,6 @@
 <!-- Formulario -->
 <%= inicio_formulario( { :action => 'modificar_pago', :id => params[:id], :factura_id => @pago.factura_id, :update => params[:update] }, true ) %>
-  <%= texto "Importe", 'pago', 'importe', pagopendiente %>
+  <%= texto "Importe", 'pago', 'importe', @pago_pendiente %>
   <%= fecha "Fecha", 'pago', 'fecha' %>
   <%= hidden_field 'pago', 'factura_id' %>
 <%= final_formulario %>

@@ -1,12 +1,15 @@
 <!--- Sublistado de pagos de una factura --->
 
-<%= cabecera_sublistado "Pagos", ["fecha","importe"], params[:update], {:url => {:action => 'nuevo_pago', :update =>  params[:update], :factura_id => params[:factura_id]}, :title => "Generar pago"} %>
+<% if @pago_pendiente > 0 %>
+  <%= cabecera_sublistado "Pagos", ["fecha","importe"], params[:update], {:url => {:action => 'nuevo_pago', :update =>  params[:update], :factura_id => params[:factura_id]}, :title => "Generar pago"} %>
+<% else %>
+  <%= cabecera_sublistado "Pagos", ["fecha","importe"], params[:update] %>
+<% end %>
 <% i = 0 %>
 <% for pago in @pagos %>
   <div id="<%= params[:update] %>_pago_<%= (i += 1).to_s %>" class="fila" >
     <%= fila_sublistado pago %>
     <div class="listado_derecha">
-      <%# link_to_remote icono('Write',{:title => "Editar"}), :url => {:controller => 'pago', :action => 'editar_pago', :id => pago.id, :factura_id => params[:factura_id], :update => params[:update] } %>
       <%= borrado icono('Trash',{:title => "Borrar"}), {:controller => 'pago', :action => 'eliminar_pago', :id => pago.id, :factura_id => params[:factura_id], :update => params[:update]}, "Eliminar Pago", "Pago de " + pago.importe.to_s + "€ con fecha " + pago.fecha.to_s, :ajax => true %>
     </div>
   </div>

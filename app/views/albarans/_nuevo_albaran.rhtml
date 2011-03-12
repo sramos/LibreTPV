@@ -7,6 +7,9 @@
     <%= selector 'Cliente', 'albaran', 'cliente_id', @clientes.map {|u| [u.nombre,u.id]} %>
   <% end %>
   <%= fecha 'Fecha', 'albaran', 'fecha' %>
-<br>
+  <% if params[:seccion] == 'productos' %>
+      <%= texto 'Código de Albaran', 'albaran', 'codigo' %>
+  <% end %>
+  <br/>
 <%= final_formulario({:etiqueta => params[:seccion] == 'productos' ? "Nuevo Albaran" : "Nueva Venta"})%>
 

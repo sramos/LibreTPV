@@ -15,12 +15,12 @@ module ApplicationHelper
     return cadena
   end
 
-  def fila_listado objeto
+  def fila_listado objeto, id=nil
     cadena = ""
     for campo in @campos_listado
       valor=objeto
       campo.split('.').each { |metodo| valor = valor.send(metodo) if valor }
-      cadena += "<div class='listado_campo' id='listado_campo_valor_" + campo + "'>" + (valor && valor.to_s != "" ? truncate(valor.to_s, :length => 20):"&nbsp;") + '</div>'
+      cadena += "<div class='listado_campo' id='listado_campo_valor_" + campo + "_" + objeto.id.to_s + "'>" + (valor && valor.to_s != "" ? truncate(valor.to_s, :length => 20):"&nbsp;") + '</div>'
     end
     #cadena += "</div>"
     return cadena

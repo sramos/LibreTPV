@@ -12,6 +12,26 @@ class FacturaController < ApplicationController
   def listado
   end
 
+  def editar
+    @factura = Factura.find(params[:id])
+    @albaran = @factura.albaran
+    if params[:seccion] != "productos"
+      @clientes = Cliente.all
+    end
+    render :partial => "formulario", :locals => { :proveedor => (@albaran.proveedor.nombre if @albaran.proveedor_id) }
+  end
+
+  def modificar
+    if params[:seccion] != "productos"
+      factura = Factura.find(params[:id])
+      albaran = factura.albaran
+      albaran.update_attributes params[:albaran]
+      factura.update_attributes params[:factura]
+      flash[:error] = factura
+      redirect_to :action => :listado
+    end
+  end
+
   def aceptar_albaran_proveedor
     factura = Factura.new
     factura.fecha = Time.now
