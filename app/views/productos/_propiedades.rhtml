@@ -1,26 +1,26 @@
 <div id="propiedades">
 <%= inicio_formulario( { :action => 'modificar', :id => @producto, :update => params[:update], :nuevo => params[:nuevo] }, params[:nuevo] ? false : true ) %>
   <% if @producto %>
-    <div class="ralla"><br/></div>
+    <div class="linea"><br/></div>
       Código/ISBN: <%= @producto.codigo %><br/>
     <%= hidden_field('producto', 'codigo')%>
   <% else %>
     <%= texto "Código/ISBN", 'producto', 'codigo', @codigo_value %>
       <%= observe_field( "formulario_campo_codigo", :frequency => 2, :update => "propiedades", :with => :codigo, :url => {:action => :producto_x_codigo, :nuevo => params[:nuevo], :template => 'propiedades'}, :before => "Element.show('spinner')", :success => "Element.hide('spinner')") %>
   <% end %>
-  <div class="ralla"><br/></div>
+  <div class="linea"><br/></div>
   Familia: <%= select( "producto", "familia_id", @familias.map {|u| [u.nombre,u.id]} ) %>
-  <div class="ralla"><br/></div>
+  <div class="linea"><br/></div>
     <%# observe_field( "producto_familia_id" , :update => "propiedades", :with => "'producto_familia_id='+value", :url => {:action => :cambio_familia, :id => @producto} ) %>
   <%= texto "Nombre", 'producto', 'nombre' %>
   <%= texto "Autor", 'producto', 'autor' %>
   <%= texto "Editor", 'producto', 'editor' %>
   <%= texto "Año", 'producto', 'anno' %>
-  <div class="ralla"></div>
+  <div class="linea"></div>
   <%= texto "Descripcion", 'producto', 'descripcion' %>
-  <div class="ralla"></div>
+  <div class="linea"></div>
   <%= texto "Precio", 'producto', 'precio' %>
-  <div class="ralla"><br/></div>
+  <div class="linea"><br/></div>
 <%= final_formulario %>
 </div>
 <br>

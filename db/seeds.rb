@@ -16,6 +16,6 @@ Familia.create([	{ :nombre => 'Libros', :iva => Iva.find_by_nombre('Superreducid
 Campo.create([		{ :nombre => 'Autor'}, { :nombre => 'Año'}, { :nombre => 'Editor'}, { :nombre => 'Coleccion'},
 			{ :nombre => 'Descripcion'}  ])
 
-Proveedor.create([	{ :nombre => 'Timadores Sin Fronteras', :cif => 'A-88554345-J' } ] )
+Proveedor.create([	{ :nombre => 'Timadores Sin Fronteras', :cif => 'A-88554345-J', :descuento => '5' } ] )
 
-Cliente.create([	{ :nombre => 'Caja', :cif => 'O-000-O' } ] )
+Cliente.create([	{ :nombre => 'Caja', :cif => 'N/A' } ] )

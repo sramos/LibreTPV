@@ -1,12 +1,11 @@
 
 <%= inicio_formulario( { :action => 'modificar', :id => @albaran }, false ) %>
-    <%= hidden_field 'albaran', 'codigo' %>
+  <%= hidden_field 'albaran', 'codigo' %>
     <% if params[:seccion] == 'productos' %>
       Proveedor: <%= select( "albaran", "proveedor_id", @proveedores.map {|u| [u.nombre,u.id]} ) %>
     <% else %>
       Cliente: <%= select( "albaran", "cliente_id", @clientes.map {|u| [u.nombre,u.id]} ) %>
     <% end %>
-    <%# f.date_select :fecha %>
-    Fecha: <%= date_select('albaran', 'fecha') %>
+  Fecha: <%= date_select('albaran', 'fecha') %>
 <%= final_formulario({:etiqueta => params[:seccion] == 'productos' ? "Nuevo Albaran" : "Nueva Venta"})%>
 

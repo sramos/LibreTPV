@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(:version => 20110311113153) do
 
   create_table "clientes", :force => true do |t|
     t.string   "nombre"
+    t.integer  "descuento",  :default => 0
+    t.string   "email"
     t.string   "cif"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -93,6 +95,11 @@ ActiveRecord::Schema.define(:version => 20110311113153) do
 
   create_table "proveedors", :force => true do |t|
     t.string   "nombre"
+    t.string   "direccion"
+    t.string   "email"
+    t.string   "telefono"
+    t.string   "contacto"
+    t.integer  "descuento",  :default => 0
     t.string   "cif"
     t.datetime "created_at"
     t.datetime "updated_at"

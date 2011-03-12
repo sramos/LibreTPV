@@ -40,14 +40,6 @@ class AlbaranLineasController < ApplicationController
     end    
   end
 
-  #def editar_linea
-  #  @albaranlinea = params[:id] ?  AlbaranLinea.find(params[:id]) : AlbaranLinea.new
-  #  @albaran = Albaran.find(params[:albaran_id])
-  #  render :update do |page|
-  #    page.replace_html params[:update] + "_linea_editar", :partial => "editar_linea"
-  #  end
-  #end
-
   def asignar_linea
     albaran = Albaran.find_by_id params[:albaranlinea][:albaran_id]
     if albaran && !albaran.cerrado

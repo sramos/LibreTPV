@@ -1,7 +1,7 @@
 <!--- Listado de proveedores --->
 
 <div class="caja_completa"
-<%= cabecera_listado ["nombre", "cif"], { :title => "Nuevo Proveedor", :url => { :action => :editar } } %>
+<%= cabecera_listado ["cif", "nombre", "email", "telefono", "descuento"], { :title => "Nuevo Proveedor", :url => { :action => :editar } } %>
 <% for objeto in @proveedores %>
   <div class="listadofila">
     <%= fila_listado objeto %>

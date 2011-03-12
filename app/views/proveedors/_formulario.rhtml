@@ -1,6 +1,16 @@
 
 <%= inicio_formulario( { :action => 'modificar', :id => @proveedor }, false ) %>
-  <%= texto 'Nombre', 'proveedor', 'nombre' %>
-  <%= texto 'CIF', 'proveedor', 'cif' %>
+  <div class="linea">
+    <%= texto 'CIF', 'proveedor', 'cif' %>
+    <%= texto 'Nombre', 'proveedor', 'nombre' %>
+  </div>
+  <div class="linea">
+    <%= texto 'Direccion', 'proveedor', 'direccion' %>
+    <%= texto 'Telefono', 'proveedor', 'telefono' %>
+    <%= texto 'Contacto', 'proveedor', 'contacto' %>
+  </div>
+  <div class="linea">
+    <%= texto '% Descuento', 'proveedor', 'descuento' %>
+  </div>
 <%= final_formulario%>
 

@@ -20,6 +20,7 @@ class AlbaransController < ApplicationController
       @albaran_lineas.each { |linea| @importe_total += (linea.producto.precio * linea.cantidad * (1 - linea.descuento.to_f/100) ) }
       params[:update] = 'lineas_albaran'
       params[:albaran_id] = @albaran.id
+      params[:descuento] = params[:seccion] == "productos" ? @albaran.proveedor.descuento : @albaran.cliente.descuento
       render :action => :modificar
     else
       @proveedores = Proveedor.all

@@ -29,7 +29,7 @@ body {
     border-bottom:dotted 1px #ccc;
  }
 
-.listadofila, listadocabecera, .caja_completa, .ralla {clear: both;}
+.listadofila, listadocabecera, .caja_completa, .linea {clear: both;}
 
 .listado div:hover, .tabla div:hover {
  /* background-color:#FFFFDD;*/

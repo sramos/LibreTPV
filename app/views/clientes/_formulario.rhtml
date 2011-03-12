@@ -1,6 +1,14 @@
 
 <%= inicio_formulario( { :action => 'modificar', :id => @cliente }, false ) %>
-  <%= texto 'Nombre', 'cliente', 'nombre' %>
-  <%= texto 'CIF', 'cliente', 'cif' %>
+  <div class="linea">
+    <%= texto 'CIF', 'cliente', 'cif' %>
+    <%= texto 'Nombre', 'cliente', 'nombre' %>
+  </div>
+  <div class="linea">
+    <%= texto 'email', 'cliente', 'email' %>
+  </div>
+  <div class="linea">
+    <%= texto '% Descuento', 'cliente', 'descuento' %>
+  </div>
 <%= final_formulario%>
 

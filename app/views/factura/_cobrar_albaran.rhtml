@@ -9,15 +9,15 @@
 
 <%= inicio_formulario( { :action => 'aceptar_cobro' }, false ) %>
   <%= hidden_field 'factura', 'albaran_id', :value => params[:albaran_id] %>
-  <div class="ralla">            
+  <div class="linea">            
     Fecha de Pago<br/><%= date_select('factura', 'fecha') %>
   </div>
-  <div class="ralla"><br/></div>
-  <div class="ralla">
+  <div class="linea"><br/></div>
+  <div class="linea">
     <%= texto 'Recibido (€)', 'recibido', '' %>
       <%= observe_field( "formulario_campo_" , :frequency => 1, :update => "importe_devolver", :with => "'recibido='+value", :url => {:action => :calcula_cambio, :importe => params[:importe]} ) %>
   </div>
-  <div class="ralla"><br/></div>
+  <div class="linea"><br/></div>
 <%= final_formulario({:etiqueta => "Cobrar"})%>
 
 </div>
