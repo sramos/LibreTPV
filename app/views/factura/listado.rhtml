@@ -1,15 +1,15 @@
-<!--- Listado de productos --->
+<!--- Listado de facturas --->
 
 <div class="caja_completa" id="listado_facturas">
-<%= cabecera_listado ["fecha", "codigo", params[:seccion] == "productos" ? "albaran.proveedor.nombre" : "albaran.cliente.nombre", "pagado"] %>
+<%= cabecera_listado ["fecha", "codigo", params[:seccion] == "productos" ? "albaran.proveedor.nombre" : "albaran.cliente.nombre", "importe", "pagado"] %>
 <% i = 0 %>
 <% for objeto in @facturas %>
   <div id="factura_<% i += 1 %>" class="listadofila">
     <%= fila_listado objeto %>
     <div class="listado_derecha">
       <%# link_to icono('Write',{:title => "Editar"}), :action => :editar, :id => objeto %>
-      <%= link_to_remote icono('Currency Euro',{:title => "Ver pagos"}), :url => { :controller => 'pago', :action => 'lineas', :factura_id => objeto.id, :update => "factura_sub_" + i.to_s + "_pago" } %>
-      <%= link_to_remote icono('Search',{:title => "Ver líneas"}), :url => { :controller => 'albaran_lineas', :action => 'lineas', :albaran_id => objeto.albaran_id, :update => "factura_sub_" + i.to_s + "_albaran" } %>
+      <%= link_to_remote icono('Currency Euro',{:title => "Ver pagos"}), :url => { :controller => 'pago', :action => 'pagos', :factura_id => objeto.id, :update => "factura_sub_" + i.to_s + "_pago" } %>
+      <%= link_to_remote icono('Table',{:title => "Ver productos"}), :url => { :controller => 'albaran_lineas', :action => 'lineas', :albaran_id => objeto.albaran_id, :update => "factura_sub_" + i.to_s + "_albaran" } %>
       <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id, :update => 'listado_productos' }, "Editar factura" %>
     </div>
   </div>

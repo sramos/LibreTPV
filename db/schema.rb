@@ -47,11 +47,12 @@ ActiveRecord::Schema.define(:version => 20110311113153) do
   end
 
   create_table "facturas", :force => true do |t|
-    t.date     "fecha",                         :null => false
-    t.string   "codigo",                        :null => false
-    t.integer  "albaran_id",                    :null => false
-    t.boolean  "pagado",     :default => false
-    t.boolean  "metalico",   :default => true
+    t.date     "fecha",                                                       :null => false
+    t.string   "codigo",                                                      :null => false
+    t.decimal  "importe",    :precision => 8, :scale => 2,                    :null => false
+    t.integer  "albaran_id",                                                  :null => false
+    t.boolean  "pagado",                                   :default => false
+    t.boolean  "metalico",                                 :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end

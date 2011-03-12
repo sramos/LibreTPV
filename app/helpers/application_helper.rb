@@ -31,15 +31,20 @@ module ApplicationHelper
     return cadena
   end
 
-  def cabecera_sublistado rotulo, campos, sub_id
+  def cabecera_sublistado rotulo, campos, sub_id, nuevo={}
     @campos_sublistado = campos     
     script = "document.getElementById('" +  sub_id + "').innerHTML=\"\";" if sub_id
     cadena = '<br><fieldset class="sublistado"> <legend>'+ rotulo +'</legend>'
-    cadena << '<div class="linea"><div class="listado_derecha" id="cerrarsublistado">'
+    cadena << '<div class="listado_derecha" id="cerrarsublistado">'
     cadena << link_to_function( icono('Cancel',{:Title => "Ocultar"}), script, {:id => sub_id + "_ocultar_sublistado"} ) if sub_id
-    cadena << "</div></div><br/><br/><div class='listadocabecera'>"
+    cadena << "</div><br/><br/><div class='listadocabecera'>"
     for campo in campos
       cadena << "<div class='listado_campo' id='sublistado_campo_valor_" + campo + "' >" + etiqueta(campo) + "</div>"
+    end
+    if nuevo[:url] && nuevo[:title]
+      cadena << '<div class="listado_derecha">'
+      cadena << modal(icono('Plus',{:title => nuevo[:title]}), nuevo[:url], nuevo[:title])
+      cadena << '</div>'
     end
     cadena << '</div>'
   end
@@ -78,6 +83,12 @@ module ApplicationHelper
   def texto rotulo, objeto, atributo, valor=nil
     cadena = "<div class='elemento'>" + rotulo +"<br/>"
     cadena << text_field( objeto, atributo , {:class => "texto", :id => "formulario_campo_" + atributo, :type => "d", :value => valor })
+    return cadena << "</div>"
+  end
+
+  def fecha rotulo, objeto, atributo, valor=nil
+    cadena = "<div class='elemento_x15'>" + rotulo + "<br/>"
+    cadena << date_select(objeto, atributo, {:class => "fecha", :id => "formulario_campo_" + atributo, :value => valor})
     return cadena << "</div>"
   end
 

@@ -99,21 +99,26 @@ margin-top:15px;
     font-size:11px;
 }
 
+.texto, .elemento, .elemento_x15, .elemento_c {
+    font-size: 11px;
+}
+
 .elemento {
     float: left;
     width:190px;
-    font-size:11px;
 }
 
 .elemento_c {
-    width:190px
-    font-size:11px;
-    text-align:center;
+    text-align: center;
+}
+
+.elemento_x15 {
+    float: left;
+    width:285px
 }
 
 .texto {
     height: 21px;
-    font-size:11px;
     width:180px; 
 }
 

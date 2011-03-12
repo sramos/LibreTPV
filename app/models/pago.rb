@@ -1,5 +1,5 @@
 class Pago < ActiveRecord::Base
 
-  :belong_to :factura
+  belongs_to :factura
 
 end
