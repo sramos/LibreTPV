@@ -11,6 +11,7 @@ class IvasController < ApplicationController
 
   def editar
     @iva = params[:id] ?  Iva.find(params[:id]) : nil
+    render :partial => "formulario"
   end
 
   def modificar 

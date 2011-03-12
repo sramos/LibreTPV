@@ -1,7 +1,7 @@
 class FamiliasController < ApplicationController
 
   def index
-    flash[:mensaje] = "Listado de Familias"
+    flash[:mensaje] = "Listado de Familias de Productos"
     redirect_to :action => :listado
   end
 
@@ -12,6 +12,7 @@ class FamiliasController < ApplicationController
   def editar
     @familia = params[:id] ?  Familia.find(params[:id]) : nil
     @ivas = Iva.all
+    render :partial => "formulario"
   end
 
   def modificar

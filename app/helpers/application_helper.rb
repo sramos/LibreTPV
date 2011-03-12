@@ -88,7 +88,13 @@ module ApplicationHelper
 
   def fecha rotulo, objeto, atributo, valor=nil
     cadena = "<div class='elemento_x15'>" + rotulo + "<br/>"
-    cadena << date_select(objeto, atributo, {:class => "fecha", :id => "formulario_campo_" + atributo, :value => valor})
+    cadena << date_select(objeto, atributo, {:class => "texto", :id => "formulario_campo_" + atributo, :value => valor})
+    return cadena << "</div>"
+  end
+
+  def selector rotulo, objeto, atributo, valores, valor=nil
+    cadena = "<div class='elemento'>" + rotulo + "<br/>"
+    cadena << select(objeto, atributo, valores, {:class => "texto", :id => "formulario_campo_" + atributo, :value => valor})
     return cadena << "</div>"
   end
 
@@ -177,6 +183,8 @@ module ApplicationHelper
       when "admin"
         controladores = [ #{ :rotulo => "Usuarios", :controlador => "usuarios"},
                           #{ :rotulo => "Parametros", :controlador => "parametros"},
+                          { :rotulo => "Tipos de IVA", :controlador => "ivas"},
+                          { :rotulo => "Familias de Productos", :controlador => "familias"},
                           { :rotulo => "Proveedores", :controlador => "proveedors"},
                           { :rotulo => "Clientes", :controlador => "clientes"} ]
     end
@@ -191,7 +199,8 @@ module ApplicationHelper
 			"proveedor.nombre"		=> "Proveedor",
 			"producto.codigo"		=> "Código/ISBN",
 			"producto.nombre"		=> "Nombre/Título",
-			"producto.precio"		=> "Precio"
+			"producto.precio"		=> "Precio",
+			"iva.nombre"			=> "IVA aplicado"
 		}
     return etiqueta[campo] || campo.capitalize
   end
