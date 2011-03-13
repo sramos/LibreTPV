@@ -12,8 +12,10 @@
 ActiveRecord::Schema.define(:version => 20110311113153) do
 
   create_table "albaran_lineas", :force => true do |t|
-    t.integer  "cantidad",    :default => 1
-    t.integer  "descuento",   :default => 0
+    t.integer  "cantidad",                                    :default => 1
+    t.integer  "descuento",                                   :default => 0
+    t.decimal  "precio_compra", :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "precio_venta",  :precision => 8, :scale => 2, :default => 0.0
     t.integer  "producto_id"
     t.integer  "albaran_id"
     t.datetime "created_at"
@@ -87,11 +89,11 @@ ActiveRecord::Schema.define(:version => 20110311113153) do
     t.string   "anno"
     t.string   "descripcion"
     t.string   "url_imagen"
+    t.decimal  "precio",      :precision => 8, :scale => 2,                :null => false
     t.integer  "cantidad",                                  :default => 0
     t.integer  "familia_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "precio",      :precision => 8, :scale => 2, :default => 0.0
   end
 
   create_table "proveedors", :force => true do |t|

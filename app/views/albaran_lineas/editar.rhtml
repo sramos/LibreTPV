@@ -1,8 +1,0 @@
-
-<%= inicio_formulario( { :action => 'modificar', :id => @albaranlinea }, false ) %>
-    Producto: <%= select( "albaranlinea", "producto_id", @productos.map {|u| [u.nombre,u.id]} ) %>
-    <%= texto "Cantidad", 'albaranlinea', 'cantidad' %>
-    <%= texto "Descuento", 'albaranlinea', 'descuento' %>
-    <%= hidden_field('albaranlinea', 'albaran_id', :value => @albaran_id)%>
-<%= final_formulario %>
-

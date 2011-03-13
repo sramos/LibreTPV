@@ -89,7 +89,6 @@ private
       nuevo_codigo = /^#{ENV['TPV-FACTURA-PREFIX']}([0-9]+)$/.match(factura.codigo)
       codigo = nuevo_codigo[1].to_i if nuevo_codigo[1] && nuevo_codigo[1].to_i > codigo
     end 
-    #puts ENV['TPV-FACTURA-PREFIX'] + format("%010d", (codigo+1).to_s)
     return ENV['TPV-FACTURA-PREFIX'] + format("%010d", (codigo+1).to_s)
   end
 

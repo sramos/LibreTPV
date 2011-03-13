@@ -8,6 +8,7 @@ class CreateProductos < ActiveRecord::Migration
       t.string :anno
       t.string :descripcion
       t.string :url_imagen
+      t.decimal :precio, :precision => 8, :scale => 2, :null => false
       t.integer :cantidad, :default => 0
       t.integer :familia_id
 
