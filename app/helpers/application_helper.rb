@@ -167,7 +167,7 @@ module ApplicationHelper
       when "caja"
         controladores = [ #{ :rotulo => "Pedidos", :controlador => "pedidos" },
                           { :rotulo => "Facturas Clientes" , :controlador => "factura"},
-                          { :rotulo => "Devoluciones" , :controlador => "devoluciones"},
+#                          { :rotulo => "Devoluciones" , :controlador => "devoluciones"},
                           { :rotulo => "TPV", :controlador => "albarans" } ]
       when "productos"
         controladores = [ { :rotulo => "Facturas Proveedores", :controlador => "factura"},
