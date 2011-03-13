@@ -9,11 +9,6 @@ class ProductosController < ApplicationController
     @productos = Producto.all
   end
 
-  def nuevo
-    @nuevo = true
-    redirect_to :action => :editar
-  end
- 
   def editar
     @familias = Familia.all
     if params[:codigo]
@@ -22,13 +17,17 @@ class ProductosController < ApplicationController
       @producto = params[:id]?Producto.find(params[:id]) : nil
     end
     @producto_familia_id = @producto.familia_id if ! @producto.nil?
-    render :partial => "propiedades", :nuevo => @nuevo
+    if params[:inventario]
+      render :partial => "formulario"
+    else
+      render :partial => "propiedades"
+    end
   end
 
   def modificar
     @producto = params[:id] ?  Producto.find(params[:id]) : Producto.new
     @producto.update_attributes params[:producto]
-    if params[:seccion] == "productos" && params[:nuevo]
+    if params[:inventario]
       flash[:error] = @producto 
       redirect_to :action => :listado
     else
@@ -66,19 +65,11 @@ class ProductosController < ApplicationController
  
     # Si existe el libro coge los datos y envia el formulario
     elsif !@producto.nil?
-      #render(:update) do |page|
-      #   page[dom_id(@item)].remove
-      #end
       render :partial => params[:template] 
 
     # Si no existe el libro lo busca y se prepara para guardarlos
     else 
       @producto = producto_x_codigo_isbn(params[:codigo])
-      puts "Es un producto nuevo!!!!!!!" if params[:nuevo]
-      if ( !@producto.nombre && params[:nuevo] )
-        @producto = nil 
-        @codigo_value = params[:codigo]
-      end
       render :partial => params[:template]
     end
   end
@@ -129,7 +120,6 @@ class ProductosController < ApplicationController
     end
     @producto.codigo = params[:codigo] 
     render :partial => "propiedades"
-    #render "editar"
   end
 
   def libro_x_isbn_mcu
