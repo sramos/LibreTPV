@@ -1,5 +1,7 @@
 2011-03-13 Santiago Ramos <sramos@sitiodistinto.net> Version 0.2
 
+  * Cambios en tipo de datos del codigo de producto y conditions
+    de busqueda de albaranes por paso a MySQL
 
 2011-02-18 Santiago Ramos <sramos@sitiodistinto.net> Version 0.1 
 

@@ -96,6 +96,6 @@ class AlbaransController < ApplicationController
         limpiar = false
         albaran.destroy if AlbaranLinea.find_by_albaran_id(albaran.id).nil?
       end
-      @albarans = Albaran.find :all, :order => 'fecha DESC', :conditions => [ condicion + " IS NOT NULL AND cerrado IS ?", false ]
+      @albarans = Albaran.find :all, :order => 'fecha DESC', :conditions => [ condicion + " IS NOT NULL AND NOT cerrado" ]
     end
 end

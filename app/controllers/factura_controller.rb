@@ -129,7 +129,7 @@ private
     end
     cadena += format "\n %-41s %6s\n\n.", "Total Euros (IVA incluido)", format("%.2f",precio_total.to_s)
     File.open("/tmp/ticket", 'w') {|f| f.write(cadena) }
-    system("lpr -o cpi=20 /tmp/ticket")
+    system(ENV['TPV-PRINTER'] + " /tmp/ticket")
   end
 
 end
