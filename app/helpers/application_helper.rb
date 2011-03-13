@@ -199,8 +199,10 @@ module ApplicationHelper
 			"proveedor.nombre"		=> "Proveedor",
 			"producto.codigo"		=> "Código/ISBN",
 			"producto.nombre"		=> "Nombre/Título",
-			"producto.precio"		=> "Precio",
-			"iva.nombre"			=> "IVA aplicado"
+			"producto.precio"		=> "Precio Venta",
+			"precio"			=> "Precio Venta",
+			"iva.nombre"			=> "IVA aplicado",
+			"precio_compra"			=> "Precio Compra",
 		}
     return etiqueta[campo] || campo.capitalize
   end

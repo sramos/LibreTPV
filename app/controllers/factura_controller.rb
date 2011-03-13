@@ -22,14 +22,14 @@ class FacturaController < ApplicationController
   end
 
   def modificar
+    factura = Factura.find(params[:id])
     if params[:seccion] != "productos"
-      factura = Factura.find(params[:id])
       albaran = factura.albaran
       albaran.update_attributes params[:albaran]
-      factura.update_attributes params[:factura]
-      flash[:error] = factura
-      redirect_to :action => :listado
     end
+    factura.update_attributes params[:factura]
+    flash[:error] = factura
+    redirect_to :action => :listado
   end
 
   def aceptar_albaran_proveedor

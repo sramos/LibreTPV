@@ -17,7 +17,7 @@ class AlbaransController < ApplicationController
       @albaran = Albaran.find(params[:id])
       @albaran_lineas = @albaran.albaran_lineas
       @importe_total = 0;
-      @albaran_lineas.each { |linea| @importe_total += (linea.producto.precio * linea.cantidad * (1 - linea.descuento.to_f/100) ) }
+      @albaran_lineas.each { |linea| @importe_total += ( (params[:seccion] == 'productos' ? linea.precio_compra : linea.producto.precio) * linea.cantidad * (1 - linea.descuento.to_f/100) ) }
       params[:update] = 'lineas_albaran'
       params[:albaran_id] = @albaran.id
       params[:descuento] = params[:seccion] == "productos" ? @albaran.proveedor.descuento : @albaran.cliente.descuento

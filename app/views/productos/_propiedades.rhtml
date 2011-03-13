@@ -20,8 +20,10 @@
     <%= texto "Descripcion", 'producto', 'descripcion' %>
   </div>
   <div class="linea">
-    <%= texto "Precio", 'producto', 'precio' %>
-    <%= texto "Cantidad", 'producto', 'cantidad' %>
+    <%= texto "Precio Venta", 'producto', 'precio' %>
+    <% if params[:inventario] %>
+      <%= texto "Cantidad", 'producto', 'cantidad' %>
+    <% end %>
   </div>
   <div class="linea"><br/></div>
 <%= final_formulario %>
