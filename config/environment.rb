@@ -39,6 +39,8 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
 
+  ENV['RAILS_TMP'] = Rails.root.join('tmp')
+
   ENV['TPV-CIF'] = 'A-12345678-B'
   ENV['TPV-DIRECCION'] = "c/ Aroyo del Olivar, 34"
   ENV['TPV-FACTURA-PREFIX'] = "LEDZ-"
