@@ -8,7 +8,7 @@
     <%= fila_listado objeto %>
     <div class="listado_derecha">
       <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id }, "Editar Familia" %>
-      <%= link_to icono('Trash',{:title => "Borrar"}), :action => :borrar, :id => objeto %>
+      <%= borrado icono('Trash',{:title => "Borrar"}), {:action => :borrar, :id => objeto}, 'Eliminar Familia', "Familia: " + objeto.nombre, :ajax => false %>
     </div>
   <div class='linea'></div>
   <div id="spinner_<%= objeto.id.to_s %>" class="spinner" style="display:none" ></div>

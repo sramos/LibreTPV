@@ -7,7 +7,7 @@
     <%= fila_listado objeto %>
     <div class="listado_derecha">
       <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id }, "Editar IVA" %>
-      <%= link_to icono('Trash',{:title => "Borrar"}), :action => :borrar, :id => objeto %>
+      <%= borrado icono('Trash',{:title => "Borrar"}), {:action => :borrar, :id => objeto}, 'Eliminar Tipo de IVA', "IVA: " + objeto.nombre + " (" + objeto.valor.to_s + "%)", :ajax => false %>
     </div>
   </div>
 <% end %>
