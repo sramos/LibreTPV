@@ -15,6 +15,10 @@
   </div>
   <div class="linea"><br/></div>
   <div class="linea">
+    <%= selector 'Forma de Pago', 'forma_pago', 'id', @formasdepago.map {|u| [u.nombre,u.id]} %>
+  </div>
+  <div class="linea"><br/></div>
+  <div class="linea">
     <%= texto 'Recibido (€)', 'recibido', '' %>
       <%= observe_field( "formulario_campo_" , :frequency => 1, :update => "importe_devolver", :with => "'recibido='+value", :url => {:action => :calcula_cambio, :importe => params[:importe]} ) %>
   </div>

@@ -44,6 +44,7 @@ class FacturaController < ApplicationController
 
   def cobrar_albaran
     @factura = Factura.new
+    @formasdepago = FormaPago.all
     @importe = params[:importe]
     render :partial => "cobrar_albaran", :albaran_id => params[:albaran_id]
   end
@@ -58,6 +59,7 @@ class FacturaController < ApplicationController
     pago.importe = factura.importe
     pago.factura = factura
     pago.fecha = factura.fecha
+    pago.forma_pago_id = params[:forma_pago][:id]
     pago.save
     imprime_ticket factura.albaran_id
     redirect_to :controller => :albarans, :action => :aceptar_albaran, :id => factura.albaran_id
