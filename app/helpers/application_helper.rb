@@ -184,7 +184,8 @@ module ApplicationHelper
         controladores = [ #{ :rotulo => "Usuarios", :controlador => "usuarios"},
                           #{ :rotulo => "Parametros", :controlador => "parametros"},
                           { :rotulo => "Backup", :controlador => "backup"},
-                          { :rotulo => "Tipos de IVA", :controlador => "ivas"},
+                          { :rotulo => "Formas de Pago", :controlador => "forma_pago"},
+                          { :rotulo => "Tipos de IVA", :controlador => "iva"},
                           { :rotulo => "Familias de Productos", :controlador => "familias"},
                           { :rotulo => "Proveedores", :controlador => "proveedors"},
                           { :rotulo => "Clientes", :controlador => "clientes"} ]
@@ -204,6 +205,7 @@ module ApplicationHelper
 			"precio"			=> "Precio Venta",
 			"iva.nombre"			=> "IVA aplicado",
 			"precio_compra"			=> "Precio Compra",
+			"forma_pago.nombre"		=> "Forma de Pago",
 		}
     return etiqueta[campo] || campo.capitalize
   end

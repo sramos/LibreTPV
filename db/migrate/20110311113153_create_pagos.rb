@@ -4,6 +4,7 @@ class CreatePagos < ActiveRecord::Migration
       t.decimal :importe, :precision => 8, :scale => 2, :null => false
       t.date :fecha, :null => false
       t.integer :factura_id
+      t.integer :forma_pago_id, :null => false
 
       t.timestamps
     end

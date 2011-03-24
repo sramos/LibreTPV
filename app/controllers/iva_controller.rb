@@ -1,4 +1,4 @@
-class IvasController < ApplicationController
+class IvaController < ApplicationController
 
   def index
     flash[:mensaje] = "Listado de tipos de IVA"

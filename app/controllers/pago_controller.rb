@@ -13,6 +13,7 @@ class PagoController < ApplicationController
 
   def nuevo_pago
     @pago = params[:id] ?  Pago.find(params[:id]) : Pago.new
+    @mediodepago = FormaPago.all
     factura = Factura.find_by_id params[:factura_id]
     @pago.factura = factura 
     pago_pendiente
@@ -22,6 +23,7 @@ class PagoController < ApplicationController
 
   def modificar_pago
     @pago = params[:id] ? Pago.find(params[:id]) : Pago.new
+    @pago.forma_pago_id = params[:forma_pago][:id]
     @pago.update_attributes params[:pago]
     factura = Factura.find(@pago.factura_id)
     pago_pendiente
