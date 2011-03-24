@@ -1,0 +1,16 @@
+<!--- Listado de formas de pago --->
+
+<div class="caja_completa">
+<%= cabecera_listado ["nombre"] %>
+<% for objeto in @formasdepago %>
+  <div class="listadofila">
+    <%= fila_listado objeto %>
+    <div class="listado_derecha">
+      <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id }, "Editar Forma de Pago" %>
+      <%= borrado icono('Trash',{:title => "Borrar"}), {:action => :borrar, :id => objeto}, 'Eliminar Forma de Pago', "Forma de Pago: " + objeto.nombre, :ajax => false %>
+    </div>
+  </div>
+<% end %>
+<%= final_listado @formasdepago %>
+</div>
+
