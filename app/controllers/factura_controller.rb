@@ -61,7 +61,7 @@ class FacturaController < ApplicationController
     pago.fecha = factura.fecha
     pago.forma_pago_id = params[:forma_pago][:id]
     pago.save
-    imprime_ticket factura.albaran_id
+    imprime_ticket factura.albaran_id,params[:forma_pago][:id]
     redirect_to :controller => :albarans, :action => :aceptar_albaran, :id => factura.albaran_id
   end
 
@@ -94,7 +94,7 @@ private
     return ENV['TPV-FACTURA-PREFIX'] + format("%010d", (codigo+1).to_s)
   end
 
-  def imprime_ticket albaran_id
+  def imprime_ticket albaran_id, formadepago
     albaran = Albaran.find_by_id albaran_id
     lineas = albaran.albaran_lineas
     precio_total = 0
@@ -108,7 +108,8 @@ private
     cadena += " " + ENV['TPV-DIRECCION'] + "\n\n" 
     cadena += " Cliente: " + albaran.cliente.nombre + "\n"
     cadena += " Fecha: " + Time.now.strftime("%d-%m-%Y  %H:%M") + "\n"
-    cadena += " Ticket: " + albaran.id.to_s + "\n\n"
+    cadena += " Ticket: " + albaran.id.to_s + "\n"
+    cadena += " Forma de Pago: " + formadepago + "\n\n"
     cadena += "--------------------------------------------------\n\n"
     cadena += format "Cnt.  %-31s Dto.   Imp.\n\n", "Descripcion"
     lineas.each do |linea|
