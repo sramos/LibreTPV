@@ -74,15 +74,15 @@ ActiveRecord::Schema.define(:version => 20110311113153) do
   end
 
   create_table "pagos", :force => true do |t|
-    t.decimal  "importe",    :null => false
-    t.date     "fecha",      :null => false
+    t.decimal  "importe",    :precision => 8, :scale => 2, :null => false
+    t.date     "fecha",                                    :null => false
     t.integer  "factura_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "productos", :force => true do |t|
-    t.integer  "codigo"
+    t.string   "codigo"
     t.string   "nombre"
     t.string   "autor"
     t.string   "editor"

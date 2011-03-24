@@ -1,5 +1,7 @@
 <!-- FORMULARIO DE BACKUP-->
-<%= form_tag( { :action => "seleccionar"}, :multipart => true, :class => "formulario" ) %>
-<div class="elementoderecha" <%= submit_tag(_("Obtener Backup"), :class => "boton1_2") %></div>
+<fieldset>
+  <%= form_tag( { :action => "seleccionar"}, :multipart => true, :class => "formulario" ) %>
+  <div class="elemento_derecha" <%= submit_tag("Obtener Backup", :class => "boton1_2") %></div>
+</fieldset>
 </form>
 
