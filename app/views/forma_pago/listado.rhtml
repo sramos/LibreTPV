@@ -1,7 +1,7 @@
 <!--- Listado de formas de pago --->
 
 <div class="caja_completa">
-<%= cabecera_listado ["nombre"] %>
+<%= cabecera_listado ["nombre", "caja"] %>
 <% for objeto in @formasdepago %>
   <div class="listadofila">
     <%= fila_listado objeto %>

@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(:version => 20110324190334) do
 
   create_table "forma_pagos", :force => true do |t|
     t.string   "nombre"
+    t.boolean  "caja",       :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -13,7 +13,7 @@ Iva.create([		{ :nombre => 'Superreducido', :valor => 4},
 Familia.create([	{ :nombre => 'Libros', :iva => Iva.find_by_nombre('Superreducido') },
 			{ :nombre => 'Entradas', :iva => Iva.find_by_nombre('Reducido') } ])	
 
-FormaPago.create([	{ :nombre => 'Efectivo (Caja)'}, { :nombre => 'Tarjeta' }, { :nombre => 'Transferencia' } ])
+FormaPago.create([	{ :nombre => 'Efectivo', :caja => true}, { :nombre => 'Tarjeta' }, { :nombre => 'Transferencia' }, { :nombre => 'Domiciliacion' } ])
 
 Campo.create([		{ :nombre => 'Autor'}, { :nombre => 'Año'}, { :nombre => 'Editor'}, { :nombre => 'Coleccion'},
 			{ :nombre => 'Descripcion'}  ])
