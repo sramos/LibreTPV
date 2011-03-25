@@ -14,7 +14,7 @@
       document.forms["formulario"].submit();
     </script> 
   <% end %>
-  <%= "Nombre: " + @producto.nombre if @producto.nombre %><br/>
+  <%= "Nombre: " + truncate(@producto.nombre, :length => 20) if @producto.nombre %><br/>
   <%= "Autor: " + @producto.autor if @producto.autor %><br/>
   <%= "Editor: " + @producto.editor if @producto.editor %><br/>
   <%# "Año: " + @producto.anno if @producto.anno %>
