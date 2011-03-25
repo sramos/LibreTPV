@@ -16,7 +16,7 @@
   <div id="albaran_<%= i +=1 %>" class="listadofila">
     <%= fila_listado objeto %>
     <div class="listado_derecha">
-      <%= link_to_remote icono('Table',{:title => "Ver Productos"}), :url => { :controller => 'albaran_lineas', :action => 'lineas', :albaran_id => objeto.id, :update => "albaran_sub_" + i.to_s } %>
+      <%= link_to_remote icono('Cart',{:title => "Ver Productos"}), :url => { :controller => 'albaran_lineas', :action => 'lineas', :albaran_id => objeto.id, :update => "albaran_sub_" + i.to_s } %>
       <%= link_to icono('Write',{:title => "Editar"}), :action => :editar, :id => objeto %>
       <%= borrado icono('Trash',{:title => 'Borrar'}), { :action => 'borrar', :id => objeto.id } , 'Eliminar Albaran', "Albaran Pendiente de " + ( params[:seccion] == "productos" ? objeto.proveedor.nombre : objeto.cliente.nombre ), :ajax => false %>
     </div>

@@ -6,8 +6,9 @@
   <div id="factura_<% objeto.id.to_s %>" class="listadofila">
     <%= fila_listado objeto %>
     <div class="listado_derecha">
+      <% icono('Warning', {:title => "La factura no está completamente pagada!"}) if !objeto.pagado %>
       <%= link_to_remote icono('Currency Euro',{:title => "Ver pagos"}), :url => { :controller => 'pago', :action => 'pagos', :factura_id => objeto.id, :update => "factura_sub_" + objeto.id.to_s + "_pago" } %>
-      <%= link_to_remote icono('Table',{:title => "Ver productos"}), :url => { :controller => 'albaran_lineas', :action => 'lineas', :albaran_id => objeto.albaran_id, :update => "factura_sub_" + objeto.id.to_s + "_albaran" } %>
+      <%= link_to_remote icono('Cart',{:title => "Ver productos"}), :url => { :controller => 'albaran_lineas', :action => 'lineas', :albaran_id => objeto.albaran_id, :update => "factura_sub_" + objeto.id.to_s + "_albaran" } %>
       <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id }, "Editar factura" %>
     </div>
   </div>
