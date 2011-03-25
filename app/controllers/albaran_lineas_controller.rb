@@ -19,6 +19,11 @@ class AlbaranLineasController < ApplicationController
       albaran = Albaran.find_by_id params[:albaranlinea][:albaran_id]
       if albaran.cliente_id
         albaranlinea.precio_venta = params[:producto][:precio]
+      # Para albaranes de entrada calcula el precio de compra si esta relacionado con el de venta
+      elsif params[:precios_relacionados]
+        producto = Producto.find_by_id params[:producto][:id]
+        preciodeventa = producto.precio
+        albaranlinea.precio_compra = preciodeventa * (1 - producto.familia.iva.valor.to_f/100) 
       end
       albaranlinea.producto_id = params[:producto][:id]
       albaranlinea.save

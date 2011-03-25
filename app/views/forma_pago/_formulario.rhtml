@@ -2,7 +2,7 @@
 <%= inicio_formulario( { :action => 'modificar', :id => @formadepago }, false ) %>
   <%= texto "Nombre", 'formadepago', 'nombre' %>
   <div class='elemento'>Afecta a la caja?<br/>
-  <%= radio_button( :formadepago, :caja.to_s, true ) %> Sí&nbsp;&nbsp;
+  <%= radio_button( :formadepago, :caja.to_s, :default => true ) %> Sí&nbsp;&nbsp;
   <%= radio_button( :formadepago, :caja, false ) %> No
   </div>
 <%= final_formulario %>

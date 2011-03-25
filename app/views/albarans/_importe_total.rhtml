@@ -1,6 +1,6 @@
 
 <div id="importe_total" class="importe_grande">
-Total<br/><%= @importe_total %> €
+Total<br/><%= format("%0.2f",@importe_total) %> €
 </div>
 <div class='elemento_derecha'>
   <% if ! @albaran.cerrado %>

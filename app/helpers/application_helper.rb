@@ -204,7 +204,7 @@ module ApplicationHelper
 			"producto.precio"		=> "Precio Venta",
 			"precio"			=> "Precio Venta",
 			"iva.nombre"			=> "IVA aplicado",
-			"precio_compra"			=> "Precio Compra",
+			"precio_compra"			=> "P.Compra (sin iva)",
 			"forma_pago.nombre"		=> "Forma de Pago",
 		}
     return etiqueta[campo] || campo.capitalize
