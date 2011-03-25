@@ -1,4 +1,6 @@
 class FacturaController < ApplicationController
+  # Incluimos esto para un trucate en los tickets
+  include ActionView::Helpers::TextHelper
 
   # Hace una busqueda de "factura" para listado 
   before_filter :obtiene_facturas, :only => [ :listado, :aceptar_cobro ]
@@ -117,7 +119,7 @@ private
       descuento = linea.descuento
       precio = linea.producto.precio * cantidad
       precio = precio * (1 - descuento.to_f/100)
-      nombre = linea.producto.nombre
+      nombre = truncate(linea.producto.nombre, :length => 31)
       iva = linea.producto.familia.iva.valor
       sub = precio * (1 - iva.to_f/100)
       iva_total[iva] = iva_total.key?(iva) ? iva_total[iva] + (precio-sub) : precio-sub
