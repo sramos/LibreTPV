@@ -121,7 +121,7 @@ private
       precio = precio * (1 - descuento.to_f/100)
       nombre = truncate(linea.producto.nombre, :length => 31)
       iva = linea.producto.familia.iva.valor
-      sub = precio * (1 - iva.to_f/100)
+      sub = precio / (1 + iva.to_f/100)
       iva_total[iva] = iva_total.key?(iva) ? iva_total[iva] + (precio-sub) : precio-sub
       subtotal += sub
       precio_total += precio

@@ -18,11 +18,8 @@ class AlbaransController < ApplicationController
       @albaran_lineas = @albaran.albaran_lineas
       @importe_total = 0;
       @albaran_lineas.each do |linea|
-        @importe_total += ( (params[:seccion] == 'productos' ? linea.precio_compra : linea.producto.precio).to_f * linea.cantidad * (1 - linea.descuento.to_f/100) )
-        # En los albaranes de entrada los precios los tenemos sin iva, asi que sumamos
-        if params[:seccion] == "productos"
-          @importe_total *= 1 + linea.producto.familia.iva.valor.to_f/100 
-        end
+        # En los albaranes de entrada los precios los tenemos sin iva
+        @importe_total += ( (params[:seccion] == 'productos' ? linea.precio_compra*(1+linea.producto.familia.iva.valor.to_f/100) : linea.producto.precio).to_f * linea.cantidad * (1 - linea.descuento.to_f/100) )
       end
       params[:update] = 'lineas_albaran'
       params[:albaran_id] = @albaran.id

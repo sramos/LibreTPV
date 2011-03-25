@@ -23,7 +23,7 @@ class AlbaranLineasController < ApplicationController
       elsif params[:precios_relacionados]
         producto = Producto.find_by_id params[:producto][:id]
         preciodeventa = producto.precio
-        albaranlinea.precio_compra = preciodeventa * (1 - producto.familia.iva.valor.to_f/100) 
+        albaranlinea.precio_compra = preciodeventa / (1 + producto.familia.iva.valor.to_f/100) 
       end
       albaranlinea.producto_id = params[:producto][:id]
       albaranlinea.save
