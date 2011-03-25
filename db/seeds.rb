@@ -18,7 +18,7 @@ FormaPago.create([	{ :nombre => 'Efectivo', :caja => true}, { :nombre => 'Tarjet
 Campo.create([		{ :nombre => 'Autor'}, { :nombre => 'Año'}, { :nombre => 'Editor'}, { :nombre => 'Coleccion'},
 			{ :nombre => 'Descripcion'}  ])
 
-Proveedor.create([	{ :nombre => 'Timadores Sin Fronteras', :cif => 'A-88554345-J', :descuento => '5' } ] )
+Proveedor.create([	{ :nombre => 'Timadores Sin Fronteras', :cif => 'A-88554345-J', :descuento => '30' } ] )
 
 Cliente.create([	{ :nombre => 'Caja', :cif => 'N/A' } ] )
 
