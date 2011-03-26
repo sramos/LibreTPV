@@ -11,6 +11,17 @@ class AlbaranLineasController < ApplicationController
     end    
   end
 
+  def editar
+    @albaran_linea = AlbaranLinea.find(params[:id])
+    render :partial => "editar", :albaran_id => params[:albaran_id]
+  end
+
+  def modificar
+    @albaran_linea = AlbaranLinea.find(params[:id])
+    @albaran_linea.update_attributes params[:albaran_linea]
+    redirect_to :controller => :albarans, :action => :editar, :id => params[:albaran_id]
+  end
+
   def asignar_linea
     albaran = Albaran.find_by_id params[:albaranlinea][:albaran_id]
     if albaran && !albaran.cerrado
@@ -31,7 +42,7 @@ class AlbaranLineasController < ApplicationController
     redirect_to :controller => :albarans, :action => :editar, :id => albaranlinea.albaran_id
   end
 
-  def eliminar_linea
+  def borrar 
     albaran = Albaran.find_by_id params[:albaran_id]
     albaranlinea = AlbaranLinea.find_by_id params[:id] 
     if albaranlinea && albaran && !albaran.cerrado

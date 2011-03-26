@@ -1,0 +1,19 @@
+<!-- Formulario de edicion de linea de albaran -->
+<%= inicio_formulario( { :action => 'modificar', :id => params[:id], :albaran_id => params[:albaran_id], :update => params[:update] }, false ) %>
+  <div class="linea">
+    Producto: <%= @albaran_linea.producto.nombre %>
+  </div>
+  <div class="linea">
+    <% if params[:seccion] == "productos" %>
+      Precio Compra (sin IVA): <%= @albaran_linea.precio_compra %>
+    <% else %>
+      Precio Venta: <%= @albaran_linea.producto.precio %>
+    <% end %>
+  </div>
+  <div class="linea"><br/></div>
+  <div class="linea">
+    <%= texto "Cantidad", 'albaran_linea', 'cantidad' %>
+    <%= texto "% Descuento", 'albaran_linea', 'descuento' %>
+  </div>
+  <div class="linea"><br/></div>
+<%= final_formulario %>
