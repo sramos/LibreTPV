@@ -56,6 +56,18 @@ class ProductosController < ApplicationController
     render :partial => "propiedades"
   end
 
+  # Devuelve sublistado de proveedores del producto
+  def proveedores
+    lineas = AlbaranLinea.find :all, :conditions=>{:producto_id => params[:id]}
+    # Obtiene los albaranes donde esta el producto
+    lineas.inject([]) { |@albaranes,linea| @albaranes.push(linea.albaran) if linea.albaran.cerrado }
+    # Elimina los albaranes duplicados
+    @albaranes.uniq!
+    render :update do |page|
+      page.replace_html params[:update], :partial => "proveedores"
+    end
+  end
+
   def producto_x_codigo
     @producto = Producto.find_by_codigo(params[:codigo]) 
     @familias = Familia.all

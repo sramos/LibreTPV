@@ -206,6 +206,7 @@ module ApplicationHelper
 			"iva.nombre"			=> "IVA aplicado",
 			"precio_compra"			=> "P.Compra (sin iva)",
 			"forma_pago.nombre"		=> "Forma de Pago",
+			"factura.codigo"		=> "Código de Factura",
 		}
     return etiqueta[campo] || campo.capitalize
   end
