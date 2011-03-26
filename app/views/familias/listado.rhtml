@@ -1,7 +1,7 @@
 <!--- Listado de familias --->
 
 <div class="caja_completa">
-<%= cabecera_listado ["nombre", "iva.nombre"] %>
+<%= cabecera_listado ["nombre", "iva.nombre"], { :title => "Nuevo", :url => { :action => :editar } } %>
 <% i = 0 %>
 <% for objeto in @familias %>
   <div id="familia_<%= i += 1 %>" class="listadofila">
