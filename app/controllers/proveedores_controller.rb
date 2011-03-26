@@ -1,4 +1,4 @@
-class ProveedorsController < ApplicationController
+class ProveedoresController < ApplicationController
 
   def index
     flash[:mensaje] = "Listado de Proveedores"
