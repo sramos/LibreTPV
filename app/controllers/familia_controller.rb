@@ -1,4 +1,4 @@
-class FamiliasController < ApplicationController
+class FamiliaController < ApplicationController
 
   def index
     flash[:mensaje] = "Listado de Familias de Productos"

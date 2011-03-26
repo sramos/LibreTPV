@@ -175,10 +175,10 @@ module ApplicationHelper
                           { :rotulo => "Inventario", :controlador => "productos"} ]
       when "tesoreria"
         controladores = [ { :rotulo => "Arqueo de caja", :controlador => "arqueo"},
-                          { :rotulo => "Informes", :controlador => "informes"},
+                          { :rotulo => "Informes", :controlador => "informe"},
                           { :rotulo => "Libro diario", :controlador => "libro"} ]
       when "trueke"
-        controladores = [ { :rotulo => "Cambios", :controlador => "cambios"} ]
+        controladores = [ { :rotulo => "Cambios", :controlador => "cambio"} ]
 
       when "admin"
         controladores = [ #{ :rotulo => "Usuarios", :controlador => "usuarios"},
@@ -186,9 +186,9 @@ module ApplicationHelper
                           { :rotulo => "Backup", :controlador => "backup"},
                           { :rotulo => "Formas de Pago", :controlador => "forma_pago"},
                           { :rotulo => "Tipos de IVA", :controlador => "iva"},
-                          { :rotulo => "Familias de Productos", :controlador => "familias"},
+                          { :rotulo => "Familias de Productos", :controlador => "familia"},
                           { :rotulo => "Proveedores", :controlador => "proveedor"},
-                          { :rotulo => "Clientes", :controlador => "clientes"} ]
+                          { :rotulo => "Clientes", :controlador => "cliente"} ]
     end
     return controladores
   end
