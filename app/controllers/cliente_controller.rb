@@ -1,4 +1,4 @@
-class ClientesController < ApplicationController
+class ClienteController < ApplicationController
 
   def index
     flash[:mensaje] = "Listado de Clientes"
