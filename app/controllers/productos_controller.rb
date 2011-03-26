@@ -60,7 +60,8 @@ class ProductosController < ApplicationController
   def proveedores
     lineas = AlbaranLinea.find :all, :conditions=>{:producto_id => params[:id]}
     # Obtiene los albaranes donde esta el producto
-    lineas.inject([]) { |@albaranes,linea| @albaranes.push(linea.albaran) if linea.albaran.cerrado }
+    @albaranes=[]
+    lineas.each { |linea| @albaranes.push(linea.albaran) if linea.albaran.cerrado }
     # Elimina los albaranes duplicados
     @albaranes.uniq!
     render :update do |page|
