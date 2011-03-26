@@ -187,7 +187,7 @@ module ApplicationHelper
                           { :rotulo => "Formas de Pago", :controlador => "forma_pago"},
                           { :rotulo => "Tipos de IVA", :controlador => "iva"},
                           { :rotulo => "Familias de Productos", :controlador => "familias"},
-                          { :rotulo => "Proveedores", :controlador => "proveedors"},
+                          { :rotulo => "Proveedores", :controlador => "proveedor"},
                           { :rotulo => "Clientes", :controlador => "clientes"} ]
     end
     return controladores
