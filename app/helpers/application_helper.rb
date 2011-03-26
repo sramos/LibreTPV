@@ -203,10 +203,14 @@ module ApplicationHelper
 			"producto.nombre"		=> "Nombre/Título",
 			"producto.precio"		=> "Precio Venta",
 			"precio"			=> "Precio Venta",
+			"descuento"			=> "% Descuento",
 			"iva.nombre"			=> "IVA aplicado",
 			"precio_compra"			=> "P.Compra (sin iva)",
 			"forma_pago.nombre"		=> "Forma de Pago",
 			"factura.codigo"		=> "Código de Factura",
+			"albaran.factura.codigo"	=> "Código de Factura",
+			"albaran.codigo"		=> "Código de Albaran",
+			"albaran.fecha"			=> "Fecha",
 		}
     return etiqueta[campo] || campo.capitalize
   end

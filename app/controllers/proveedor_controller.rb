@@ -28,4 +28,16 @@ class ProveedorController < ApplicationController
     redirect_to :action => :listado
   end
 
+  # Devuelve sublistado de productos comprados al proveedor
+  def productos
+    albaranes = Albaran.find :all, :conditions => { :proveedor_id => params[:id], :cerrado => true }
+    # Obtiene las líneas de cada albaran del proveedor
+    @lineas = []
+    albaranes.each { |albaran| albaran.albaran_lineas.each { |linea| @lineas.push(linea) } if albaran.cerrado }
+    puts "--------------->" + @lineas.to_s
+    render :update do |page|
+      page.replace_html params[:update], :partial => "productos"
+    end
+  end
+
 end
