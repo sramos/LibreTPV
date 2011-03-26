@@ -209,6 +209,7 @@ module ApplicationHelper
 			"forma_pago.nombre"		=> "Forma de Pago",
 			"factura.codigo"		=> "Código de Factura",
 			"albaran.factura.codigo"	=> "Código de Factura",
+			"albaran.factura.fecha"		=> "Fecha",
 			"albaran.codigo"		=> "Código de Albaran",
 			"albaran.fecha"			=> "Fecha",
 		}

@@ -33,7 +33,7 @@ class ProveedorController < ApplicationController
     albaranes = Albaran.find :all, :conditions => { :proveedor_id => params[:id], :cerrado => true }
     # Obtiene las líneas de cada albaran del proveedor
     @lineas = []
-    albaranes.each { |albaran| albaran.albaran_lineas.each { |linea| @lineas.push(linea) } if albaran.cerrado }
+    albaranes.each { |albaran| albaran.albaran_lineas.each { |linea| @lineas.push(linea) } }
     puts "--------------->" + @lineas.to_s
     render :update do |page|
       page.replace_html params[:update], :partial => "productos"
