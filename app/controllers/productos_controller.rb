@@ -1,7 +1,6 @@
 class ProductosController < ApplicationController
 
   def index
-    flash[:mensaje] = "Inventario de Productos Registrados"
     redirect_to :action => :listado
   end
 
