@@ -182,8 +182,8 @@ module ApplicationHelper
 
       when "admin"
         controladores = [ #{ :rotulo => "Usuarios", :controlador => "usuarios"},
-                          #{ :rotulo => "Parametros", :controlador => "parametros"},
                           { :rotulo => "Backup", :controlador => "backup"},
+			  #{ :rotulo => "Parámetros", :controlador => "parametros"},
                           { :rotulo => "Formas de Pago", :controlador => "forma_pago"},
                           { :rotulo => "Tipos de IVA", :controlador => "iva"},
                           { :rotulo => "Familias de Productos", :controlador => "familia"},

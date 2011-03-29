@@ -3,7 +3,7 @@
 <% if params[:seccion ] == 'productos' %>
   <%= cabecera_sublistado "Productos", ["producto.codigo","producto.nombre","cantidad","descuento","precio_compra"], params[:update] %>
 <% else %>
-  <%= cabecera_sublistado "Productos", ["producto.codigo","producto.nombre","cantidad","descuento","producto.precio"], params[:update] %>
+  <%= cabecera_sublistado "Productos", ["producto.codigo","producto.nombre","cantidad","descuento","producto.precio","subtotal"], params[:update] %>
 <% end %>
 <% i = 0 %>
 <% for linea in @albaran_lineas %>
