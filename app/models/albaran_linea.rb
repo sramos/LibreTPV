@@ -5,7 +5,7 @@ class AlbaranLinea < ActiveRecord::Base
 
   # devuelve el subtotal.
   def subtotal
-    if ( self.precio_compra != 0 )
+    if ( self.albaran.proveedor_id )
       precio = self.precio_compra
       #precio = self.precio_compra * (1 - self.producto.familia.iva.valor.to_f/100)
     else

@@ -1,7 +1,7 @@
 <!--- Sublistado de lineas de albaran --->
 
 <% if params[:seccion ] == 'productos' %>
-  <%= cabecera_sublistado "Productos", ["producto.codigo","producto.nombre","cantidad","descuento","precio_compra"], params[:update] %>
+  <%= cabecera_sublistado "Productos", ["producto.codigo","producto.nombre","cantidad","descuento","precio_compra","subtotal"], params[:update] %>
 <% else %>
   <%= cabecera_sublistado "Productos", ["producto.codigo","producto.nombre","cantidad","descuento","producto.precio","subtotal"], params[:update] %>
 <% end %>
