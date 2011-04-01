@@ -4,6 +4,9 @@
   * Productos comprados por cliente
   * Productos comprados a proveedor
   * Proveedores de productos
+  * Las facturas se pueden borrar
+  * Bug en formas de pago
+  * Bug en precios vinculados para lineas de albaran
 
 2011-03-25 Santiago Ramos <sramos@sitiodistinto.net> Version 0.2
 
