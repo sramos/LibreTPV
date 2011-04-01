@@ -61,10 +61,20 @@ class AlbaransController < ApplicationController
 
   def borrar
     albaran = Albaran.find_by_id params[:id]
+    if albaran && !albaran.cerrado
+      albaran.destroy
+      flash[:error] = albaran
+    end
+    redirect_to :action => :listado 
+  end
+
+  # A eliminar
+  def borrar_viejo 
+    albaran = Albaran.find_by_id params[:id]
     if albaran
       if albaran.cerrado
         lineas = albaran.albaran_lineas
-        if :seccion == "productos"
+        if params[:seccion] == "productos"
           multiplicador = -1
         else
           multiplicador = 1

@@ -10,12 +10,18 @@
       <%= link_to_remote icono('Currency Euro',{:title => "Ver pagos"}), :url => { :controller => 'pago', :action => 'pagos', :factura_id => objeto.id, :update => "factura_sub_" + objeto.id.to_s + "_pago" } %>
       <%= link_to_remote icono('Cart',{:title => "Ver productos"}), :url => { :controller => 'albaran_lineas', :action => 'lineas', :albaran_id => objeto.albaran_id, :update => "factura_sub_" + objeto.id.to_s + "_albaran" } %>
       <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id }, "Editar factura" %>
+      <% if objeto.pagos.size != 0 %>
+        <%= icono('Trash',{:title => 'No se puede borrar una Factura con pagos realizados'}) %>
+      <% else %>
+        <%= borrado icono('Trash',{:title => 'Borrar'}), { :action => 'borrar', :id => objeto.id } ,
+		'Borrar Factura', 'Factura: ' + objeto.codigo + " (" + objeto.fecha.to_s + ")" + '<br>IMPORTANTE: Sólo debería borrar la factura si no ha emitió aún ticket o comprobante.<br>Se volverá a generar el albarán con estado abierto.' , :ajax => false %>
+      <% end %>
       <%# link_to icono('Printer',{:title => "Imprimir"}), :action => :imprimir, :id => objeto %>
     </div>
   </div>
   <div id="factura_sub_<%= objeto.id.to_s %>_pago"></div>
   <div id="factura_sub_<%= objeto.id.to_s %>_albaran"></div>
 <% end %>
-<%= final_listado @productos %>
+<%= final_listado @facturas %>
 </div>
 

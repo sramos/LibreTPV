@@ -44,6 +44,30 @@ class FacturaController < ApplicationController
     redirect_to :controller => :albarans, :action => :aceptar_albaran, :id => params[:albaran_id]
   end
 
+  def borrar 
+    factura = Factura.find(params[:id])
+    albaran = factura.albaran
+    # Primero elimina los productos relacionados del stock
+    lineas = albaran.albaran_lineas
+    if params[:seccion] == "productos"
+      multiplicador = -1
+    else
+      multiplicador = 1
+    end
+    lineas.each do |linea|
+      producto=linea.producto
+      producto.cantidad += (linea.cantidad * multiplicador)
+      producto.save
+    end
+    # Cambia el estado del albaran a abierto
+    albaran.cerrado = false
+    albaran.save
+    # Elimina la factura
+    factura.destroy
+    flash[:error] = factura 
+    redirect_to :action => :listado
+  end
+
   def cobrar_albaran
     @factura = Factura.new
     @formasdepago = FormaPago.all
