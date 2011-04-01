@@ -29,6 +29,7 @@ Rails::Initializer.run do |config|
   # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
 
   config.action_controller.session_store = :active_record_store
+  config.action_controller.allow_forgery_protection    = false
 
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
