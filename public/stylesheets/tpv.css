@@ -169,6 +169,14 @@ margin-top:15px;
     float: right;
 }
 
+#imagen_libro {
+    float: right;
+    /*border: dotted 1px #ccc;*/
+    width: 130px;
+    height: 210px;  
+    margin: 0;
+}
+
 fieldset {
   border:dotted 0px #ccc;
   -moz-border-radius: 7px;

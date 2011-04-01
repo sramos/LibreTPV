@@ -1,11 +1,15 @@
 <div id="propiedades">
 <%= inicio_formulario( { :action => 'modificar', :id => @producto, :update => params[:update], :nuevo => params[:nuevo], :inventario => params[:inventario] }, !params[:inventario] ) %>
+  <!--
+  <div class="formulario_izqda">
+  -->
   <% if @producto && !params[:nuevo] %>
     <div class="linea">
       Código/ISBN: <%= @producto.codigo %><br/>
     </div>
   <% end %>
   <%= hidden_field('producto', 'codigo')%>
+  <%= hidden_field('producto', 'url_imagen')%>
   <div class="linea"><br/></div>
   <div class="linea">
     <%= selector "Familia", "producto", "familia_id", @familias.map {|u| [u.nombre,u.id]} %>
@@ -13,6 +17,7 @@
   <div class="linea">
     <%= texto "Nombre", 'producto', 'nombre' %>
     <%= texto "Autor", 'producto', 'autor' %>
+  </div><div class="linea">
     <%= texto "Editor", 'producto', 'editor' %>
     <%= texto "Año", 'producto', 'anno' %>
   </div>
@@ -27,6 +32,13 @@
     <% end %>
   </div>
   <div class="linea"><br/></div>
+  </div>
+  <!--
+  <div class="imagen_libro" id="imagen_libro">
+    <img src="<%= @producto.url_imagen %>">
+  </div>
+  </div>
+  -->
 <%= final_formulario %>
 </div>
 <br>

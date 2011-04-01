@@ -1,5 +1,7 @@
 class ProductosController < ApplicationController
 
+  require 'json'
+
   def index
     redirect_to :action => :listado
   end
@@ -11,7 +13,7 @@ class ProductosController < ApplicationController
   def editar
     @familias = Familia.all
     if params[:codigo]
-      @producto = producto_x_codigo_isbn(params[:codigo])
+      @producto = producto_x_codigo_isbn_con_imagen(params[:codigo])
     else
       @producto = params[:id]?Producto.find(params[:id]) : nil
     end
@@ -107,6 +109,23 @@ class ProductosController < ApplicationController
       return producto
     end
 
+  def producto_x_codigo_isbn_con_imagen isbn
+    producto = producto_x_codigo_isbn isbn
+    data = Net::HTTP.get('books.google.com','/books?jscmd=viewapi&bibkeys=ISBN:' + isbn)
+    data =~ /^var _GBSBookInfo = (.+);$/
+    if $1
+      result = JSON.parse($1)
+
+      # if the hash has 'Error' as a key, we raise an error
+      if result.has_key? 'Error'
+        raise "web service error"
+      end
+
+      producto.url_imagen = result['ISBN:'+isbn]['thumbnail_url'].to_s.gsub(/zoom=5/, 'zoom=1') if producto
+    end
+    return producto
+  end
+
   def libro_x_isbn_google
     #isbn = "9788467426373"
     @producto = params[:id] ? Producto.find(params[:id]) : Producto.new
@@ -115,6 +134,7 @@ class ProductosController < ApplicationController
 
     # en JSON
     #http://books.google.com/books?jscmd=viewapi&bibkeys=ISBN:
+    # y devuelve tambien la referencia a la portada del libro
     refman = { "T1" => "Titulo", "A1" => "Autor", "Y1" => "Año", "PB" => "Editor", "T3" => "Coleccion", "UR" => "URL", "SN" => "ISBN" }
 
     output = Net::HTTP.get('books.google.com', '/books/download/libro.ris?vid=' + isbn + '&output=ris').split("\r\n")
@@ -146,6 +166,27 @@ class ProductosController < ApplicationController
   end
 
 # Z3950
+
+# 9788499182254
+#
+# Ministerio de cultura
+#  Host: rebeca.mcu.es
+#  Port: 210
+#  Database: absysrebeca
+#  Syntax: IBERMAC
+#
+# Biblioteca Nacional
+#  Host: sigb.bne.es 
+#  Port: 2200
+#  Database: Unicorn / bimo
+#  Syntax: IBERMAC / USMARC
+#
+# Biblioteca del Congreso
+#  Host: z3950.loc.gov
+#  Port: 7090
+#  Database: Voyager
+#  Syntax: USMARC
+#
 #  >> ZOOM::Connection.open('z3950.loc.gov', 7090) do |conn|
 #  ?> conn.database_name = 'Voyager'
 #  >> conn.preferred_record_syntax = 'USMARC'
