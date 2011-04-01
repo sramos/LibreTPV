@@ -27,11 +27,13 @@ class AlbaranLineasController < ApplicationController
     if albaran && !albaran.cerrado
       albaranlinea = params[:id] ? AlbaranLinea.find(params[:id]) : AlbaranLinea.new
       albaranlinea.update_attributes params[:albaranlinea]
+      # Sustituir esto por un :default => 0 en una migracion o revisar las vistas 
+      albaranlinea.precio_compra = params[:albaranlinea][:precio_compra].to_f
       albaran = Albaran.find_by_id params[:albaranlinea][:albaran_id]
       if albaran.cliente_id
         albaranlinea.precio_venta = params[:producto][:precio]
       # Para albaranes de entrada calcula el precio de compra si esta relacionado con el de venta
-      elsif params[:precios_relacionados]
+      elsif (params[:precios_relacionados][1].to_s == "true")
         producto = Producto.find_by_id params[:producto][:id]
         preciodeventa = producto.precio
         albaranlinea.precio_compra = preciodeventa / (1 + producto.familia.iva.valor.to_f/100) 
