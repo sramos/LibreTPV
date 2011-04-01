@@ -6,7 +6,7 @@ module ApplicationHelper
     @campos_listado = campos
     cadena = "<div class='listado'><div class='listadocabecera'>"
     for campo in campos
-      cadena += "<div class='listado_campo' id='listado_campo_etiqueta_" + campo + "'>" + etiqueta(campo) + "</div>"
+      cadena += "<div class='listado_campo_" + etiqueta(campo)[1] + (etiqueta(campo)[3]||"") + "' id='listado_campo_etiqueta_" + campo + "'>" + etiqueta(campo)[0] + "</div>"
     end
     cadena += "<div class='listado_derecha'>"
     #cadena += link_to icono('Plus',{:title => "Nuevo"}), {:action => 'editar'}
@@ -20,7 +20,7 @@ module ApplicationHelper
     for campo in @campos_listado
       valor=objeto
       campo.split('.').each { |metodo| valor = valor.send(metodo) if valor }
-      cadena += "<div class='listado_campo' id='listado_campo_valor_" + campo + "_" + objeto.id.to_s + "'>" + (valor && valor.to_s != "" ? truncate(valor.to_s, :length => 20):"&nbsp;") + '</div>'
+      cadena += "<div class='listado_campo_" + etiqueta(campo)[1] + (etiqueta(campo)[3]||"") + "' id='listado_campo_valor_" + campo + "_" + objeto.id.to_s + "'>" + (valor && valor.to_s != "" ? truncate(valor.to_s, :length => etiqueta(campo)[2]):"&nbsp;") + '</div>'
     end
     #cadena += "</div>"
     return cadena
@@ -39,7 +39,7 @@ module ApplicationHelper
     cadena << link_to_function( icono('Cancel',{:Title => "Ocultar"}), script, {:id => sub_id + "_ocultar_sublistado"} ) if sub_id
     cadena << "</div><br/><br/><div class='listadocabecera'>"
     for campo in campos
-      cadena << "<div class='listado_campo' id='sublistado_campo_valor_" + campo + "' >" + etiqueta(campo) + "</div>"
+      cadena << "<div class='listado_campo_" + etiqueta(campo)[1] + (etiqueta(campo)[3]||"") + "' id='sublistado_campo_valor_" + campo + "' >" + etiqueta(campo)[0] + "</div>"
     end
     if nuevo[:url] && nuevo[:title]
       cadena << '<div class="listado_derecha">'
@@ -54,7 +54,8 @@ module ApplicationHelper
     for campo in @campos_sublistado
       valor=objeto
       campo.split('.').each { |metodo| valor = valor.send(metodo) if valor }
-      cadena += "<div class='listado_campo' id='listado_campo_valor_" + campo + "'>" + (valor && valor.to_s != "" ? truncate(valor.to_s, :length => 20):"&nbsp;") + '</div>'
+      valor = format('%0.2f',valor) if etiqueta(campo)[3] == "f"
+      cadena += "<div class='listado_campo_" + etiqueta(campo)[1] + (etiqueta(campo)[3]||"") + "' id='listado_campo_valor_" + campo + "'>" + (valor && valor.to_s != "" ? truncate(valor.to_s, :length => etiqueta(campo)[2]):"&nbsp;") + '</div>'
     end
     return cadena
   end
@@ -194,26 +195,33 @@ module ApplicationHelper
   end
 
   def etiqueta campo
-    etiqueta = {	"albaran.cliente.nombre"	=> "Cliente",
-			"albaran.proveedor.nombre"	=> "Proveedor",
-			"cliente.nombre"		=> "Cliente",
-			"familia.nombre"		=> "Familia",
-			"proveedor.nombre"		=> "Proveedor",
-			"producto.codigo"		=> "Código/ISBN",
-			"producto.nombre"		=> "Nombre/Título",
-			"producto.precio"		=> "Precio Venta",
-			"precio"			=> "Precio Venta",
-			"descuento"			=> "% Descuento",
-			"iva.nombre"			=> "IVA aplicado",
-			"precio_compra"			=> "P.Compra (sin iva)",
-			"forma_pago.nombre"		=> "Forma de Pago",
-			"factura.codigo"		=> "Código de Factura",
-			"albaran.factura.codigo"	=> "Código de Factura",
-			"albaran.factura.fecha"		=> "Fecha",
-			"albaran.codigo"		=> "Código de Albaran",
-			"albaran.fecha"			=> "Fecha",
+    etiqueta = {	"albaran.cliente.nombre"	=> ["Cliente", "1", 68],
+			"albaran.proveedor.nombre"	=> ["Proveedor", "1", 68],
+			"cliente.nombre"		=> ["Cliente", "1", 68],
+			"familia.nombre"		=> ["Familia", "1_2", 22],
+			"proveedor.nombre"		=> ["Proveedor", "1", 68],
+			"codigo"			=> ["Código", "1_2", 22],
+			"producto.codigo"		=> ["Código/ISBN", "1_2", 22],
+			"producto.nombre"		=> ["Nombre/Título", "1", 68],
+			"nombre"			=> ["Nombre/Título", "1", 68],
+			"autor"				=> ["Autor", "2_3", 28],
+			"producto.precio"		=> ["P.Venta", "1_3", 14, "f"],
+			"cantidad"			=> ["Cant.", "1_5", 8, "d"],
+			"precio"			=> ["P.Venta", "1_3", 14, "f"],
+			"subtotal"			=> ["Subtotal", "1_3", 14, "f"],
+			"descuento"			=> ["% Dto.", "1_5", 8, "d"],
+			"producto.familia.iva.valor"	=> ["% IVA", "1_5", 8, "d"],
+			"iva.nombre"			=> ["IVA aplicado", "1", 44],
+			"precio_compra"			=> ["P.Bruto", "1_3", 14, "f"],
+			"total"				=> ["Total", "1_3", 14, "f"],
+			"forma_pago.nombre"		=> ["Forma de Pago", "1", 46],
+			"factura.codigo"		=> ["Código de Factura", "1_2", 22],
+			"albaran.factura.codigo"	=> ["Código de Factura", "1_2", 22],
+			"albaran.factura.fecha"		=> ["Fecha", "1_2", 22],
+			"albaran.codigo"		=> ["Código de Albaran", "1_2", 22],
+			"albaran.fecha"			=> ["Fecha", "1_2", 22],
 		}
-    return etiqueta[campo] || campo.capitalize
+    return etiqueta[campo] || [campo.capitalize, "1_2", 22]
   end
 
 end

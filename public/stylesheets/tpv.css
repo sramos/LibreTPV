@@ -29,7 +29,7 @@ body {
     border-bottom:dotted 1px #ccc;
  }
 
-.listadofila, listadocabecera, .caja_completa, .linea {clear: both;}
+.listadofila, .listadocabecera, .caja_completa, .linea {clear: both;}
 
 .listado div:hover, .tabla div:hover {
  /* background-color:#FFFFDD;*/
@@ -69,7 +69,7 @@ margin-top:15px;
 
 .sublistado legend{
   font-weight:bold;
-  padding: 5 0 0 0;
+  padding: 5 0 5 0;
   color: gray;
   float: left;
 }
@@ -93,11 +93,18 @@ margin-top:15px;
 
 .listado_derecha, .elemento_derecha { float: right;}
 
-.listado_campo {
+.listado_campo_1, .listado_campo_2_3, .listado_campo_1_2, .listado_campo_1_3, .listado_campo_1_3d, .listado_campo_1_3f, .listado_campo_1_5, .listado_campo_1_5d, .listado_campo_1_5f {
     float: left;
-    width:150px;
     font-size:11px;
+    padding: 0 5 0 5;
 }
+
+.listado_campo_1 { width:380px; }
+.listado_campo_2_3 { width:160px; }
+.listado_campo_1_2 { width:120px; }
+.listado_campo_1_3, .listado_campo_1_3d, .listado_campo_1_3f { width:80px; }
+.listado_campo_1_5, .listado_campo_1_5d, .listado_campo_1_5f { width:48px; }
+.listado_campo_1_3d, .listado_campo_1_3f, .listado_campo_1_5d, .listado_campo_1_5f { text-align: right; }
 
 .texto, .elemento, .elemento_x15, .elemento_c {
     font-size: 11px;
