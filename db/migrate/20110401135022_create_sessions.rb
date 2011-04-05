@@ -4,9 +4,9 @@ class CreateSessions < ActiveRecord::Migration
       t.string :session_id, :null => false
       t.text :data
       t.timestamps
-      t.columns << 'data longtext'
     end
 
+    execute "ALTER TABLE sessions CHANGE COLUMN data data LONGTEXT"
     add_index :sessions, :session_id
     add_index :sessions, :updated_at
   end
