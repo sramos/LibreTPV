@@ -4,6 +4,7 @@ class CreateSessions < ActiveRecord::Migration
       t.string :session_id, :null => false
       t.text :data
       t.timestamps
+      t.columns << 'data longtext'
     end
 
     add_index :sessions, :session_id
