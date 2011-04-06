@@ -143,7 +143,7 @@ class ProductosController < ApplicationController
         raise "web service error"
       end
 
-      producto.url_imagen = result['ISBN:'+isbn]['thumbnail_url'].to_s.gsub(/zoom=5/, 'zoom=1') if producto
+      producto.url_imagen = result['ISBN:'+isbn]['thumbnail_url'].to_s.gsub(/zoom=5/, 'zoom=1') if producto && result['ISBN:'+isbn]
     end
     return producto
   end
