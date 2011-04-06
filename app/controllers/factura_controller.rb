@@ -141,15 +141,12 @@ private
     lineas.each do |linea|
       cantidad = linea.cantidad
       descuento = linea.descuento
-      precio = linea.producto.precio * cantidad
-      precio = precio * (1 - descuento.to_f/100)
       nombre = truncate(linea.producto.nombre, :length => 31)
-      iva = linea.producto.familia.iva.valor
-      sub = precio / (1 + iva.to_f/100)
-      iva_total[iva] = iva_total.key?(iva) ? iva_total[iva] + (precio-sub) : precio-sub
-      subtotal += sub
-      precio_total += precio
-      cadena += format " %2d  %-32s  %2d  %6s\n", cantidad, nombre, descuento, format("%.2f",precio)
+      iva = linea.valor_iva
+      iva_total[iva] = iva_total.key?(iva) ? iva_total[iva] + (linea.total-linea.subtotal) : linea.total-linea.subtotal 
+      subtotal += linea.subtotal 
+      precio_total += linea.total 
+      cadena += format " %2d  %-32s  %2d  %6s\n", cantidad, nombre, descuento, format("%.2f",linea.total)
     end
     cadena += "\n--------------------------------------------------\n\n"
     cadena += format " %-41s %6s\n", "Subtotal", format("%.2f",subtotal)
