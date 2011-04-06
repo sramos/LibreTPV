@@ -3,11 +3,33 @@ class ProductosController < ApplicationController
   require 'json'
 
   def index
+    session[("productos_filtrado").to_sym] = ""
+    redirect_to :action => :listado
+  end
+
+  def filtrado
+    session[("productos_filtrado_tipo").to_sym] = params[:filtro][:tipo] if params[:filtro]
+    session[("productos_filtrado_valor").to_sym] = params[:filtro][:valor] if params[:filtro]
     redirect_to :action => :listado
   end
 
   def listado
-    @productos = Producto.all
+    #@campos_filtro = [["Nombre","nombre"], ["Autor","autor"], ["Codigo","codigo"] ,["Editor","editor"], ["Familia","familias.nombre"], ["Proveedor","proveedores.nombre"]]
+    @campos_filtro = [["Nombre","nombre"], ["Autor","autor"], ["Codigo","codigo"] ,["Editor","editor"], ["Familia","familias.nombre"]]
+    if session[("productos_filtrado_tipo").to_sym] && session[("productos_filtrado_valor").to_sym]
+      if session[("productos_filtrado_tipo").to_sym] =~ /familias.nombre/
+        @productos = Producto.find :all,
+                :include => [ :familia ],             
+                :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("productos_filtrado_valor").to_sym] + "%" ]
+      elsif session[("productos_filtrado_tipo").to_sym] =~ /proveedores.nombre/
+        @productos = Producto.find :all
+      else
+        @productos = Producto.find :all, 
+		:conditions => [ session[("productos_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("productos_filtrado_valor").to_sym] + "%" ]
+      end
+    else
+      @productos = Producto.all
+    end
   end
 
   def editar

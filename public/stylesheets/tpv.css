@@ -22,6 +22,8 @@ body {
     float: left;
 }
 
+#texto_filtrado { font-style: italic; }
+
 .listado .listadofila, .filaDos, .filaDos{
     padding: 4 5 0 5;
     /*border-bottom:dotted 1px #ccc;*/
@@ -87,7 +89,6 @@ margin-top:15px;
 
 .listadocabecera div a:link, .listadocabecera div a:visited, .listadocabecera div a  { 
     color: gray;
-
     text-decoration: none;
 }
 
