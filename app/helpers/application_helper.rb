@@ -195,15 +195,15 @@ module ApplicationHelper
   end
 
   def etiqueta campo
-    etiqueta = {	"albaran.cliente.nombre"	=> ["Cliente", "1", 68],
-			"albaran.proveedor.nombre"	=> ["Proveedor", "1", 68],
-			"cliente.nombre"		=> ["Cliente", "1", 68],
+    etiqueta = {	"albaran.cliente.nombre"	=> ["Cliente", "1", 65],
+			"albaran.proveedor.nombre"	=> ["Proveedor", "1", 65],
+			"cliente.nombre"		=> ["Cliente", "1", 65],
 			"familia.nombre"		=> ["Familia", "1_2", 22],
-			"proveedor.nombre"		=> ["Proveedor", "1", 68],
+			"proveedor.nombre"		=> ["Proveedor", "1", 65],
 			"codigo"			=> ["Código", "1_2", 22],
 			"producto.codigo"		=> ["Código/ISBN", "1_2", 22],
-			"producto.nombre"		=> ["Nombre/Título", "1", 68],
-			"nombre"			=> ["Nombre/Título", "1", 68],
+			"producto.nombre"		=> ["Nombre/Título", "1", 65],
+			"nombre"			=> ["Nombre/Título", "1", 65],
 			"autor"				=> ["Autor", "2_3", 28],
 			"producto.precio"		=> ["P.Venta", "1_3", 14, "f"],
 			"cantidad"			=> ["Cant.", "1_5", 8, "d"],

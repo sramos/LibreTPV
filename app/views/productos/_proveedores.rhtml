@@ -1,6 +1,6 @@
 <!--- Sublistado de proveedores de un producto --->
 
-<%= cabecera_sublistado "Pedididos Realizados", ["fecha","codigo","factura.codigo","proveedor.nombre"], params[:update] %>
+<%= cabecera_sublistado "Pedidos Realizados", ["fecha","codigo","factura.codigo","proveedor.nombre"], params[:update] %>
 <% i = 0 %>
 <% for objeto in @albaranes %>
   <div id="<%= params[:update] %>_proveedor_<%= (i += 1).to_s %>" class="fila" >

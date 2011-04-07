@@ -8,8 +8,8 @@
       Código/ISBN: <%= @producto.codigo %><br/>
     </div>
   <% end %>
-  <%= hidden_field('producto', 'codigo')%>
-  <%= hidden_field('producto', 'url_imagen')%>
+  <%= hidden_field('producto', 'codigo') %>
+  <%= hidden_field('producto', 'url_imagen') %>
   <div class="linea"><br/></div>
   <div class="linea">
     <%= selector "Familia", "producto", "familia_id", @familias.map {|u| [u.nombre,u.id]} %>
@@ -35,7 +35,7 @@
   <!--
   </div>
   <div class="imagen_libro" id="imagen_libro">
-    <img src="<%= @producto.url_imagen %>">
+    <img src="<%# @producto.url_imagen %>">
   </div>
   -->
 <%= final_formulario %>
