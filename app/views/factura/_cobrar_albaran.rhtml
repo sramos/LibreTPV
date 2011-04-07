@@ -20,7 +20,7 @@
   <div class="linea"><br/></div>
   <div class="linea">
     <%= texto 'Recibido (€)', 'recibido', '' %>
-      <%= observe_field( "formulario_campo_" , :frequency => 1, :update => "importe_devolver", :with => "'recibido='+value", :url => {:action => :calcula_cambio, :importe => params[:importe]} ) %>
+      <%= observe_field( "formulario_campo_recibido_" , :frequency => 1, :update => "importe_devolver", :with => "'recibido='+value", :url => {:action => :calcula_cambio, :importe => params[:importe]} ) %>
   </div>
   <div class="linea"><br/></div>
 <%= final_formulario({:etiqueta => "Cobrar"})%>

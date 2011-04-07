@@ -142,7 +142,7 @@ private
       cantidad = linea.cantidad
       descuento = linea.descuento
       nombre = truncate(linea.producto.nombre, :length => 31)
-      iva = linea.valor_iva
+      iva = linea.iva
       iva_total[iva] = iva_total.key?(iva) ? iva_total[iva] + (linea.total-linea.subtotal) : linea.total-linea.subtotal 
       subtotal += linea.subtotal 
       precio_total += linea.total 
