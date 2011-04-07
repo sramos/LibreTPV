@@ -2,7 +2,7 @@
 <div class="formulario_izq">
 <% if params[:nuevo] %>
 <%= texto "Codigo o ISBN", 'producto', 'codigo' %>
-  <%= observe_field( "formulario_campo_codigo", :frequency => 2, :update => "propiedades", :with => :codigo, :url => {:action => :producto_x_codigo, :nuevo => params[:nuevo], :inventario => params[:inventario], :template => 'propiedades'}, :before => "Element.show('spinner')", :success => "Element.hide('spinner')") %>
+  <%= observe_field( "formulario_campo_producto_codigo", :frequency => 2, :update => "propiedades", :with => :codigo, :url => {:action => :producto_x_codigo, :nuevo => params[:nuevo], :inventario => params[:inventario], :template => 'propiedades'}, :before => "Element.show('spinner')", :success => "Element.hide('spinner')") %>
 <% end %>
 
 <%= render :partial => "propiedades" %>
