@@ -2,17 +2,23 @@
 
 <fieldset class="filtrado" id="filtro_productos">
   <%= inicio_formulario( { :action => 'filtrado' }, false ) %>
-    <div class="elemento_derecha">
+    <div class="linea">
       <%= selector 'Criterio de Filtrado', 'filtro', 'tipo', @campos_filtro.map {|u| [u[0],u[1]]} %>
+      <%= observe_field( "filtro_tipo" , :function => 'if( document.getElementById("filtro_tipo").selectedIndex == 2 ){ Element.show("filtro_condicion");} else { Element.hide("filtro_condicion");}' ) %>
+      <div id="filtro_condicion" style="display: none;">
+        <%= selector '', 'filtro', 'condicion', [["igual a","="], ["mayor que",">"], ["menor que","<"]] %>
+      </div>
       <%= texto '', 'filtro', 'valor' %>
-      <div class='elemento_derecha'><br/> 
+      <div class='elemento_derecha' id='boton_filtrado'><br/> 
         <%= submit_tag( "Filtrar", :class => "boton", :onclick => "this.disabled=true") %>
       </div>
     </div>
   </form>
   <% if session[("productos_filtrado_valor").to_sym] && session[("productos_filtrado_valor").to_sym] != '' %>
     <div class='linea' id="texto_filtrado">
-      Filtrado por <%= session[("productos_filtrado_tipo").to_sym].capitalize %> >> "<%= session[("productos_filtrado_valor").to_sym] %>"
+      Filtrado por <%= session[("productos_filtrado_tipo").to_sym].capitalize %>
+      <%= session[("productos_filtrado_condicion").to_sym] ? session[("productos_filtrado_condicion").to_sym] : " >> " %>
+      "<%= session[("productos_filtrado_valor").to_sym] %>"
     </div>
   <% end %>
 </fieldset>

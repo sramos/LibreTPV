@@ -9,18 +9,23 @@ class ProductosController < ApplicationController
 
   def filtrado
     session[("productos_filtrado_tipo").to_sym] = params[:filtro][:tipo] if params[:filtro]
-    session[("productos_filtrado_valor").to_sym] = params[:filtro][:valor] if params[:filtro]
+    session[("productos_filtrado_valor").to_sym] = ( params[:filtro] && params[:filtro][:valor] != "" ) ? params[:filtro][:valor] :nil 
+    session[("productos_filtrado_condicion").to_sym] = params[:filtro] ? params[:filtro][:condicion] : nil 
     redirect_to :action => :listado
   end
 
   def listado
     #@campos_filtro = [["Nombre","nombre"], ["Autor","autor"], ["Codigo","codigo"] ,["Editor","editor"], ["Familia","familias.nombre"], ["Proveedor","proveedores.nombre"]]
-    @campos_filtro = [["Nombre","nombre"], ["Autor","autor"], ["Codigo","codigo"] ,["Editor","editor"], ["Familia","familias.nombre"]]
+    @campos_filtro = [["Nombre","nombre"], ["Autor","autor"], ["Cantidad","cantidad"], ["Codigo","codigo"] ,["Editor","editor"], ["Familia","familias.nombre"]]
+
     if session[("productos_filtrado_tipo").to_sym] && session[("productos_filtrado_valor").to_sym]
       if session[("productos_filtrado_tipo").to_sym] =~ /familias.nombre/
         @productos = Producto.find :all,
                 :include => [ :familia ],             
                 :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("productos_filtrado_valor").to_sym] + "%" ]
+      elsif session[("productos_filtrado_tipo").to_sym] =~ /cantidad/
+        @productos = Producto.find :all,
+                :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' ' + session[("productos_filtrado_condicion").to_sym] + ' ?', session[("productos_filtrado_valor").to_sym].to_i ]
       elsif session[("productos_filtrado_tipo").to_sym] =~ /proveedores.nombre/
         @productos = Producto.find :all
       else

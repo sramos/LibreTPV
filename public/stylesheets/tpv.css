@@ -25,6 +25,7 @@ body {
 #texto_filtrado {
     font-size: 13px;
     font-style: italic;
+    text-align: center;
 }
 
 .listado .listadofila, .filaDos, .filaDos{

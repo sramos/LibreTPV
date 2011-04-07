@@ -83,19 +83,19 @@ module ApplicationHelper
 
   def texto rotulo, objeto, atributo, valor=nil
     cadena = "<div class='elemento'>" + rotulo +"<br/>"
-    cadena << text_field( objeto, atributo , {:class => "texto", :id => "formulario_campo_" + atributo, :type => "d", :value => valor })
+    cadena << text_field( objeto, atributo , {:class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :type => "d", :value => valor })
     return cadena << "</div>"
   end
 
   def fecha rotulo, objeto, atributo, valor=nil
     cadena = "<div class='elemento_x15'>" + rotulo + "<br/>"
-    cadena << date_select(objeto, atributo, {:class => "texto", :id => "formulario_campo_" + atributo, :value => valor})
+    cadena << date_select(objeto, atributo, {:class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :value => valor})
     return cadena << "</div>"
   end
 
   def selector rotulo, objeto, atributo, valores, valor=nil
-    cadena = "<div class='elemento'>" + rotulo + "<br/>"
-    cadena << select(objeto, atributo, valores, {:class => "texto", :id => "formulario_campo_" + atributo, :value => valor})
+    cadena = "<div class='elemento' id='selector_" + objeto + "_" + atributo + "'>" + rotulo + "<br/>"
+    cadena << select(objeto, atributo, valores, {:class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :value => valor})
     return cadena << "</div>"
   end
 
