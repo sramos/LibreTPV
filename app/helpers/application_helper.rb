@@ -26,8 +26,10 @@ module ApplicationHelper
     return cadena
   end
 
-  def final_listado objeto
-    cadena = "</div>"
+  def final_listado objeto=nil
+    cadena = ""
+    cadena << "<div class='linea' id='paginado'><br/></div><div class='elemento_derecha'>" + will_paginate(objeto) + "</div>" if !objeto.nil?
+    cadena << "</div>"
     return cadena
   end
 
@@ -203,6 +205,7 @@ module ApplicationHelper
 			"codigo"			=> ["Código", "1_2", 22],
 			"producto.codigo"		=> ["Código/ISBN", "1_2", 22],
 			"producto.nombre"		=> ["Nombre/Título", "1", 65],
+			"nombre_producto"		=> ["Nombre/Título", "1", 65],
 			"nombre"			=> ["Nombre/Título", "1", 65],
 			"autor"				=> ["Autor", "2_3", 28],
 			"producto.precio"		=> ["P.Venta", "1_3", 14, "f"],
@@ -212,7 +215,9 @@ module ApplicationHelper
 			"descuento"			=> ["% Dto.", "1_5", 8, "d"],
 			"producto.familia.iva.valor"	=> ["% IVA", "1_5", 8, "d"],
 			"iva.nombre"			=> ["IVA aplicado", "1", 44],
+			"iva"				=> ["% IVA", "1_5", 8, "d"],
 			"precio_compra"			=> ["P.Bruto", "1_3", 14, "f"],
+			"precio_venta"			=> ["PVP", "1_3", 14, "f"],
 			"total"				=> ["Total", "1_3", 14, "f"],
 			"forma_pago.nombre"		=> ["Forma de Pago", "1", 46],
 			"factura.codigo"		=> ["Código de Factura", "1_2", 22],
@@ -220,6 +225,7 @@ module ApplicationHelper
 			"albaran.factura.fecha"		=> ["Fecha", "1_2", 22],
 			"albaran.codigo"		=> ["Código de Albaran", "1_2", 22],
 			"albaran.fecha"			=> ["Fecha", "1_2", 22],
+			"email"				=> ["Email", "2_3", 28],
 		}
     return etiqueta[campo] || [campo.capitalize, "1_2", 22]
   end

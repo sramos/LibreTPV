@@ -99,7 +99,6 @@ class FacturaController < ApplicationController
 private
 
   def obtiene_facturas 
-    # Hace una limpieza de los albaranes vacios
     case params[:seccion]
       when "caja"
         condicion = "cliente_id"
@@ -108,7 +107,7 @@ private
       when "trueke"
         condicion = "cliente_id"
     end
-    @facturas = Factura.find :all, :order => 'facturas.codigo DESC', :include => "albaran", :conditions => [ 'albarans.' + condicion + ' IS NOT NULL' ]
+    @facturas = Factura.paginate :page => params[:page], :per_page => ENV['TPV-PAGINADO'], :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => [ 'albarans.' + condicion + ' IS NOT NULL' ]
   end
 
   def codigo_factura_venta

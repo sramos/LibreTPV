@@ -1,9 +1,9 @@
 <!--- Sublistado de lineas de albaran --->
 
 <% if params[:seccion ] == 'productos' %>
-  <%= cabecera_sublistado "Productos", ["cantidad","producto.nombre","precio_compra","descuento","subtotal","producto.familia.iva.valor", "total"], params[:update] %>
+  <%= cabecera_sublistado "Productos", ["cantidad","nombre_producto","precio_compra","descuento","subtotal","iva", "total"], params[:update] %>
 <% else %>
-  <%= cabecera_sublistado "Productos", ["cantidad","producto.nombre","producto.precio","descuento","subtotal","producto.familia.iva.valor", "total"], params[:update] %>
+  <%= cabecera_sublistado "Productos", ["cantidad","nombre_producto","precio_venta","descuento","subtotal","iva", "total"], params[:update] %>
 <% end %>
 <% i = 0 %>
 <% for linea in @albaran_lineas %>
