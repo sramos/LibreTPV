@@ -28,7 +28,7 @@ module ApplicationHelper
 
   def final_listado objeto=nil
     cadena = ""
-    cadena << "<div class='linea' id='paginado'><br/></div><div class='elemento_derecha'>" + will_paginate(objeto) + "</div>" if !objeto.nil?
+    cadena << "<div class='linea' id='paginado'><br/></div><div class='elemento_derecha'>" + (will_paginate(objeto) || "") + "</div>" if !objeto.nil?
     cadena << "</div>"
     return cadena
   end
