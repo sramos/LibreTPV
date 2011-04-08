@@ -152,6 +152,11 @@ margin-top:15px;
     width:320px;
 }
 
+.importe_medio {
+    font-size: 13px;
+    font-weight: bold;
+}
+
 .caja_lateral, .caja_completa {
   border:dotted 0px #ccc;
   -moz-border-radius: 7px;

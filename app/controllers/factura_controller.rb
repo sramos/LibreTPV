@@ -88,7 +88,7 @@ class FacturaController < ApplicationController
     pago.forma_pago_id = params[:forma_pago][:id]
     pago.save
     imprime_ticket factura.albaran_id, FormaPago.find_by_id(params[:forma_pago][:id]).nombre
-    redirect_to :controller => :albarans, :action => :aceptar_albaran, :id => factura.albaran_id
+    redirect_to :controller => :albarans, :action => :aceptar_albaran, :id => factura.albaran_id, :forma_pago => params[:forma_pago], :importe => params[:importe], :recibido => params[:recibido]
   end
 
   def calcula_cambio
