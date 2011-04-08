@@ -20,19 +20,19 @@ class ProductosController < ApplicationController
 
     if session[("productos_filtrado_tipo").to_sym] && session[("productos_filtrado_valor").to_sym]
       if session[("productos_filtrado_tipo").to_sym] =~ /familias.nombre/
-        @productos = Producto.find :all,
+        @productos = Producto.paginate :page => params[:page], :per_page => ENV['TPV-PAGINADO'], 
 		:order => 'nombre ASC',
                 :include => [ :familia ],             
                 :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("productos_filtrado_valor").to_sym] + "%" ]
       elsif session[("productos_filtrado_tipo").to_sym] =~ /cantidad/
-        @productos = Producto.find :all,
+        @productos = Producto.paginate :page => params[:page], :per_page => ENV['TPV-PAGINADO'],
 		:order => 'nombre ASC',
                 :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' ' + session[("productos_filtrado_condicion").to_sym] + ' ?', session[("productos_filtrado_valor").to_sym].to_i ]
       elsif session[("productos_filtrado_tipo").to_sym] =~ /proveedores.nombre/
-        @productos = Producto.find :all,
+        @productos = Producto.paginate :page => params[:page], :per_page => ENV['TPV-PAGINADO'],
 		:order => 'nombre ASC'
       else
-        @productos = Producto.find :all, 
+        @productos = Producto.paginate :page => params[:page], :per_page => ENV['TPV-PAGINADO'],
 		:order => 'nombre ASC',
 		:conditions => [ session[("productos_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("productos_filtrado_valor").to_sym] + "%" ]
       end
