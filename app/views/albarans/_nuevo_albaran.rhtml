@@ -1,14 +1,14 @@
 
 <%= inicio_formulario( { :action => 'modificar', :id => @albaran }, false ) %>
   <%= hidden_field 'albaran', 'codigo' %>
+  <%= fecha 'Fecha', 'albaran', 'fecha' %>
+  <% if params[:seccion] == 'productos' %>
+      <%= texto 'Código de Albaran', 'albaran', 'codigo' %>
+  <% end %>
   <% if params[:seccion] == 'productos' %>
     <%= selector 'Proveedor', 'albaran', 'proveedor_id', @proveedores.map {|u| [u.nombre,u.id]} %>
   <% else %>
     <%= selector 'Cliente', 'albaran', 'cliente_id', @clientes.map {|u| [u.nombre,u.id]} %>
-  <% end %>
-  <%= fecha 'Fecha', 'albaran', 'fecha' %>
-  <% if params[:seccion] == 'productos' %>
-      <%= texto 'Código de Albaran', 'albaran', 'codigo' %>
   <% end %>
   <br/>
 <%= final_formulario({:etiqueta => params[:seccion] == 'productos' ? "Nuevo Albaran" : "Nueva Venta"})%>
