@@ -7,7 +7,7 @@ class Factura < ActiveRecord::Base
 
   private
     def verificar_borrado
-      errors.add( "pago", "No se puede borrar la factura: Hay pagos asignados." ) unless self.pagos.empty?
+      errors.add( "pago", "No se puede borrar la factura: Hay pagos realizados." ) unless self.pagos.empty?
     end
 
 end

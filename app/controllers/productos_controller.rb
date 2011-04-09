@@ -93,11 +93,24 @@ class ProductosController < ApplicationController
     lineas = AlbaranLinea.find :all, :conditions=>{:producto_id => params[:id]}
     # Obtiene los albaranes donde esta el producto
     @albaranes=[]
-    lineas.each { |linea| @albaranes.push(linea.albaran) if linea.albaran.cerrado }
+    lineas.each { |linea| @albaranes.push(linea.albaran) if linea.albaran && linea.albaran.proveedor && linea.albaran.cerrado }
     # Elimina los albaranes duplicados
     @albaranes.uniq!
     render :update do |page|
       page.replace_html params[:update], :partial => "proveedores"
+    end
+  end
+
+  # Devuelve sublistado de ventas del producto
+  def ventas
+    lineas = AlbaranLinea.find :all, :conditions=>{:producto_id => params[:id]}
+    # Obtiene los albaranes donde esta el producto
+    @albaranes=[]
+    lineas.each { |linea| @albaranes.push(linea.albaran) if linea.albaran && linea.albaran.cliente && linea.albaran.cerrado }
+    # Elimina los albaranes duplicados
+    @albaranes.uniq!
+    render :update do |page|
+      page.replace_html params[:update], :partial => "clientes"
     end
   end
 

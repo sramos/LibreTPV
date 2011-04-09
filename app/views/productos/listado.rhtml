@@ -30,12 +30,14 @@
   <div id="productos_<% i += 1 %>" class="listadofila">
     <%= fila_listado objeto %>
     <div class="listado_derecha">
-      <%= link_to_remote icono('User',{:title => "Ver Proveedores de este producto"}), :url => { :action => 'proveedores', :id => objeto.id, :update => "productos_sub_" + i.to_s } %>
+      <%= link_to_remote icono('Cart2',{:title => "Ver Pedidos"}), :url => { :action => 'proveedores', :id => objeto.id, :update => "productos_sub_" + i.to_s + "_compras" } %>
+      <%= link_to_remote icono('Cart',{:title => "Ver Ventas"}), :url => { :action => 'ventas', :id => objeto.id, :update => "productos_sub_" + i.to_s + "_ventas"} %>
       <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id, :inventario => true }, "Editar Libro" %>
       <%= borrado icono('Trash',{:title => 'Borrar'}), { :action => 'borrar', :id => objeto.id } , 'Borrar Libro', objeto.nombre , :ajax => false %>
     </div>
   </div>
-  <div id="productos_sub_<%= i.to_s %>"></div>
+  <div id="productos_sub_<%= i.to_s %>_compras"></div>
+  <div id="productos_sub_<%= i.to_s %>_ventas"></div>
 <% end %>
 <%= final_listado @productos %>
 </div>
