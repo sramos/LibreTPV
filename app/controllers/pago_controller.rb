@@ -35,7 +35,8 @@ class PagoController < ApplicationController
       page.replace_html params[:update], :partial => "listado"
       page.visual_effect :highlight, params[:update] , :duration => 6
       page.replace 'formulario_ajax', :inline => '<%= mensaje_error(@pago) %><br>'
-      page.replace 'listado_campo_valor_pagado_' + params[:factura_id], :inline => '<div id="listado_campo_valor_pagado_<%= params[:factura_id]%>" class="listado_campo">true</div>' if @pago_pendiente <= 0
+      page.hide 'factura_' + factura.id.to_s + '_aviso_pago' if factura.pagado
+      #page.replace 'listado_campo_valor_pagado_' + params[:factura_id], :inline => '<div id="listado_campo_valor_pagado_<%= params[:factura_id]%>" class="listado_campo">true</div>' if @pago_pendiente <= 0
       page.call("Modalbox.resizeToContent")
     end
   end
@@ -53,7 +54,8 @@ class PagoController < ApplicationController
     render :update do |page|
       page.replace_html params[:update], :partial => "listado"
       page.visual_effect :highlight, params[:update] , :duration => 6
-      page.replace 'listado_campo_valor_pagado_' + params[:factura_id], :inline => '<div id="listado_campo_valor_pagado_<%= params[:factura_id] %>" class="listado_campo">&nbsp;</div>' if @pago_pendiente > 0
+      #page.replace 'listado_campo_valor_pagado_' + params[:factura_id], :inline => '<div id="listado_campo_valor_pagado_<%= params[:factura_id] %>" class="listado_campo">&nbsp;</div>' if @pago_pendiente > 0
+      page.show 'factura_' + factura.id.to_s + '_aviso_pago' unless factura.pagado
       page.replace_html 'MB_content', :inline => '<%= mensaje_error(@pago, :eliminar => true) %><br>'
       page.call("Modalbox.resizeToContent")
     end
