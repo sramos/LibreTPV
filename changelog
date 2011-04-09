@@ -1,6 +1,17 @@
 2011-04-01 Santiago Ramos <sramos@sitiodistinto.net> Version 0.4
 
-  *
+  * Cambios en tamaño de caracteres por campo para listados
+  * Ventas por producto
+  * Retoques en borrado de pagos de facturas
+  * Las facturas se pueden borrar (convertir de nuevo en 
+    albaranes abiertos) cuando no tienen pagos realizados.
+  * Borrado de líneas de albaran cuando se borra un albaran
+  * Información de cobro y cambio a devolver tras venta
+  * Paginado de facturas y productos
+  * Busqueda por titulo, autor, cantidad, codigo, editor y
+    familia. La búsqueda se guarda en la sesión
+  * Lineas de albaran contiene nombre del producto, iva y
+    precio de venta (cuando sea una venta)
 
 2011-03-25 Santiago Ramos <sramos@sitiodistinto.net> Version 0.3
 
