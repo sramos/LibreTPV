@@ -1,0 +1,16 @@
+<!--- Sublistado de albaranes de un producto --->
+
+<% if compra %>
+  <%= cabecera_sublistado "Compras", ["fecha","codigo","factura.codigo","proveedor.nombre"], params[:update] %>
+<% else %>
+  <%= cabecera_sublistado "Ventas", ["fecha","factura.codigo","cliente.nombre"], params[:update] %>
+<% end %>
+<% i = 0 %>
+<% for objeto in @albaranes %>
+  <div id="<%= params[:update] %>_linea_<%= (i += 1).to_s %>" class="fila" >
+    <%= fila_sublistado objeto %>
+  </div>
+<% end %>
+<%= final_sublistado %>
+<br/>
+

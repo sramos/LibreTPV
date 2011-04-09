@@ -89,7 +89,7 @@ class ProductosController < ApplicationController
   end
 
   # Devuelve sublistado de proveedores del producto
-  def proveedores
+  def albaranes_compra
     lineas = AlbaranLinea.find :all, :conditions=>{:producto_id => params[:id]}
     # Obtiene los albaranes donde esta el producto
     @albaranes=[]
@@ -97,12 +97,12 @@ class ProductosController < ApplicationController
     # Elimina los albaranes duplicados
     @albaranes.uniq!
     render :update do |page|
-      page.replace_html params[:update], :partial => "proveedores"
+      page.replace_html params[:update], :partial => "albaranes", :locals => { :compra => true }
     end
   end
 
   # Devuelve sublistado de ventas del producto
-  def ventas
+  def albaranes_venta
     lineas = AlbaranLinea.find :all, :conditions=>{:producto_id => params[:id]}
     # Obtiene los albaranes donde esta el producto
     @albaranes=[]
@@ -110,7 +110,7 @@ class ProductosController < ApplicationController
     # Elimina los albaranes duplicados
     @albaranes.uniq!
     render :update do |page|
-      page.replace_html params[:update], :partial => "clientes"
+      page.replace_html params[:update], :partial => "albaranes", :locals => { :compra => false }
     end
   end
 
