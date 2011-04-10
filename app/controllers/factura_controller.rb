@@ -54,16 +54,17 @@ class FacturaController < ApplicationController
     else
       multiplicador = 1
     end
-    lineas.each do |linea|
-      producto=linea.producto
-      producto.cantidad += (linea.cantidad * multiplicador)
-      producto.save
+    if factura.destroy
+      lineas.each do |linea|
+        producto=linea.producto
+        producto.cantidad += (linea.cantidad * multiplicador)
+        producto.save
+      end
+      # Cambia el estado del albaran a abierto
+      albaran.cerrado = false
+      albaran.save
+      # Elimina la factura
     end
-    # Cambia el estado del albaran a abierto
-    albaran.cerrado = false
-    albaran.save
-    # Elimina la factura
-    factura.destroy
     flash[:error] = factura 
     redirect_to :action => :listado
   end
