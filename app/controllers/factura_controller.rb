@@ -108,16 +108,17 @@ private
       when "trueke"
         condicion = "cliente_id"
     end
-    @facturas = Factura.paginate :page => params[:page], :per_page => ENV['TPV-PAGINADO'], :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => [ 'albarans.' + condicion + ' IS NOT NULL' ]
+    @facturas = Factura.paginate :page => params[:page], :per_page => Configuracion.valor('PAGINADO'), :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => [ 'albarans.' + condicion + ' IS NOT NULL' ]
   end
 
   def codigo_factura_venta
     codigo = 0 
+    prefijo = Configuracion.valor("PREFIJO FACTURA VENTA")
     @facturas.each do |factura|
-      nuevo_codigo = /^#{ENV['TPV-FACTURA-PREFIX']}([0-9]+)$/.match(factura.codigo)
-      codigo = nuevo_codigo[1].to_i if nuevo_codigo[1] && nuevo_codigo[1].to_i > codigo
+      nuevo_codigo = /^#{prefijo}([0-9]+)$/.match(factura.codigo)
+      codigo = nuevo_codigo[1].to_i if nuevo_codigo && nuevo_codigo[1] && nuevo_codigo[1].to_i > codigo
     end 
-    return ENV['TPV-FACTURA-PREFIX'] + format("%010d", (codigo+1).to_s)
+    return prefijo + format("%010d", (codigo+1).to_s)
   end
 
   def imprime_ticket albaran_id, formadepago
@@ -127,11 +128,14 @@ private
     subtotal = 0
     iva_total={}
 
-    cadena =  "            ------------------------\n"
-    cadena += "            | La Esquina del Zorro |\n"
-    cadena += "            ------------------------\n\n"
-    cadena += " C.I.F. " + ENV['TPV-CIF'] + "\n"
-    cadena += " " + ENV['TPV-DIRECCION'] + "\n\n" 
+    nombre_corto = "| " + Configuracion.valor('NOMBRE CORTO EMPRESA') + " |"
+    pre_size = (46 - nombre_corto.length.to_i) / 2
+    cadena  = " " * pre_size + "-" * nombre_corto.length.to_i + "\n"
+    cadena += " " * pre_size + nombre_corto + "\n"
+    cadena += " " * pre_size + "-" * nombre_corto.length.to_i + "\n\n"
+    cadena += " " + Configuracion.valor('NOMBRE LARGO EMPRESA') + "\n"
+    cadena += " C.I.F. " + Configuracion.valor('CIF') + "\n"
+    cadena += " " + Configuracion.valor('DIRECCION') + "\n\n" 
     cadena += " Cliente: " + albaran.cliente.nombre + "\n"
     cadena += " Fecha: " + Time.now.strftime("%d-%m-%Y  %H:%M") + "\n"
     cadena += " Ticket: " + albaran.factura.codigo + "\n"
@@ -155,7 +159,7 @@ private
     end
     cadena += format "\n %-41s %6s\n\n.", "Total Euros (IVA incluido)", format("%.2f",precio_total.to_s)
     File.open("/tmp/ticket", 'w') {|f| f.write(cadena) }
-    system(ENV['TPV-PRINTER'] + " /tmp/ticket")
+    system(Configuracion.valor('COMANDO IMPRESION') + " /tmp/ticket")
   end
 
 end

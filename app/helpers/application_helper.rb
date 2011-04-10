@@ -186,7 +186,7 @@ module ApplicationHelper
       when "admin"
         controladores = [ #{ :rotulo => "Usuarios", :controlador => "usuarios"},
                           { :rotulo => "Backup", :controlador => "backup"},
-			  #{ :rotulo => "Parámetros", :controlador => "parametros"},
+			  { :rotulo => "Parámetros", :controlador => "configuracion"},
                           { :rotulo => "Formas de Pago", :controlador => "forma_pago"},
                           { :rotulo => "Tipos de IVA", :controlador => "iva"},
                           { :rotulo => "Familias de Productos", :controlador => "familia"},
@@ -226,6 +226,8 @@ module ApplicationHelper
 			"albaran.codigo"		=> ["Código de Albaran", "2_3", 20],
 			"albaran.fecha"			=> ["Fecha", "1_2", 13],
 			"email"				=> ["Email", "2_3", 20],
+			"nombre_param"			=> ["Parámetro","1", 36],
+			"valor_param"			=> ["Valor", "1", 36],
 		}
     return etiqueta[campo] || [campo.capitalize, "1_2", 13]
   end
