@@ -31,7 +31,7 @@
         <li><a id="seccion_productos" href="/productos/productos/"> <div class="<%= params[:seccion] == 'productos' ? 'seleccionado' : ''%>" > Productos </div> </a> </li>
 <!--        <li><a id="seccion_trueke" href="/caja/albarans"> <div class="<%# params[:seccion] == 'trueke' ? 'seleccionado' : ''%>" > Trueke </div> </a> </li>
         <li><a id="seccion_tesoreria" href="/caja/albarans/"> <div class="<%= params[:seccion] == 'tesoreria' ? 'seleccionado' : ''%>" > Tesoreria </div> </a> </li> -->
-        <li><a id="seccion_admin" href="/admin/cliente/"> <div class="<%= params[:seccion] == 'admin' ? 'seleccionado' : ''%>" > Admin </div> </a> </li>
+        <li><a id="seccion_admin" href="/admin/configuracion/"> <div class="<%= params[:seccion] == 'admin' ? 'seleccionado' : ''%>" > Admin </div> </a> </li>
     </ul></div>
     <div id="estado">
       <%= params[:seccion].capitalize + " - " + controlador_rotulo(params[:controller]) %>

@@ -170,11 +170,12 @@ module ApplicationHelper
       when "caja"
         controladores = [ #{ :rotulo => "Pedidos", :controlador => "pedidos" },
                           { :rotulo => "Facturas Clientes" , :controlador => "factura"},
-#                          { :rotulo => "Devoluciones" , :controlador => "devoluciones"},
+                          { :rotulo => "Clientes" , :controlador => "cliente"},
                           { :rotulo => "TPV", :controlador => "albarans" } ]
       when "productos"
         controladores = [ { :rotulo => "Facturas Proveedores", :controlador => "factura"},
                           { :rotulo => "Albaranes de entrada", :controlador => "albarans"},
+                          { :rotulo => "Proveedores" , :controlador => "proveedor"},
                           { :rotulo => "Inventario", :controlador => "productos"} ]
       when "tesoreria"
         controladores = [ { :rotulo => "Arqueo de caja", :controlador => "arqueo"},
@@ -189,9 +190,7 @@ module ApplicationHelper
 			  { :rotulo => "Parámetros", :controlador => "configuracion"},
                           { :rotulo => "Formas de Pago", :controlador => "forma_pago"},
                           { :rotulo => "Tipos de IVA", :controlador => "iva"},
-                          { :rotulo => "Familias de Productos", :controlador => "familia"},
-                          { :rotulo => "Proveedores", :controlador => "proveedor"},
-                          { :rotulo => "Clientes", :controlador => "cliente"} ]
+                          { :rotulo => "Familias de Productos", :controlador => "familia"} ]
     end
     return controladores
   end
