@@ -48,14 +48,14 @@ Rails::Initializer.run do |config|
   # En apache se define a traves de la directiva:
   #         SetEnv GOR_SITEID "nombre_instancia"
   #
-  ENV['RAILS_ETC'] ||= "/etc/libretpv/#{ENV['LIBRETPV-SITEID']}"
+  ENV['RAILS_ETC'] ||= "/etc/libretpv/#{ENV['LIBRETPV_SITEID']}"
   ENV['RAILS_LOG'] ||= "/var/log/libretpv/#{ENV['LIBRETPV_SITEID']}"
   ENV['RAILS_CACHE'] ||= "/var/cache/libretpv/#{ENV['LIBRETPV_SITEID']}"
   ENV['RAILS_TMP'] ||= ENV['LIBRETPV_SITEID'] ? "/var/tmp/libretpv" : Rails.root.join('tmp')
 
-  config.database_configuration_file = ENV['RAILS_ETC'] + '-database.yml' unless !ENV['GOR_SITEID']
-  config.log_path = ENV['RAILS_LOG'] + "." + ENV['RAILS_ENV'] + ".log" unless !ENV['GOR_SITEID']
-  config.cache_store = :file_store, ENV['RAILS_CACHE'] unless !ENV['GOR_SITEID']
+  config.database_configuration_file = ENV['RAILS_ETC'] + '-database.yml' unless !ENV['LIBRETPV_SITEID']
+  config.log_path = ENV['RAILS_LOG'] + "." + ENV['RAILS_ENV'] + ".log" unless !ENV['LIBRETPV_SITEID']
+  config.cache_store = :file_store, ENV['RAILS_CACHE'] unless !ENV['LIBRETPV_SITEID']
 
   #
   # Obtiene la version para mostrarla en el header de la pagina
