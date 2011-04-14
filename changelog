@@ -1,6 +1,13 @@
 2011-04-09 Santiago Ramos <sramos@sitiodistinto.net> Version 0.5
 
-  *
+  * Controlador de Proveedores movido a seccion Productos
+  * Controlador de Clientes movido a seccion TPV
+  * Version de la app en la pagina web
+  * Adaptaciones para empaquetado debian
+  * Correccion de bug en borrado de facturas
+  * Parametros de configuracion de la tienda en seccion Admin
+  * Unificacion de metodos de calculo de precio bruto y
+    precio con iva
 
 2011-04-01 Santiago Ramos <sramos@sitiodistinto.net> Version 0.4
 
