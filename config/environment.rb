@@ -65,7 +65,7 @@ Rails::Initializer.run do |config|
       linea =~ /^\s*(\S+).+Version\s+(.+)$/
       ENV['TPV_VERSION'] = $2 + " (" + $1 + ")" if $1 && $2
     end
-  end
+  end if File.exists?(RAILS_ROOT + "/changelog")
   ENV['TPV_VERSION'] ||= "desconocida"
 
 
