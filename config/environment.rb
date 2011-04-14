@@ -42,7 +42,33 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
 
-  ENV['RAILS_TMP'] = Rails.root.join('tmp')
+  #
+  # Configura los paths para multisitio. Con la variable de entorno GOR_SITEID se 
+  # define los paths particulares de una instancia concreta.
+  # En apache se define a traves de la directiva:
+  #         SetEnv GOR_SITEID "nombre_instancia"
+  #
+  ENV['RAILS_ETC'] ||= "/etc/libretpv/#{ENV['LIBRETPV-SITEID']}"
+  ENV['RAILS_LOG'] ||= "/var/log/libretpv/#{ENV['LIBRETPV_SITEID']}"
+  ENV['RAILS_CACHE'] ||= "/var/cache/libretpv/#{ENV['LIBRETPV_SITEID']}"
+  ENV['RAILS_TMP'] ||= ENV['LIBRETPV_SITEID'] ? "/var/tmp/libretpv" : Rails.root.join('tmp')
+
+  config.database_configuration_file = ENV['RAILS_ETC'] + '-database.yml' unless !ENV['GOR_SITEID']
+  config.log_path = ENV['RAILS_LOG'] + "." + ENV['RAILS_ENV'] + ".log" unless !ENV['GOR_SITEID']
+  config.cache_store = :file_store, ENV['RAILS_CACHE'] unless !ENV['GOR_SITEID']
+
+  #
+  # Obtiene la version para mostrarla en el header de la pagina
+  #
+  File.open(RAILS_ROOT + "/changelog", "r") do |fichero|
+    while (linea=fichero.gets) && ENV['TPV_VERSION'].nil?
+      linea =~ /^\s*(\S+).+Version\s+(.+)$/
+      ENV['TPV_VERSION'] = $2 + " (" + $1 + ")" if $1 && $2
+    end
+  end
+  ENV['TPV_VERSION'] ||= "desconocida"
+
+
   ENV['TPV-PAGINADO'] = "25"
 
   ENV['TPV-CIF'] = 'F86139771'
