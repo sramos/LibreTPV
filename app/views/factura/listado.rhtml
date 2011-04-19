@@ -11,7 +11,7 @@
       <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id }, "Editar factura" %>
       <%= borrado icono('Trash',{:title => 'Borrar'}), { :action => 'borrar', :id => objeto.id } ,
 		'Borrar Factura', 'Factura: ' + objeto.codigo + " (" + objeto.fecha.to_s + ")" + '<br>IMPORTANTE: Sólo debería borrar la factura si no ha emitió aún ticket o comprobante o no se han realizado pagos sobre ésta.<br>Se volverá a generar el albarán con estado abierto.' , :ajax => false %>
-      <%# link_to icono('Printer',{:title => "Imprimir"}), :action => :imprimir, :id => objeto %>
+      <%= link_to icono('Printer',{:title => "Imprimir"}), :action => :imprimir, :id => objeto %>
     </div>
     <div class="listado_derecha" id="factura_<%= objeto.id.to_s %>_aviso_pago" <%= 'style="display:none;"' if objeto.pagado %> >
       <%= icono('Exclamation', {:title => "La factura no está completamente pagada!", :style => ( objeto.pagado ? 'display: none;' : '') }) %>
