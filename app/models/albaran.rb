@@ -5,4 +5,5 @@ class Albaran < ActiveRecord::Base
   belongs_to :proveedor
   has_one :factura
 
+  def 
 end
