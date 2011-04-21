@@ -4,6 +4,13 @@
   <% if params[:seccion] == 'productos' %>
     <div class="elemento" %>Proveedor<br/><%= proveedor %></div>
     <%= texto "Código de Factura", 'factura', 'codigo' %>
+  <% elsif params[:seccion] == 'tesoreria' %>
+    <%= texto "Base Imponible", 'factura', 'base_imponible' %>
+    <%= selector "IVA", 'factura', 'valor_iva', @ivas.map {|u| [u.nombre,u.valor]} %>
+    <%= texto "% IRPF", 'factura', 'valor_irpf' %>
+    </div><div class="linea">
+    <%= selector "Proveedor", 'factura', 'proveedor_id', @proveedores.map {|u| [u.nombre,u.id]} %>
+    <%= texto "Código de Factura", 'factura', 'codigo' %>
   <% else %>
     <%= selector "Cliente", 'albaran', 'cliente_id', @clientes.map {|u| [u.nombre,u.id]} %>  
   <% end %>

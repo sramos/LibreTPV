@@ -1,13 +1,19 @@
 <!--- Listado de facturas --->
 
 <div class="caja_completa" id="listado_facturas">
-<%= cabecera_listado ["fecha", "codigo", params[:seccion] == "productos" ? "albaran.proveedor.nombre" : "albaran.cliente.nombre", "importe"] %>
+<% if params[:seccion] == "tesoreria" %>
+  <%= cabecera_listado ["fecha", "codigo", "proveedor.nombre", "base_imponible", "valor_iva", "valor_irpf", "importe"], { :title => "Nueva Factura de Servicios", :url => { :action => :editar} } %>
+<% else %>
+  <%= cabecera_listado ["fecha", "codigo", (params[:seccion] == "productos"?"albaran.proveedor.nombre":"albaran.cliente.nombre"), "importe"] %>
+<% end %>
 <% for objeto in @facturas %>
   <div id="factura_<% objeto.id.to_s %>" class="listadofila">
     <%= fila_listado objeto %>
     <div class="listado_derecha">
       <%= link_to_remote icono('Currency Euro',{:title => "Ver pagos"}), :url => { :controller => 'pago', :action => 'pagos', :factura_id => objeto.id, :update => "factura_sub_" + objeto.id.to_s + "_pago" } %>
-      <%= link_to_remote icono((params[:seccion] == 'productos')?'Cart2':'Cart',{:title => "Ver productos"}), :url => { :controller => 'albaran_lineas', :action => 'lineas', :albaran_id => objeto.albaran_id, :update => "factura_sub_" + objeto.id.to_s + "_albaran" } %>
+      <% if params[:seccion] != "tesoreria" %>
+        <%= link_to_remote icono((params[:seccion] == 'productos')?'Cart2':'Cart',{:title => "Ver productos"}), :url => { :controller => 'albaran_lineas', :action => 'lineas', :albaran_id => objeto.albaran_id, :update => "factura_sub_" + objeto.id.to_s + "_albaran" } %>
+      <% end %>
       <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id }, "Editar factura" %>
       <%= borrado icono('Trash',{:title => 'Borrar'}), { :action => 'borrar', :id => objeto.id } ,
 		'Borrar Factura', 'Factura: ' + objeto.codigo + " (" + objeto.fecha.to_s + ")" + '<br>IMPORTANTE: Sólo debería borrar la factura si no ha emitió aún ticket o comprobante o no se han realizado pagos sobre ésta.<br>Se volverá a generar el albarán con estado abierto.' , :ajax => false %>

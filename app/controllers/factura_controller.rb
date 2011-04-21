@@ -8,6 +8,7 @@ class FacturaController < ApplicationController
   def index
     flash[:mensaje] = "Listado de Facturas de Proveedores" if params[:seccion] == "productos"
     flash[:mensaje] = "Listado de Facturas de Clientes" if params[:seccion] == "caja"
+    flash[:mensaje] = "Listado de Facturas de Servicios" if params[:seccion] == "tesoreria"
     redirect_to :action => :listado
   end
 
@@ -15,19 +16,24 @@ class FacturaController < ApplicationController
   end
 
   def editar
-    @factura = Factura.find(params[:id])
-    @albaran = @factura.albaran
-    if params[:seccion] != "productos"
-      @clientes = Cliente.all
+    @factura = params[:id] ? Factura.find(params[:id]) : nil 
+    @albaran = @factura.albaran if @factura 
+    if params[:seccion] == "tesoreria"
+      @proveedores = Proveedor.all
+      @ivas = Iva.all
     end
-    render :partial => "formulario", :locals => { :proveedor => (@albaran.proveedor.nombre if @albaran.proveedor_id) }
+    @clientes = Cliente.all if params[:seccion] == "caja"
+    render :partial => "formulario", :locals => { :proveedor => (@albaran.proveedor.nombre if @albaran && @albaran.proveedor_id) }
   end
 
   def modificar
-    factura = Factura.find(params[:id])
-    if params[:seccion] != "productos"
+    factura = params[:id] ? Factura.find(params[:id]) : Factura.new
+    if params[:seccion] == "caja"
       albaran = factura.albaran
       albaran.update_attributes params[:albaran]
+    elsif params[:seccion] == "tesoreria"
+      # Guardamos 2 veces en el caso de tesoreria para poder hacer el calculo segun la base imponible
+      factura.update_attributes params[:factura]
     end
     factura.update_attributes params[:factura]
     flash[:error] = factura
@@ -46,24 +52,29 @@ class FacturaController < ApplicationController
 
   def borrar 
     factura = Factura.find(params[:id])
-    albaran = factura.albaran
-    # Primero elimina los productos relacionados del stock
-    lineas = albaran.albaran_lineas
-    if params[:seccion] == "productos"
-      multiplicador = -1
-    else
-      multiplicador = 1
-    end
-    if factura.destroy
-      lineas.each do |linea|
-        producto=linea.producto
-        producto.cantidad += (linea.cantidad * multiplicador)
-        producto.save
+
+    # Cuando no son facturas externas hay que modificar el inventario
+    if params[:seccion] != "tesoreria"
+      albaran = factura.albaran
+      # Primero elimina los productos relacionados del stock
+      lineas = albaran.albaran_lineas
+      if params[:seccion] == "productos"
+        multiplicador = -1
+      else
+        multiplicador = 1
       end
-      # Cambia el estado del albaran a abierto
-      albaran.cerrado = false
-      albaran.save
-      # Elimina la factura
+      if factura.destroy
+        lineas.each do |linea|
+          producto=linea.producto
+          producto.cantidad += (linea.cantidad * multiplicador)
+          producto.save
+        end
+        # Cambia el estado del albaran a abierto
+        albaran.cerrado = false
+        albaran.save
+      end
+    else
+      factura.destroy
     end
     flash[:error] = factura 
     redirect_to :action => :listado
@@ -102,13 +113,15 @@ private
   def obtiene_facturas 
     case params[:seccion]
       when "caja"
-        condicion = "cliente_id"
+        condicion = "albarans.cliente_id IS NOT NULL"
       when "productos"
-        condicion = "proveedor_id"
+        condicion = "albarans.proveedor_id IS NOT NULL"
+      when "tesoreria"
+        condicion = "albaran_id IS NULL"
       when "trueke"
-        condicion = "cliente_id"
+        condicion = "albarans.cliente_id IS NOT NULL"
     end
-    @facturas = Factura.paginate :page => params[:page], :per_page => Configuracion.valor('PAGINADO'), :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => [ 'albarans.' + condicion + ' IS NOT NULL' ]
+    @facturas = Factura.paginate :page => params[:page], :per_page => Configuracion.valor('PAGINADO'), :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => [ condicion ]
   end
 
   def codigo_factura_venta

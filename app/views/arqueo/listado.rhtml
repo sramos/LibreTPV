@@ -1,0 +1,49 @@
+<!--- Arqueo de Caja --->
+<% if session[("arqueo_filtrado_condicion").to_sym] != '' %>
+  <fieldset id="filtro_arqueo_valores">
+  <div class='linea' id="texto_filtrado">
+      Resumen para => "<%= session[("arqueo_filtrado_condicion").to_sym] %>"
+    </div>
+  </fieldset>
+<% end %>
+
+<% if @resumen %>
+<div class="caja_completa" id="resumen_diario">
+  <%= cabecera_listado (@resumen.delete_at(0))[1] %>
+  <% i = 0 %>
+  <% for objeto in @resumen %>
+    <div id="resumen_diario_<%= i+=1 %>" class="<%= objeto[0]? "listadofila" : "listadocabecera" %>">
+      <%= fila_listado objeto[1] %>
+      <% if objeto[0] && objeto[0] != "" %>
+        <div class="listado_derecha">
+          <%= link_to_remote icono('Search',{:title => "Ver Facturas"}), :url => { :action => 'facturas', :tipo => objeto[0], :update => "facturas_" + objeto[0] + "_sub"} %>
+        </div>
+        <div id="facturas_<%= objeto[0] %>_sub"></div>
+      <% end %>
+    </div>
+  <% end %>
+  <%= final_listado %>
+</div>
+<% end %>
+
+<fieldset class="filtrado" id="filtro_arqueo">
+  <%= inicio_formulario( { :action => 'filtrado' }, false ) %>
+    <div class="linea">
+      <%= selector 'Resumen para', 'filtro', 'tipo', @campos_filtro.map {|u| [u[0],u[1]]} %>
+      <%= observe_field( "filtro_tipo" , :function => 'Element.hide("filtro_dia");Element.hide("filtro_mes");Element.hide("filtro_anno");if( document.getElementById("filtro_tipo").selectedIndex == 0 ){ Element.show("filtro_dia");} else if (document.getElementById("filtro_tipo").selectedIndex==1){ Element.show("filtro_mes");} else { Element.show("filtro_anno");}' ) %>
+      <div id="filtro_dia">
+        <%= fecha "Fecha", "filtro", "dia" %>
+      </div>
+      <div id="filtro_mes" style="display: none;">
+        <%= fecha_mes "Mes", "filtro", "mes" %>
+      </div>
+      <div id="filtro_anno" style="display: none;">
+        <%= fecha_anno "Año", "filtro", "anno" %>
+      </div>
+      <div class='elemento_derecha' id='boton_filtrado'><br/> 
+        <%= submit_tag( "Filtrar", :class => "boton", :onclick => "this.disabled=true") %>
+      </div>
+    </div>
+  </form>
+</fieldset>
+

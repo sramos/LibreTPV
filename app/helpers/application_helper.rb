@@ -17,10 +17,17 @@ module ApplicationHelper
 
   def fila_listado objeto, id=nil
     cadena = ""
+    i=0
     for campo in @campos_listado
-      valor=objeto
-      campo.split('.').each { |metodo| valor = valor.send(metodo) if valor }
-      cadena += "<div class='listado_campo_" + etiqueta(campo)[1] + (etiqueta(campo)[3]||"") + "' id='listado_campo_valor_" + campo + "_" + objeto.id.to_s + "'>" + (valor && valor.to_s != "" ? truncate(valor.to_s, :length => etiqueta(campo)[2]):"&nbsp;") + '</div>'
+      if objeto.class.name == "Array"
+        valor=objeto[i] || ""
+      else
+        valor=objeto
+        campo.split('.').each { |metodo| valor = valor.send(metodo) if valor }
+      end
+      i += 1
+      etiqueta=etiqueta(campo)
+      cadena += "<div class='listado_campo_" + etiqueta[1] + (etiqueta[3]||"") + "' id='listado_campo_valor_" + campo + (objeto.class.name == "Array" ? "" : "_" + objeto.id.to_s) + "'>" + (valor && valor.to_s != "" ? truncate(valor.to_s, :length => etiqueta[2]):"&nbsp;") + '</div>'
     end
     #cadena += "</div>"
     return cadena
@@ -89,10 +96,18 @@ module ApplicationHelper
     return cadena << "</div>"
   end
 
-  def fecha rotulo, objeto, atributo, valor=nil
+  def fecha rotulo, objeto, atributo, valor=nil, discards=[false, false]
     cadena = "<div class='elemento_x15'>" + rotulo + "<br/>"
-    cadena << date_select(objeto, atributo, {:class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :value => valor})
+    cadena << date_select(objeto, atributo, {:discard_day=>discards[0], :discard_month=>discards[1], :order => [:day,:month,:year], :class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :value => valor})
     return cadena << "</div>"
+  end
+
+  def fecha_mes rotulo, objeto, atributo, valor=nil
+    fecha rotulo, objeto, atributo, valor, [true,false]
+  end
+
+  def fecha_anno rotulo, objeto, atributo, valor=nil
+    fecha rotulo, objeto, atributo, valor, [true,true]
   end
 
   def selector rotulo, objeto, atributo, valores, valor=nil
@@ -178,9 +193,10 @@ module ApplicationHelper
                           { :rotulo => "Proveedores" , :controlador => "proveedor"},
                           { :rotulo => "Inventario", :controlador => "productos"} ]
       when "tesoreria"
-        controladores = [ { :rotulo => "Arqueo de caja", :controlador => "arqueo"},
-                          { :rotulo => "Informes", :controlador => "informe"},
-                          { :rotulo => "Libro diario", :controlador => "libro"} ]
+        controladores = [ { :rotulo => "Informes", :controlador => "informe"},
+			  { :rotulo => "Arqueo de caja", :controlador => "arqueo"},
+                          { :rotulo => "Libro diario", :controlador => "libro"},
+                          { :rotulo => "Facturas de Servicios", :controlador => "factura"}  ]
       when "trueke"
         controladores = [ { :rotulo => "Cambios", :controlador => "cambio"} ]
 
@@ -227,6 +243,13 @@ module ApplicationHelper
 			"email"				=> ["Email", "2_3", 20],
 			"nombre_param"			=> ["Parámetro","1", 36],
 			"valor_param"			=> ["Valor", "1", 36],
+			"base_imponible"		=> ["Base Imp.", "1_3", 14, "f"],
+			"valor_iva"			=> ["% IVA", "1_5", 8, "d"],
+			"valor_irpf"			=> ["% IRPF", "1_5", 8, "d"],
+			"importe"			=> ["Importe", "1_3", 14, "f"],
+			"concepto"			=> ["Concepto", "1", 36],
+			"debe"				=> ["Debe", "1_3", 14, "f"],
+			"haber"				=> ["Haber", "1_3", 14, "f"],
 		}
     return etiqueta[campo] || [campo.capitalize, "1_2", 13]
   end
