@@ -8,6 +8,24 @@ class Factura < ActiveRecord::Base
   validates_numericality_of :importe, :greater_than => 0, :message => "La factura debe tener un importe."
   validates_presence_of :codigo, :message => "La factura debe tener un código."
 
+  # devuelve el debe de una factura
+  def debe
+    if (self.albaran && self.albaran.proveedor_id) || self.proveedor
+      return importe
+    else
+      return 0
+    end
+  end
+
+  # devuelve el haber de una factura
+  def haber
+    if self.albaran && self.albaran.cliente_id
+      return importe
+    else
+      return 0
+    end
+  end
+
   # devuelve la base imponible
   def base_imponible
     if ( valor_iva )
