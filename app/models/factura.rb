@@ -10,8 +10,8 @@ class Factura < ActiveRecord::Base
 
   # devuelve el debe de una factura
   def debe
-    if (self.albaran && self.albaran.proveedor_id) || self.proveedor
-      return importe
+    if (self.albaran && self.albaran.proveedor_id) || (self.proveedor && self.importe > 0)
+      return self.importe
     else
       return 0
     end
@@ -19,8 +19,8 @@ class Factura < ActiveRecord::Base
 
   # devuelve el haber de una factura
   def haber
-    if self.albaran && self.albaran.cliente_id
-      return importe
+    if (self.albaran && self.albaran.cliente_id) || (self.proveedor && self.importe < 0)
+      return self.importe.abs
     else
       return 0
     end
@@ -28,10 +28,12 @@ class Factura < ActiveRecord::Base
 
   # devuelve la base imponible
   def base_imponible
+    # Si hay un iva asociado a la factura completa (aunque sea 0)
     if ( valor_iva )
       return self.importe / (1 + (valor_iva.to_f - valor_irpf.to_f)/100 )
-    else
-      return self.importe
+    # Si la factura corresponde a un albaran 
+    elsif self.albaran
+      return self.importe 
     end
   end
 
