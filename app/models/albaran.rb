@@ -29,8 +29,8 @@ class Albaran < ActiveRecord::Base
 
   private
     def verificar_borrado
-      if !self.factura.empty?
-        errors.add( "albaran", "No se puede borrar albaran: Hay facturas asociadas." ) unless self.pagos.empty?
+      if !self.factura.nil?
+        errors.add( "albaran", "No se puede borrar albaran: Hay facturas asociadas." )
         false
       end
     end
