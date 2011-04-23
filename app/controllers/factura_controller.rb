@@ -105,7 +105,7 @@ class FacturaController < ApplicationController
 
   def calcula_cambio
     devolver = params[:recibido].to_f - params[:importe].to_f
-    render :inline => devolver>=0 ? 'A Devolver<br/>' + devolver.to_s + ' €' : '&nbsp;'
+    render :inline => devolver>=0 ? 'A Devolver<br/>' + format("%.2f",devolver.to_s) + ' €' : '&nbsp;'
   end
 
 private

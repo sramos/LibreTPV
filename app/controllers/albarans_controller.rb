@@ -48,8 +48,8 @@ class AlbaransController < ApplicationController
       else
         multiplicador = -1
         if ( params[:forma_pago] && FormaPago.find_by_id(params[:forma_pago][:id]).caja )
-          flash[:mensaje] = "Asegúrese de cobrar la venta!!!<div class='importe_medio'>Importe: " + params[:importe] 
-          flash[:mensaje] << "<br>Recibido: " + params[:recibido][0] + "<br>Cambio: " + (params[:recibido][0].to_f - params[:importe].to_f).to_s if params[:recibido][0].to_f > 0
+          flash[:mensaje] = "Asegúrese de cobrar la venta!!!<div class='importe_medio'>Importe: " + params[:importe] + "€"
+          flash[:mensaje] << "<br>Recibido: " + params[:recibido][0] + "€<br>Cambio: " + format("%.2f",(params[:recibido][0].to_f - params[:importe].to_f).to_s) + "€" if params[:recibido][0].to_f > 0
           flash[:mensaje] << "</div>"
         else
           flash[:mensaje] = "Pago realizado!"
