@@ -27,7 +27,7 @@ module ApplicationHelper
       end
       i += 1
       etiqueta=etiqueta(campo)
-      cadena += "<div class='listado_campo_" + etiqueta[1] + (etiqueta[3]||"") + "' id='listado_campo_valor_" + campo + (objeto.class.name == "Array" ? "" : "_" + objeto.id.to_s) + "'>" + (valor && valor.to_s != "" ? truncate(valor.to_s, :length => etiqueta[2]):"&nbsp;") + '</div>'
+      cadena += "<div class='listado_campo_" + etiqueta[1] + (etiqueta[3]||"") + "' id='listado_campo_valor_" + campo + (objeto.class.name == "Array" ? "" : "_" + objeto.id.to_s) + "'>" + (valor && valor.to_s != "" ? truncate( (etiqueta[3]=="f"?sprintf("%.2f",valor):valor.to_s), :length => etiqueta[2]):"&nbsp;") + '</div>'
     end
     #cadena += "</div>"
     return cadena
@@ -194,8 +194,9 @@ module ApplicationHelper
                           { :rotulo => "Inventario", :controlador => "productos"} ]
       when "tesoreria"
         controladores = [ { :rotulo => "Informes", :controlador => "informe"},
-			  { :rotulo => "Arqueo de caja", :controlador => "arqueo"},
-                          { :rotulo => "Libro diario", :controlador => "libro"},
+                          { :rotulo => "Libro diario", :controlador => "libro_diario"},
+                          { :rotulo => "Posicion global", :controlador => "posicion_global"},
+                          { :rotulo => "Arqueo de caja", :controlador => "arqueo"},
                           { :rotulo => "Facturas de Servicios", :controlador => "factura"}  ]
       when "trueke"
         controladores = [ { :rotulo => "Cambios", :controlador => "cambio"} ]

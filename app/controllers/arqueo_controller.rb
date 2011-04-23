@@ -7,9 +7,9 @@ class ArqueoController < ApplicationController
   end
 
   def filtrado
-    session[("arqueo_filtrado_tipo").to_sym] = params[:filtro][:tipo] if params[:filtro]
+    session[("tesoreria_filtrado_tipo").to_sym] = params[:filtro][:tipo] if params[:filtro]
     if params[:filtro]
-      session[("arqueo_filtrado_condicion").to_sym] = case params[:filtro][:tipo]
+      session[("tesoreria_filtrado_condicion").to_sym] = case params[:filtro][:tipo]
         when "dia"
           'YEAR(facturas.fecha) = ' + params[:filtro]["dia(1i)".to_sym] + 
 		' AND MONTH(facturas.fecha) = ' + params[:filtro]["dia(2i)".to_sym] + 
@@ -21,14 +21,14 @@ class ArqueoController < ApplicationController
           'YEAR(facturas.fecha) = ' + params[:filtro]["anno(1i)".to_sym]
       end 
     else
-      session[("arqueo_filtrado_condicion").to_sym] = nil
+      session[("tesoreria_filtrado_condicion").to_sym] = nil
     end
     redirect_to :action => :listado
   end
 
   def listado
     @campos_filtro = [["Día","dia"], ["Mes","mes"], ["Año","anno"]]
-    if session[("arqueo_filtrado_condicion").to_sym]
+    if session[("tesoreria_filtrado_condicion").to_sym]
       @resumen = []
       importe_compra=importe_venta=importe_servicio=0
       factura_por_tipo("compras").each do |factura|
@@ -68,11 +68,11 @@ class ArqueoController < ApplicationController
     def factura_por_tipo tipo
       case tipo
         when "compras"
-          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => ["albarans.proveedor_id IS NOT NULL AND " + session[("arqueo_filtrado_condicion").to_sym]]
+          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => ["albarans.proveedor_id IS NOT NULL AND " + session[("tesoreria_filtrado_condicion").to_sym]]
         when "ventas"
-          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => ["albarans.cliente_id IS NOT NULL AND " + session[("arqueo_filtrado_condicion").to_sym]]
+          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => ["albarans.cliente_id IS NOT NULL AND " + session[("tesoreria_filtrado_condicion").to_sym]]
         when "servicios"
-          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :conditions => ["facturas.albaran_id IS NULL AND " + session[("arqueo_filtrado_condicion").to_sym]]
+          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :conditions => ["facturas.albaran_id IS NULL AND " + session[("tesoreria_filtrado_condicion").to_sym]]
       end
     end
 end

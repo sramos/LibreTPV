@@ -1,0 +1,18 @@
+<!-- Sublistado de Facturas para Resumen -->
+
+<% if params[:tipo] == "servicios" %>
+  <%= cabecera_sublistado "Facturas de Servicios (otros gastos)", ["fecha", "codigo", "proveedor.nombre", "importe"], params[:update] %>
+<% else %>
+  <%= cabecera_sublistado "Facturas de " + params[:tipo].capitalize, ["fecha", "codigo", (params[:tipo] == "compras"?"albaran.proveedor.nombre":"albaran.cliente.nombre"), "importe"], params[:update] %>
+<% end %>
+<% i = 0 %>
+<% for objeto in @facturas %>
+  <div id="<% params[:update] %>_sub_<%= i += 1 %>" class="fila" >
+    <%= fila_sublistado objeto %>
+    <div class="listado_derecha">
+      <%= icono('Exclamation', {:title => "La factura no está completamente pagada!", :style => ( objeto.pagado ? 'display: none;' : '') }) %>
+    </div>
+  </div>
+<% end %>
+<%= final_sublistado %>
+<br/>

@@ -1,0 +1,23 @@
+<!-- Filtro de Informes -->
+
+<fieldset class="filtrado" id="filtro_informe">
+  <%= inicio_formulario( { :action => 'filtrado' }, false ) %>
+    <div class="linea">
+      <%= selector 'Informe de', 'filtro', 'tipo', @campos_filtro.map {|u| [u[0],u[1]]} %>
+      <%= observe_field( "filtro_tipo" , :function => 'Element.hide("filtro_dia");Element.hide("filtro_mes");Element.hide("filtro_anno");if( document.getElementById("filtro_tipo").selectedIndex == 0 ){ Element.show("filtro_dia");} else if (document.getElementById("filtro_tipo").selectedIndex==1){ Element.show("filtro_mes");} else { Element.show("filtro_anno");}' ) %>
+      <div id="filtro_dia">
+        <%= fecha "Fecha", "filtro", "dia" %>
+      </div>
+      <div id="filtro_mes" style="display: none;">
+        <%= fecha_mes "Mes", "filtro", "mes" %>
+      </div>
+      <div id="filtro_anno" style="display: none;">
+        <%= fecha_anno "Año", "filtro", "anno" %>
+      </div>
+      <div class='elemento_derecha' id='boton_filtrado'><br/>
+        <%= submit_tag( "Filtrar", :class => "boton", :onclick => "this.disabled=true") %>
+      </div>
+    </div>
+  </form>
+</fieldset>
+

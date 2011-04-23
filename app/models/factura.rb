@@ -10,20 +10,35 @@ class Factura < ActiveRecord::Base
 
   # devuelve el debe de una factura
   def debe
-    if (self.albaran && self.albaran.proveedor_id) || (self.proveedor && self.importe > 0)
-      return self.importe
+    if (self.albaran && ( (self.albaran.proveedor_id && self.importe >= 0) || (self.albaran.cliente_id && self.importe < 0))) || (self.proveedor && self.importe >= 0)
+      return self.importe.abs
     else
-      return 0
+      return nil 
     end
   end
 
   # devuelve el haber de una factura
   def haber
-    if (self.albaran && self.albaran.cliente_id) || (self.proveedor && self.importe < 0)
+    if (self.albaran && ( (self.albaran.cliente_id && self.importe >= 0) || (self.albaran.proveedor_id && self.importe <0))) || (self.proveedor && self.importe < 0)
       return self.importe.abs
     else
-      return 0
+      return nil 
     end
+  end
+
+  # devuelve el concepto de una factura
+  def concepto
+    if (self.albaran)
+      if self.albaran.cliente_id
+        concepto = (self.importe>=0?"Venta ":"Devolucion ") + self.albaran.cliente.nombre
+      else
+        concepto = (self.importe>=0?"Compra ":"Devolucion compra ") + self.albaran.proveedor.nombre
+      end
+    else
+      concepto = (self.importe>0?"Factura ":"Cobro ") + (self.proveedor ? self.proveedor.nombre : "REVISAME!!!")
+      #concepto = (importe>0?"Factura ":"Cobro ") + "REVISAME"
+    end
+    return concepto
   end
 
   # devuelve la base imponible tenga o no un albaran asociado

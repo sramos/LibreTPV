@@ -1,0 +1,27 @@
+<!--- Libro Diario --->
+<% if session[("tesoreria_filtrado_condicion").to_sym] && session[("tesoreria_filtrado_condicion").to_sym] != '' %>
+  <fieldset id="filtro_libro_valores">
+  <div class='linea' id="texto_filtrado">
+      Libro Diario para => "<%= session[("tesoreria_filtrado_condicion").to_sym] %>"
+    </div>
+  </fieldset>
+<% end %>
+
+<% if @facturas %>
+<div class="caja_completa" id="listado_facturas">
+<%= cabecera_listado ["fecha", "concepto", "codigo", "debe", "haber"] %>
+<% for objeto in @facturas %>
+  <div id="factura_<% objeto.id.to_s %>" class="listadofila">
+    <%= fila_listado objeto %>
+    <div class="listado_derecha" id="factura_<%= objeto.id.to_s %>_aviso_pago" <%= 'style="display:none;"' if objeto.pagado %> >
+      <%= icono('Exclamation', {:title => "La factura no está completamente pagada!", :style => ( objeto.pagado ? 'display: none;' : '') }) %>
+    </div>
+  </div>
+  <div id="factura_sub_<%= objeto.id.to_s %>_pago"></div>
+  <div id="factura_sub_<%= objeto.id.to_s %>_albaran"></div>
+<% end %>
+<%= final_listado @facturas %>
+</div>
+<% end %>
+
+<%= render :partial => "comunes/filtro_informes" %>
