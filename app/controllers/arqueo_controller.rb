@@ -6,28 +6,7 @@ class ArqueoController < ApplicationController
     redirect_to :action => :listado
   end
 
-  def filtrado
-    session[("tesoreria_filtrado_tipo").to_sym] = params[:filtro][:tipo] if params[:filtro]
-    if params[:filtro]
-      session[("tesoreria_filtrado_condicion").to_sym] = case params[:filtro][:tipo]
-        when "dia"
-          'YEAR(facturas.fecha) = ' + params[:filtro]["dia(1i)".to_sym] + 
-		' AND MONTH(facturas.fecha) = ' + params[:filtro]["dia(2i)".to_sym] + 
-		' AND DAY(facturas.fecha) = ' + params[:filtro]["dia(3i)".to_sym]
-        when "mes"
-          'YEAR(facturas.fecha) = ' + params[:filtro]["mes(1i)".to_sym] +
-                ' AND MONTH(facturas.fecha) = ' + params[:filtro]["mes(2i)".to_sym]
-        when "anno"
-          'YEAR(facturas.fecha) = ' + params[:filtro]["anno(1i)".to_sym]
-      end 
-    else
-      session[("tesoreria_filtrado_condicion").to_sym] = nil
-    end
-    redirect_to :action => :listado
-  end
-
   def listado
-    @campos_filtro = [["Día","dia"], ["Mes","mes"], ["Año","anno"]]
     if session[("tesoreria_filtrado_condicion").to_sym]
       @resumen = []
       importe_compra=importe_venta=importe_servicio=0

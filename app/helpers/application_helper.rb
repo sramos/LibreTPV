@@ -232,6 +232,7 @@ module ApplicationHelper
 			"producto.familia.iva.valor"	=> ["% IVA", "1_5", 8, "d"],
 			"iva.nombre"			=> ["IVA aplicado", "1", 36],
 			"iva"				=> ["% IVA", "1_5", 8, "d"],
+			"iva_aplicado"			=> ["IVA", "1_3", 14, "f"],
 			"precio_compra"			=> ["P.Prov.", "1_3", 14, "f"],
 			"precio_venta"			=> ["PVP", "1_3", 14, "f"],
 			"total"				=> ["Total", "1_3", 14, "f"],

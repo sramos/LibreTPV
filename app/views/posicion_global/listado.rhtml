@@ -1,5 +1,5 @@
 <!--- Arqueo de Caja --->
-<% if session[("tesoreria_filtrado_condicion").to_sym] != '' %>
+<% if session[("tesoreria_filtrado_condicion").to_sym] %>
   <fieldset id="filtro_arqueo_valores">
   <div class='linea' id="texto_filtrado">
       Resumen para => "<%= session[("tesoreria_filtrado_condicion").to_sym] %>"
