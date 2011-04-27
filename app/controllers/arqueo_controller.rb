@@ -7,7 +7,7 @@ class ArqueoController < ApplicationController
   end
 
   def listado
-    if session[("tesoreria_filtrado_condicion").to_sym]
+    if session[("tesoreria_filtrado_fecha_inicio").to_sym] && session[("tesoreria_filtrado_fecha_fin").to_sym]
       @resumen = []
       importe_compra=importe_venta=importe_servicio=0
       factura_por_tipo("compras").each do |factura|
@@ -47,11 +47,11 @@ class ArqueoController < ApplicationController
     def factura_por_tipo tipo
       case tipo
         when "compras"
-          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => ["albarans.proveedor_id IS NOT NULL AND " + session[("tesoreria_filtrado_condicion").to_sym]]
+          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => ["albarans.proveedor_id IS NOT NULL AND facturas.fecha BETWEEN '" + session[("tesoreria_filtrado_fecha_inicio").to_sym].to_s + "' AND '" + session[("tesoreria_filtrado_fecha_fin").to_sym].to_s + "'" ]
         when "ventas"
-          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => ["albarans.cliente_id IS NOT NULL AND " + session[("tesoreria_filtrado_condicion").to_sym]]
+          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => ["albarans.cliente_id IS NOT NULL AND facturas.fecha BETWEEN '" + session[("tesoreria_filtrado_fecha_inicio").to_sym].to_s + "' AND '" + session[("tesoreria_filtrado_fecha_fin").to_sym].to_s + "'" ]
         when "servicios"
-          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :conditions => ["facturas.albaran_id IS NULL AND " + session[("tesoreria_filtrado_condicion").to_sym]]
+          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :conditions => ["facturas.albaran_id IS NULL AND facturas.fecha AND facturas.fecha BETWEEN '" + session[("tesoreria_filtrado_fecha_inicio").to_sym].to_s + "' AND '" + session[("tesoreria_filtrado_fecha_fin").to_sym].to_s + "'" ]
       end
     end
 end

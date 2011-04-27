@@ -7,7 +7,7 @@ class PosicionGlobalController < ApplicationController
   end
 
   def listado
-    if session[("tesoreria_filtrado_condicion").to_sym]
+    if session[("tesoreria_filtrado_fecha_inicio").to_sym] && session[("tesoreria_filtrado_fecha_fin").to_sym]
       @resumen = []
       importe_compra_debe=importe_compra_haber=importe_venta_debe=importe_venta_haber=importe_servicio_debe=importe_servicio_haber=0
       base_imponible_debe=base_imponible_haber=0
@@ -70,11 +70,11 @@ class PosicionGlobalController < ApplicationController
     def factura_por_tipo tipo
       case tipo
         when "compras"
-          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => ["albarans.proveedor_id IS NOT NULL AND " + session[("tesoreria_filtrado_condicion").to_sym]]
+          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => ["albarans.proveedor_id IS NOT NULL AND facturas.fecha BETWEEN '" + session[("tesoreria_filtrado_fecha_inicio").to_sym].to_s + "' AND '" + session[("tesoreria_filtrado_fecha_fin").to_sym].to_s + "'" ]
         when "ventas"
-          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => ["albarans.cliente_id IS NOT NULL AND " + session[("tesoreria_filtrado_condicion").to_sym]]
+          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => ["albarans.cliente_id IS NOT NULL AND facturas.fecha BETWEEN '" + session[("tesoreria_filtrado_fecha_inicio").to_sym].to_s + "' AND '" + session[("tesoreria_filtrado_fecha_fin").to_sym].to_s + "'" ]
         when "servicios"
-          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :conditions => ["facturas.albaran_id IS NULL AND " + session[("tesoreria_filtrado_condicion").to_sym]]
+          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :conditions => ["facturas.albaran_id IS NULL AND facturas.fecha AND facturas.fecha BETWEEN '" + session[("tesoreria_filtrado_fecha_inicio").to_sym].to_s + "' AND '" + session[("tesoreria_filtrado_fecha_fin").to_sym].to_s + "'" ]
       end
     end
 end

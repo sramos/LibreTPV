@@ -1,11 +1,5 @@
 <!--- Libro Diario --->
-<% if session[("tesoreria_filtrado_condicion").to_sym] && session[("tesoreria_filtrado_condicion").to_sym] != '' %>
-  <fieldset id="filtro_libro_valores">
-  <div class='linea' id="texto_filtrado">
-      Libro Diario para => "<%= session[("tesoreria_filtrado_condicion").to_sym] %>"
-    </div>
-  </fieldset>
-<% end %>
+<%= render :partial => "comunes/info_filtro_informes" %>
 
 <% if @facturas %>
 <div class="caja_completa" id="listado_facturas">
