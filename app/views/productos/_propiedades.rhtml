@@ -4,11 +4,10 @@
   <div class="formulario_izqda">
   -->
   <% if @producto && !params[:nuevo] %>
-    <div class="linea">
-      Código/ISBN: <%= @producto.codigo %><br/>
-    </div>
+    <%= texto "Codigo o ISBN", 'producto', 'codigo' %>
+  <% else %>
+    <%= hidden_field('producto', 'codigo') %>
   <% end %>
-  <%= hidden_field('producto', 'codigo') %>
   <%= hidden_field('producto', 'url_imagen') %>
   <div class="linea"><br/></div>
   <div class="linea">
