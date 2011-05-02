@@ -23,6 +23,11 @@
       <%= observe_field( "formulario_campo_recibido_" , :frequency => 1, :update => "importe_devolver", :with => "'recibido='+value", :url => {:action => :calcula_cambio, :importe => params[:importe]} ) %>
   </div>
   <div class="linea"><br/></div>
+  <div class="linea">
+    <div class='elemento'>
+      <%= check_box ("imprimeticket", "imprimeticket", {:checked => true}, true, false) %> Imprimir ticket?
+    </div>
+  </div>
 <%= final_formulario({:etiqueta => "Cobrar"})%>
 
 </div>
