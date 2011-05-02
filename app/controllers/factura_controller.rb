@@ -96,7 +96,7 @@ class FacturaController < ApplicationController
     pago = Pago.new
     pago.importe = factura.importe
     pago.factura = factura
-    pago.fecha = factura.fecha
+    pago.fecha = Time.now 
     pago.forma_pago_id = params[:forma_pago][:id]
     pago.save
     imprime_ticket( factura.albaran_id, FormaPago.find_by_id(params[:forma_pago][:id]).nombre) if params[:imprimeticket][:imprimeticket]
