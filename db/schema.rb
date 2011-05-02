@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110419105927) do
+ActiveRecord::Schema.define(:version => 20110427175031) do
 
   create_table "albaran_lineas", :force => true do |t|
     t.integer  "cantidad",                                      :default => 1
@@ -30,6 +30,15 @@ ActiveRecord::Schema.define(:version => 20110419105927) do
     t.boolean  "cerrado",      :default => false
     t.integer  "proveedor_id"
     t.integer  "cliente_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "caja", :force => true do |t|
+    t.datetime "fecha_hora",                                :null => false
+    t.decimal  "importe",     :precision => 8, :scale => 2, :null => false
+    t.string   "comentarios"
+    t.boolean  "cierre_caja"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -94,7 +103,7 @@ ActiveRecord::Schema.define(:version => 20110419105927) do
 
   create_table "pagos", :force => true do |t|
     t.decimal  "importe",       :precision => 8, :scale => 2, :null => false
-    t.date     "fecha",                                       :null => false
+    t.datetime "fecha",                                       :null => false
     t.integer  "factura_id"
     t.integer  "forma_pago_id",                               :null => false
     t.datetime "created_at"

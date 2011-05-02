@@ -1,0 +1,15 @@
+<!--- Listado de entradas/salidas de caja --->
+
+<div class="caja_completa">
+<%= cabecera_listado ["fecha_hora","importe","comentarios"], { :title => "Nueva entrada/salida de Caja", :url => { :action => :editar} } %>
+<% for objeto in @caja %>
+  <div class="listadofila">
+    <%= fila_listado objeto %>
+    <div class="listado_derecha">
+      <%= icono('Exclamation', {:title => "Anotación de cierre de Caja", :style => ( !objeto.cierre_caja ? 'display: none;' : '') }) %>
+    </div>
+  </div>
+<% end %>
+<%= final_listado @caja %>
+</div>
+

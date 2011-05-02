@@ -1,0 +1,16 @@
+<!-- Arqueo de Caja -->
+
+<%= cabecera_sublistado "Arqueo de Caja" + (@cierre_caja ? " (desde: " + @cierre_caja.fecha_hora.localtime.strftime("%d/%m/%Y %H:%M:%S") + ")" : ""), ["ventas","entradas/salidas","total caja"], "arqueo" %>
+  <div class="listadofila">
+    <div class='listado_campo_2_3f' id='listado_campo_valor_venta'><%= sprintf("%.2f",@importe_ventas)%> €</div>
+    <div class='listado_campo_2_3f' id='listado_campo_valor_caja'><%= sprintf("%.2f",@importe_caja)%> €</div>
+    <div class='listado_campo_2_3f' id='listado_campo_valor_total'><%= sprintf("%.2f",@importe_ventas+@importe_caja)%> €</div>
+  </div>
+  <div class="listadofila">
+    <div class="listado_derecha">
+      <%= modal "Efectuar Cierre de Caja", { :action => 'cierre_caja', :importe => @importe_ventas+@importe_caja }, "Cierre de Caja (" + (@importe_ventas+@importe_caja).to_s + " €)" %>
+    </div>
+  </div>
+<%= final_sublistado %>
+
+

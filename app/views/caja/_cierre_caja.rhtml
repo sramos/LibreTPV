@@ -1,0 +1,13 @@
+<!-- Formulario de cierre de caja -->
+
+<%= inicio_formulario( { :action => 'guarda_cierre_caja' }, false ) %>
+  <div class="linea">
+  Compruebe el importe existente en Caja. Anote el valor existente y pulse en guardar para cerrar caja.
+  </div>
+  <div class="linea"><br/></div>
+  <div class="linea">
+    <%= hidden_field 'importe_teorico', '', :value => @importe %>
+    <%= texto "Importe Real en Caja", 'importe_real', '' %>
+  </div>
+<%= final_formulario %>
+

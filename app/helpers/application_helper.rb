@@ -27,6 +27,7 @@ module ApplicationHelper
       end
       i += 1
       etiqueta=etiqueta(campo)
+      valor = valor.localtime.strftime("%d/%m/%Y %H:%M:%S") if valor.class.name == "ActiveSupport::TimeWithZone"
       cadena += "<div class='listado_campo_" + etiqueta[1] + (etiqueta[3]||"") + "' id='listado_campo_valor_" + campo + (objeto.class.name == "Array" ? "" : "_" + objeto.id.to_s) + "'>" + (valor && valor.to_s != "" ? truncate( (etiqueta[3]=="f"?sprintf("%.2f",valor):valor.to_s), :length => etiqueta[2]):"&nbsp;") + '</div>'
     end
     #cadena += "</div>"
@@ -186,7 +187,8 @@ module ApplicationHelper
         controladores = [ #{ :rotulo => "Pedidos", :controlador => "pedidos" },
                           { :rotulo => "Facturas Clientes" , :controlador => "factura"},
                           { :rotulo => "Clientes" , :controlador => "cliente"},
-                          { :rotulo => "TPV", :controlador => "albarans" } ]
+                          { :rotulo => "Entradas/Salidas de Caja" , :controlador => "caja"},
+                          { :rotulo => "Ventas/Devoluciones", :controlador => "albarans" } ]
       when "productos"
         controladores = [ { :rotulo => "Facturas Proveedores", :controlador => "factura"},
                           { :rotulo => "Albaranes de entrada", :controlador => "albarans"},
@@ -196,7 +198,7 @@ module ApplicationHelper
         controladores = [ { :rotulo => "Informes", :controlador => "informe"},
                           { :rotulo => "Libro diario", :controlador => "libro_diario"},
                           { :rotulo => "Posicion global", :controlador => "posicion_global"},
-                          { :rotulo => "Arqueo de caja", :controlador => "arqueo"},
+                          { :rotulo => "Arqueo/Cierre de Caja", :controlador => "caja"},
                           { :rotulo => "Facturas de Servicios", :controlador => "factura"}  ]
       when "trueke"
         controladores = [ { :rotulo => "Cambios", :controlador => "cambio"} ]
@@ -252,6 +254,11 @@ module ApplicationHelper
 			"concepto"			=> ["Concepto", "1", 36],
 			"debe"				=> ["Debe", "1_3", 14, "f"],
 			"haber"				=> ["Haber", "1_3", 14, "f"],
+			"fecha_hora"			=> ["Fecha", "2_3", 20],
+			"comentarios"			=> ["Observaciones", "1", 36],
+                        "ventas"			=> ["Ventas", "2_3", 20, "f"],
+			"entradas/salidas"		=> ["Entradas/Salidas", "2_3", 20, "f"],
+			"total caja"			=> ["Total Caja", "2_3", 20, "f"],
 		}
     return etiqueta[campo] || [campo.capitalize, "1_2", 13]
   end

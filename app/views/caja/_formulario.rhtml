@@ -1,0 +1,11 @@
+
+<%= inicio_formulario( { :action => 'modificar' }, false ) %>
+  <div class="linea">
+  <%= texto "Importe", 'caja', 'importe' %>
+  <%= texto "Observaciones", 'caja', 'comentarios' %> 
+  </div>
+  <div class="linea"><br/>
+    NOTA: Importe positivo para meter dinero en caja, negativo para sacarlo
+  </div>
+<%= final_formulario %>
+

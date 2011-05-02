@@ -25,6 +25,11 @@ class PagoController < ApplicationController
     @pago = params[:id] ? Pago.find(params[:id]) : Pago.new
     @pago.forma_pago_id = params[:forma_pago][:id]
     @pago.update_attributes params[:pago]
+    # Si el pago es de hoy, incluimos hora/minutos/segundos para poder filtrar luego en arqueo
+    if (@pago.fecha == Date.current)
+      @pago.fecha += Time.current.hour.hours + Time.current.min.minutes + Time.current.sec.seconds
+      @pago.save
+    end
     factura = Factura.find(@pago.factura_id)
     pago_pendiente
     if @pago_pendiente <= 0 && !factura.pagado
