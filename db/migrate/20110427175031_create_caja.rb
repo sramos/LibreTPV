@@ -12,5 +12,6 @@ class CreateCaja < ActiveRecord::Migration
 
   def self.down
     drop_table :caja
+    change_column('pagos', :fecha, :date)
   end
 end
