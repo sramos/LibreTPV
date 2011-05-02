@@ -34,7 +34,7 @@ class ProveedorController < ApplicationController
     # Obtiene las líneas de cada albaran del proveedor
     @lineas = []
     albaranes.each { |albaran| albaran.albaran_lineas.each { |linea| @lineas.push(linea) } }
-    puts "--------------->" + @lineas.to_s
+    #puts "--------------->" + @lineas.to_s
     render :update do |page|
       page.replace_html params[:update], :partial => "productos"
     end
