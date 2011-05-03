@@ -1,0 +1,14 @@
+
+<%= inicio_formulario( { :action => 'aumentar_credito', :id => @cliente }, false ) %>
+  <div class="linea">
+    Credito Actual: <%= @cliente.credito ? @cliente.credito.to_s : "0" %> €
+  </div>
+  <div class="linea"><br/></div>
+  <div class="linea">
+    <%= texto 'Incremento de Credito (€)', 'aumenta_credito', '' %>
+  </div>
+  <div class="linea"><br>
+    NOTA: Se generara un cobro de caja por el importe incrementado
+  </div>
+<%= final_formulario%>
+

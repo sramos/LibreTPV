@@ -28,13 +28,43 @@ class ClienteController < ApplicationController
     redirect_to :action => :listado
   end
 
+  def nuevo_credito
+    @cliente = params[:id] ? Cliente.find(params[:id]) : nil
+    if @cliente.nil?
+      flash[:error] = "Elija un clientes antes de realizar esta accion"
+      redirect_to :action => :listado
+    else
+      render :partial => "nuevo_credito"
+    end
+  end
+
+  def aumentar_credito
+    cliente = params[:id] ? Cliente.find(params[:id]) : nil
+    if cliente.nil?
+      flash[:error] = "Elija un clientes antes de realizar esta accion"
+    else
+      cliente.credito = cliente.credito ? (cliente.credito + params[:aumenta_credito][0].to_f) : params[:aumenta_credito][0].to_f
+      if cliente.save
+        caja = Caja.new
+        caja.fecha_hora = Time.now
+        caja.importe = params[:aumenta_credito][0].to_f
+        caja.comentarios = "Aumento de credito " + cliente.nombre
+        caja.save
+        flash[:error] = caja
+      else
+        flash[:error] = cliente
+      end
+    end
+    redirect_to :action => :listado
+  end
+
   # Devuelve sublistado de productos vendidos al cliente 
   def productos
     albaranes = Albaran.find :all, :conditions => { :cliente_id => params[:id], :cerrado => true }
     # Obtiene las líneas de cada albaran del proveedor
     @lineas = []
     albaranes.each { |albaran| albaran.albaran_lineas.each { |linea| @lineas.push(linea) } }
-    puts "--------------->" + @lineas.to_s
+    #puts "--------------->" + @lineas.to_s
     render :update do |page|
       page.replace_html params[:update], :partial => "productos"
     end

@@ -1,12 +1,13 @@
 <!--- Listado de clientes --->
 
 <div class="caja_completa"
-<%= cabecera_listado ["cif", "nombre", "email", "descuento"], { :title => "Nuevo Cliente", :url => { :action => :editar } } %>
+<%= cabecera_listado ["cif", "nombre", "email", "descuento","credito"], { :title => "Nuevo Cliente", :url => { :action => :editar } } %>
 <% for objeto in @clientes %>
   <div class="listadofila">
     <%= fila_listado objeto %>
     <div class="listado_derecha">
       <%= link_to_remote icono('Cart',{:title => "Ver Productos Vendidos al Cliente"}), :url => { :action => 'productos', :id => objeto.id, :update => "cliente_sub_" + objeto.id.to_s } %>
+      <%= modal icono('Currency Euro',{:title => 'Aumentar Crédito'}), {:action => 'nuevo_credito', :id => objeto.id}, 'Aumentar Credito' %>
       <%= modal icono('Write',{:title => 'Editar Cliente'}), {:action => 'editar', :id => objeto.id}, 'Editar Cliente' %>
       <%= borrado icono('Trash',{:title => 'Borrar Cliente'}), { :action => 'borrar', :id => objeto.id } , 'Eliminar Cliente', "Cliente: " + objeto.nombre, :ajax => false %>
     </div>
