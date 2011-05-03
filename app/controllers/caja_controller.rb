@@ -11,15 +11,20 @@ class CajaController < ApplicationController
   end
 
   def arqueo 
-    @importe_ventas = 0
+    @importe_ventas = @importe_compras = @importe_gastos = 0
     # Calcula la fecha/hora del ultimo cierre de caja
     @cierre_caja = Caja.last :conditions => { :cierre_caja => true }
     @importe_caja = @cierre_caja ? @cierre_caja.importe : 0
-    # Encuentra todos los pagos de caja realizados desde el ultimo cierre de caja
+    # Encuentra todas las ventas en caja realizados desde el ultimo cierre de caja
     @pagos = Pago.find :all, :include => "forma_pago", :conditions => [ "forma_pagos.caja IS TRUE AND fecha > ?", (@cierre_caja ? @cierre_caja.fecha_hora : Date.new) ]
     @pagos.each do |pago|
-      @importe_ventas += pago.importe 
+      @importe_ventas += pago.importe if pago.factura && !pago.factura.albaran.nil? && pago.factura.albaran.cliente
+      @importe_compras += pago.importe if pago.factura && !pago.factura.albaran.nil? && pago.factura.albaran.proveedor
+      @importe_gastos += pago.importe if pago.factura && pago.factura.albaran.nil? && pago.factura.proveedor
+      puts "---> ERROR: Pago con id " + pago.id.to_s + " no tiene factura asociada!!!!" if pago.factura.nil?
     end
+    # Encuentra todas las compras en caja realizadas desde el ultimo cierre de caja
+    # Encuentra todos los pagos de servicios realizados desde el ultimo cierre de caja
     # Encuentra todas las entradas/salidas de caja realizadas desde el ultimo cierre de caja
     @salidas = Caja.find :all, :conditions => [ "fecha_hora > ?", (@cierre_caja ? @cierre_caja.fecha_hora : Date.new) ]
     @salidas.each do |salida|

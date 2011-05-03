@@ -257,8 +257,11 @@ module ApplicationHelper
 			"fecha_hora"			=> ["Fecha", "2_3", 20],
 			"comentarios"			=> ["Observaciones", "1", 36],
                         "ventas"			=> ["Ventas", "2_3", 20, "f"],
+			"compras"			=> ["Compras", "2_3", 20, "f"],
+			"pagos_servicios"		=> ["Otros Gastos", "2_3", 20, "f"],
 			"entradas/salidas"		=> ["Entradas/Salidas", "2_3", 20, "f"],
 			"total caja"			=> ["Total Caja", "2_3", 20, "f"],
+                        "credito"			=> ["Credito", "1_3", 14, "f"],
 		}
     return etiqueta[campo] || [campo.capitalize, "1_2", 13]
   end
