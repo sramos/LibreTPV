@@ -1,6 +1,15 @@
-2011-04-14 Santiago Ramos <sramos@sitiodistinto.net> Version 0.5.1
+2011-04-14 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6
 
   * Bug en creacion de tabla de sesiones para instalaciones nuevas
+  * Facturas de otros gastos
+  * Entradas/salidas de caja
+  * Arqueo y cierre de caja
+  * Libro diario
+  * Resumen de posicion global
+  * Checkbox de imprimir factura
+  * Campo ISBN por defecto para nueva linea de albaran
+  * Credito acumulado por cliente (provision manual)
+  * % de retorno por familia (configuracion)
 
 2011-04-09 Santiago Ramos <sramos@sitiodistinto.net> Version 0.5
 

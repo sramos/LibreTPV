@@ -250,6 +250,7 @@ module ApplicationHelper
 			"base_imponible"		=> ["Base Imp.", "1_3", 14, "f"],
 			"valor_iva"			=> ["% IVA", "1_5", 8, "d"],
 			"valor_irpf"			=> ["% IRPF", "1_5", 8, "d"],
+			"acumulable"			=> ["% Reemb.", "1_3", 14, "d"],
 			"importe"			=> ["Importe", "1_3", 14, "f"],
 			"concepto"			=> ["Concepto", "1", 36],
 			"debe"				=> ["Debe", "1_3", 14, "f"],
