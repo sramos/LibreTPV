@@ -115,7 +115,7 @@ class FacturaController < ApplicationController
   def imprimir
     factura = params[:id] ? Factura.find_by_id(params[:id]) : nil
     if factura && factura.pagado && factura.albaran && factura.albaran.cliente
-      send_data genera_pdf(factura), :filename => 'factura.pdf', :type => 'application/pdf'
+      send_data genera_pdf(factura), :filename => 'Factura.' + factura.codigo + '.pdf', :type => 'application/pdf'
       #redirect_to :action => :listado
     else
       flash[:error] = "Imposible imprimir. La factura no existe o no está completamente pagada."
@@ -160,7 +160,9 @@ private
     pdf.text Configuracion.valor('NOMBRE CORTO EMPRESA').upcase
     pdf.text Configuracion.valor('NOMBRE LARGO EMPRESA')
     pdf.text "C.I.F. " + Configuracion.valor('CIF')
-    pdf.text Configuracion.valor('DIRECCION')
+    pdf.text Configuracion.valor('DIRECCION') if Configuracion.valor('DIRECCION')
+    pdf.text Configuracion.valor('CODIGO POSTAL') if Configuracion.valor('CODIGO POSTAL')
+    pdf.text "Tfn. " + Configuracion.valor('TELEFONO') if Configuracion.valor('TELEFONO')
     pdf.stop_columns
     pdf.move_pointer(30)
     pdf.start_columns 3
@@ -170,12 +172,14 @@ private
     pdf.start_new_page
     pdf.text "Cliente: " + factura.albaran.cliente.nombre 
     pdf.text "N.I.F. " + factura.albaran.cliente.cif
+    pdf.text factura.albaran.cliente.direccion if factura.albaran.cliente.direccion
+    pdf.text factura.albaran.cliente.cp if factura.albaran.cliente.cp 
     pdf.stop_columns
     pdf.move_pointer(30) 
     iva_total = {}
     subtotal = precio_total = 0
     PDF::SimpleTable.new do |tab|
-      tab.show_lines = :all
+      #tab.show_lines = :all
       tab.show_headings = true
       tab.bold_headings = true
       tab.orientation = :center

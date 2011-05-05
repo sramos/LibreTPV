@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110503134745) do
+ActiveRecord::Schema.define(:version => 20110505094819) do
 
   create_table "albaran_lineas", :force => true do |t|
     t.integer  "cantidad",                                      :default => 1
@@ -58,6 +58,8 @@ ActiveRecord::Schema.define(:version => 20110503134745) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "credito",    :precision => 8, :scale => 2
+    t.string   "direccion"
+    t.string   "cp"
   end
 
   create_table "configuracion", :force => true do |t|

@@ -1,7 +1,8 @@
 class Configuracion < ActiveRecord::Base
 
   def self.valor parametro
-    return Configuracion.find_by_nombre_param(parametro).valor_param
+    elemento = Configuracion.find_by_nombre_param(parametro)
+    return elemento.valor_param if elemento
   end
 
 end
