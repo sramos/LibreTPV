@@ -8,8 +8,13 @@
   * Resumen de posicion global
   * Checkbox de imprimir factura
   * Campo ISBN por defecto para nueva linea de albaran
-  * Credito acumulado por cliente (provision manual)
+  * Credito acumulado por cliente (provision manual con generacion
+    de entrada salida de caja, pero no de factura ni pago)
   * % de retorno por familia (configuracion)
+  * Inclusion de direccion y codigo postal en cliente
+  * Impresion de facturas de clientes
+  * Inclusion de codigo postal y telefono en config general y uso
+    en las facturas de clientes
 
 2011-04-09 Santiago Ramos <sramos@sitiodistinto.net> Version 0.5
 
