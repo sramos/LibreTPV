@@ -196,11 +196,11 @@ private
         fila = Hash.new
         columnas.each do |columna|
           fila[columna[:atribute]] = columna[:format] ? format(columna[:format],linea.send(columna[:atribute])) : linea.send(columna[:atribute])
-          iva = linea.iva
-          iva_total[iva] = iva_total.key?(iva) ? iva_total[iva] + (linea.total-linea.subtotal) : linea.total-linea.subtotal
-          subtotal += linea.subtotal
-          precio_total += linea.total
         end
+        iva = linea.iva
+        iva_total[iva] = iva_total.key?(iva) ? iva_total[iva] + (linea.total-linea.subtotal) : linea.total-linea.subtotal
+        subtotal += linea.subtotal
+        precio_total += linea.total
         data << fila 
       end
       tab.data.replace data
@@ -264,7 +264,7 @@ private
     cadena += " Fecha: " + Time.now.strftime("%d-%m-%Y  %H:%M") + "\n"
     cadena += " Ticket: " + albaran.factura.codigo + "\n"
     cadena += " Forma de Pago: " + formadepago + "\n\n"
-    cadena +="--------------------------------------------------\n\n"
+    cadena += "--------------------------------------------------\n\n"
     cadena += format "Cnt.  %-31s Dto.   Imp.\n\n", "Descripcion"
     lineas.each do |linea|
       cantidad = linea.cantidad
