@@ -1,6 +1,6 @@
 <!--- Sublistado de productos comprados por un cliente --->
 
-<%= cabecera_sublistado "Productos Vendidos", ["albaran.factura.fecha","producto.nombre","cantidad","albaran.factura.codigo"], params[:update] %>
+<%= cabecera_sublistado "Productos Vendidos", ["albaran.factura.fecha","cantidad","producto.nombre","albaran.factura.codigo"], params[:update] %>
 <% i = 0 %>
 <% for objeto in @lineas %>
   <div id="<%= params[:update] %>_producto_<%= (i += 1).to_s %>" class="fila" >
