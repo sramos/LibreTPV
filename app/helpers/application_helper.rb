@@ -112,7 +112,7 @@ module ApplicationHelper
   end
 
   def selector rotulo, objeto, atributo, valores, valor=nil
-    cadena = "<div class='elemento' id='selector_" + objeto + "_" + atributo + "'>" + rotulo + "<br/>"
+    cadena = "<div class='elemento_x15' id='selector_" + objeto + "_" + atributo + "'>" + rotulo + "<br/>"
     cadena << select(objeto, atributo, valores, {:class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :value => valor})
     return cadena << "</div>"
   end

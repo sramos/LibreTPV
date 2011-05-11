@@ -6,11 +6,12 @@
     <%= texto "Código de Factura", 'factura', 'codigo' %>
   <% elsif params[:seccion] == 'tesoreria' %>
     <%= texto "Base Imponible", 'factura', 'base_imponible' %>
-    <%= selector "IVA", 'factura', 'valor_iva', @ivas.map {|u| [u.nombre,u.valor]} %>
     <%= texto "% IRPF", 'factura', 'valor_irpf' %>
+    <%= selector "IVA", 'factura', 'valor_iva', @ivas.map {|u| [u.nombre,u.valor]} %>
     </div><div class="linea">
-    <%= selector "Proveedor", 'factura', 'proveedor_id', @proveedores.map {|u| [u.nombre,u.id]} %>
     <%= texto "Código de Factura", 'factura', 'codigo' %>
+    <%= selector "Proveedor", 'factura', 'proveedor_id', @proveedores.map {|u| [u.nombre,u.id]} %>
+    </div><div class="linea">
   <% else %>
     <%= selector "Cliente", 'albaran', 'cliente_id', @clientes.map {|u| [u.nombre,u.id]} %>  
   <% end %>
