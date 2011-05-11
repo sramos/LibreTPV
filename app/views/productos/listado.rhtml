@@ -32,6 +32,7 @@
     <div class="listado_derecha">
       <%= link_to_remote icono('Cart2',{:title => "Ver Compras"}), :url => { :action => 'albaranes_compra', :id => objeto.id, :update => "productos_sub_" + i.to_s + "_compras" } %>
       <%= link_to_remote icono('Cart',{:title => "Ver Ventas"}), :url => { :action => 'albaranes_venta', :id => objeto.id, :update => "productos_sub_" + i.to_s + "_ventas"} %>
+      <%= link_to icono('Tag', {:title => "Generar Etiqueta"}), :action => 'etiqueta', :id => objeto.id %>
       <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id, :inventario => true }, "Editar Libro" %>
       <%= borrado icono('Trash',{:title => 'Borrar'}), { :action => 'borrar', :id => objeto.id } , 'Borrar Libro', objeto.nombre , :ajax => false %>
     </div>

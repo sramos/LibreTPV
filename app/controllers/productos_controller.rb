@@ -1,6 +1,9 @@
 class ProductosController < ApplicationController
 
   require 'json'
+  require 'barby'
+  require 'barby/outputter/rmagick_outputter'
+  require 'pdf/writer'
 
   def index
     session[("productos_filtrado").to_sym] = ""
@@ -87,6 +90,30 @@ class ProductosController < ApplicationController
     @familias = Familia.all
 
     render :partial => "propiedades"
+  end
+
+  def etiqueta
+    producto = params[:id] ? Producto.find(params[:id]) : nil
+    if producto
+      barcode = Barby::Code128B.new(producto.codigo)
+      altura_codigo = 30
+      pdf = PDF::Writer.new(:paper => 'B8', :orientation => :landscape)
+      pdf.text Configuracion.valor('NOMBRE CORTO EMPRESA').upcase, :justification => :center, :font_size => 10
+      pdf.add_image barcode.to_jpg(:height => altura_codigo, :margin => 5), pdf.left_margin + 10, pdf.y - 42
+      pdf.move_pointer altura_codigo + 6 
+      pdf.text producto.codigo, :font_size => 8, :left => 15 
+      pdf.move_pointer 5 
+      pdf.text producto.nombre, :justification => :right, :right => 5, :font_size => 9
+      pdf.text "PVP: " + format("%.2f",producto.precio.to_s) + " euros", :justification => :right, :right => 5
+      pdf.rounded_rectangle(pdf.left_margin, pdf.absolute_top_margin, pdf.margin_width,
+                      altura_codigo + 58, 5).stroke
+
+      send_data pdf.render, :filename => 'Etiqueta_' + producto.nombre + '.pdf', :type => 'application/pdf'
+      #barcode = Barby::Code128B.new(producto.codigo)
+      #File.open('/tmp/code128b.png', 'w') do |f|
+      #  f.write barcode.to_png(:height => 20, :margin => 5)
+      #end 
+    end
   end
 
   # Devuelve sublistado de proveedores del producto
