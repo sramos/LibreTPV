@@ -1,0 +1,43 @@
+
+<!--- Listado de albaranes de compra perdidos --->
+
+<div class='caja_completa' id='listado_albaranes_compra'>
+<div class='linea' id='encabezado_albaranes_compra'><div class='elemento_derecha'>Albaranes de Compras</div></div>
+<%= cabecera_listado ["fecha", "proveedor.nombre", "codigo", "base_imponible", "iva_aplicado", "total"] %>
+<% i = 0 %>
+<% for objeto in @albaranes_compra %>
+  <div id="albaran_<%= i +=1 %>" class="listadofila">
+    <%= fila_listado objeto %>
+    <div class="listado_derecha">
+      <%= link_to_remote icono('Cart2',{:title => "Ver Productos"}), :url => { :controller => 'albaran_lineas', :action => 'lineas', :albaran_id => objeto.id, :update => "albaran_compra_sub_" + i.to_s } %>
+      <%= link_to icono('Wizard',{:title => "Recuperar"}), :action => 'recuperar_albaran', :albaran_id => objeto.id %>
+      <%= borrado icono('Trash',{:title => 'Borrar'}), { :controller => 'albarans', :action => 'borrar', :id => objeto.id }, 'Eliminar Albaran', 'Eliminar Albaran', :ajax => false %>
+    </div>
+  </div>
+  <div id="albaran_compra_sub_<%= i.to_s %>">
+  </div>
+<% end %>
+<%= final_listado %>
+</div>
+
+
+<!--- Listado de albaranes de venta perdidos --->
+
+<div class='caja_completa' id='listado_albaranes_venta'>
+<div class='linea' id='encabezado_albaranes_compra'><div class='elemento_derecha'>Albaranes de Ventas</div></div>
+<%= cabecera_listado ["fecha", "cliente.nombre", "base_imponible", "iva_aplicado", "total"] %>
+<% i = 0 %>
+<% for objeto in @albaranes_venta %>
+  <div id="albaran_<%= i +=1 %>" class="listadofila">
+    <%= fila_listado objeto %>
+    <div class="listado_derecha">
+      <%= link_to_remote icono('Cart',{:title => "Ver Productos"}), :url => { :controller => 'albaran_lineas', :action => 'lineas', :albaran_id => objeto.id, :update => "albaran_venta_sub_" + i.to_s } %>
+      <%= link_to icono('Wizard',{:title => "Recuperar"}), :action => 'recuperar_albaran', :albaran_id => objeto.id %>
+      <%= borrado icono('Trash',{:title => 'Borrar'}), { :controller => 'albarans', :action => 'borrar', :id => objeto.id }, 'Eliminar Albaran', 'Eliminar Albaran', :ajax => false %>
+    </div>
+  </div>
+  <div id="albaran_venta_sub_<%= i.to_s %>">
+  </div>
+<% end %>
+<%= final_listado %>
+</div>

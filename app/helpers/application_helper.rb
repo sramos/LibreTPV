@@ -23,7 +23,7 @@ module ApplicationHelper
         valor=objeto[i] || ""
       else
         valor=objeto
-        campo.split('.').each { |metodo| valor = valor.send(metodo) if valor }
+        campo.split('.').each { |metodo| valor = valor.send(metodo) if valor } if objeto
       end
       i += 1
       etiqueta=etiqueta(campo)
@@ -64,7 +64,7 @@ module ApplicationHelper
     for campo in @campos_sublistado
       valor=objeto
       campo.split('.').each { |metodo| valor = valor.send(metodo) if valor }
-      valor = format('%0.2f',valor) if etiqueta(campo)[3] == "f"
+      valor = format('%0.2f',valor) if etiqueta(campo)[3] == "f" && valor
       cadena += "<div class='listado_campo_" + etiqueta(campo)[1] + (etiqueta(campo)[3]||"") + "' id='listado_campo_valor_" + campo + "'>" + (valor && valor.to_s != "" ? truncate(valor.to_s, :length => etiqueta(campo)[2]):"&nbsp;") + '</div>'
     end
     return cadena
@@ -206,6 +206,7 @@ module ApplicationHelper
       when "admin"
         controladores = [ #{ :rotulo => "Usuarios", :controlador => "usuarios"},
                           { :rotulo => "Backup", :controlador => "backup"},
+                          { :rotulo => "Recuperar Objetos", :controlador => "perdidos" },
 			  { :rotulo => "Parámetros", :controlador => "configuracion"},
                           { :rotulo => "Formas de Pago", :controlador => "forma_pago"},
                           { :rotulo => "Tipos de IVA", :controlador => "iva"},

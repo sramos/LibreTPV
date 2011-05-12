@@ -27,6 +27,11 @@ class Albaran < ActiveRecord::Base
     return iva_total
   end
 
+  # Devuelve la suma de los dos anteriores
+  def total
+    return self.iva_aplicado + self.base_imponible
+  end
+
   private
     def verificar_borrado
       if !self.factura.nil?

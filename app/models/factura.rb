@@ -5,7 +5,7 @@ class Factura < ActiveRecord::Base
   has_many :pagos
 
   before_destroy :verificar_borrado
-  validates_numericality_of :importe, :greater_than => 0, :message => "La factura debe tener un importe."
+  validates_numericality_of :importe, :message => "La factura debe tener un importe."
   validates_presence_of :codigo, :message => "La factura debe tener un código."
 
   # devuelve el debe de una factura

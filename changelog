@@ -2,7 +2,8 @@
 
   * Bug en cobro de venta (selección de impresión de ticket)
   * Impresión de etiquetas de productos
-  * Ajustes de presentacion de formulario
+  * Ajustes de presentacion de formularios de facturas 
+  * Bug en creacion de facturas desde albaranes con importe = 0
 
 2011-05-05 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6
 

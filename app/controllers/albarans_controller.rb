@@ -6,7 +6,7 @@ class AlbaransController < ApplicationController
   def index
     flash[:mensaje] = "Listado de Albaranes de Proveedores pendientes de aceptar" if params[:seccion] == "productos"
     flash[:mensaje] = "Listado de Truekes pendientes de aceptar" if params[:seccion] == "trueke"
-    redirect_to :action => :listado
+    redirect_to :action => :listado 
   end
 
   def listado
@@ -22,7 +22,7 @@ class AlbaransController < ApplicationController
       end
       params[:update] = 'lineas_albaran'
       params[:albaran_id] = @albaran.id
-      params[:descuento] = params[:seccion] == "productos" ? @albaran.proveedor.descuento : @albaran.cliente.descuento
+      params[:descuento] = @albaran.cliente.nil? ? @albaran.proveedor.descuento : @albaran.cliente.descuento
       render :action => :modificar
     else
       @proveedores = Proveedor.all
