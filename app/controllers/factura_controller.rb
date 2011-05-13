@@ -6,6 +6,9 @@ class FacturaController < ApplicationController
   require 'pdf/writer'
   require 'pdf/simpletable'
 
+  # Librerias para paginado
+  require 'will_paginate'
+
   # Hace una busqueda de "factura" para listado 
   before_filter :obtiene_facturas, :only => [ :listado, :aceptar_cobro ]
 

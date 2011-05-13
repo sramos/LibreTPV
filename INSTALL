@@ -35,7 +35,7 @@ Indice
 
 2.- Instalación de dependencias
 
-  $ apt-get install libnokogiri-ruby 
+  $ apt-get install libjson-ruby, libwill-paginate-ruby, libpdf-writer-ruby, libbarby-ruby, libspreadsheet-ruby 
 
 
 3.- Instalación de TPV
