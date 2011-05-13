@@ -97,16 +97,19 @@ class ProductosController < ApplicationController
     if producto
       barcode = Barby::Code128B.new(producto.codigo)
       altura_codigo = 30
-      pdf = PDF::Writer.new(:paper => 'B8', :orientation => :landscape)
+      #pdf = PDF::Writer.new(:paper => 'C8', :orientation => :landscape)
+      pdf = PDF::Writer.new( :paper => [8.8,5] )
+      pdf.margins_mm(5)
+      pdf.y = pdf.absolute_top_margin - 5 
       pdf.text Configuracion.valor('NOMBRE CORTO EMPRESA').upcase, :justification => :center, :font_size => 10
-      pdf.add_image barcode.to_jpg(:height => altura_codigo, :margin => 5), pdf.left_margin + 10, pdf.y - 42
-      pdf.move_pointer altura_codigo + 6 
+      pdf.add_image barcode.to_jpg(:height => altura_codigo, :margin => 5), pdf.left_margin + 10, pdf.y - 52
+      pdf.move_pointer altura_codigo + 20 
       pdf.text producto.codigo, :font_size => 8, :left => 15 
-      pdf.move_pointer 5 
-      pdf.text producto.nombre, :justification => :right, :right => 5, :font_size => 9
+      pdf.move_pointer 10 
+      pdf.text producto.nombre.first(32)+" ...", :justification => :right, :right => 5, :font_size => 9
       pdf.text "PVP: " + format("%.2f",producto.precio.to_s) + " euros", :justification => :right, :right => 5
       pdf.rounded_rectangle(pdf.left_margin, pdf.absolute_top_margin, pdf.margin_width,
-                      altura_codigo + 58, 5).stroke
+                      pdf.margin_height, 5).stroke
 
       send_data pdf.render, :filename => 'Etiqueta_' + producto.nombre + '.pdf', :type => 'application/pdf'
       #barcode = Barby::Code128B.new(producto.codigo)
