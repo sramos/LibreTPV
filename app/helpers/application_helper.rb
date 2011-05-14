@@ -195,7 +195,7 @@ module ApplicationHelper
                           { :rotulo => "Proveedores" , :controlador => "proveedor"},
                           { :rotulo => "Inventario", :controlador => "productos"} ]
       when "tesoreria"
-        controladores = [ #{ :rotulo => "Informes", :controlador => "informe"},
+        controladores = [ { :rotulo => "Informes", :controlador => "informe"},
                           { :rotulo => "Libro diario", :controlador => "libro_diario"},
                           { :rotulo => "Posicion global", :controlador => "posicion_global"},
                           { :rotulo => "Arqueo/Cierre de Caja", :controlador => "caja"},
