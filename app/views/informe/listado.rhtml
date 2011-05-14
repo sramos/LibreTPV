@@ -1,0 +1,15 @@
+<!--- Generacion de Informes --->
+<%= render :partial => "fechas/info_filtro_fechas" %>
+
+<fieldset class="filtrado" id="filtro_informe">
+  <%= inicio_formulario( { :action => 'listado' }, false ) %>
+    <div class="linea">
+      <%= selector 'Seleccione Informe', 'informe', 'tipo', @informes %>
+      <div class='elemento_derecha' id='boton_informe'><br/>
+        <%= submit_tag( "Generar Informe", :class => "boton", :onclick => "this.disabled=true") %>
+      </div>
+    </div>
+  </form>
+</fieldset>
+
+<%= render :partial => "fechas/filtro_fechas" %>
