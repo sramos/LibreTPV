@@ -4,6 +4,7 @@ class ProductosController < ApplicationController
   require 'barby'
   require 'barby/outputter/rmagick_outputter'
   require 'pdf/writer'
+  require 'will_paginate'
 
   def index
     session[("productos_filtrado").to_sym] = ""

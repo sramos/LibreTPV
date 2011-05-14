@@ -7,7 +7,7 @@ class PosicionGlobalController < ApplicationController
   end
 
   def listado
-    if session[("filtrado_fecha_inicio").to_sym] && session[("filtrado_fecha_fin").to_sym]
+    if cookies[("filtrado_fecha_inicio").to_sym] && cookies[("filtrado_fecha_fin").to_sym]
       @resumen = []
       importe_compra_debe=importe_compra_haber=importe_venta_debe=importe_venta_haber=importe_servicio_debe=importe_servicio_haber=0
       base_imponible_debe=base_imponible_haber=0
@@ -68,13 +68,14 @@ class PosicionGlobalController < ApplicationController
 
   private
     def factura_por_tipo tipo
+      filtro_fecha = "facturas.fecha BETWEEN '" + cookies[("filtrado_fecha_inicio").to_sym].to_s + "' AND '" + cookies[("filtrado_fecha_fin").to_sym].to_s + "'"
       case tipo
         when "compras"
-          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => ["albarans.proveedor_id IS NOT NULL AND facturas.fecha BETWEEN '" + session[("filtrado_fecha_inicio").to_sym].to_s + "' AND '" + session[("filtrado_fecha_fin").to_sym].to_s + "'" ]
+          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => ["albarans.proveedor_id IS NOT NULL AND " + filtro_fecha]
         when "ventas"
-          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => ["albarans.cliente_id IS NOT NULL AND facturas.fecha BETWEEN '" + session[("filtrado_fecha_inicio").to_sym].to_s + "' AND '" + session[("filtrado_fecha_fin").to_sym].to_s + "'" ]
+          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => ["albarans.cliente_id IS NOT NULL AND " + filtro_fecha ]
         when "servicios"
-          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :conditions => ["facturas.albaran_id IS NULL AND facturas.fecha AND facturas.fecha BETWEEN '" + session[("filtrado_fecha_inicio").to_sym].to_s + "' AND '" + session[("filtrado_fecha_fin").to_sym].to_s + "'" ]
+          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :conditions => ["facturas.albaran_id IS NULL AND facturas.fecha AND " + filtro_fecha ]
       end
     end
 end

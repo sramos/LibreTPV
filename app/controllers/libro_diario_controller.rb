@@ -1,5 +1,7 @@
 class LibroDiarioController < ApplicationController
 
+  require 'will_paginate'
+
   def index
     flash[:mensaje] = "Libro Diario."
     flash[:mensaje] << "<br>Informe de Facturas emitidas/recibidas para las fechas elegidas."
@@ -7,8 +9,8 @@ class LibroDiarioController < ApplicationController
   end
 
   def listado
-    if session[("filtrado_fecha_inicio").to_sym] && session[("filtrado_fecha_fin").to_sym]
-      @facturas = Factura.paginate :page => params[:page], :per_page => Configuracion.valor('PAGINADO'), :order => 'facturas.fecha DESC, facturas.codigo DESC', :conditions => { 'facturas.fecha' => session[("filtrado_fecha_inicio").to_sym]..session[("filtrado_fecha_fin").to_sym]}
+    if cookies[("filtrado_fecha_inicio").to_sym] && cookies[("filtrado_fecha_fin").to_sym]
+      @facturas = Factura.paginate :page => params[:page], :per_page => Configuracion.valor('PAGINADO'), :order => 'facturas.fecha DESC, facturas.codigo DESC', :conditions => { 'facturas.fecha' => cookies[("filtrado_fecha_inicio").to_sym]..cookies[("filtrado_fecha_fin").to_sym]}
     end
   end
 

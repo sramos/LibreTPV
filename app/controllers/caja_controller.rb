@@ -1,5 +1,7 @@
 class CajaController < ApplicationController
 
+  require 'will_paginate'
+
   def index
     flash[:mensaje] = "Entradas/Salidas de Caja" if params[:seccion] == 'caja'
     redirect_to :action => :listado if params[:seccion] == 'caja'

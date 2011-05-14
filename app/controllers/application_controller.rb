@@ -7,8 +7,8 @@ class ApplicationController < ActionController::Base
 
   def filtrado
     if params[:filtro]
-      session[("filtrado_fecha_inicio").to_sym] = Date.civil(params[:filtro][:"fecha_inicio(1i)"].to_i,params[:filtro][:"fecha_inicio(2i)"].to_i,params[:filtro][:"fecha_inicio(3i)"].to_i)
-      session[("filtrado_fecha_fin").to_sym] = Date.civil(params[:filtro][:"fecha_fin(1i)"].to_i,params[:filtro][:"fecha_fin(2i)"].to_i,params[:filtro][:"fecha_fin(3i)"].to_i)
+      cookies[("filtrado_fecha_inicio").to_sym] = { :value => Date.civil(params[:filtro][:"fecha_inicio(1i)"].to_i,params[:filtro][:"fecha_inicio(2i)"].to_i,params[:filtro][:"fecha_inicio(3i)"].to_i), :expires => 5.days.from_now }
+      cookies[("filtrado_fecha_fin").to_sym] = { :value => Date.civil(params[:filtro][:"fecha_fin(1i)"].to_i,params[:filtro][:"fecha_fin(2i)"].to_i,params[:filtro][:"fecha_fin(3i)"].to_i), :expires => 5.days.from_now }
     end
     redirect_to :action => :listado
   end
