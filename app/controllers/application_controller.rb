@@ -7,8 +7,8 @@ class ApplicationController < ActionController::Base
 
   def filtrado
     if params[:filtro]
-      session[("tesoreria_filtrado_fecha_inicio").to_sym] = Date.civil(params[:filtro][:"fecha_inicio(1i)"].to_i,params[:filtro][:"fecha_inicio(2i)"].to_i,params[:filtro][:"fecha_inicio(3i)"].to_i)
-      session[("tesoreria_filtrado_fecha_fin").to_sym] = Date.civil(params[:filtro][:"fecha_fin(1i)"].to_i,params[:filtro][:"fecha_fin(2i)"].to_i,params[:filtro][:"fecha_fin(3i)"].to_i)
+      session[("filtrado_fecha_inicio").to_sym] = Date.civil(params[:filtro][:"fecha_inicio(1i)"].to_i,params[:filtro][:"fecha_inicio(2i)"].to_i,params[:filtro][:"fecha_inicio(3i)"].to_i)
+      session[("filtrado_fecha_fin").to_sym] = Date.civil(params[:filtro][:"fecha_fin(1i)"].to_i,params[:filtro][:"fecha_fin(2i)"].to_i,params[:filtro][:"fecha_fin(3i)"].to_i)
     end
     redirect_to :action => :listado
   end
