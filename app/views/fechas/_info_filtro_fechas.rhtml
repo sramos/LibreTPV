@@ -1,0 +1,10 @@
+<!--- Caja con info del filtrado --->
+
+<% if session[("tesoreria_filtrado_fecha_inicio").to_sym] && session[("tesoreria_filtrado_fecha_fin").to_sym] != '' %>
+  <fieldset id="filtro_libro_valores">
+  <div class='linea' id="texto_filtrado">
+      Filtro de fechas => desde "<%= session[("tesoreria_filtrado_fecha_inicio").to_sym] %>" hasta "<%= session[("tesoreria_filtrado_fecha_fin").to_sym] %>"
+    </div>
+  </fieldset>
+<% end %>
+

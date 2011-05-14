@@ -1,0 +1,14 @@
+<!-- Filtro de Informes -->
+
+<fieldset class="filtrado" id="filtro_informe">
+  <%= inicio_formulario( { :action => 'filtrado' }, false ) %>
+    <div class="linea">
+      <%= fecha "Fecha Inicio (incluida)", "filtro", "fecha_inicio" %>
+      <%= fecha "Fecha Fin (incluida)", "filtro", "fecha_fin" %>
+      <div class='elemento_derecha' id='boton_filtrado'><br/>
+        <%= submit_tag( "Filtrar", :class => "boton", :onclick => "this.disabled=true") %>
+      </div>
+    </div>
+  </form>
+</fieldset>
+
