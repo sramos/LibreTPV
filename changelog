@@ -1,6 +1,8 @@
 2011-05-13 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.4
 
-  *  
+  * Los filtros de fechas se guardan en cookies
+    para que permanezcan tras la sesion
+  * Primera version de informes
 
 2011-05-13 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.3
 

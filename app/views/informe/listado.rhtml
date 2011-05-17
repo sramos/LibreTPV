@@ -1,15 +1,17 @@
 <!--- Generacion de Informes --->
-<%= render :partial => "comunes/info_filtro_fechas" %>
-
 <fieldset class="filtrado" id="filtro_informe">
   <%= inicio_formulario( { :action => 'listado' }, false ) %>
     <div class="linea">
       <%= selector 'Seleccione Informe', 'informe', 'tipo', @informes %>
+      <%= observe_field( "informe_tipo" , :function => 'if( document.getElementById("informe_tipo").selectedIndex == 0 ){ Element.hide("fechas"); } else { Element.show("fechas"); }' ) %>
+      <div id="fechas" style="display:none;">
+        <%= fecha "Fecha Inicio (incluida)", "informe", "fecha_inicio" %>
+        <%= fecha "Fecha Fin (incluida)", "informe", "fecha_fin" %>
+      </div>
+      <div class='elemento_derecha' id='boton_filtrado'><br/>
       <div class='elemento_derecha' id='boton_informe'><br/>
-        <%= submit_tag( "Generar Informe", :class => "boton", :onclick => "this.disabled=true") %>
+        <%= submit_tag( "Generar Informe", :class => "boton") %>
       </div>
     </div>
   </form>
 </fieldset>
-
-<%= render :partial => "comunes/filtro_fechas" %>
