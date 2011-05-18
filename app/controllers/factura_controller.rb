@@ -26,7 +26,7 @@ class FacturaController < ApplicationController
     @factura = params[:id] ? Factura.find(params[:id]) : nil 
     @albaran = @factura.albaran if @factura 
     if params[:seccion] == "tesoreria"
-      @proveedores = Proveedor.all
+      @proveedores = Proveedor.find :all, :order => 'nombre'
       @ivas = Iva.all
     end
     @clientes = Cliente.all if params[:seccion] == "caja"

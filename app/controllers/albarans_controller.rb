@@ -25,7 +25,7 @@ class AlbaransController < ApplicationController
       params[:descuento] = @albaran.cliente.nil? ? @albaran.proveedor.descuento : @albaran.cliente.descuento
       render :action => :modificar
     else
-      @proveedores = Proveedor.all
+      @proveedores = Proveedor.find :all, :order => 'nombre'
     end
   end
 
@@ -105,7 +105,7 @@ class AlbaransController < ApplicationController
           @clientes = Cliente.all
         when "productos"
           condicion = "proveedor_id"
-          @proveedores = Proveedor.all
+          @proveedores = Proveedor.find :all, :order => 'nombre'
         when "trueke"
           condicion = "cliente_id"
       end

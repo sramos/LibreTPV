@@ -6,7 +6,7 @@ class ProveedorController < ApplicationController
   end
 
   def listado
-    @proveedores = Proveedor.all
+    @proveedores = Proveedor.find :all, :order => 'nombre'
   end
 
   def editar
