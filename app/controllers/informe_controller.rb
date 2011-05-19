@@ -103,6 +103,11 @@ class InformeController < ApplicationController
   end
 
   def facturas_venta fecha_inicio, fecha_fin
+    campos = [  ["Fecha", "fecha"], ["Codigo", "codigo"], ["Cliente", "albaran.cliente.nombre"],
+                ["Base Imponible", "base_imponible", true], ["IVA", "iva_aplicado", true], ["Total", "importe", true] ]
+    condicion = "albarans.cliente_id IS NOT NULL AND facturas.fecha BETWEEN '" + fecha_inicio.to_s + "' AND '" + fecha_fin.to_s + "'"
+    objetos = Factura.find(:all, :order => 'facturas.fecha DESC', :include => 'albaran', :conditions => [ condicion ])
+    return genera_informe(objetos,campos)
   end
 
   def facturas_compra fecha_inicio, fecha_fin
@@ -116,8 +121,8 @@ class InformeController < ApplicationController
   def facturas_servicios fecha_inicio, fecha_fin
     campos = [  ["Fecha", "fecha"], ["Codigo", "codigo"], ["Proveedor", "proveedor.nombre"],
 		["Base Imponible", "base_imponible", true], ["IVA", "iva_aplicado", true], ["IRPF", "irpf"], ["Total", "importe", true] ] 
-    condicion = "albaran_id IS NULL AND fecha BETWEEN '" + fecha_inicio.to_s + "' AND '" + fecha_fin.to_s + "'"
-    objetos = Factura.find(:all, :order => 'fecha DESC', :include => 'albaran', :conditions => [ condicion ])
+    condicion = "albaran_id IS NULL AND facturas.fecha BETWEEN '" + fecha_inicio.to_s + "' AND '" + fecha_fin.to_s + "'"
+    objetos = Factura.find(:all, :order => 'facturas.fecha DESC', :include => 'albaran', :conditions => [ condicion ])
     return genera_informe(objetos,campos)
   end
 
