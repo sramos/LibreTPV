@@ -2,6 +2,7 @@
 
   * Los filtros de fechas se guardan en cookies
     para que permanezcan tras la sesion
+  * Filtrado por fechas en facturas
   * Primera version de informes
   * Ordenado de listados de proveedores
 

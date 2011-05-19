@@ -129,6 +129,7 @@ class FacturaController < ApplicationController
 private
 
   def obtiene_facturas 
+    # Segun la seccion aplica un criterio de busqueda
     case params[:seccion]
       when "caja"
         condicion = "albarans.cliente_id IS NOT NULL"
@@ -139,6 +140,11 @@ private
       when "trueke"
         condicion = "albarans.cliente_id IS NOT NULL"
     end
+    # Si hay un filtrado de fechas lo aplica
+    if cookies[("filtrado_fecha_inicio").to_sym] && cookies[("filtrado_fecha_fin").to_sym]
+      condicion += " AND facturas.fecha BETWEEN '" + cookies[("filtrado_fecha_inicio").to_sym] + "' AND '" + cookies[("filtrado_fecha_fin").to_sym] + "'"
+    end
+
     @facturas = Factura.paginate :page => params[:page], :per_page => Configuracion.valor('PAGINADO'), :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => [ condicion ]
   end
 

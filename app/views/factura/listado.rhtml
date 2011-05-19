@@ -1,5 +1,7 @@
 <!--- Listado de facturas --->
 
+<%= render :partial => "comunes/info_filtro_fechas" %>
+
 <div class="caja_completa" id="listado_facturas">
 <% if params[:seccion] == "tesoreria" %>
   <%= cabecera_listado ["fecha", "codigo", "proveedor.nombre", "base_imponible", "valor_iva", "valor_irpf", "importe"], { :title => "Nueva Factura de Servicios", :url => { :action => :editar} } %>
@@ -27,3 +29,4 @@
 <%= final_listado @facturas %>
 </div>
 
+<%= render :partial => "comunes/filtro_fechas" %>
