@@ -3,6 +3,7 @@ class AlbaranLinea < ActiveRecord::Base
   belongs_to :producto
   belongs_to :albaran
 
+  #validate :comprueba_linea
   after_create :mete_campos
 
 
@@ -29,13 +30,25 @@ class AlbaranLinea < ActiveRecord::Base
   end
 
   private
+    def comprueba_linea
+      # Comprueba que exista producto asociado, o sea entrada por concepto
+      if self.producto.nil? 
+        errors.add( "albaran_linea", "No se introdujo el concepto" ) unless self.nombre_producto
+        errors.add( "albaran_linea", "No se introdujo el tipo de IVA aplicado" ) unless self.iva
+        errors.add( "albaran_linea", "No se introdujo el precio" ) unless self.precio_compra || self.precio_venta
+      end
+      return false unless errors.empty?
+    end
+
     # Mete automaticamente los campos que se necesiten si la linea esta vinculada a un producto
     def mete_campos
       if self.producto
         self.precio_venta = self.producto.precio if !self.albaran.cliente.nil?
         self.iva = self.producto.familia.iva.valor
         self.nombre_producto = self.producto.nombre 
-        self.save
+      else
+        self.nombre_producto = "N/A" unless self.nombre_producto && self.nombre_producto != ""
       end
+      self.save
     end
 end

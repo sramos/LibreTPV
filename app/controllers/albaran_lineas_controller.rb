@@ -29,7 +29,7 @@ class AlbaranLineasController < ApplicationController
       albaranlinea.producto_id = params[:producto][:id] if params[:producto]
       albaranlinea.update_attributes params[:albaranlinea]
 
-      if !Albaran.find_by_id(params[:albaranlinea][:albaran_id]).proveedor.nil?
+      if !Albaran.find_by_id(params[:albaranlinea][:albaran_id]).proveedor.nil? && params[:precios_relacionados]
         if params[:precios_relacionados][1].to_s == "true"
           producto = Producto.find_by_id(params[:producto][:id])
           preciodeventa = producto.precio
@@ -37,10 +37,11 @@ class AlbaranLineasController < ApplicationController
         else
           albaranlinea.precio_compra = params[:albaranlinea][:precio_compra].to_f
         end
+        albaranlinea.save
       end
-      albaranlinea.save
 
     end
+    #flash[:error] = albaranlinea if albaranlinea.errors
     redirect_to :controller => :albarans, :action => :editar, :id => albaranlinea.albaran_id
   end
 
