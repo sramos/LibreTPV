@@ -11,7 +11,7 @@
     <%= fila_sublistado linea %>
     <div class="listado_derecha">
       <% if ! Albaran.find_by_id(params[:albaran_id]).cerrado %>
-        <%= modal icono("Write",{:title => "Editar"}), { :controller => 'albaran_lineas', :action => 'editar', :id => linea.id, :albaran_id => params[:albaran_id] }, "Editar línea" %>
+        <%= modal(icono("Write",{:title => "Editar"}), { :controller => 'albaran_lineas', :action => 'editar', :id => linea.id, :albaran_id => params[:albaran_id] }, "Editar línea") if linea.producto %>
         <%= link_to icono('Trash',{:title => "Borrar"}), :controller => 'albaran_lineas', :action => 'borrar', :update => params[:update], :id => linea.id, :albaran_id => params[:albaran_id] %>
       <% end %>
     </div>

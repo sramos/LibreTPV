@@ -26,7 +26,7 @@ class AlbaranLineasController < ApplicationController
     albaran = Albaran.find_by_id params[:albaranlinea][:albaran_id]
     if albaran && !albaran.cerrado
       albaranlinea = params[:id] ? AlbaranLinea.find(params[:id]) : AlbaranLinea.new
-      albaranlinea.producto_id = params[:producto][:id]
+      albaranlinea.producto_id = params[:producto][:id] if params[:producto]
       albaranlinea.update_attributes params[:albaranlinea]
 
       if !Albaran.find_by_id(params[:albaranlinea][:albaran_id]).proveedor.nil?

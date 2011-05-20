@@ -72,9 +72,12 @@ class FacturaController < ApplicationController
       end
       if factura.destroy
         lineas.each do |linea|
-          producto=linea.producto
-          producto.cantidad += (linea.cantidad * multiplicador)
-          producto.save
+          # En el caso de que haya un producto asociado, lo modifica en el inventario
+          if linea.producto
+            producto=linea.producto
+            producto.cantidad += (linea.cantidad * multiplicador)
+            producto.save
+          end
         end
         # Cambia el estado del albaran a abierto
         albaran.cerrado = false

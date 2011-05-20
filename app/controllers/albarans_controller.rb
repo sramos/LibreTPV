@@ -56,9 +56,12 @@ class AlbaransController < ApplicationController
         end 
       end
       lineas.each do |linea|
-        producto=linea.producto
-        producto.cantidad += (linea.cantidad * multiplicador)
-        producto.save 
+        # Modificamos el inventario si la linea corresponde a un producto registrado
+        if linea.producto
+          producto=linea.producto
+          producto.cantidad += (linea.cantidad * multiplicador)
+          producto.save 
+        end
       end
     end
     redirect_to :action => :listado

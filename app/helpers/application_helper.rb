@@ -111,8 +111,8 @@ module ApplicationHelper
     fecha rotulo, objeto, atributo, valor, [true,true]
   end
 
-  def selector rotulo, objeto, atributo, valores, valor=nil
-    cadena = "<div class='elemento_x15' id='selector_" + objeto + "_" + atributo + "'>" + rotulo + "<br/>"
+  def selector rotulo, objeto, atributo, valores, valor=nil, tipo=nil
+    cadena = "<div class='elemento_" + (tipo || "x15") + "' id='selector_" + objeto + "_" + atributo + "'>" + rotulo + "<br/>"
     cadena << select(objeto, atributo, valores, {:class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :value => valor})
     return cadena << "</div>"
   end

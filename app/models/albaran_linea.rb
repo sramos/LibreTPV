@@ -29,11 +29,13 @@ class AlbaranLinea < ActiveRecord::Base
   end
 
   private
-    # Mete automaticamente los campos que se necesiten
+    # Mete automaticamente los campos que se necesiten si la linea esta vinculada a un producto
     def mete_campos
-      self.precio_venta = self.producto.precio if !self.albaran.cliente.nil?
-      self.iva = self.producto.familia.iva.valor
-      self.nombre_producto = self.producto.nombre 
-      self.save
+      if self.producto
+        self.precio_venta = self.producto.precio if !self.albaran.cliente.nil?
+        self.iva = self.producto.familia.iva.valor
+        self.nombre_producto = self.producto.nombre 
+        self.save
+      end
     end
 end
