@@ -1,5 +1,8 @@
 2011-05-20 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.4
 
+  * Eliminada opcion de recuperacion de albaranes perdidos (estaba
+    solo para recuperar elementos del bug de creacion de facturas
+    corregido en la version 0.6.1)
   * Cambios en backup de BBDD (el .sql no se comprime)
   * Entrada de lineas de albaran por concepto (sin vinculacion
     con el inventario)
