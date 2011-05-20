@@ -1,5 +1,6 @@
 2011-05-20 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.4
 
+  * Cambios en backup de BBDD (el .sql no se comprime)
   * Entrada de lineas de albaran por concepto (sin vinculacion
     con el inventario)
   * Los filtros de fechas se guardan en cookies

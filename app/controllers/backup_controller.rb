@@ -8,16 +8,16 @@ class BackupController < ApplicationController
 
   def seleccionar
     db_config = Rails::Configuration.new.database_configuration[RAILS_ENV]
-    fichero_salida = "#{ENV['RAILS_TMP']}/backup.gz"
+    fichero_salida = "#{ENV['RAILS_TMP']}/backup.sql"
 
-    system "mysqldump -u #{db_config['username']} --routines -p#{db_config['password']} #{db_config['database']} | gzip -c > #{fichero_salida}"
+    system "mysqldump -u #{db_config['username']} --routines -p#{db_config['password']} #{db_config['database']} > #{fichero_salida}"
 
     if File.exists?(fichero_salida)
       send_file fichero_salida,
         :disposition => 'attachment',
-        :type => 'application/gzip',
+        :type => 'text/plain',
         :encoding => 'utf8',
-        :filename => "tpv_backup_" + Time.new.strftime("%Y%m%d") + ".sql.gz"
+        :filename => "tpv_backup_" + Time.new.strftime("%Y%m%d") + ".sql"
       # Elimina los ficheros temporales para no dejarlo sucio (no se puede borrar aqui)
       #File.delete (fichero_salida)
     else
