@@ -18,7 +18,7 @@
     <%= texto "% Descuento", 'albaranlinea', 'descuento', params[:descuento] %>
     <%= hidden_field('albaranlinea', 'albaran_id', :value => params[:albaran_id])%>
     <div class='linea'><br>
-      <%= link_to_function("Cambiar a entrada por Concepto", nil, id => "cambio_a_concepto") { |page| page.show 'div_formulario_concepto'; page.hide 'div_formulario_codigo'} %>
+      <%= link_to_function("Cambiar a entrada por Concepto", nil, :id => "cambio_a_concepto") { |page| page.show 'div_formulario_concepto'; page.hide 'div_formulario_codigo'} %>
     </div>
     <div id="propiedades_producto" class="formulario_izqda"></div>
   <%= final_formulario :submit_disabled => true %>

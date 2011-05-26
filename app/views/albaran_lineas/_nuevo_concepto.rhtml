@@ -16,7 +16,7 @@
     <br>
   <%= final_formulario %>
   <div class='linea'><br>
-  <%= link_to_function("Cambiar a entrada por Código", nil, id => "cambio_a_concepto") { |page| page.hide 'div_formulario_concepto'; page.show 'div_formulario_codigo'} %>
+  <%= link_to_function("Cambiar a entrada por Código", nil, :id => "cambio_a_concepto") { |page| page.hide 'div_formulario_concepto'; page.show 'div_formulario_codigo'} %>
   </div>
 </div>
 
