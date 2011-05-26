@@ -117,6 +117,15 @@ module ApplicationHelper
     return cadena << "</div>"
   end
 
+  # check_box 
+  def checkbox rotulo, objeto, atributo, otros={}
+    if otros[:izquierda]
+      '<div class="elemento">' + check_box( objeto, atributo, {:checked => otros[:checked] } ) + rotulo + '</div>'
+    else
+      '<div class="elemento">' + rotulo + check_box( objeto, atributo, {:checked => otros[:checked] } ) + '</div>'
+    end
+  end
+
   def final_formulario boton={}
     cadena = '<div class="fila" id="botonguardar" > <div class="elemento_derecha">'
     if boton[:submit_disabled] != true

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110505094819) do
+ActiveRecord::Schema.define(:version => 20110526150428) do
 
   create_table "albaran_lineas", :force => true do |t|
     t.integer  "cantidad",                                      :default => 1
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(:version => 20110505094819) do
     t.integer  "proveedor_id"
     t.integer  "valor_iva"
     t.integer  "valor_irpf"
+    t.decimal  "importe_base", :precision => 8, :scale => 2
   end
 
   create_table "familias", :force => true do |t|

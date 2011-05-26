@@ -48,12 +48,13 @@ class Factura < ActiveRecord::Base
       return self.importe / (1 + (valor_iva.to_f - valor_irpf.to_f)/100 )
     # Si la factura corresponde a un albaran 
     elsif self.albaran
-      return self.albaran.base_imponible 
+      return self.importe_base ? self.importe_base : self.albaran.base_imponible 
     end
   end
 
   # incluye la base imponible (solo en el caso de que no haya albaran asociado)
   def base_imponible=(valor)
+    self.importe_base = valor.to_f
     if ( self.valor_iva )
       self.importe = valor.to_f * (1 + (valor_iva.to_f - valor_irpf.to_f )/100 )
     else

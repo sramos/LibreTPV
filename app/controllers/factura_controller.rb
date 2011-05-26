@@ -35,13 +35,21 @@ class FacturaController < ApplicationController
 
   def modificar
     factura = params[:id] ? Factura.find(params[:id]) : Factura.new
+    # Para caja, actualizamos el cliente en el albaran
     if params[:seccion] == "caja"
       albaran = factura.albaran
       albaran.update_attributes params[:albaran]
+    # Para productos comprobamos si queremos pisar los importes
+    elsif params[:seccion] == "productos"
+      unless params[:selector][:fuerza_importe] == "1" && params[:factura][:importe_base] && params[:factura][:importe_base].to_f.abs < params[:factura][:importe].to_f.abs
+        params[:factura][:importe_base] = nil
+      end
+    # Para tesoreria actualizamos los campos
     elsif params[:seccion] == "tesoreria"
       # Guardamos 2 veces en el caso de tesoreria para poder hacer el calculo segun la base imponible
       factura.update_attributes params[:factura]
     end
+    # Guardamos las modificaciones
     factura.update_attributes params[:factura]
     flash[:error] = factura
     redirect_to :action => :listado

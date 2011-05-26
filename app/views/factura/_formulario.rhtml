@@ -17,4 +17,14 @@
   <% end %>
   <%= fecha "Fecha", "factura", "fecha" %>
   </div>
+  <% if params[:seccion] == 'productos' %>
+  <div class="linea">
+    <%= checkbox "Forzar Precios de Proveedor", 'selector', 'fuerza_importe', {:checked => (@factura.importe_base?), :izquierda => true } %>
+      <%= observe_field( "selector_fuerza_importe" , :function => 'if( document.getElementById("selector_fuerza_importe").checked ){ Element.show("opciones_precios"); } else { Element.hide("opciones_precios"); }; Modalbox.resizeToContent();' ) %>
+    <div id="opciones_precios" <%= @factura.importe_base ? '' : 'style="display:none"' %> >
+      <%= texto "Importe Total", 'factura', 'importe' %>
+      <%= texto "Base Imponible", 'factura', 'importe_base' %>
+    </div>
+  </div>
+  <% end %>
 <%= final_formulario %>
