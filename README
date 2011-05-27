@@ -6,7 +6,7 @@ Copyright (C) 2011 Santiago Ramos
 
 This file is part of libreTPV. 
 
-TPV is free software; you can redistribute it and/or modify it under the
+libreTPV is free software; you can redistribute it and/or modify it under the
 terms of the GNU General Public License as published by the Free Software Foundation;
 either version 3 of the License, or (at your option) any later version.
 
@@ -20,7 +20,7 @@ You should have received a copy of the GNU General Public License along with
 this program; if not, write to the Free Software Foundation, Inc., 51 Franklin
 Street, Fifth Floor, Boston, Dt. 02110-1301, USA. 
 
-Date: 18 February 2011 
+Date: 27 May 2011 
 Authors: Santiago Ramos 
 You may contact the copyright holder at:
 Email: sramos@sitiodistinto.net
@@ -108,16 +108,16 @@ Existe un único helper general con todos los métodos específicos de las vista
 
 = Changelog y "TODO"
 
-El listado de las novedades y cambios de esta versión de TPV se puede consultar
+El listado de las novedades y cambios de esta versión de libreTPV se puede consultar
 En el fichero "changelog". Los cambios pendientes a implementar en futuras versiones
 aparecen descritas en el fichero "TODO".
 
 
 = Licencia
 
-TPV está licenciado bajo GPLv3. Una descripción de dicha licencia, así como las
+libreTPV está licenciado bajo GPLv3. Una descripción de dicha licencia, así como las
 condiciones de uso, copia, modificación y distribución aparecen en el fichero "COPYING".
 
-TPV está desarrollado por el equipo referido en el archivo "AUTHORS". El Copyright
-de TPV pertenece a Santiago Ramos <sramos@sitiodistinto.net>
+libreTPV está desarrollado por el equipo referido en el archivo "AUTHORS". El Copyright
+de libreTPV pertenece a Santiago Ramos <sramos@sitiodistinto.net>
 
