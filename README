@@ -4,7 +4,7 @@
 ################################################################################
 Copyright (C) 2011 Santiago Ramos
 
-This file is part of TPV. 
+This file is part of libreTPV. 
 
 TPV is free software; you can redistribute it and/or modify it under the
 terms of the GNU General Public License as published by the Free Software Foundation;
@@ -28,7 +28,7 @@ Email: sramos@sitiodistinto.net
 
 ++
 
-<b>NOTAS a la versión 1.0 de TPV </b> 
+<b>NOTAS a la versión 0.x de libreTPV </b> 
 
 = Instalación.
 
@@ -41,6 +41,38 @@ En este punto solo enumeramos los pasos generales para una instalación. Remitim
 5. Instalar y configurar mod-rails (o cualquier motor rails) con apache (o con cualquier otro servidor web).
 
 Para el resto de módulos remitimos a la documentación sobre instalación general del sistema recogida en el archivo INSTALL
+
+
+= Descripción de libreTPV
+
+LibreTPV es una aplicación de gestión de tiendas pequeñas y medianas. Está diseñada de forma intuitiva y clara, de forma que
+el uso de la herramienta sea lo más rápido posible. Sus funcionalidades son:
+
+  * Gestión de proveedores
+  * Gestión de clientes
+  * Gestión de stock
+  * Ventas con distintas formas de pago
+  * Impresión de tickets de venta y control de apertura de caja
+  * Utilización de lector de código de barras para realizar las ventas y los albaranes de entrada de productos
+  * Uso de ISBN para gestión de libros con rellenado automático de los datos de este.
+  * Ventas de productos no inventariados
+  * Generación de etiquetas de venta con códigos de barras
+  * Descuento personalizado por cliente y proveedor
+  * Arqueo y cierre de caja
+  * Gestión de tipos de IVA
+  * Control de pagos de facturas de proveedores y de ventas.
+  * Impresión de PDFs de facturas para clientes
+  * Gestión de facturas de servicios asociados a la tienda (autónomos, alquiler, luz, teléfono, ...)
+  * Informes de libro diario y posición global (con desglose de iva repercutido y soportado para declaraciones, irpf, ...) 
+  * Exportaciones a hojas de cálculo excel
+
+= Funcionalidades futuras 
+
+  * Control de vendedores
+  * Múltiples puestos de venta
+  * Sincronización de inventario y ventas con sistema de eCommerce (tiendas web)
+  * Prepago por cliente
+  * Bonos descuento para fidelización de compras
 
 
 
