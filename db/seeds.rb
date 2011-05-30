@@ -28,7 +28,7 @@ Configuracion.create([	{ :nombre_param => 'PAGINADO', :valor_param => '25'},
 			{ :nombre_param => 'CIF', :valor_param => 'A-12345678-B'},
 			{ :nombre_param => 'DIRECCION', :valor_param => 'c/ Sin Nombre, nº1'},
 			{ :nombre_param => 'CODIGO POSTAL', :valor_param => '28053 MADRID' },
-			{ :nombre_param => 'TELEFONO'. :valor_param => '911760555' },
+			{ :nombre_param => 'TELEFONO', :valor_param => '911760555' },
 			{ :nombre_param => 'PREFIJO FACTURA VENTA', :valor_param => 'LIB-'},
 			{ :nombre_param => 'COMANDO IMPRESION', :valor_param => 'lpr -P TM-T70 -o cpi=20'} ])
 
