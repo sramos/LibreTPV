@@ -252,7 +252,7 @@ module ApplicationHelper
 			"factura.codigo"		=> ["Código de Factura", "2_3", 20],
 			"albaran.factura.codigo"	=> ["Código de Factura", "2_3", 20],
 			"albaran.factura.fecha"		=> ["Fecha", "1_2", 13],
-			"albaran.codigo"		=> ["Código de Albaran", "2_3", 20],
+			"albaran.codigo"		=> ["Cod.Albarán", "1_3", 14],
 			"albaran.fecha"			=> ["Fecha", "1_2", 13],
 			"email"				=> ["Email", "2_3", 20],
 			"nombre_param"			=> ["Parámetro","1", 36],
