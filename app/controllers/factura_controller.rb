@@ -43,6 +43,7 @@ class FacturaController < ApplicationController
     elsif params[:seccion] == "productos"
       unless params[:selector][:fuerza_importe] == "1" && params[:factura][:importe_base] && params[:factura][:importe_base].to_f.abs < params[:factura][:importe].to_f.abs
         params[:factura][:importe_base] = nil
+        params[:factura][:importe] = factura.albaran.total
       end
     # Para tesoreria actualizamos los campos
     elsif params[:seccion] == "tesoreria"
