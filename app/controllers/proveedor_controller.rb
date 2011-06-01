@@ -1,7 +1,6 @@
 class ProveedorController < ApplicationController
 
   def index
-    flash[:mensaje] = "Listado de Proveedores"
     redirect_to :action => :listado
   end
 

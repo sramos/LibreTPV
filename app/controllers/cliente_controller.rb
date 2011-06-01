@@ -1,7 +1,6 @@
 class ClienteController < ApplicationController
 
   def index
-    flash[:mensaje] = "Listado de Clientes"
     redirect_to :action => :listado
   end
 

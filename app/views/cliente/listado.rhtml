@@ -1,9 +1,9 @@
 <!--- Listado de clientes --->
 
-<div class="caja_completa"
+<div class="caja_completa">
 <%= cabecera_listado ["cif", "nombre", "email", "descuento","credito"], { :title => "Nuevo Cliente", :url => { :action => :editar } } %>
 <% for objeto in @clientes %>
-  <div class="listadofila">
+  <div class="listadofila" id="cliente_<%= objeto.id.to_s %>">
     <%= fila_listado objeto %>
     <div class="listado_derecha">
       <%= link_to_remote icono('Cart',{:title => "Ver Productos Vendidos al Cliente"}), :url => { :action => 'productos', :id => objeto.id, :update => "cliente_sub_" + objeto.id.to_s } %>
