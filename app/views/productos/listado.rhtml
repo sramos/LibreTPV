@@ -15,7 +15,7 @@
     </div>
   </form>
   <% if session[("productos_filtrado_valor").to_sym] && session[("productos_filtrado_valor").to_sym] != '' %>
-    <div class='linea' id="texto_filtrado">
+    <div class='linea texto_filtrado' id="texto_filtrado">
       Filtrado por <%= session[("productos_filtrado_tipo").to_sym].capitalize %>
       <%= session[("productos_filtrado_condicion").to_sym] ? session[("productos_filtrado_condicion").to_sym] : " >> " %>
       "<%= session[("productos_filtrado_valor").to_sym] %>"

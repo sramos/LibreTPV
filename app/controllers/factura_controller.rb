@@ -13,9 +13,6 @@ class FacturaController < ApplicationController
   before_filter :obtiene_facturas, :only => [ :listado, :aceptar_cobro ]
 
   def index
-    flash[:mensaje] = "Listado de Facturas de Proveedores" if params[:seccion] == "productos"
-    flash[:mensaje] = "Listado de Facturas de Clientes" if params[:seccion] == "caja"
-    flash[:mensaje] = "Listado de Facturas de Servicios" if params[:seccion] == "tesoreria"
     redirect_to :action => :listado
   end
 
@@ -141,12 +138,14 @@ class FacturaController < ApplicationController
 private
 
   def obtiene_facturas 
-    # Segun la seccion aplica un criterio de busqueda
+    # Segun la seccion aplica un criterio de busqueda con los filtrados particulares
     case params[:seccion]
       when "caja"
-        condicion = "albarans.cliente_id IS NOT NULL"
+        condicion = "albarans.cliente_id IS NOT NULL" unless session[("filtrado_cliente").to_sym] && session[("filtrado_cliente").to_sym] != ""
+        condicion = "albarans.cliente_id = " + session[("filtrado_cliente").to_sym] if session[("filtrado_cliente").to_sym] && session[("filtrado_cliente").to_sym] != ""
       when "productos"
-        condicion = "albarans.proveedor_id IS NOT NULL"
+        condicion = "albarans.proveedor_id IS NOT NULL" unless session[("filtrado_proveedor").to_sym] && session[("filtrado_proveedor").to_sym] != ""
+        condicion = "albarans.proveedor_id = " + session[("filtrado_proveedor").to_sym] if session[("filtrado_proveedor").to_sym] && session[("filtrado_proveedor").to_sym] != ""
       when "tesoreria"
         condicion = "albaran_id IS NULL"
       when "trueke"

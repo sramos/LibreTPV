@@ -22,7 +22,7 @@ body {
     float: left;
 }
 
-#texto_filtrado {
+.texto_filtrado {
     font-size: 13px;
     font-style: italic;
     text-align: center;

@@ -1,6 +1,6 @@
 <!--- Listado de facturas --->
 
-<%= render :partial => "comunes/info_filtro_fechas" %>
+<%= render :partial => "comunes/filtros" %>
 
 <div class="caja_completa" id="listado_facturas">
 <% if params[:seccion] == "tesoreria" %>
@@ -31,4 +31,3 @@
 <%= final_listado @facturas %>
 </div>
 
-<%= render :partial => "comunes/filtro_fechas" %>

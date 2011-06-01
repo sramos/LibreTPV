@@ -1,0 +1,16 @@
+<!-- Filtros -->
+
+<fieldset class="filtrado" id="filtro">
+  <%= inicio_formulario( { :action => 'filtrado' }, false ) %>
+    <div class="linea">
+      <%= fecha "Fecha Inicio (incluida)", "filtro", "fecha_inicio", cookies[("filtrado_fecha_inicio").to_sym].to_date %>
+      <%= fecha "Fecha Fin (incluida)", "filtro", "fecha_fin", cookies[("filtrado_fecha_fin").to_sym].to_date %>
+      <%= selector("Proveedor", 'filtro', 'proveedor', Proveedor.find(:all,:order=>"nombre ASC").map {|p| [p.nombre,p.id]}, session[("filtrado_proveedor").to_sym].to_i, "x15", true) if params[:seccion] == "productos" %>
+      <%= selector("Cliente", 'filtro', 'cliente', Cliente.find(:all,:order=>"nombre ASC").map {|p| [p.nombre,p.id]}, session[("filtrado_cliente").to_sym].to_i, "x15", true) if params[:seccion] == "caja" %>
+      <div class='elemento_derecha' id='boton_filtrado'><br/>
+        <%= submit_tag( "Cambiar Filtro", :class => "boton", :onclick => "this.disabled=true") %>
+      </div>
+    </div>
+  </form>
+</fieldset>
+

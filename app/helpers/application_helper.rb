@@ -99,7 +99,7 @@ module ApplicationHelper
 
   def fecha rotulo, objeto, atributo, valor=nil, discards=[false, false]
     cadena = "<div class='elemento_x15'>" + rotulo + "<br/>"
-    cadena << date_select(objeto, atributo, {:discard_day=>discards[0], :discard_month=>discards[1], :order => [:day,:month,:year], :class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :value => valor})
+    cadena << date_select(objeto, atributo, {:discard_day=>discards[0], :discard_month=>discards[1], :order => [:day,:month,:year], :class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :default => valor})
     return cadena << "</div>"
   end
 
@@ -111,9 +111,13 @@ module ApplicationHelper
     fecha rotulo, objeto, atributo, valor, [true,true]
   end
 
-  def selector rotulo, objeto, atributo, valores, valor=nil, tipo=nil
+  def selector rotulo, objeto, atributo, valores, valor=nil, tipo=nil, vacio=nil
     cadena = "<div class='elemento_" + (tipo || "x15") + "' id='selector_" + objeto + "_" + atributo + "'>" + rotulo + "<br/>"
-    cadena << select(objeto, atributo, valores, {:class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :value => valor})
+    if valor && valor != ""
+      cadena << select(objeto, atributo, valores, {:class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :selected => valor, :include_blank => !vacio.nil?})
+    else
+      cadena << select(objeto, atributo, valores, {:class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :include_blank => !vacio.nil?})
+    end
     return cadena << "</div>"
   end
 
