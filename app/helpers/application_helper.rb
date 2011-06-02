@@ -235,6 +235,7 @@ module ApplicationHelper
 			"familia.nombre"		=> ["Familia", "1_2", 13],
 			"proveedor.nombre"		=> ["Proveedor", "1", 36],
 			"codigo"			=> ["Código", "2_3", 20],
+                        "codigo_mayusculas"             => ["Código", "2_3", 20],
 			"producto.codigo"		=> ["Código/ISBN", "1_2", 13],
 			"producto.nombre"		=> ["Nombre/Título", "1", 36],
 			"nombre_producto"		=> ["Nombre/Título", "1", 36],
@@ -256,7 +257,7 @@ module ApplicationHelper
 			"factura.codigo"		=> ["Código de Factura", "2_3", 20],
 			"albaran.factura.codigo"	=> ["Código de Factura", "2_3", 20],
 			"albaran.factura.fecha"		=> ["Fecha", "1_2", 13],
-			"albaran.codigo"		=> ["Cod.Albarán", "1_3", 14],
+			"albaran.codigo"		=> ["Código de Albarán", "2_3", 20],
 			"albaran.fecha"			=> ["Fecha", "1_2", 13],
 			"email"				=> ["Email", "2_3", 20],
 			"nombre_param"			=> ["Parámetro","1", 36],
@@ -276,7 +277,7 @@ module ApplicationHelper
 			"pagos_servicios"		=> ["Otros Gastos", "2_3", 20, "f"],
 			"entradas/salidas"		=> ["Entradas/Salidas", "2_3", 20, "f"],
 			"total caja"			=> ["Total Caja", "2_3", 20, "f"],
-                        "credito"			=> ["Credito", "1_3", 14, "f"],
+                        "credito"			=> ["Crédito", "1_3", 14, "f"],
 		}
     return etiqueta[campo] || [campo.capitalize, "1_2", 13]
   end

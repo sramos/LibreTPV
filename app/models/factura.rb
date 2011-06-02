@@ -8,6 +8,12 @@ class Factura < ActiveRecord::Base
   validates_numericality_of :importe, :message => "La factura debe tener un importe."
   validates_presence_of :codigo, :message => "La factura debe tener un código."
 
+  # devuelve el codigo de la factura o el del albaran si no existe
+  def codigo_mayusculas
+    (self.codigo == "N/A" && self.albaran && self.albaran.codigo != "") ? "(*) " + self.albaran.codigo.upcase : self.codigo.upcase
+  end
+
+
   # devuelve el debe de una factura
   def debe
     if (self.albaran && ( (self.albaran.proveedor_id && self.importe >= 0) || (self.albaran.cliente_id && self.importe < 0))) || (self.proveedor && self.importe >= 0)

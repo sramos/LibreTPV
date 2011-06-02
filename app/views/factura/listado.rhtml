@@ -5,10 +5,8 @@
 <div class="caja_completa" id="listado_facturas">
 <% if params[:seccion] == "tesoreria" %>
   <%= cabecera_listado ["fecha", "codigo", "proveedor.nombre", "base_imponible", "valor_iva", "valor_irpf", "importe"], { :title => "Nueva Factura de Servicios", :url => { :action => :editar} } %>
-<% elsif params[:seccion] == "productos" %>
-  <%= cabecera_listado ["fecha", "albaran.codigo", "codigo", "albaran.proveedor.nombre", "base_imponible", "iva_aplicado", "importe"] %>
 <% else %>
-  <%= cabecera_listado ["fecha", "codigo", "albaran.cliente.nombre", "base_imponible", "iva_aplicado", "importe"] %>
+  <%= cabecera_listado ["fecha", "codigo_mayusculas", (params[:seccion] == "productos" ? "albaran.proveedor.nombre" : "albaran.cliente.nombre"), "base_imponible", "iva_aplicado", "importe"] %>
 <% end %>
 <% for objeto in @facturas %>
   <div id="factura_<% objeto.id.to_s %>" class="listadofila">
