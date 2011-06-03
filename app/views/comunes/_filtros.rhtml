@@ -7,6 +7,7 @@
       <%= fecha "Fecha Fin (incluida)", "filtro", "fecha_fin", cookies[("filtrado_fecha_fin").to_sym].to_date %>
       <%= selector("Proveedor", 'filtro', 'proveedor', Proveedor.find(:all,:order=>"nombre ASC").map {|p| [p.nombre,p.id]}, session[("filtrado_proveedor").to_sym].to_i, "x15", true) if params[:seccion] == "productos" %>
       <%= selector("Cliente", 'filtro', 'cliente', Cliente.find(:all,:order=>"nombre ASC").map {|p| [p.nombre,p.id]}, session[("filtrado_cliente").to_sym].to_i, "x15", true) if params[:seccion] == "caja" %>
+      <%= selector("Pagada", 'filtro', 'pagado', [["Si","true"],["No","false"]], session[("filtrado_pagado").to_sym], "x05", true) %>
       <div class='elemento_derecha' id='boton_filtrado'><br/>
         <%= submit_tag( "Cambiar Filtro", :class => "boton", :onclick => "this.disabled=true") %>
       </div>

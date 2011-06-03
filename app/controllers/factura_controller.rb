@@ -155,6 +155,10 @@ private
     if cookies[("filtrado_fecha_inicio").to_sym] && cookies[("filtrado_fecha_fin").to_sym]
       condicion += " AND facturas.fecha BETWEEN '" + cookies[("filtrado_fecha_inicio").to_sym] + "' AND '" + cookies[("filtrado_fecha_fin").to_sym] + "'"
     end
+    # Si hay filtrado de facturas pagadas lo aplica
+    if session[("filtrado_pagado").to_sym] && session[("filtrado_pagado").to_sym] != ""
+      condicion += " AND facturas.pagado IS " + session[("filtrado_pagado").to_sym]
+    end
 
     @facturas = Factura.paginate :page => params[:page], :per_page => Configuracion.valor('PAGINADO'), :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => [ condicion ]
   end

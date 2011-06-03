@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
       cookies[("filtrado_fecha_fin").to_sym] = { :value => Date.civil(params[:filtro][:"fecha_fin(1i)"].to_i,params[:filtro][:"fecha_fin(2i)"].to_i,params[:filtro][:"fecha_fin(3i)"].to_i), :expires => 5.days.from_now }
       session[("filtrado_proveedor").to_sym] = (params[:filtro][:proveedor]=="0" ? nil : params[:filtro][:proveedor]) if params[:filtro][:proveedor]
       session[("filtrado_cliente").to_sym] = (params[:filtro][:cliente]=="0" ? nil : params[:filtro][:cliente]) if params[:filtro][:cliente]
+      session[("filtrado_pagado").to_sym] = (params[:filtro][:pagado]=="0" ? nil : params[:filtro][:pagado]) if params[:filtro][:pagado]
     end
     redirect_to :action => :listado
   end
