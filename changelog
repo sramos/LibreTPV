@@ -8,6 +8,7 @@
   * En los listados de facturas de proveedores y clientes se
     muestra el codigo de albaran si no se definio codigo de
     factura
+  * Incluido nuevo sitio de busqueda de codigo ISBN
 
 2011-05-26 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.5
 
