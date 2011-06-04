@@ -5,6 +5,7 @@ class ProductosController < ApplicationController
   require 'barby/outputter/rmagick_outputter'
   require 'pdf/writer'
   require 'will_paginate'
+  require 'hpricot'
 
   def index
     session[("productos_filtrado").to_sym] = ""
@@ -159,7 +160,7 @@ class ProductosController < ApplicationController
 
     # Si no existe el libro lo busca y se prepara para guardarlos
     else 
-      @producto = producto_x_codigo_isbn(params[:codigo])
+      @producto = producto_x_codigo_isbn params[:codigo]
       render :partial => params[:template]
     end
   end
@@ -167,6 +168,13 @@ class ProductosController < ApplicationController
   private
     def producto_x_codigo_isbn isbn
       producto = Producto.new
+      producto = producto_x_isbn_todostuslibros producto, isbn if producto.codigo.nil?
+      producto = producto_x_isbn_google producto, isbn if producto.codigo.nil?
+      producto.codigo = isbn if producto.codigo.nil?
+      return producto
+    end
+
+    def producto_x_isbn_google producto, isbn
       output = Net::HTTP.get('books.google.com', '/books/download/libro.ris?vid=' + isbn + '&output=ris').split("\r\n")
       propiedades={}
       output.each{|a|
@@ -179,9 +187,32 @@ class ProductosController < ApplicationController
         producto.anno = propiedades["Y1"]
         producto.editor = propiedades["PB"]
         producto.familia_id = 1
+        producto.codigo = isbn 
       end
-      producto.codigo = params[:codigo]
-  
+
+      return producto
+    end
+
+    def producto_x_isbn_todostuslibros producto, isbn
+      url = URI.parse('http://www.todostuslibros.com/busquedas')
+      post_params = {     '_method'       => 'POST',
+                          'data[Busquedas][keyword]'      => isbn }
+
+      resp, data = Net::HTTP.post_form(url, post_params)
+      enlace = Hpricot(data).search("//div[@class='details']//a").first.to_html
+      if enlace
+        enlace =~ /href="(.+)"/
+        doc = Hpricot Net::HTTP.get('www.todostuslibros.com', $1)
+        producto.nombre = doc.search("div[@class='data']//h1/strong").first.inner_html
+        producto.autor = doc.search("div[@class='data']//h2/a").first.inner_html
+        producto.editor = doc.search("//dd[@class='publisher']//a").first.inner_html
+        producto.precio = doc.search("//dd[@class='precio']").first.inner_html.to_f.to_s
+        doc.search("//dd[@class='publication-date']").first.inner_html =~ /-([0-9]+)$/
+        producto.anno = $1
+	producto.familia_id = 1
+        producto.codigo = isbn 
+      end
+
       return producto
     end
 
