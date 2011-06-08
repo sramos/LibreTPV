@@ -13,6 +13,8 @@ class AlbaransController < ApplicationController
   end
 
   def editar
+    @proveedores = Proveedor.find(:all, :order => 'nombre') if params[:seccion] == "productos"
+    @clientes = Cliente.find(:all, :order => 'nombre') if params[:seccion] == "caja"
     if params[:id]
       @albaran = Albaran.find(params[:id])
       @albaran_lineas = @albaran.albaran_lineas
@@ -24,8 +26,6 @@ class AlbaransController < ApplicationController
       params[:albaran_id] = @albaran.id
       params[:descuento] = @albaran.cliente.nil? ? @albaran.proveedor.descuento : @albaran.cliente.descuento
       render :action => :modificar
-    else
-      @proveedores = Proveedor.find :all, :order => 'nombre'
     end
   end
 
