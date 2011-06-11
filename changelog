@@ -1,6 +1,11 @@
 2011-06-xx Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.7
 
-  * Bug in new shell because of select object error
+  * Corregido selector de clientes en albaranes
+  * Valores iniciales de los filtros de fecha
+  * Eliminado filtro de "pagado" en seccion tesoreria 
+  * Edicion de campos de albaran ya creado en la introduccion de lineas
+  * Captura de excepciones para busquedas de ISBN
+  * Duplicacion de facturas
 
 2011-06-08 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.6
 
