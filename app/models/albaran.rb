@@ -7,6 +7,17 @@ class Albaran < ActiveRecord::Base
 
   before_destroy :verificar_borrado
 
+  # Crea un albaran copiando todos los datos de otro
+  def clonar
+    #albaran = clone
+    #albaran.albaran_lineas = albaran_lineas.collect {|al| al.clone}
+    albaran = Albaran.create(self.attributes.merge({:cerrado => false, :fecha => Date.today}))
+    self.albaran_lineas.each do |al|
+      albaran.albaran_lineas << AlbaranLinea.create(al.attributes)
+    end
+    albaran
+  end
+
   # Devuelve la base imponible de los productos
   def base_imponible
     subtotal = 0
