@@ -199,18 +199,21 @@ class ProductosController < ApplicationController
                           'data[Busquedas][keyword]'      => isbn }
 
       resp, data = Net::HTTP.post_form(url, post_params)
-      enlace = Hpricot(data).search("//div[@class='details']//a").first.to_html
-      if enlace
-        enlace =~ /href="(.+)"/
-        doc = Hpricot Net::HTTP.get('www.todostuslibros.com', $1)
-        producto.nombre = doc.search("div[@class='data']//h1/strong").first.inner_html
-        producto.autor = doc.search("div[@class='data']//h2/a").first.inner_html
-        producto.editor = doc.search("//dd[@class='publisher']//a").first.inner_html
-        producto.precio = doc.search("//dd[@class='precio']").first.inner_html.to_f.to_s
-        doc.search("//dd[@class='publication-date']").first.inner_html =~ /-([0-9]+)$/
-        producto.anno = $1
-	producto.familia_id = 1
-        producto.codigo = isbn 
+      begin 
+        enlace = Hpricot(data).search("//div[@class='details']//a").first.to_html
+        if enlace
+          enlace =~ /href="(.+)"/
+          doc = Hpricot Net::HTTP.get('www.todostuslibros.com', $1)
+          producto.nombre = doc.search("div[@class='data']//h1/strong").first.inner_html
+          producto.autor = doc.search("div[@class='data']//h2/a").first.inner_html
+          producto.editor = doc.search("//dd[@class='publisher']//a").first.inner_html
+          producto.precio = doc.search("//dd[@class='precio']").first.inner_html.to_f.to_s
+          doc.search("//dd[@class='publication-date']").first.inner_html =~ /-([0-9]+)$/
+          producto.anno = $1
+          producto.familia_id = 1
+          producto.codigo = isbn 
+        end
+      rescue
       end
 
       return producto
