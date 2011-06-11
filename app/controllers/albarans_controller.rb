@@ -83,15 +83,6 @@ class AlbaransController < ApplicationController
     redirect_to :action => :listado 
   end
 
-  # Cambia el cliente de un albaran que se esta editando
-  def cambiar_relaciones
-    albaran=Albaran.find_by_id params[:id]
-    albaran.proveedor_id = params[:proveedor_id] if params[:proveedor_id] && params[:seccion] == "productos"
-    albaran.cliente_id = params[:cliente_id] if params[:cliente_id] && params[:seccion] == "caja"
-    albaran.save
-    render :inline => ""
-  end
-
   private
     def obtiene_albaranes
       # Hace una limpieza de los albaranes vacios

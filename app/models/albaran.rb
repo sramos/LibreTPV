@@ -11,7 +11,7 @@ class Albaran < ActiveRecord::Base
   def clonar
     #albaran = clone
     #albaran.albaran_lineas = albaran_lineas.collect {|al| al.clone}
-    albaran = Albaran.create(self.attributes.merge({:cerrado => false, :fecha => Date.today}))
+    albaran = Albaran.create(self.attributes.merge({:codigo => "D-"+codigo, :cerrado => false, :fecha => Date.today}))
     self.albaran_lineas.each do |al|
       albaran.albaran_lineas << AlbaranLinea.create(al.attributes)
     end

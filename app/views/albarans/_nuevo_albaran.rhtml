@@ -11,5 +11,5 @@
     <%= selector 'Cliente', 'albaran', 'cliente_id', @clientes.map {|u| [u.nombre,u.id]} %>
   <% end %>
   <br/>
-<%= final_formulario({:etiqueta => params[:seccion] == 'productos' ? "Nuevo Albaran" : "Nueva Venta"})%>
+<%= final_formulario({:etiqueta => (@albaran.nil? ? (params[:seccion] == 'productos' ? "Nuevo Albaran" : "Nueva Venta") : "Modificar" ) })%>
 
