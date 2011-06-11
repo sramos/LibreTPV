@@ -76,27 +76,13 @@ class AlbaransController < ApplicationController
     redirect_to :action => :listado 
   end
 
-  # A eliminar
-  def borrar_viejo 
-    albaran = Albaran.find_by_id params[:id]
-    if albaran
-      if albaran.cerrado
-        lineas = albaran.albaran_lineas
-        if params[:seccion] == "productos"
-          multiplicador = -1
-        else
-          multiplicador = 1
-        end
-        lineas.each do |linea|
-          producto=linea.producto
-          producto.cantidad += (linea.cantidad * multiplicador)
-          producto.save  
-        end
-      end
-      albaran.destroy
-    end
-    flash[:error] = albaran
-    redirect_to :action => :listado
+  # Cambia el cliente de un albaran que se esta editando
+  def cambiar_relaciones
+    albaran=Albaran.find_by_id params[:id]
+    albaran.proveedor_id = params[:proveedor_id] if params[:proveedor_id] && params[:seccion] == "productos"
+    albaran.cliente_id = params[:cliente_id] if params[:cliente_id] && params[:seccion] == "caja"
+    albaran.save
+    render :inline => ""
   end
 
   private

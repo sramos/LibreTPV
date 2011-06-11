@@ -5,10 +5,10 @@
   Fecha: <%= @albaran.fecha %><br/>
   <% if @albaran.proveedor %>
     <%= selector "Proveedor", 'albaran', 'proveedor_id', @proveedores.map {|u| [u.nombre,u.id]} %>
-      <%= observe_field( "albaran_proveedor_id", :with => :proveedor_id, :url => {:action => :cambiar_proveedor, :id => @albaran.id}, :before => "Element.show('spinner_albaran')", :success => "Element.hide('spinner_albaran')") %>
+      <%= observe_field( "albaran_proveedor_id", :with => :proveedor_id, :url => {:action => :cambiar_relaciones, :id => @albaran.id}, :before => "Element.show('spinner_albaran')", :success => "Element.hide('spinner_albaran')") %>
   <% else %>
     <%= selector "Cliente", 'albaran', 'cliente_id', @clientes.map {|u| [u.nombre,u.id]} %>
-      <%= observe_field( "albaran_cliente_id", :with => :cliente_id, :url => {:action => :cambiar_cliente, :id => @albaran.id}, :before => "Element.show('spinner_albaran')", :success => "Element.hide('spinner_albaran')") %>
+      <%= observe_field( "albaran_cliente_id", :with => :cliente_id, :url => {:action => :cambiar_relaciones, :id => @albaran.id}, :before => "Element.show('spinner_albaran')", :success => "Element.hide('spinner_albaran')") %>
   <% end %>
   <div id="spinner_albaran" class="spinner elemento_derecha" style="display:none" ></div>
   </div>
