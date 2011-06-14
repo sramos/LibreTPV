@@ -6,6 +6,7 @@
   * Edicion de campos de albaran ya creado en la introduccion de lineas
   * Captura de excepciones para busquedas de ISBN
   * Duplicacion de facturas
+  * El directorio temporal se genera en el arranque
 
 2011-06-08 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.6
 

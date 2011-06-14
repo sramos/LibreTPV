@@ -43,15 +43,20 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
 
   #
-  # Configura los paths para multisitio. Con la variable de entorno GOR_SITEID se 
+  # Configura los paths para multisitio. Con la variable de entorno LIBRETPV_SITEID se 
   # define los paths particulares de una instancia concreta.
   # En apache se define a traves de la directiva:
-  #         SetEnv GOR_SITEID "nombre_instancia"
+  #         SetEnv LIBRETPV_SITEID "nombre_instancia"
   #
   ENV['RAILS_ETC'] ||= "/etc/libretpv/#{ENV['LIBRETPV_SITEID']}"
   ENV['RAILS_LOG'] ||= "/var/log/libretpv/#{ENV['LIBRETPV_SITEID']}"
   ENV['RAILS_CACHE'] ||= "/var/cache/libretpv/#{ENV['LIBRETPV_SITEID']}"
-  ENV['RAILS_TMP'] ||= ENV['LIBRETPV_SITEID'] ? "/var/tmp/libretpv" : Rails.root.join('tmp')
+  ENV['RAILS_TMP'] ||= ENV['LIBRETPV_SITEID'] ? "/tmp/libretpv" : Rails.root.join('tmp')
+
+  # Si no existe, genera el directorio temporal
+  Dir.mkdir(ENV['RAILS_TMP']) unless File.directory?(ENV['RAILS_TMP'])
+  # Si no existe, genera el directorio de cache
+  Dir.mkdir(ENV['RAILS_CACHE']) unless File.directory?(ENV['RAILS_CACHE']) || !ENV['LIBRETPV_SITEID']
 
   config.database_configuration_file = ENV['RAILS_ETC'] + '-database.yml' unless !ENV['LIBRETPV_SITEID']
   config.log_path = ENV['RAILS_LOG'] + "." + ENV['RAILS_ENV'] + ".log" unless !ENV['LIBRETPV_SITEID']
