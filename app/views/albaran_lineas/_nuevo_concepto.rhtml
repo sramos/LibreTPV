@@ -1,7 +1,7 @@
 <!--- Entrada de linea de albaran por concepto --->
 
 <div id="div_formulario_concepto" class="formulario_izqda" style="display:none;">
-  <%= inicio_formulario( { :controller => :albaran_lineas, :action => :asignar_linea, :albaran_id => params[:albaran_id], :update => params[:update] }, false ) %>
+  <%= inicio_formulario( { :controller => :albaran_lineas, :action => :asignar_linea, :albaran_id => params[:albaran_id], :update => params[:update] }, false, :id => "formulario_concepto" ) %>
     <%= texto "Concepto", 'albaranlinea', 'nombre_producto' %>
     <div class="linea"></div>
     <%= texto("Base Imponible", 'albaranlinea', 'precio_compra') if params[:seccion] == "productos" %>

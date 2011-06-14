@@ -7,6 +7,8 @@
   * Captura de excepciones para busquedas de ISBN
   * Duplicacion de facturas
   * El directorio temporal se genera en el arranque
+  * Actualizados nombres de formularios para encajar con edicion de campos
+    de albaranes
 
 2011-06-08 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.6
 

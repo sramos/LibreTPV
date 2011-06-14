@@ -11,7 +11,7 @@
   <br>
   <% if @producto.id %>
     <script type="text/javascript">
-      document.forms["formulario"].submit();
+      document.forms["formulario_codigo"].submit();
     </script> 
   <% end %>
   <%= "Nombre: " + truncate(@producto.nombre, :length => 20) if @producto.nombre %><br/>

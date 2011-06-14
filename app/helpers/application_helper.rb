@@ -82,10 +82,10 @@ module ApplicationHelper
 
   def inicio_formulario url, ajax, otros={}
     if ajax
-      cadena = form_remote_tag( :url => url, :html => {:id => "formulario_ajax", :class => "formulario"}, :multipart => true, :loading => "Element.show('spinner'); Element.hide('botonguardar');", :complete => "Element.hide('spinner')")
+      cadena = form_remote_tag( :url => url, :html => {:id => otros[:id]||"formulario_ajax", :class => "formulario"}, :multipart => true, :loading => "Element.show('spinner'); Element.hide('botonguardar');", :complete => "Element.hide('spinner')")
       cadena << "<div class='fila' id='spinner' style='display:none'></div>"
     else
-      cadena = form_tag( url, :multipart => true, :id => "formulario", :class => "formulario" )
+      cadena = form_tag( url, :multipart => true, :id => otros[:id]||"formulario", :class => "formulario" )
     end
     cadena << "<div class='fila'></div>\n"
     return cadena
