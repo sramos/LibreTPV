@@ -21,7 +21,7 @@ class BackupController < ApplicationController
       # Elimina los ficheros temporales para no dejarlo sucio (no se puede borrar aqui)
       #File.delete (fichero_salida)
     else
-      flash[:error] = _("Error al realizar el backup. Contacte con el administrador del sistema.")
+      flash[:error] = "Error al realizar el backup. Contacte con el administrador del sistema."
       redirect_to :action => 'index'
     end
   end
