@@ -238,6 +238,7 @@ module ApplicationHelper
                         "codigo_mayusculas"             => ["Código", "2_3", 20],
 			"producto.codigo"		=> ["Código/ISBN", "1_2", 13],
 			"producto.nombre"		=> ["Nombre/Título", "1", 36],
+			"producto.cantidad"		=> ["Stock", "1_5", 8, "d"],
 			"nombre_producto"		=> ["Nombre/Título", "1", 36],
 			"nombre"			=> ["Nombre/Título", "1", 36],
 			"autor"				=> ["Autor", "2_3", 20],
