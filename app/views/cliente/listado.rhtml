@@ -6,12 +6,13 @@
   <div class="listadofila" id="cliente_<%= objeto.id.to_s %>">
     <%= fila_listado objeto %>
     <div class="listado_derecha">
-      <%= link_to_remote icono('Cart',{:title => "Ver Productos Vendidos al Cliente"}), :url => { :action => 'productos', :id => objeto.id, :update => "cliente_sub_" + objeto.id.to_s } %>
+      <%= link_to_remote icono('Cart',{:title => "Ver Productos Vendidos al Cliente"}), :url => { :action => 'productos', :id => objeto.id, :update => "cliente_sub_" + objeto.id.to_s }, :loading => "Element.show('spinner_#{objeto.id.to_s }')", :complete => "Element.hide('spinner_#{objeto.id.to_s}')" %>
       <%= modal icono('Currency Euro',{:title => 'Aumentar Crédito'}), {:action => 'nuevo_credito', :id => objeto.id}, 'Aumentar Credito' %>
       <%= modal icono('Write',{:title => 'Editar Cliente'}), {:action => 'editar', :id => objeto.id}, 'Editar Cliente' %>
       <%= borrado icono('Trash',{:title => 'Borrar Cliente'}), { :action => 'borrar', :id => objeto.id } , 'Eliminar Cliente', "Cliente: " + objeto.nombre, :ajax => false %>
     </div>
   </div>
+  <div id="spinner_<%= objeto.id.to_s %>" class="spinner" style="display:none" ></div>
   <div id="cliente_sub_<%= objeto.id.to_s %>"></div>
 <% end %>
 <%= final_listado %>
