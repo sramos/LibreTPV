@@ -2,11 +2,20 @@
 <%= inicio_formulario( { :action => 'modificar', :id => @albaran }, false ) %>
   <%= hidden_field 'albaran', 'codigo' %>
   <%= fecha 'Fecha', 'albaran', 'fecha' %>
+  <div class="elemento_x01">&nbsp;</div>
   <% if params[:seccion] == 'productos' %>
       <%= texto 'Código de Albaran', 'albaran', 'codigo' %>
   <% end %>
   <% if params[:seccion] == 'productos' %>
     <%= selector 'Proveedor', 'albaran', 'proveedor_id', @proveedores.map {|u| [u.nombre,u.id]} %>
+    <div class="elemento_x05">Depósito<br>
+      <%= check_box( "albaran", "deposito") %>
+    </div>
+      <%= observe_field( "albaran_deposito" , :function => 'if( document.getElementById("albaran_deposito").checked ){ Element.show("devolucion"); } else { Element.hide("devolucion"); }' ) %>
+    <div id="devolucion" <% if @albaran.nil? || !@albaran.deposito %>style="display:none;"<% end %> >
+      <div class="elemento_x01">&nbsp;</div>
+      <%= fecha 'Fecha de Devolución', 'albaran', 'fecha_devolucion' %>
+    </div>
   <% else %>
     <%= selector 'Cliente', 'albaran', 'cliente_id', @clientes.map {|u| [u.nombre,u.id]} %>
   <% end %>

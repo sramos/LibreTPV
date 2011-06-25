@@ -54,12 +54,16 @@ class FacturaController < ApplicationController
   end
 
   def aceptar_albaran_proveedor
-    factura = Factura.new
-    factura.fecha = Time.now
-    factura.albaran_id = params[:albaran_id]
-    factura.codigo = "N/A"
-    factura.importe = params[:importe].to_f
-    factura.save
+    albaran = Albaran.find_by_id params[:albaran_id]
+    # Genera una factura solo si no es de deposito
+    if !albaran.deposito
+      factura = Factura.new
+      factura.fecha = Time.now
+      factura.albaran_id = params[:albaran_id]
+      factura.codigo = "N/A"
+      factura.importe = params[:importe].to_f
+      factura.save
+    end
     redirect_to :controller => :albarans, :action => :aceptar_albaran, :id => params[:albaran_id]
   end
 

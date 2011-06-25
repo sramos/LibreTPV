@@ -108,10 +108,10 @@ margin-top:15px;
 .listado_campo_2_3, .listado_campo_2_3f { width:160px; }
 .listado_campo_1_2 { width:120px; }
 .listado_campo_1_3, .listado_campo_1_3d, .listado_campo_1_3f { width:80px; }
-.listado_campo_1_5, .listado_campo_1_5d, .listado_campo_1_5f { width:48px; }
+.listado_campo_1_5, .listado_campo_1_5d, .listado_campo_1_5f { width:40px; }
 .listado_campo_2_3f, .listado_campo_1_3d, .listado_campo_1_3f, .listado_campo_1_5d, .listado_campo_1_5f { text-align: right; }
 
-.texto, .elemento, .elemento_x15, .elemento_x05, .elemento_c {
+.texto, .elemento, .elemento_x15, .elemento_x05, .elemento_x01, .elemento_c {
     font-size: 11px;
 }
 
@@ -126,12 +126,18 @@ margin-top:15px;
 
 .elemento_x05 {
     float: left;
+    text-align: right;
     width: 95px;
+}
+
+.elemento_x01 {
+    float: left;
+    width: 20px;
 }
 
 .elemento_x15 {
     float: left;
-    width:285px
+    width:225px
 }
 
 .texto {

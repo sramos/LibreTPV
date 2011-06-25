@@ -1,7 +1,9 @@
 <!--- Sublistado de lineas de albaran --->
 
+<% albaran = Albaran.find_by_id(params[:albaran_id]) %>
 <% if params[:seccion ] == 'productos' %>
-  <%= cabecera_sublistado "Productos", ["cantidad","nombre_producto","precio_compra","descuento","subtotal","iva", "total"], params[:update] %>
+  <%= cabecera_sublistado("Productos", ["cantidad","nombre_producto","precio_compra","descuento","subtotal","iva", "total"], params[:update]) unless albaran.deposito %>
+  <%= cabecera_sublistado("Productos", ["producto.cantidad","cantidad","nombre_producto","precio_compra","descuento","subtotal","iva", "total"], params[:update]) if albaran.deposito %>
 <% else %>
   <%= cabecera_sublistado "Productos", ["cantidad","nombre_producto","precio_venta","descuento","subtotal","iva", "total"], params[:update] %>
 <% end %>
@@ -10,9 +12,19 @@
   <div id="<%= params[:update] %>_linea_<%= (i += 1).to_s %>" class="fila" >
     <%= fila_sublistado linea %>
     <div class="listado_derecha">
-      <% if ! Albaran.find_by_id(params[:albaran_id]).cerrado %>
+      <% if ! albaran.cerrado %>
         <%= modal(icono("Write",{:title => "Editar"}), { :controller => 'albaran_lineas', :action => 'editar', :id => linea.id, :albaran_id => params[:albaran_id] }, "Editar línea") if linea.producto %>
         <%= link_to icono('Trash',{:title => "Borrar"}), :controller => 'albaran_lineas', :action => 'borrar', :update => params[:update], :id => linea.id, :albaran_id => params[:albaran_id] %>
+      <% elsif albaran.deposito %>
+        <% if (session[("reposicion").to_sym][(albaran.proveedor_id.to_s + albaran.fecha_devolucion.to_s).to_sym][(linea.id.to_s).to_sym] rescue false) %>
+          <% cantidad = session[("reposicion").to_sym][(albaran.proveedor_id.to_s + albaran.fecha_devolucion.to_s).to_sym][(linea.id.to_s).to_sym]["cantidad".to_sym] %>
+          <%= icono(cantidad, {:title => cantidad + " en la Lista de Reposición" }) if cantidad.to_i <= 9 %>
+          <%= icono("Info", {:title => cantidad + " en la Lista de Reposición" }) if cantidad.to_i > 9 %>
+          <%= borrado icono('Go Out',{:title => 'Quitar de Lista de Reposición'}), { :controller => 'deposito', :action => 'quitar_sustitucion_producto', :id => linea.id, :albaran_id => albaran.id, :update => params[:update] } , 'Quitar de Lista de Reposición', linea.nombre_producto, :ajax => true %>
+        <% elsif linea.producto %>
+          <%= icono("Exclamation", {:title => "No quedan ejemplares en Stock" }) if linea.producto.cantidad <= 0 %>
+          <%= modal(icono("Loop",{:title => "Incluir en Lista de Reposición"}), { :controller => 'deposito', :action => 'preparar_sustitucion_producto', :id => linea.id, :update => params[:update] }, "Incluir en Lista de Reposición") %>
+        <% end %>
       <% end %>
     </div>
   </div>

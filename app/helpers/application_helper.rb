@@ -204,6 +204,7 @@ module ApplicationHelper
                           { :rotulo => "Ventas/Devoluciones", :controlador => "albarans" } ]
       when "productos"
         controladores = [ { :rotulo => "Facturas Proveedores", :controlador => "factura"},
+                          { :rotulo => "Depósitos", :controlador => "deposito"},
                           { :rotulo => "Albaranes de entrada", :controlador => "albarans"},
                           { :rotulo => "Proveedores" , :controlador => "proveedor"},
                           { :rotulo => "Inventario", :controlador => "productos"} ]
@@ -260,6 +261,7 @@ module ApplicationHelper
 			"albaran.factura.fecha"		=> ["Fecha", "1_2", 13],
 			"albaran.codigo"		=> ["Código de Albarán", "2_3", 20],
 			"albaran.fecha"			=> ["Fecha", "1_2", 13],
+			"fecha_devolucion"		=> ["Devolución", "1_2", 13],
 			"email"				=> ["Email", "2_3", 20],
 			"nombre_param"			=> ["Parámetro","1", 36],
 			"valor_param"			=> ["Valor", "1", 36],

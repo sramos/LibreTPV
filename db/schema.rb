@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110526150428) do
+ActiveRecord::Schema.define(:version => 20110624091739) do
 
   create_table "albaran_lineas", :force => true do |t|
     t.integer  "cantidad",                                      :default => 1
@@ -27,11 +27,13 @@ ActiveRecord::Schema.define(:version => 20110526150428) do
   create_table "albarans", :force => true do |t|
     t.string   "codigo"
     t.date     "fecha"
-    t.boolean  "cerrado",      :default => false
+    t.boolean  "cerrado",          :default => false
     t.integer  "proveedor_id"
     t.integer  "cliente_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "deposito",         :default => false
+    t.date     "fecha_devolucion"
   end
 
   create_table "caja", :force => true do |t|
