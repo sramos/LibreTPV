@@ -1,6 +1,10 @@
+<!--- Listado de depositos --->
+
+<div class='caja_completa' id='caja_reposicion'>
+  <%= render :partial => "caja_reposicion" %>
+</div>
 
 <% if @albarans.size()>0 %>
-<!--- Listado de albaranes --->
 <div class='caja_completa'>
 <% if params[:seccion] == "productos" %>
   <%= cabecera_listado ["fecha", "proveedor.nombre", "codigo", "fecha_devolucion"] %>

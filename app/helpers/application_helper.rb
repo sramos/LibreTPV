@@ -173,7 +173,8 @@ module ApplicationHelper
   def borrado ( rotulo, url, titulo, texto, otros={} )
     # Falta añadir al titulo de la ventana modal el mismo texto superior que llevan las modales sobre la variable de session.
     cadena = '<div style="display:none;" id="'+ (otros[:id] || url[:id].to_s ) +'_borrar" class="elemento_c">'
-    cadena << 'Va a eliminar: <br><B>' + texto + '<br><br>'
+    cadena << 'Va a eliminar:<br>' unless otros[:no_borrado]
+    cadena << '<B>' + texto + '<br><br>'
     cadena << '<div class="fila"><a href="#" onclick="Modalbox.hide()"> Cancelar </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '
     cadena << link_to( "Confirmar", url, :id => otros[:id].to_s + "_confirmar") unless otros[:ajax]
     cadena << link_to_remote( "Confirmar", :url => url, :html =>  {:id => otros[:id].to_s + "_confirmar"}) if otros[:ajax]

@@ -4,7 +4,6 @@ class DepositoController < ApplicationController
   before_filter :obtiene_albaranes, :only => [ :listado ]
 
   def index
-    flash[:mensaje] = "Listado de Albaranes en Depósito" if params[:seccion] == "productos"
     redirect_to :action => :listado 
   end
 
@@ -26,6 +25,7 @@ class DepositoController < ApplicationController
     session[("reposicion").to_sym][(albaran_linea.albaran.proveedor_id.to_s + albaran_linea.albaran.fecha_devolucion.to_s).to_sym][(albaran_linea.id.to_s).to_sym] = params[:selector]
     render :update do |page|
       page.replace_html params[:update], :partial => "albaran_lineas/lineas"
+      page.replace_html "caja_reposicion", :partial => "caja_reposicion"
       page.visual_effect :highlight, params[:update] , :duration => 6
       page.replace_html 'MB_content', :inline => '<div id="mensajeok">Se ha incluido el elemento en la lista de reposición.<br></div>'
       page.call("Modalbox.resizeToContent")
@@ -39,10 +39,24 @@ class DepositoController < ApplicationController
     session[("reposicion").to_sym][(albaran_linea.albaran.proveedor_id.to_s + albaran_linea.albaran.fecha_devolucion.to_s).to_sym].delete((albaran_linea.id.to_s).to_sym)
     render :update do |page|
       page.replace_html params[:update], :partial => "albaran_lineas/lineas"
+      page.replace_html "caja_reposicion", :partial => "caja_reposicion"
       page.visual_effect :highlight, params[:update] , :duration => 6
       page.replace_html 'MB_content', :inline => '<div id="mensajeok">Se ha eliminado el elemento de la lista de reposición.<br></div>'
       page.call("Modalbox.resizeToContent")
     end
+  end
+
+  # Mostrar la lista de reposicion
+  def lista_reposicion
+    render :update do |page|
+      page.replace_html params[:update], :partial => "lista_reposicion"
+    end
+  end
+
+  # Vaciar lista de reposicion
+  def vaciar_lista_reposicion
+    session[("reposicion").to_sym] = Hash.new
+    redirect_to :action => :listado 
   end
 
   def borrar
