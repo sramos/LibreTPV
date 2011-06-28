@@ -1,0 +1,20 @@
+<!--- Caja de aviso de titulos pendientes de reposicion --->
+
+  <% cantidad = 0 %>
+  <% session[("reposicion").to_sym].each_value { |elemento| elemento.each_value { |libros| cantidad += libros.size } } if session[("reposicion").to_sym] %>
+  <div class='listado'>
+    <div class='listado_derecha'>
+      &nbsp;&nbsp;&nbsp;
+      <% if cantidad > 0 %>
+        <%= link_to_remote icono('Cart2',{:title => "Ver Lista de Reposición"}), :url => { :controller => 'deposito', :action => 'lista_reposicion', :update => "listado_reposicion"}, :loading => "Element.show('spinner_reposicion')", :complete => "Element.hide('spinner_reposicion')" %>
+        <%= borrado icono('Loop',{:title => 'Solicitar la Reposición de todos los productos de la lista'}), { :controller => 'deposito', :action => 'reponer_productos' } , 'Reponer productos', '¿Está seguro de querer reponer todos los productos de la lista?.<br>Esto provocará la creación de una factura y un albarán abierto de reposición de depósito.', :ajax => false, :no_borrado => true, :id => 'reponer_productos' %>
+        <%= borrado icono('Trash',{:title => "Vaciar Lista de Reposición"}), {:controller => 'deposito', :action => 'vaciar_lista_reposicion'}, 'Vaciar la Lista de Reposición', 'Todos los elementos de la lista de reposición', :ajax => false, :id => 'vaciar_lista_reposicion' %>
+      <% end %> 
+    </div>
+    <div class='listado_derecha texto_filtrado' id='texto_caja_reposicion'>
+      <%= cantidad > 0 ? (cantidad.to_s + " producto" + (cantidad==1?"":"s") + " en la lista de reposición.") : "No hay productos en la lista de reposición" %>
+    </div>
+  </div>
+  <div id="spinner_reposicion" class="spinner" style="display:none" ></div>
+  <div id="listado_reposicion"></div>
+
