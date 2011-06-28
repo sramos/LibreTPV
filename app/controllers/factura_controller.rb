@@ -73,26 +73,27 @@ class FacturaController < ApplicationController
     # Cuando no son facturas externas hay que modificar el inventario
     if params[:seccion] != "tesoreria"
       albaran = factura.albaran
+      albaran.borrar(params[:seccion]) if factura.destroy
       # Primero elimina los productos relacionados del stock
-      lineas = albaran.albaran_lineas
-      if params[:seccion] == "productos"
-        multiplicador = -1
-      else
-        multiplicador = 1
-      end
-      if factura.destroy
-        lineas.each do |linea|
-          # En el caso de que haya un producto asociado, lo modifica en el inventario
-          if linea.producto
-            producto=linea.producto
-            producto.cantidad += (linea.cantidad * multiplicador)
-            producto.save
-          end
-        end
-        # Cambia el estado del albaran a abierto
-        albaran.cerrado = false
-        albaran.save
-      end
+      #lineas = albaran.albaran_lineas
+      #if params[:seccion] == "productos"
+      #  multiplicador = -1
+      #else
+      #  multiplicador = 1
+      #end
+      #if factura.destroy
+      #  lineas.each do |linea|
+      #    # En el caso de que haya un producto asociado, lo modifica en el inventario
+      #    if linea.producto
+      #      producto=linea.producto
+      #      producto.cantidad += (linea.cantidad * multiplicador)
+      #      producto.save
+      #    end
+      #  end
+      #  # Cambia el estado del albaran a abierto
+      #  albaran.cerrado = false
+      #  albaran.save
+      #end
     else
       factura.destroy
     end
@@ -111,6 +112,7 @@ class FacturaController < ApplicationController
     factura = Factura.new
     factura.pagado = true
     factura.codigo = codigo_factura_venta
+    factura.fecha = Time.now
     factura.update_attributes params[:factura]
     flash[:error] = factura
     pago = Pago.new

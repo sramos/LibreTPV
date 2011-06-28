@@ -7,7 +7,7 @@
       &nbsp;&nbsp;&nbsp;
       <% if cantidad > 0 %>
         <%= link_to_remote icono('Cart2',{:title => "Ver Lista de Reposición"}), :url => { :controller => 'deposito', :action => 'lista_reposicion', :update => "listado_reposicion"}, :loading => "Element.show('spinner_reposicion')", :complete => "Element.hide('spinner_reposicion')" %>
-        <%= borrado icono('Loop',{:title => 'Solicitar la Reposición de todos los productos de la lista'}), { :controller => 'deposito', :action => 'reponer_productos' } , 'Reponer productos', '¿Está seguro de querer reponer todos los productos de la lista?.<br>Esto provocará la creación de una factura y un albarán abierto de reposición de depósito.', :ajax => false, :no_borrado => true, :id => 'reponer_productos' %>
+        <%= borrado icono('Loop',{:title => 'Solicitar la Reposición de todos los productos de la lista'}), { :controller => 'deposito', :action => 'reponer_productos' } , 'Reponer productos', '¿Está seguro de querer reponer todos los productos de la lista?.<br>Esto provocará la creación de una factura y un albarán de reposición de depósito abierto.', :ajax => false, :no_borrado => true, :id => 'reponer_productos' %>
         <%= borrado icono('Trash',{:title => "Vaciar Lista de Reposición"}), {:controller => 'deposito', :action => 'vaciar_lista_reposicion'}, 'Vaciar la Lista de Reposición', 'Todos los elementos de la lista de reposición', :ajax => false, :id => 'vaciar_lista_reposicion' %>
       <% end %> 
     </div>
