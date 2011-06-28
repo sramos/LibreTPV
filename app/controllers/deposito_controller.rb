@@ -26,7 +26,7 @@ class DepositoController < ApplicationController
     render :update do |page|
       page.replace_html params[:update], :partial => "albaran_lineas/lineas"
       page.replace_html "caja_reposicion", :partial => "caja_reposicion"
-      page.visual_effect :highlight, params[:update] , :duration => 6
+      page.visual_effect :highlight, "caja_reposicion", :duration => 6
       page.replace_html 'MB_content', :inline => '<div id="mensajeok">Se ha incluido el elemento en la lista de reposición.<br></div>'
       page.call("Modalbox.resizeToContent")
     end
@@ -37,10 +37,13 @@ class DepositoController < ApplicationController
     albaran_linea = AlbaranLinea.find_by_id params[:id]
     @albaran_lineas = albaran_linea.albaran.albaran_lineas
     session[("reposicion").to_sym][(albaran_linea.albaran.proveedor_id.to_s + albaran_linea.albaran.fecha_devolucion.to_s).to_sym].delete((albaran_linea.id.to_s).to_sym)
+    cantidad = 0
+    session[("reposicion").to_sym].each_value { |elemento| elemento.each_value { |libros| cantidad += libros.size } } if session[("reposicion").to_sym]
     render :update do |page|
-      page.replace_html params[:update], :partial => "albaran_lineas/lineas"
       page.replace_html "caja_reposicion", :partial => "caja_reposicion"
-      page.visual_effect :highlight, params[:update] , :duration => 6
+      page.replace_html("listado_reposicion", :partial => "lista_reposicion") if cantidad > 0 && params[:tipo] == "d"
+      page.replace_html params[:update], :partial => "albaran_lineas/lineas"
+      page.visual_effect :highlight, "caja_reposicion", :duration => 6
       page.replace_html 'MB_content', :inline => '<div id="mensajeok">Se ha eliminado el elemento de la lista de reposición.<br></div>'
       page.call("Modalbox.resizeToContent")
     end
