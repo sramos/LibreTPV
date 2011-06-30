@@ -18,9 +18,31 @@ class Albaran < ActiveRecord::Base
     albaran
   end
 
-  # Destruye un albaran modificando los productos del inventario
-  def borrar seccion
-    if seccion != "tesoreria"
+  # Cierra un albaran modificando los productos del inventario
+  def cerrar seccion
+    if seccion != "tesoreria" && !self.cerrado
+      if seccion == "productos"
+        multiplicador = 1
+      else
+        multiplicador = -1
+      end 
+      self.albaran_lineas.each do |linea|
+        # En el caso de que haya un producto asociado, lo modifica en el inventario
+        if linea.producto
+          producto=linea.producto
+          producto.cantidad += (linea.cantidad * multiplicador)
+          producto.save
+        end
+      end
+      # Cambia el estado del albaran a abierto
+      self.cerrado = true 
+      self.save
+    end
+  end
+
+  # Reabre un albaran modificando los productos del inventario
+  def reabrir seccion
+    if seccion != "tesoreria" && self.cerrado
       if seccion == "productos"
         multiplicador = -1
       else

@@ -85,7 +85,7 @@ class DepositoController < ApplicationController
   def borrar
     albaran = Albaran.find_by_id params[:id]
     if albaran && albaran.cerrado
-      albaran.borrar(params[:seccion])
+      albaran.reabrir(params[:seccion])
       flash[:error] = albaran
     end
     redirect_to :action => :listado 
