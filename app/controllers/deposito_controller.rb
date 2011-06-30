@@ -20,9 +20,9 @@ class DepositoController < ApplicationController
   def sustituir_producto
     albaran_linea = AlbaranLinea.find_by_id params[:albaran_linea_id]
     @albaran_lineas = albaran_linea.albaran.albaran_lineas
-    session[("reposicion").to_sym] ||= Hash.new
-    session[("reposicion").to_sym][(albaran_linea.albaran_id.to_s).to_sym] ||= Hash.new
-    session[("reposicion").to_sym][(albaran_linea.albaran_id.to_s).to_sym][(albaran_linea.id.to_s).to_sym] = params[:selector]
+    cookies[("reposicion").to_sym] ||= Hash.new
+    cookies[("reposicion").to_sym][(albaran_linea.albaran_id.to_s).to_sym] ||= Hash.new
+    cookies[("reposicion").to_sym][(albaran_linea.albaran_id.to_s).to_sym][(albaran_linea.id.to_s).to_sym] = params[:selector]
     render :update do |page|
       page.replace_html params[:update], :partial => "albaran_lineas/lineas"
       page.replace_html "caja_reposicion", :partial => "caja_reposicion"
@@ -36,9 +36,9 @@ class DepositoController < ApplicationController
   def quitar_sustitucion_producto
     albaran_linea = AlbaranLinea.find_by_id params[:id]
     @albaran_lineas = albaran_linea.albaran.albaran_lineas
-    session[("reposicion").to_sym][(albaran_linea.albaran_id.to_s).to_sym].delete((albaran_linea.id.to_s).to_sym)
+    cookies[("reposicion").to_sym][(albaran_linea.albaran_id.to_s).to_sym].delete((albaran_linea.id.to_s).to_sym)
     cantidad = 0
-    session[("reposicion").to_sym].each_value { |elemento| elemento.each_value { |libros| cantidad += libros.size } } if session[("reposicion").to_sym]
+    cookies[("reposicion").to_sym].each_value { |elemento| elemento.each_value { |libros| cantidad += libros.size } } if cookies[("reposicion").to_sym]
     render :update do |page|
       page.replace_html "caja_reposicion", :partial => "caja_reposicion"
       page.replace_html("listado_reposicion", :partial => "lista_reposicion") if cantidad > 0 && params[:tipo] == "d"
@@ -58,14 +58,14 @@ class DepositoController < ApplicationController
 
   # Vaciar lista de reposicion
   def vaciar_lista_reposicion
-    session[("reposicion").to_sym] = Hash.new
+    cookies[("reposicion").to_sym] = Hash.new
     redirect_to :action => :listado 
   end
 
   # Reponer los productos de la lista de reposicion
   def reponer_productos
     # Genera los albaranes de pedido
-    session[("reposicion").to_sym].each do |albaran_id,elemento|
+    cookies[("reposicion").to_sym].each do |albaran_id,elemento|
       albaran_viejo = Albaran.find_by_id(albaran_id.to_s.to_i)
       #albaran = Albaran.create( albaran_viejo.attributes.merge(:fecha => Date.today, :cerrado => false, :codigo => "R-" + albaran_viejo.codigo) )
       albaran = Albaran.create( :fecha => Date.today, :proveedor_id => albaran_viejo.proveedor_id, :cerrado => false, :codigo => "R-" + albaran_viejo.codigo)
@@ -73,11 +73,11 @@ class DepositoController < ApplicationController
         cantidad = cant["cantidad".to_sym].to_s
         al = AlbaranLinea.find_by_id(linea_id.to_s.to_i) 
         linea = AlbaranLinea.create( al.attributes.merge({:cantidad => cantidad, :albaran_id => albaran.id}) )
-        session[("reposicion").to_sym][albaran_id].delete(linea_id)
+        cookies[("reposicion").to_sym][albaran_id].delete(linea_id)
       end
-      session[("reposicion").to_sym].delete(albaran_id)
+      cookies[("reposicion").to_sym].delete(albaran_id)
     end
-    session[("reposicion").to_sym] = Hash.new
+    cookies[("reposicion").to_sym] = Hash.new
     # Clona los albaranes de pedido como cerrados y con una factura asociada
     redirect_to :action => :listado
   end

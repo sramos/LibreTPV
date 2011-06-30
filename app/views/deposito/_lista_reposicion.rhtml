@@ -1,7 +1,7 @@
 <!--- Sublistado de elementos en lista de reposicion --->
 
 <%= cabecera_sublistado "Lista de Reposición", ["nombre_producto","fecha_devolucion"], "listado_reposicion" %>
-  <% session[("reposicion").to_sym].each_value do |elemento| %>
+  <% cookies[("reposicion").to_sym].each_value do |elemento| %>
     <% elemento.each do |linea_id,cant| %>
       <% cantidad = cant["cantidad".to_sym].to_s %>
       <% al = AlbaranLinea.find_by_id(linea_id.to_s.to_i) %>
@@ -15,5 +15,5 @@
         </div>
       </div>
     <% end %>
-  <% end if session[("reposicion").to_sym]%>
+  <% end if cookies[("reposicion").to_sym]%>
 <%= final_sublistado %>

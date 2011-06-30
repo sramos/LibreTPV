@@ -16,8 +16,8 @@
         <%= modal(icono("Write",{:title => "Editar"}), { :controller => 'albaran_lineas', :action => 'editar', :id => linea.id, :albaran_id => params[:albaran_id] }, "Editar línea") if linea.producto %>
         <%= link_to icono('Trash',{:title => "Borrar"}), :controller => 'albaran_lineas', :action => 'borrar', :update => params[:update], :id => linea.id, :albaran_id => params[:albaran_id] %>
       <% elsif albaran.deposito %>
-        <% if (session[("reposicion").to_sym][(albaran.id.to_s).to_sym][(linea.id.to_s).to_sym] rescue false) %>
-          <% cantidad = session[("reposicion").to_sym][(albaran.id.to_s).to_sym][(linea.id.to_s).to_sym]["cantidad".to_sym] %>
+        <% if (cookies[("reposicion").to_sym][(albaran.id.to_s).to_sym][(linea.id.to_s).to_sym] rescue false) %>
+          <% cantidad = cookies[("reposicion").to_sym][(albaran.id.to_s).to_sym][(linea.id.to_s).to_sym]["cantidad".to_sym] %>
           <%= icono(cantidad, {:title => cantidad + " en la Lista de Reposición" }) if cantidad.to_i <= 9 %>
           <%= icono("Info", {:title => cantidad + " en la Lista de Reposición" }) if cantidad.to_i > 9 %>
           <%= borrado icono('Go Out',{:title => 'Quitar de Lista de Reposición'}), { :controller => 'deposito', :action => 'quitar_sustitucion_producto', :id => linea.id, :albaran_id => albaran.id, :update => params[:update] } , 'Quitar de Lista de Reposición', linea.nombre_producto, :ajax => true %>
