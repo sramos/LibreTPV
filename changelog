@@ -2,6 +2,10 @@
 
   * Spinner activado para sublistados
   * Productos en deposito para seccion Productos
+  * Generación de albaranes de reposición para productos en deposito
+  * Orden del listado de clientes por nombre de este
+  * Resuelto bug en impresion de tickets de caja con productos metidos
+    por entrada por concepto
 
 2011-06-14 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.7
 
