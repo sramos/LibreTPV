@@ -1,9 +1,14 @@
 <!-- Formulario de edicion de linea de albaran de deposito -->
 <%= inicio_formulario( { :action => 'sustituir_producto', :update => params[:update], :albaran_linea_id => @albaran_linea, :albaran_id => @albaran_linea.albaran_id }, true ) %>
   <div class="linea">
-    Nombre: <%= @albaran_linea.nombre_producto %>
+    <div class="elemento_x05">
+      Stock<br><%= @albaran_linea.producto.cantidad %>
+    </div>
+    <div class="elemento_x01">&nbsp;</div>
+    <div class="elemento_x2">
+      Nombre<br><%= @albaran_linea.nombre_producto %>
+    </div>
+    <%= selector "A reponer", 'selector', 'cantidad', 1.upto(@albaran_linea.cantidad).map {|i| [i,i]}, nil %>
   </div>
-  <div class="linea">
-    <%= selector "Cantidad", 'selector', 'cantidad', 1.upto(@albaran_linea.cantidad).map {|i| [i,i]}, nil, "" %>
-  </div>
+  <br><br><br>
 <%= final_formulario %>
