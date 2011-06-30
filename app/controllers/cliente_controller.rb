@@ -5,7 +5,7 @@ class ClienteController < ApplicationController
   end
 
   def listado
-    @clientes = Cliente.all
+    @clientes = Cliente.find(:all,:order => [ :nombre ])
   end
 
   def editar
