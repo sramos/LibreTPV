@@ -303,7 +303,7 @@ private
     lineas.each do |linea|
       cantidad = linea.cantidad
       descuento = linea.descuento
-      nombre = truncate(linea.producto.nombre, :length => 31)
+      nombre = truncate(linea.nombre_producto, :length => 31)
       iva = linea.iva
       iva_total[iva] = iva_total.key?(iva) ? iva_total[iva] + (linea.total-linea.subtotal) : linea.total-linea.subtotal 
       subtotal += linea.subtotal 
