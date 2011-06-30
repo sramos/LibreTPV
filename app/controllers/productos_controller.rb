@@ -27,7 +27,7 @@ class ProductosController < ApplicationController
     if session[("productos_filtrado_tipo").to_sym] && session[("productos_filtrado_valor").to_sym]
       if session[("productos_filtrado_tipo").to_sym] =~ /familias.nombre/
         @productos = Producto.paginate :page => params[:page], :per_page => paginado, 
-		:order => 'nombre ASC',
+		:order => 'productos.nombre ASC',
                 :include => [ :familia ],             
                 :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("productos_filtrado_valor").to_sym] + "%" ]
       elsif session[("productos_filtrado_tipo").to_sym] =~ /cantidad/
