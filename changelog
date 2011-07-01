@@ -3,6 +3,7 @@
   * Spinner activado para sublistados
   * Productos en deposito para seccion Productos
   * Generación de albaranes de reposición para productos en deposito
+  * Filtro de productos en deposito para inventario
   * Orden del listado de clientes por nombre de este
   * Resuelto bug en impresion de tickets de caja con productos metidos
     por entrada por concepto
