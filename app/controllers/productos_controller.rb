@@ -21,7 +21,7 @@ class ProductosController < ApplicationController
 
   def listado
     #@campos_filtro = [["Nombre","nombre"], ["Autor","autor"], ["Codigo","codigo"] ,["Editor","editor"], ["Familia","familias.nombre"], ["Proveedor","proveedores.nombre"]]
-    @campos_filtro = [["Nombre","nombre"], ["Autor","autor"], ["Cantidad","cantidad"], ["Codigo","codigo"] ,["Editor","editor"], ["Familia","familias.nombre"]]
+    @campos_filtro = [["Nombre","nombre"], ["Autor","autor"], ["Cantidad","cantidad"], ["Deposito","deposito"], ["Codigo","codigo"], ["Editor","editor"], ["Familia","familias.nombre"]]
     paginado = Configuracion.valor('PAGINADO')
 
     if session[("productos_filtrado_tipo").to_sym] && session[("productos_filtrado_valor").to_sym]
@@ -42,8 +42,16 @@ class ProductosController < ApplicationController
 		:order => 'nombre ASC',
 		:conditions => [ session[("productos_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("productos_filtrado_valor").to_sym] + "%" ]
       end
+    elsif session[("productos_filtrado_tipo").to_sym] =~ /deposito/
+        @lineas = AlbaranLinea.paginate :page => params[:page], :per_page => paginado,
+                :order => 'nombre_producto ASC',
+                :include => [ :albaran ],
+                :conditions => "producto_id IS NOT NULL AND albarans.deposito IS true"
     else
       @productos = Producto.paginate :page => params[:page], :per_page => paginado, :order => 'nombre'
+    end
+    if session[("productos_filtrado_tipo").to_sym] == "deposito"
+      render "listado_deposito"
     end
   end
 

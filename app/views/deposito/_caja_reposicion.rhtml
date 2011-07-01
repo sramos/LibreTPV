@@ -1,7 +1,7 @@
 <!--- Caja de aviso de titulos pendientes de reposicion --->
 
   <% cantidad = 0 %>
-  <% cookies[("reposicion").to_sym].each_value { |elemento| elemento.each_value { |libros| cantidad += libros.size } } if cookies[("reposicion").to_sym] %>
+  <% session[("reposicion").to_sym].each_value { |elemento| elemento.each_value { |libros| cantidad += libros.size } } if session[("reposicion").to_sym] %>
   <div class='listado'>
     <div class='listado_derecha'>
       &nbsp;&nbsp;&nbsp;

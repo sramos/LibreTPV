@@ -1,19 +1,17 @@
 <!--- Sublistado de elementos en lista de reposicion --->
 
 <%= cabecera_sublistado "Lista de Reposición", ["nombre_producto","fecha_devolucion"], "listado_reposicion" %>
-  <% cookies[("reposicion").to_sym].each_value do |elemento| %>
+  <% session[("reposicion").to_sym].each_value do |elemento| %>
     <% elemento.each do |linea_id,cant| %>
       <% cantidad = cant["cantidad".to_sym].to_s %>
-      <% al = AlbaranLinea.find_by_id(linea_id.to_s.to_i) %>
-      <div id="<%= params[:update] %>_linea_<%= al.id.to_s %>" class="fila" >
-        <div class='listado_campo_1' id='sublistado_campo_nombre_producto'><%= al.nombre_producto %></div>
-        <div class='listado_campo_1_2' id='sublistado_campo_fecha_devolucion'><%= al.albaran.fecha_devolucion %></div> 
+      <% linea = AlbaranLinea.find_by_id(linea_id.to_s.to_i) %>
+      <div id="<%= params[:update] %>_linea_<%= linea.id.to_s %>" class="fila" >
+        <div class='listado_campo_1' id='sublistado_campo_nombre_producto'><%= linea.nombre_producto %></div>
+        <div class='listado_campo_1_2' id='sublistado_campo_fecha_devolucion'><%= linea.albaran.fecha_devolucion %></div> 
         <div class='elemento_derecha'>
-          <%= icono(cantidad, {:title => cantidad + " en la Lista de Reposición" }) if cantidad.to_i <= 9 %>
-          <%= icono("Info", {:title => cantidad + " en la Lista de Reposición" }) if cantidad.to_i > 9 %>
-          <%= borrado icono('Go Out',{:title => 'Quitar de Lista de Reposición'}), { :action => 'quitar_sustitucion_producto', :id => al.id, :albaran_id => al.albaran.id, :tipo => "d", :update => "albaran_sub_" + al.albaran.id.to_s } , 'Quitar de Lista de Reposición', al.nombre_producto, :ajax => true %>
+          <%= render :partial => "deposito/iconos_producto_deposito", :locals => { :linea => linea, :update => "botones_" + linea.albaran_id.to_s + "_linea_" + linea.id.to_s } %>
         </div>
       </div>
     <% end %>
-  <% end if cookies[("reposicion").to_sym]%>
+  <% end if session[("reposicion").to_sym]%>
 <%= final_sublistado %>

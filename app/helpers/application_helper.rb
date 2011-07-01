@@ -232,7 +232,7 @@ module ApplicationHelper
 
   def etiqueta campo
     etiqueta = {	"albaran.cliente.nombre"	=> ["Cliente", "1", 36],
-			"albaran.proveedor.nombre"	=> ["Proveedor", "1", 36],
+			"albaran.proveedor.nombre"	=> ["Proveedor", "2_3", 36],
 			"cliente.nombre"		=> ["Cliente", "1", 36],
 			"familia.nombre"		=> ["Familia", "1_2", 13],
 			"proveedor.nombre"		=> ["Proveedor", "1", 36],
@@ -241,6 +241,7 @@ module ApplicationHelper
 			"producto.codigo"		=> ["Código/ISBN", "1_2", 13],
 			"producto.nombre"		=> ["Nombre/Título", "1", 36],
 			"producto.cantidad"		=> ["Stock", "1_5", 8, "d"],
+			"producto.autor"		=> ["Autor", "2_3", 20],
 			"nombre_producto"		=> ["Nombre/Título", "1", 36],
 			"nombre"			=> ["Nombre/Título", "1", 36],
 			"autor"				=> ["Autor", "2_3", 20],
@@ -263,6 +264,7 @@ module ApplicationHelper
 			"albaran.codigo"		=> ["Código de Albarán", "2_3", 20],
 			"albaran.fecha"			=> ["Fecha", "1_2", 13],
 			"fecha_devolucion"		=> ["Devolución", "1_2", 13],
+			"albaran.fecha_devolucion"	=> ["Devolución", "1_2", 13],
 			"email"				=> ["Email", "2_3", 20],
 			"nombre_param"			=> ["Parámetro","1", 36],
 			"valor_param"			=> ["Valor", "1", 36],
