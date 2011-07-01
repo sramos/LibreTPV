@@ -1,0 +1,23 @@
+<!--- Listado de productos en deposito --->
+
+<%= render :partial => "filtro_productos" %>
+
+<div class="caja_completa" id="listado_productos_deposito">
+<%= cabecera_listado ["producto.cantidad", "cantidad", "producto.nombre", "producto.autor", "albaran.proveedor.nombre", "albaran.fecha_devolucion", "producto.precio"] %>
+<% i = 0 %>
+<% for linea in @lineas %>
+  <div id="productos_<% i += 1 %>" class="listadofila">
+    <%= fila_listado linea %>
+    <div class="listado_derecha" id="botones_<%= linea.albaran_id.to_s %>_linea_<%= linea.id.to_s %>">
+      <%= render :partial => "deposito/iconos_producto_deposito", :locals => { :linea => linea, :update => "botones_" + linea.albaran_id.to_s + "_linea_" + linea.id.to_s } %>
+    </div>
+  </div>
+  <div id="spinner_<%= i.to_s %>" class="spinner" style="display:none" ></div>
+  <div id="productos_sub_<%= i.to_s %>_ventas"></div>
+<% end %>
+<%= final_listado @lineas %>
+</div>
+
+<div class='caja_completa' id='caja_reposicion'>
+  <%= render :partial => "deposito/caja_reposicion" %>
+</div>

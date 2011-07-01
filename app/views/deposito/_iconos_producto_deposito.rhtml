@@ -1,0 +1,9 @@
+<% if (session[("reposicion").to_sym][(linea.albaran_id.to_s).to_sym][(linea.id.to_s).to_sym] rescue false) %>
+  <% cantidad = session[("reposicion").to_sym][(linea.albaran_id.to_s).to_sym][(linea.id.to_s).to_sym]["cantidad".to_sym] %>
+  <%= icono(cantidad, {:title => cantidad + " en la Lista de Reposición" }) if cantidad.to_i <= 9 %>
+  <%= icono("Info", {:title => cantidad + " en la Lista de Reposición" }) if cantidad.to_i > 9 %>
+  <%= borrado icono('Go Out',{:title => 'Quitar de Lista de Reposición'}), { :controller => 'deposito', :action => 'quitar_sustitucion_producto', :id => linea.id, :update => update } , 'Quitar de Lista de Reposición', linea.nombre_producto, :ajax => true %>
+<% elsif linea.producto %>
+  <%= icono("Exclamation", {:title => "Hay menos ejemplares en Stock que los pedidos para depósito." }) if linea.producto.cantidad < linea.cantidad %>
+  <%= modal(icono("Loop",{:title => "Incluir en Lista de Reposición"}), { :controller => 'deposito', :action => 'preparar_sustitucion_producto', :id => linea.id, :update => update }, "Incluir en Lista de Reposición") %>
+<% end %>
