@@ -27,7 +27,7 @@ class Albaran < ActiveRecord::Base
         multiplicador = -1
       end 
       # Actualiza el inventario y el credito del cliente
-      inventario_y_credito -multiplicador
+      inventario_y_credito multiplicador
       # Cambia el estado del albaran a abierto
       self.cerrado = true 
       self.save
@@ -43,7 +43,7 @@ class Albaran < ActiveRecord::Base
         multiplicador = 1
       end 
       # Actualiza el inventario y el credito del cliente
-      inventario_y_credito -multiplicador
+      inventario_y_credito multiplicador
       # Cambia el estado del albaran a abierto
       self.cerrado = false
       self.save
@@ -94,13 +94,13 @@ class Albaran < ActiveRecord::Base
           producto.cantidad += (linea.cantidad * multiplicador)
           producto.save
           # En el caso de que sea una venta/devolucion, incluye el credito
-          total_credito += (multiplicador * linea.total * linea.producto.familia.acumulable/100) if self.cliente
+          total_credito += (-1 * multiplicador * linea.total * linea.producto.familia.acumulable/100) if self.cliente
         end
       end  
       # Actualiza el credito total si es una venta/devolucion y no es caja
-      if self.cliente && self.cliente_id != 1
+      if self.cliente && self.cliente_id != 1 && self.cliente.credito != total_credito
           self.cliente.credito = total_credito
-          self.cliente.save if self.cliente.credito != total_credito
+          self.cliente.save if self.cliente.credito
       end
     end
 
