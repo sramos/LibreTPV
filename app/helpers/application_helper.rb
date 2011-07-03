@@ -284,6 +284,7 @@ module ApplicationHelper
 			"entradas/salidas"		=> ["Entradas/Salidas", "2_3", 20, "f"],
 			"total caja"			=> ["Total Caja", "2_3", 20, "f"],
                         "credito"			=> ["Crédito", "1_3", 14, "f"],
+			"credito_acumulado"		=> ["Acumulado", "1_3", 14, "f"],
 		}
     return etiqueta[campo] || [campo.capitalize, "1_2", 13]
   end

@@ -86,7 +86,7 @@ class Albaran < ActiveRecord::Base
     # Hace los calculos de las lineas de albaran
     def inventario_y_credito multiplicador
       # Obtiene el credito inicial se es una venta/devolucion
-      total_credito = (self.cliente.credito || 0) if self.cliente
+      total_credito = (self.cliente.credito_acumulado || 0) if self.cliente
       self.albaran_lineas.each do |linea|
         # En el caso de que haya un producto asociado, lo modifica en el inventario
         if linea.producto
@@ -98,9 +98,9 @@ class Albaran < ActiveRecord::Base
         end
       end  
       # Actualiza el credito total si es una venta/devolucion y no es caja
-      if self.cliente && self.cliente_id != 1 && self.cliente.credito != total_credito
-          self.cliente.credito = total_credito
-          self.cliente.save if self.cliente.credito
+      if self.cliente && self.cliente_id != 1 && self.cliente.credito_acumulado != total_credito
+          self.cliente.credito_acumulado = total_credito
+          self.cliente.save
       end
     end
 
