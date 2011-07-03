@@ -9,7 +9,7 @@
         <div class='listado_campo_1' id='sublistado_campo_nombre_producto'><%= linea.nombre_producto %></div>
         <div class='listado_campo_1_2' id='sublistado_campo_fecha_devolucion'><%= linea.albaran.fecha_devolucion %></div> 
         <div class='elemento_derecha'>
-          <%= render :partial => "deposito/iconos_producto_deposito", :locals => { :linea => linea, :update => "botones_" + linea.albaran_id.to_s + "_linea_" + linea.id.to_s } %>
+          <%= render :partial => "deposito/iconos_producto_deposito", :locals => { :linea => linea, :update => "botones_" + linea.id.to_s } %>
         </div>
       </div>
     <% end %>

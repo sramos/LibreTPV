@@ -43,9 +43,9 @@ class DepositoController < ApplicationController
       page.replace_html "caja_reposicion", :partial => "caja_reposicion"
       page.replace_html("listado_reposicion", :partial => "lista_reposicion") if cantidad > 0 && params[:tipo] == "d"
       # Esto lo hacemos para evitar un casque si el objeto no existe en la pagina
-      page.select(params[:update]).each do |element|
+      #page.select(params[:update]).each do |element|
         page.replace_html params[:update], :partial => "iconos_producto_deposito", :locals => { :linea => albaran_linea, :update => params[:update] }
-      end
+      #end
       page.visual_effect :highlight, "caja_reposicion", :duration => 6
       page.replace_html 'MB_content', :inline => '<div id="mensajeok">Se ha eliminado el elemento de la lista de reposición.<br></div>'
       page.call("Modalbox.resizeToContent")

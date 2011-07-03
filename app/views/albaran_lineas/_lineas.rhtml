@@ -11,12 +11,12 @@
 <% for linea in @albaran_lineas %>
   <div id="<%= params[:update] %>_linea_<%= (i += 1).to_s %>" class="fila" >
     <%= fila_sublistado linea %>
-    <div class="listado_derecha" id="botones_<%= linea.albaran_id %>_linea_<%= linea.id %>">
+    <div class="listado_derecha" id="botones_<%= linea.id %>">
       <% if ! albaran.cerrado %>
         <%= modal(icono("Write",{:title => "Editar"}), { :controller => 'albaran_lineas', :action => 'editar', :id => linea.id, :albaran_id => params[:albaran_id] }, "Editar línea") if linea.producto %>
         <%= link_to icono('Trash',{:title => "Borrar"}), :controller => 'albaran_lineas', :action => 'borrar', :update => params[:update], :id => linea.id, :albaran_id => params[:albaran_id] %>
       <% elsif albaran.deposito %>
-        <%= render :partial => "deposito/iconos_producto_deposito", :locals => { :linea => linea, :update => "botones_" + linea.albaran_id.to_s + "_linea_" + linea.id.to_s } %>
+        <%= render :partial => "deposito/iconos_producto_deposito", :locals => { :linea => linea, :update => "botones_" + linea.id.to_s } %>
       <% end %>
     </div>
   </div>
