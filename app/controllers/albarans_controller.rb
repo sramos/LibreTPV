@@ -77,7 +77,7 @@ class AlbaransController < ApplicationController
       case params[:seccion]
         when "caja"
           condicion = "cliente_id"
-          @clientes = Cliente.all
+          @clientes = Cliente.find :all, :order => 'nombre'
         when "productos"
           condicion = "proveedor_id"
           @proveedores = Proveedor.find :all, :order => 'nombre'

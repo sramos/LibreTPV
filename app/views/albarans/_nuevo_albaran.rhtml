@@ -17,7 +17,7 @@
       <%= fecha 'Fecha de Devolución', 'albaran', 'fecha_devolucion' %>
     </div>
   <% else %>
-    <%= selector 'Cliente', 'albaran', 'cliente_id', @clientes.map {|u| [u.nombre,u.id]} %>
+    <%= selector 'Cliente', 'albaran', 'cliente_id', @clientes.map {|u| [u.nombre,u.id]}, (@albaran.nil? ? 1 : @albaran.cliente_id) %>
   <% end %>
   <br/>
 <%= final_formulario({:etiqueta => (@albaran.nil? ? (params[:seccion] == 'productos' ? "Nuevo Albaran" : "Nueva Venta") : "Modificar" ) })%>
