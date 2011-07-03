@@ -26,14 +26,8 @@ class Albaran < ActiveRecord::Base
       else
         multiplicador = -1
       end 
-      self.albaran_lineas.each do |linea|
-        # En el caso de que haya un producto asociado, lo modifica en el inventario
-        if linea.producto
-          producto=linea.producto
-          producto.cantidad += (linea.cantidad * multiplicador)
-          producto.save
-        end
-      end
+      # Actualiza el inventario y el credito del cliente
+      inventario_y_credito -multiplicador
       # Cambia el estado del albaran a abierto
       self.cerrado = true 
       self.save
@@ -48,14 +42,8 @@ class Albaran < ActiveRecord::Base
       else
         multiplicador = 1
       end 
-      self.albaran_lineas.each do |linea|
-        # En el caso de que haya un producto asociado, lo modifica en el inventario
-        if linea.producto
-          producto=linea.producto
-          producto.cantidad += (linea.cantidad * multiplicador)
-          producto.save
-        end
-      end
+      # Actualiza el inventario y el credito del cliente
+      inventario_y_credito -multiplicador
       # Cambia el estado del albaran a abierto
       self.cerrado = false
       self.save
@@ -92,6 +80,27 @@ class Albaran < ActiveRecord::Base
       if !self.factura.nil?
         errors.add( "albaran", "No se puede borrar albaran: Hay facturas asociadas." )
         false
+      end
+    end
+
+    # Hace los calculos de las lineas de albaran
+    def inventario_y_credito multiplicador
+      # Obtiene el credito inicial se es una venta/devolucion
+      total_credito = (self.cliente.credito || 0) if self.cliente
+      self.albaran_lineas.each do |linea|
+        # En el caso de que haya un producto asociado, lo modifica en el inventario
+        if linea.producto
+          producto=linea.producto
+          producto.cantidad += (linea.cantidad * multiplicador)
+          producto.save
+          # En el caso de que sea una venta/devolucion, incluye el credito
+          total_credito += (multiplicador * linea.total * linea.producto.familia.acumulable/100) if self.cliente
+        end
+      end  
+      # Actualiza el credito total si es una venta/devolucion y no es caja
+      if self.cliente && self.cliente_id != 1
+          self.cliente.credito = total_credito
+          self.cliente.save if self.cliente.credito != total_credito
       end
     end
 
