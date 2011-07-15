@@ -2,8 +2,8 @@
 
 <% session[("filtrado_cliente").to_sym] = "" if session[("filtrado_cliente").to_sym].nil? %>
 <% session[("filtrado_proveedor").to_sym] = "" if session[("filtrado_proveedor").to_sym].nil? %>
-<% cookies[("filtrado_fecha_inicio").to_sym] = (Date.today - 3.month).to_s if cookies[("filtrado_fecha_inicio").to_sym].nil? %>
-<% cookies[("filtrado_fecha_fin").to_sym] = (Date.today + 3.month).to_s if cookies[("filtrado_fecha_fin").to_sym].nil? %>
+<% cookies[("filtrado_fecha_inicio").to_sym] = (Date.today - 3.month).to_date if cookies[("filtrado_fecha_inicio").to_sym].nil? %>
+<% cookies[("filtrado_fecha_fin").to_sym] = (Date.today + 3.month).to_date if cookies[("filtrado_fecha_fin").to_sym].nil? %>
 
 
 <fieldset class="filtrado" id="filtro">

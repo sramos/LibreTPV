@@ -19,6 +19,7 @@ Rails::Initializer.run do |config|
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
+  config.gem 'calendar_date_select' 
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
@@ -39,8 +40,9 @@ Rails::Initializer.run do |config|
   config.time_zone = 'UTC'
 
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-  # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
+  config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
+  config.i18n.default_locale = :es
 
   #
   # Configura los paths para multisitio. Con la variable de entorno LIBRETPV_SITEID se 
@@ -80,4 +82,14 @@ Rails::Initializer.run do |config|
   ENV['TPV-DIRECCION'] = "c/ Arroyo del Olivar, 34"
   ENV['TPV-FACTURA-PREFIX'] = "LEDZ-"
   ENV['TPV-PRINTER'] = "lpr -P TM-T70 -o cpi=20"
+
 end
+
+ CalendarDateSelect.format = :db
+ #CalendarDateSelect.format = :italian
+ #CalendarDateSelect::FORMATS[:italian] = {
+ #  :date => "%m/%d/%Y",
+ #  :time => " %I:%M %p",  # notice the space before time.  If you want date and time to be seperated with a space, put the leading space here.
+ #  :javascript_include => "format_italian"
+ #}
+

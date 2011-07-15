@@ -28,6 +28,7 @@ module ApplicationHelper
       i += 1
       etiqueta=etiqueta(campo)
       valor = valor.localtime.strftime("%d/%m/%Y %H:%M:%S") if valor.class.name == "ActiveSupport::TimeWithZone"
+      valor = valor.strftime("%d/%m/%Y") if valor.class.name == "Date"
       cadena += "<div class='listado_campo_" + etiqueta[1] + (etiqueta[3]||"") + "' id='listado_campo_valor_" + campo + (objeto.class.name == "Array" ? "" : "_" + objeto.id.to_s) + "'>" + (valor && valor.to_s != "" ? truncate( (etiqueta[3]=="f"?sprintf("%.2f",valor):valor.to_s), :length => etiqueta[2]):"&nbsp;") + '</div>'
     end
     #cadena += "</div>"
@@ -65,6 +66,7 @@ module ApplicationHelper
       valor=objeto
       campo.split('.').each { |metodo| valor = valor.send(metodo) if valor }
       valor = format('%0.2f',valor) if etiqueta(campo)[3] == "f" && valor
+      valor = valor.strftime("%d/%m/%Y") if valor.class.name == "Date"
       cadena += "<div class='listado_campo_" + etiqueta(campo)[1] + (etiqueta(campo)[3]||"") + "' id='listado_campo_valor_" + campo + "'>" + (valor && valor.to_s != "" ? truncate(valor.to_s, :length => etiqueta(campo)[2]):"&nbsp;") + '</div>'
     end
     return cadena
@@ -99,7 +101,12 @@ module ApplicationHelper
 
   def fecha rotulo, objeto, atributo, valor=nil, discards=[false, false]
     cadena = "<div class='elemento_x15'>" + rotulo + "<br/>"
-    cadena << date_select(objeto, atributo, {:discard_day=>discards[0], :discard_month=>discards[1], :order => [:day,:month,:year], :class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :default => valor})
+    #cadena << date_select(objeto, atributo, {:discard_day=>discards[0], :discard_month=>discards[1], :order => [:day,:month,:year], :class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :default => valor})
+    otros = {}
+    otros[:year_range] =  [1930, Time.now.year + 5] if  otros[:year_range].nil?
+    otros[:size] = "10"
+    otros[:value] = valor if valor
+    cadena << calendar_date_select(objeto, atributo, otros)
     return cadena << "</div>"
   end
 
