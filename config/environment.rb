@@ -85,11 +85,7 @@ Rails::Initializer.run do |config|
 
 end
 
- CalendarDateSelect.format = :db
+ #CalendarDateSelect.format = :db
+ CalendarDateSelect.format = :finnish
  #CalendarDateSelect.format = :italian
- #CalendarDateSelect::FORMATS[:italian] = {
- #  :date => "%m/%d/%Y",
- #  :time => " %I:%M %p",  # notice the space before time.  If you want date and time to be seperated with a space, put the leading space here.
- #  :javascript_include => "format_italian"
- #}
 
