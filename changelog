@@ -1,6 +1,8 @@
-2011-07-xx Santiago ramos <sramos@sitiodistinto.net> Version 0.6.10
+2011-07-19 Santiago ramos <sramos@sitiodistinto.net> Version 0.6.9.1
 
-  * 
+  * Cambios en traduccion de fechas
+  * Fecha por defecto para nuevos albaranes
+  * Eliminada carga de gema de calendar_date_select
 
 2011-07-19 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9
 

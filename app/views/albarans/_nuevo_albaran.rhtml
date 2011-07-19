@@ -2,7 +2,7 @@
 <%= inicio_formulario( { :action => 'modificar', :id => @albaran }, false ) %>
   <%= hidden_field 'albaran', 'codigo' %>
   <%# calendar_date_select_tag "e_date" %>
-  <%= fecha 'Fecha', 'albaran', 'fecha' %>
+  <%= fecha 'Fecha', 'albaran', 'fecha', Date.today %>
   <div class="elemento_x01">&nbsp;</div>
   <% if params[:seccion] == 'productos' %>
       <%= texto 'Código de Albaran', 'albaran', 'codigo' %>
