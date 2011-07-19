@@ -3,6 +3,8 @@
   * Actualizar credito de cliente en ventas/devoluciones
   * Selector javascript (calendar_date_select) para fechas
   * Uso de traducciones I18n
+  * Desglose por tipos de iva soportado y repercutido en informe de
+    posicion global
 
 2011-07-03 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.8
 
