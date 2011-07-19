@@ -103,9 +103,9 @@ module ApplicationHelper
     cadena = "<div class='elemento_x15'>" + rotulo + "<br/>"
     #cadena << date_select(objeto, atributo, {:discard_day=>discards[0], :discard_month=>discards[1], :order => [:day,:month,:year], :class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :default => valor})
     otros = {}
-    otros[:year_range] =  [1930, Time.now.year + 5] if  otros[:year_range].nil?
+    otros[:year_range] =  [2000, Time.now.year + 10] if  otros[:year_range].nil?
     otros[:size] = "10"
-    otros[:value] = valor if valor
+    otros[:value] = I18n.l valor if valor
     cadena << calendar_date_select(objeto, atributo, otros)
     return cadena << "</div>"
   end
@@ -283,6 +283,11 @@ module ApplicationHelper
 			"concepto"			=> ["Concepto", "1", 36],
 			"debe"				=> ["Debe", "1_3", 14, "f"],
 			"haber"				=> ["Haber", "1_3", 14, "f"],
+			"iva soportado"			=> ["Iva Soportado", "1", 36],
+			"iva repercutido"		=> ["Iva Repercutido", "1", 36],
+			"base_imponible_por_iva"	=> ["Base Imp.", "1_3", 14, "f"],
+			"total_iva"			=> ["Total Iva", "1_3", 14, "f"],
+			"importe_total"			=> ["Total Bruto", "1_3", 14, "f"],
 			"fecha_hora"			=> ["Fecha", "2_3", 20],
 			"comentarios"			=> ["Observaciones", "1", 36],
                         "ventas"			=> ["Ventas", "2_3", 20, "f"],
