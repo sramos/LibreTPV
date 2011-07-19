@@ -70,6 +70,18 @@ class Albaran < ActiveRecord::Base
     return iva_total
   end
 
+  # Devuelve el iva aplicado segun los tipos
+  def desglose_por_iva
+    desglose = Hash.new
+    self.albaran_lineas.each do |linea|
+      desglose[linea.iva.to_s] = [0,0,0] if desglose[linea.iva.to_s].nil?
+      desglose[linea.iva.to_s][0] += linea.subtotal*100.to_i.to_f/100
+      desglose[linea.iva.to_s][1] += (linea.total-linea.subtotal)*100.to_i.to_f/100
+      desglose[linea.iva.to_s][2] += linea.total*100.to_i.to_f/100
+    end
+    return desglose 
+  end
+
   # Devuelve la suma de los dos anteriores
   def total
     return self.iva_aplicado + self.base_imponible

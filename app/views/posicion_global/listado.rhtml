@@ -6,16 +6,21 @@
   <%= cabecera_listado (@resumen.delete_at(0))[1] %>
   <% i = 0 %>
   <% for objeto in @resumen %>
-    <div id="resumen_diario_<%= i+=1 %>" class="<%= objeto[0]? "listadofila" : "listadocabecera" %>">
-      <%= fila_listado objeto[1] %>
-      <% if objeto[0] && objeto[0] != "" %>
-        <div class="listado_derecha">
-          <%= link_to_remote icono('Search',{:title => "Ver Facturas"}), :url => { :action => 'facturas', :tipo => objeto[0], :update => "facturas_" + objeto[0] + "_sub"}, :loading => "Element.show('spinner_#{i.to_s }')", :complete => "Element.hide('spinner_#{i.to_s}')" %>
-        </div>
-        <div id="spinner_<%= i.to_s %>" class="spinner" style="display:none" ></div>
-        <div id="facturas_<%= objeto[0] %>_sub"></div>
-      <% end %>
-    </div>
+    <% if objeto[2] == "nuevo" %>
+      <%= final_listado %>
+      <%= cabecera_listado objeto[1] %>
+    <% else %>
+      <div id="resumen_diario_<%= i+=1 %>" class="<%= objeto[0]? "listadofila" : "listadocabecera" %>">
+        <%= fila_listado objeto[1] %>
+        <% if objeto[0] && objeto[0] != "" %>
+          <div class="listado_derecha">
+            <%= link_to_remote icono('Search',{:title => "Ver Facturas"}), :url => { :action => 'facturas', :tipo => objeto[0], :update => "facturas_" + objeto[0] + "_sub"}, :loading => "Element.show('spinner_#{i.to_s }')", :complete => "Element.hide('spinner_#{i.to_s}')" %>
+          </div>
+          <div id="spinner_<%= i.to_s %>" class="spinner" style="display:none" ></div>
+          <div id="facturas_<%= objeto[0] %>_sub"></div>
+        <% end %>
+      </div>
+    <% end %>
   <% end %>
   <%= final_listado %>
 </div>

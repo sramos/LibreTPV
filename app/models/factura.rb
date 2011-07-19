@@ -82,6 +82,15 @@ class Factura < ActiveRecord::Base
     end
   end
 
+  # devuelve el iva aplicado desglosado segun tipos
+  def desglose_por_iva
+    if ( self.valor_iva )
+      return { self.valor_iva.to_s => [self.base_imponible ,self.base_imponible.abs * self.valor_iva.to_f/100, self.importe] }
+    else
+      return self.albaran.desglose_por_iva
+    end
+  end
+
   private
     def verificar_borrado
       if !self.pagos.empty?
