@@ -1,4 +1,4 @@
-2011-07-xx Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.10
+2011-07-25 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.2
 
   * Problema con calendar_date_select en ventanas modales
   * Correccion del fichero de configuracion de bbdd para backups
