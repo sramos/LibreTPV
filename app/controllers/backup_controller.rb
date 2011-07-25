@@ -7,7 +7,9 @@ class BackupController < ApplicationController
   end
 
   def seleccionar
-    db_config = Rails::Configuration.new.database_configuration[RAILS_ENV]
+    #db_config = Rails::Configuration.new.database_configuration[RAILS_ENV]
+    database_config_file = ENV['LIBRETPV_SITEID'] ? ENV['RAILS_ETC'] + '-database.yml' : 'config/database.yml'
+    db_config = YAML::load(IO.read(database_config_file))[RAILS_ENV]
     fichero_salida = "#{ENV['RAILS_TMP']}/backup.sql"
 
     system "mysqldump -u #{db_config['username']} --routines -p#{db_config['password']} #{db_config['database']} > #{fichero_salida}"
