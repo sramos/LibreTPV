@@ -2,9 +2,13 @@ class AlbaranLinea < ActiveRecord::Base
 
   belongs_to :producto
   belongs_to :albaran
+ 
+  #belongs_to :linea_descontada, :foreign_key => :linea_descuento_id, :class_name => "AlbaranLinea"
+  has_one :linea_descuento, :foreign_key => :linea_descuento_id, :class_name => "AlbaranLinea", :dependent => :destroy
 
-  #validate :comprueba_linea
-  after_create :mete_campos
+  validate :comprueba_linea
+  after_create :valida_creacion
+  before_destroy :valida_borrado
 
 
   # devuelve el subtotal (sin iva)
@@ -29,6 +33,18 @@ class AlbaranLinea < ActiveRecord::Base
     return precio * self.cantidad * (1 - self.descuento.to_f/100)
   end
 
+  # genera una linea de descuento en base a la presente
+  def nueva_linea_descuento
+    if self.albaran.cliente && self.producto && self.linea_descuento.nil?
+      credito = self.albaran.cliente.credito_acumulado
+      descontar = self.total > credito ? credito : self.total
+      AlbaranLinea.create(:albaran_id => self.albaran_id, :cantidad => 1,
+        :nombre_producto => "Descuento " + self.nombre_producto,
+        :iva => self.producto.familia.iva.valor, :precio_venta => 0-descontar,
+	:linea_descuento_id => self.id )
+    end
+  end
+
   private
     def comprueba_linea
       # Comprueba que exista producto asociado, o sea entrada por concepto
@@ -40,15 +56,31 @@ class AlbaranLinea < ActiveRecord::Base
       return false unless errors.empty?
     end
 
-    # Mete automaticamente los campos que se necesiten si la linea esta vinculada a un producto
-    def mete_campos
+    # Tras la creacion, toquetea cosas en la linea 
+    def valida_creacion
+      # Mete automaticamente los campos que se necesiten si la linea esta vinculada a un producto
       if self.producto
         self.precio_venta = self.producto.precio if !self.albaran.cliente.nil?
         self.iva = self.producto.familia.iva.valor
         self.nombre_producto = self.producto.nombre 
+      # Si la linea no esta vinculada a un producto, toquetea el nombre si no lo tiene
       else
         self.nombre_producto = "N/A" unless self.nombre_producto && self.nombre_producto != ""
       end
       self.save
+      # Si es una linea de descuento, reduce el credito
+      if self.linea_descuento_id
+        self.albaran.cliente.credito_acumulado += self.precio_venta
+        self.albaran.cliente.save
+      end
+    end
+
+    # Antes del borrado, toquetea cosas
+    def valida_borrado
+      # Si es una linea de descuento, aumenta el credito del cliente
+      if self.linea_descuento_id
+        self.albaran.cliente.credito_acumulado -= self.precio_venta
+        self.albaran.cliente.save
+      end
     end
 end

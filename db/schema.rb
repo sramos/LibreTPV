@@ -9,19 +9,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110703173657) do
+ActiveRecord::Schema.define(:version => 20110920211741) do
 
   create_table "albaran_lineas", :force => true do |t|
-    t.integer  "cantidad",                                      :default => 1
-    t.integer  "descuento",                                     :default => 0
-    t.decimal  "precio_compra",   :precision => 8, :scale => 2
-    t.decimal  "precio_venta",    :precision => 8, :scale => 2
+    t.integer  "cantidad",                                         :default => 1
+    t.integer  "descuento",                                        :default => 0
+    t.decimal  "precio_compra",      :precision => 8, :scale => 2
+    t.decimal  "precio_venta",       :precision => 8, :scale => 2
     t.integer  "producto_id"
     t.integer  "albaran_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "nombre_producto"
     t.integer  "iva"
+    t.integer  "linea_descuento_id"
   end
 
   create_table "albarans", :force => true do |t|

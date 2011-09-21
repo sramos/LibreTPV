@@ -1,6 +1,8 @@
-2011-07-xx Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.10
+2011-09-21 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.3
 
-  *
+  * Impedimos el borrado de clientes o proveedores que tengan
+    albaranes creados
+  * Mecanismo de descuento para uso de credito acumulado
 
 2011-07-25 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.2
 

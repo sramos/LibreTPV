@@ -13,6 +13,7 @@
     <%= fila_sublistado linea %>
     <div class="listado_derecha" id="botones_<%= linea.id %>">
       <% if ! albaran.cerrado %>
+        <%= link_to icono('Star',{:title => "Aplicar Acumulado"}), :controller => 'albaran_lineas', :action => 'usar_acumulado', :update => params[:update], :id => linea.id, :albaran_id => params[:albaran_id] if albaran.cliente && linea.producto && albaran.cliente.credito_acumulado > 0 && linea.producto.familia.acumulable > 0 && linea.linea_descuento.nil? %>
         <%= modal(icono("Write",{:title => "Editar"}), { :controller => 'albaran_lineas', :action => 'editar', :id => linea.id, :albaran_id => params[:albaran_id] }, "Editar línea") if linea.producto %>
         <%= link_to icono('Trash',{:title => "Borrar"}), :controller => 'albaran_lineas', :action => 'borrar', :update => params[:update], :id => linea.id, :albaran_id => params[:albaran_id] %>
       <% elsif albaran.deposito %>

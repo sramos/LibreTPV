@@ -54,4 +54,14 @@ class AlbaranLineasController < ApplicationController
     redirect_to :controller => :albarans, :action => :editar, :id => params[:albaran_id]
   end
 
+	# Aplica el acumulado de una linea
+  def usar_acumulado
+    albaran = Albaran.find_by_id params[:albaran_id]
+    albaranlinea = AlbaranLinea.find_by_id params[:id]
+    if albaranlinea && albaran.cliente
+      albaranlinea.nueva_linea_descuento
+    end
+    redirect_to :controller => :albarans, :action => :editar, :id => params[:albaran_id]
+  end
+
 end

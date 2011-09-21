@@ -1,11 +1,14 @@
 class Albaran < ActiveRecord::Base
 
-  has_many :albaran_lineas, :dependent => :destroy
+  # No utilizamos el dependent por evitar borrados dobles en las lineas
+  #has_many :albaran_lineas, :dependent => :destroy
+  has_many :albaran_lineas
   belongs_to :cliente
   belongs_to :proveedor
   has_one :factura
 
-  before_destroy :verificar_borrado
+  before_destroy :verificar_facturas, :borra_lineas_normales
+  before_update :borra_lineas_descuento, :if => "cliente_id_changed? && !cerrado"
 
   # Crea un albaran copiando todos los datos de otro
   def clonar
@@ -88,11 +91,20 @@ class Albaran < ActiveRecord::Base
   end
 
   private
-    def verificar_borrado
+    def verificar_facturas
       if !self.factura.nil?
         errors.add( "albaran", "No se puede borrar albaran: Hay facturas asociadas." )
         false
       end
+    end
+
+    # Borra las lineas de albaran relacionadas que no sean de descuento
+    def borra_lineas_normales
+      self.albaran_lineas.all(:conditions => { :linea_descuento_id => nil }).each { |al| al.destroy }
+    end
+
+    def borra_lineas_descuento
+      self.albaran_lineas.all(:conditions => ["linea_descuento_id IS NOT NULL"]).each { |al| al.destroy }
     end
 
     # Hace los calculos de las lineas de albaran
