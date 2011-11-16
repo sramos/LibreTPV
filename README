@@ -65,6 +65,7 @@ el uso de la herramienta sea lo más rápido posible. Sus funcionalidades son:
   * Gestión de facturas de servicios asociados a la tienda (autónomos, alquiler, luz, teléfono, ...)
   * Informes de libro diario y posición global (con desglose de iva repercutido y soportado para declaraciones, irpf, ...) 
   * Exportaciones a hojas de cálculo excel
+  * Bonos descuento para fidelización de compras
 
 = Funcionalidades futuras 
 
@@ -72,7 +73,6 @@ el uso de la herramienta sea lo más rápido posible. Sus funcionalidades son:
   * Múltiples puestos de venta
   * Sincronización de inventario y ventas con sistema de eCommerce (tiendas web)
   * Prepago por cliente
-  * Bonos descuento para fidelización de compras
 
 
 
