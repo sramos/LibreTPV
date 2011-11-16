@@ -96,6 +96,6 @@ class DepositoController < ApplicationController
 
   private
     def obtiene_albaranes
-      @albarans = Albaran.find :all, :order => 'fecha DESC', :conditions => [ "proveedor_id IS NOT NULL AND cerrado AND deposito" ]
+      @albarans = Albaran.find :all, :order => 'fecha_devolucion ASC', :conditions => [ "proveedor_id IS NOT NULL AND cerrado AND deposito" ]
     end
 end
