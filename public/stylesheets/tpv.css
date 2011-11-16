@@ -11,6 +11,28 @@ body {
   width: 100%;
 }
 
+#avisos {
+  width:400px;
+  height:10px;
+  background-color: #fff;
+
+  color: #f00;
+
+  right: 0px;
+  opacity: 0.85;
+  position: absolute;
+  top: -1px;
+  z-index: 5000;
+
+
+  text-align: center;
+  padding:10px;
+  -moz-border-radius-bottomleft: 7px;
+  -moz-border-radius-bottomright: 7px;
+  -webkit-border-radius: 7px;
+  border-radius: 4px
+}
+
 .centro {
     clear:both;
     /* width:1014px; */

@@ -4,6 +4,7 @@
   * Ordenamos la salida de albaranes en deposito por fecha de devolucion
   * Los descuentos por acumulado se aplican en todos los productos
   * Incluido plugin spreadsheet_on_rails
+  * Caja de avisos
 
 2011-09-21 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.3
 
