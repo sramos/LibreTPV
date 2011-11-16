@@ -5,11 +5,18 @@ body {
 
 }
 
+#cabecera {
+  position: fixed;
+  min-width: 1024px;
+  width: 100%;
+}
+
 .centro {
     clear:both;
     /* width:1014px; */
     width:1200px;
-    margin:10px auto 0 auto;
+    margin:0 auto 0 auto;
+    padding-top: 120px;
     background-color:#fff;
     text-align:left;
   }
