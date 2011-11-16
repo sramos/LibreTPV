@@ -1,6 +1,7 @@
 2011-09-xx Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.4
 
   * Dejamos la barra de menu siempre visible
+  * Ordenamos la salida de albaranes en deposito por fecha de devolucion
 
 2011-09-21 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.3
 
