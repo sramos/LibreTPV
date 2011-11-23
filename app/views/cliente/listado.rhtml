@@ -1,7 +1,7 @@
 <!--- Listado de clientes --->
 
 <div class="caja_completa">
-<%= cabecera_listado ["cif", "nombre", "email", "descuento","credito","credito_acumulado"], { :title => "Nuevo Cliente", :url => { :action => :editar } } %>
+<%= cabecera_listado "clientes", { :title => "Nuevo Cliente", :url => { :action => :editar } } %>
 <% for objeto in @clientes %>
   <div class="listadofila" id="cliente_<%= objeto.id.to_s %>">
     <%= fila_listado objeto %>

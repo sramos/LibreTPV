@@ -2,10 +2,10 @@
 
 <% albaran = Albaran.find_by_id(params[:albaran_id]) %>
 <% if params[:seccion ] == 'productos' %>
-  <%= cabecera_sublistado("Productos", ["cantidad","nombre_producto","precio_compra","descuento","subtotal","iva", "total"], params[:update]) unless albaran.deposito && albaran.cerrado %>
-  <%= cabecera_sublistado("Productos", ["producto.cantidad","cantidad","nombre_producto","precio_compra","descuento","subtotal","iva", "total"], params[:update]) if albaran.deposito && albaran.cerrado %>
+  <%= cabecera_sublistado("Productos", "lineas_compra", params[:update]) unless albaran.deposito && albaran.cerrado %>
+  <%= cabecera_sublistado("Productos", "lineas_deposito", params[:update]) if albaran.deposito && albaran.cerrado %>
 <% else %>
-  <%= cabecera_sublistado "Productos", ["cantidad","nombre_producto","precio_venta","descuento","subtotal","iva", "total"], params[:update] %>
+  <%= cabecera_sublistado "Productos", "lineas_venta", params[:update] %>
 <% end %>
 <% i = 0 %>
 <% for linea in @albaran_lineas %>

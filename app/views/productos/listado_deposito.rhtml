@@ -3,7 +3,7 @@
 <%= render :partial => "filtro_productos" %>
 
 <div class="caja_completa" id="listado_productos_deposito">
-<%= cabecera_listado ["producto.cantidad", "cantidad", "producto.nombre", "producto.autor", "albaran.proveedor.nombre", "albaran.fecha_devolucion", "producto.precio"] %>
+<%= cabecera_listado "inventario_deposito" %>
 <% i = 0 %>
 <% for linea in @lineas %>
   <div id="productos_<% i += 1 %>" class="listadofila">

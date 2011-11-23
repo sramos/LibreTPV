@@ -1,7 +1,7 @@
 <!--- Listado de entradas/salidas de caja --->
 
 <div class="caja_completa">
-<%= cabecera_listado ["fecha_hora","importe","comentarios"], { :title => "Nueva entrada/salida de Caja", :url => { :action => :editar} } %>
+<%= cabecera_listado "movimientos_caja", { :title => "Nueva entrada/salida de Caja", :url => { :action => :editar} } %>
 <% for objeto in @caja %>
   <div class="listadofila">
     <%= fila_listado objeto %>

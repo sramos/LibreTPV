@@ -1,7 +1,7 @@
 <!--- Listado de tipos de iva --->
 
 <div class="caja_completa">
-<%= cabecera_listado ["nombre","valor"], { :title => "Nuevo", :url => { :action => :editar} } %>
+<%= cabecera_listado "iva", { :title => "Nuevo", :url => { :action => :editar} } %>
 <% for objeto in @ivas %>
   <div class="listadofila">
     <%= fila_listado objeto %>

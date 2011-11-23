@@ -1,7 +1,7 @@
 <!--- Listado de formas de pago --->
 
 <div class="caja_completa">
-<%= cabecera_listado ["nombre", "caja"], { :title => "Nuevo", :url => { :action => :editar } } %>
+<%= cabecera_listado "formas_pago", { :title => "Nuevo", :url => { :action => :editar } } %>
 <% for objeto in @formasdepago %>
   <div class="listadofila">
     <%= fila_listado objeto %>

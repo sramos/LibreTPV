@@ -3,7 +3,7 @@
 
 <% if @facturas %>
 <div class="caja_completa" id="listado_facturas">
-<%= cabecera_listado ["fecha", "concepto", "codigo", "debe", "haber"] %>
+<%= cabecera_listado "libro_diario" %>
 <% for objeto in @facturas %>
   <div id="factura_<% objeto.id.to_s %>" class="listadofila">
     <%= fila_listado objeto %>

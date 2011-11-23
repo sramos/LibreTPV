@@ -1,6 +1,6 @@
 <!--- Sublistado de elementos en lista de reposicion --->
 
-<%= cabecera_sublistado "Lista de Reposición", ["nombre_producto","fecha_devolucion"], "listado_reposicion" %>
+<%= cabecera_sublistado "Lista de Reposición", "lista_reposicion", "listado_reposicion" %>
   <% session[("reposicion").to_sym].each_value do |elemento| %>
     <% elemento.each do |linea_id,cant| %>
       <% cantidad = cant["cantidad".to_sym].to_s %>

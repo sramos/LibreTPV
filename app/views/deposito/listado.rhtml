@@ -7,9 +7,9 @@
 <% if @albarans.size()>0 %>
 <div class='caja_completa'>
 <% if params[:seccion] == "productos" %>
-  <%= cabecera_listado ["fecha", "proveedor.nombre", "codigo", "fecha_devolucion"] %>
+  <%= cabecera_listado "depositos_productos" %>
 <% else %>
-  <%= cabecera_listado ["fecha", "cliente.nombre", "fecha_devolucion"] %>
+  <%= cabecera_listado "depositos_clientes" %>
 <% end %>
 <% for objeto in @albarans%>
   <div id="albaran_<%= objeto.id.to_s %>" class="listadofila">

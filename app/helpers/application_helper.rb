@@ -25,11 +25,12 @@ module ApplicationHelper
   # METODOS GENERALES
   #++
 
-
-  def cabecera_listado campos, otros={}
-    @campos_listado = campos
+  def cabecera_listado tipo, otros={}
+    # Sacamos los campos a mostrar bien vengan como array (posicion global) o como tipo
+    @campos_listado = tipo.is_a?(Array) ? tipo : campos_listado(tipo)
+    # Dibujamos la cabecera del listado
     cadena = "<div class='listado'><div class='listadocabecera'>"
-    for campo in campos
+    for campo in @campos_listado
       cadena += "<div class='listado_campo_" + etiqueta(campo)[1] + (etiqueta(campo)[3]||"") + "' id='listado_campo_etiqueta_" + campo + "'>" + etiqueta(campo)[0] + "</div>"
     end
     cadena += "<div class='listado_derecha'>"
@@ -66,14 +67,15 @@ module ApplicationHelper
     return cadena
   end
 
-  def cabecera_sublistado rotulo, campos, sub_id, nuevo={}
-    @campos_sublistado = campos     
+  def cabecera_sublistado rotulo, tipo, sub_id, nuevo={}
+    #@campos_sublistado = campos
+    @campos_sublistado = tipo.is_a?(Array) ? tipo : campos_listado(tipo)
     script = "document.getElementById('" +  sub_id + "').innerHTML=\"\";" if sub_id
     cadena = '<br><fieldset class="sublistado"> <legend>'+ rotulo +'</legend>'
     cadena << '<div class="listado_derecha" id="cerrarsublistado">'
     cadena << link_to_function( icono('Cancel',{:Title => "Ocultar"}), script, {:id => sub_id + "_ocultar_sublistado"} ) if sub_id
     cadena << "</div><br/><br/><div class='listadocabecera'>"
-    for campo in campos
+    for campo in @campos_sublistado
       cadena << "<div class='listado_campo_" + etiqueta(campo)[1] + (etiqueta(campo)[3]||"") + "' id='sublistado_campo_valor_" + campo + "' >" + etiqueta(campo)[0] + "</div>"
     end
     if nuevo[:url] && nuevo[:title]
@@ -259,6 +261,77 @@ module ApplicationHelper
                           { :rotulo => "Familias de Productos", :controlador => "familia"} ]
     end
     return controladores
+  end
+
+  def campos_listado tipo
+    case tipo
+      when "inventario"
+        ["codigo", "familia.nombre", "nombre", "autor", "cantidad", "precio"]
+      when "inventario_deposito"
+        ["producto.cantidad", "cantidad", "producto.nombre", "producto.autor", "albaran.proveedor.nombre", "albaran.fecha_devolucion", "producto.precio"]
+      when "proveedores"
+        ["cif", "nombre", "telefono", "email", "descuento"]
+      when "clientes"
+        ["cif", "nombre", "email", "descuento","credito","credito_acumulado"]
+      when "albaranes_productos"
+        ["fecha", "proveedor.nombre", "codigo"]
+      when "albaranes_clientes"
+        ["fecha", "cliente.nombre"]
+      when "depositos_productos"
+        ["fecha", "proveedor.nombre", "codigo", "fecha_devolucion"]
+      when "depositos_clientes"
+        ["fecha", "cliente.nombre", "fecha_devolucion"]
+      when "facturas_productos"
+        ["fecha", "codigo_mayusculas", "albaran.proveedor.nombre", "base_imponible", "iva_aplicado", "importe"]
+      when "facturas_clientes"
+        ["fecha", "codigo_mayusculas", "albaran.cliente.nombre", "base_imponible", "iva_aplicado", "importe"]
+      when "facturas_servicios"
+        ["fecha", "codigo", "proveedor.nombre", "base_imponible", "valor_iva", "valor_irpf", "importe"]
+      when "arqueo_caja"
+        ["ventas", "compras", "pagos_servicios", "entradas/salidas", "total caja"]
+      when "libro_diario"
+        ["fecha", "concepto", "codigo", "debe", "haber"]
+      when "movimientos_caja"
+        ["fecha_hora","importe","comentarios"]
+
+      when "lineas_compra"
+        ["cantidad","nombre_producto","precio_compra","descuento","subtotal","iva", "total"]
+      when "lineas_deposito"
+        ["producto.cantidad","cantidad","nombre_producto","precio_compra","descuento","subtotal","iva", "total"]
+      when "lineas_venta"
+        ["cantidad","nombre_producto","precio_venta","descuento","subtotal","iva", "total"]
+      when "productos_vendidos"
+        ["albaran.factura.fecha","cantidad","producto.nombre","albaran.factura.codigo"]
+      when "productos_comprados"
+        ["albaran.fecha","cantidad","producto.nombre","albaran.factura.codigo"]
+      when "lista_reposicion"
+        ["nombre_producto","fecha_devolucion"]
+      when "resumen_facturas_servicios"
+        ["fecha", "codigo", "proveedor.nombre", "importe"]
+      when "resumen_facturas_compras"
+        ["fecha", "codigo", "albaran.proveedor.nombre", "importe"]
+      when "resumen_facturas_ventas"
+        ["fecha", "codigo", "albaran.cliente.nombre", "importe"]
+      when "pagos"
+        ["fecha","importe","forma_pago.nombre"]
+      when "compras_producto"
+        ["fecha","codigo","factura.codigo","proveedor.nombre"]
+      when "ventas_producto"
+        ["fecha","factura.codigo","cliente.nombre"]
+
+      when "configuracion"
+        ["nombre_param","valor_param"]
+      when "perdidos_compra"
+        ["fecha", "proveedor.nombre", "codigo", "base_imponible", "iva_aplicado", "total"]
+      when "perdidos_venta"
+        ["fecha", "cliente.nombre", "base_imponible", "iva_aplicado", "total"]
+      when "familias"
+        ["nombre", "iva.nombre", "acumulable"]
+      when "iva"
+        ["nombre","valor"]
+      when "formas_pago"
+        ["nombre", "caja"]
+    end
   end
 
   def etiqueta campo

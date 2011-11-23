@@ -2,7 +2,7 @@
 
 <% total = @importe_ventas+@importe_caja-@importe_compras-@importe_gastos %>
 <div class="caja_completa" id="arqueo_caja">
-<%= cabecera_listado ["ventas", "compras", "pagos_servicios", "entradas/salidas", "total caja"] %>
+<%= cabecera_listado "arqueo_caja" %>
 <%#= cabecera_sublistado "Arqueo de Caja" + (@cierre_caja ? " (desde: " + @cierre_caja.fecha_hora.localtime.strftime("%d/%m/%Y %H:%M:%S") + ")" : ""), ["ventas","compras","pagos_servicios","entradas/salidas","total caja"], "arqueo" %>
   <div class="listadofila">
     <div class='listado_campo_2_3f' id='listado_campo_valor_venta'><%= sprintf("%.2f",@importe_ventas)%> €</div>

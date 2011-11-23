@@ -3,7 +3,7 @@
 
 <div class='caja_completa' id='listado_albaranes_compra'>
 <div class='linea' id='encabezado_albaranes_compra'><div class='elemento_derecha'>Albaranes de Compras</div></div>
-<%= cabecera_listado ["fecha", "proveedor.nombre", "codigo", "base_imponible", "iva_aplicado", "total"] %>
+<%= cabecera_listado "perdidos_compra" %>
 <% i = 0 %>
 <% for objeto in @albaranes_compra %>
   <div id="albaran_<%= i +=1 %>" class="listadofila">
@@ -25,7 +25,7 @@
 
 <div class='caja_completa' id='listado_albaranes_venta'>
 <div class='linea' id='encabezado_albaranes_compra'><div class='elemento_derecha'>Albaranes de Ventas</div></div>
-<%= cabecera_listado ["fecha", "cliente.nombre", "base_imponible", "iva_aplicado", "total"] %>
+<%= cabecera_listado "perdidos_venta" %>
 <% i = 0 %>
 <% for objeto in @albaranes_venta %>
   <div id="albaran_<%= i +=1 %>" class="listadofila">

@@ -1,9 +1,9 @@
 <!-- Sublistado de Facturas para Resumen -->
 
 <% if params[:tipo] == "servicios" %>
-  <%= cabecera_sublistado "Facturas de Servicios (otros gastos)", ["fecha", "codigo", "proveedor.nombre", "importe"], params[:update] %>
+  <%= cabecera_sublistado "Facturas de Servicios (otros gastos)", "resumen_facturas_servicios", params[:update] %>
 <% else %>
-  <%= cabecera_sublistado "Facturas de " + params[:tipo].capitalize, ["fecha", "codigo", (params[:tipo] == "compras"?"albaran.proveedor.nombre":"albaran.cliente.nombre"), "importe"], params[:update] %>
+  <%= cabecera_sublistado "Facturas de " + params[:tipo].capitalize, params[:tipo] == "compras"?"resumen_facturas_compras":"resumen_facturas_ventas", params[:update] %>
 <% end %>
 <% i = 0 %>
 <% for objeto in @facturas %>

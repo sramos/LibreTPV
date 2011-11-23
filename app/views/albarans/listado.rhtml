@@ -7,9 +7,9 @@
 <!--- Listado de albaranes --->
 <div class='caja_completa'>
 <% if params[:seccion] == "productos" %>
-  <%= cabecera_listado ["fecha", "proveedor.nombre", "codigo"] %>
+  <%= cabecera_listado "albaranes_productos" %>
 <% else %>
-  <%= cabecera_listado ["fecha", "cliente.nombre"] %>
+  <%= cabecera_listado "albaranes_clientes" %>
 <% end %>
 <% i = 0 %>
 <% for objeto in @albarans%>
