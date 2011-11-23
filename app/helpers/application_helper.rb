@@ -1,6 +1,30 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
+  #--
+  # METODOS PARA SALIDAS XLS
+  #--
+
+  def formato_xls_negrita
+    return Spreadsheet::Format.new :weight => :bold, :align => :top, :text_wrap => true, :number_format => '#,##0.00'
+  end
+  def formato_xls_negrita_centrado
+    return Spreadsheet::Format.new :weight => :bold, :align => :top, :text_wrap => true, :number_format => '#,##0.00', :horizontal_align=>:center
+  end
+  def formato_xls_normal
+    return Spreadsheet::Format.new :text_wrap => true, :align => :top, :number_format => '#,##0.00'
+  end
+  def formato_xls_cabecera
+    return Spreadsheet::Format.new :weight => :bold, :align => :middle, :pattern => 1, :pattern_fg_color => :aqua
+  end
+  def formato_xls_centrado_resaltado
+    return Spreadsheet::Format.new :text_wrap => true, :align => :middle, :number_format => '#,##0.00', :horizontal_align=>:center, :pattern => 1, :pattern_fg_color => :silver
+  end
+
+  #--
+  # METODOS GENERALES
+  #++
+
 
   def cabecera_listado campos, otros={}
     @campos_listado = campos
@@ -9,7 +33,7 @@ module ApplicationHelper
       cadena += "<div class='listado_campo_" + etiqueta(campo)[1] + (etiqueta(campo)[3]||"") + "' id='listado_campo_etiqueta_" + campo + "'>" + etiqueta(campo)[0] + "</div>"
     end
     cadena += "<div class='listado_derecha'>"
-    #cadena += link_to icono('Plus',{:title => "Nuevo"}), {:action => 'editar'}
+    cadena += link_to( icono( "Download", {:title => "Exportar a XLS"}), request.parameters.merge({:format => :xls, :format_xls_count => (@formato_xls.to_i+1)}) ) if @formato_xls
     cadena += modal icono('Plus',{:title => "Nuevo"}), otros[:url], otros[:title] || "Nuevo" if otros[:url]
     cadena += "</div></div>"
     return cadena
