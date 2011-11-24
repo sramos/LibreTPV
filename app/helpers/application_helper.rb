@@ -54,7 +54,7 @@ module ApplicationHelper
       etiqueta=etiqueta(campo)
       valor = valor.localtime.strftime("%d/%m/%Y %H:%M:%S") if valor.class.name == "ActiveSupport::TimeWithZone"
       valor = valor.strftime("%d/%m/%Y") if valor.class.name == "Date"
-      cadena += "<div class='listado_campo_" + etiqueta[1] + (etiqueta[3]||"") + "' id='listado_campo_valor_" + campo + (objeto.class.name == "Array" ? "" : "_" + objeto.id.to_s) + "'>" + (valor && valor.to_s != "" ? truncate( (etiqueta[3]=="f"?sprintf("%.2f",valor):valor.to_s), :length => etiqueta[2]):"&nbsp;") + '</div>'
+      cadena += "<div class='listado_campo_" + etiqueta[1] + (etiqueta[3]||"") + "' id='listado_campo_valor_" + campo + (objeto.class.name == "Array" ? "" : "_" + objeto.id.to_s) + "' title='" + (valor ? valor.to_s : "&nbsp;") + "'>" + (valor && valor.to_s != "" ? truncate( (etiqueta[3]=="f"?sprintf("%.2f",valor):valor.to_s), :length => etiqueta[2]):"&nbsp;") + '</div>'
     end
     #cadena += "</div>"
     return cadena
@@ -115,7 +115,7 @@ module ApplicationHelper
       campo.split('.').each { |metodo| valor = valor.send(metodo) if valor }
       valor = format('%0.2f',valor) if etiqueta(campo)[3] == "f" && valor
       valor = valor.strftime("%d/%m/%Y") if valor.class.name == "Date"
-      cadena += "<div class='listado_campo_" + etiqueta(campo)[1] + (etiqueta(campo)[3]||"") + "' id='listado_campo_valor_" + campo + "'>" + (valor && valor.to_s != "" ? truncate(valor.to_s, :length => etiqueta(campo)[2]):"&nbsp;") + '</div>'
+      cadena += "<div class='listado_campo_" + etiqueta(campo)[1] + (etiqueta(campo)[3]||"") + "' id='listado_campo_valor_" + campo + "' title='" + (valor ? valor.to_s : "&nbsp;") + "'>" + (valor && valor.to_s != "" ? truncate(valor.to_s, :length => etiqueta(campo)[2]):"&nbsp;") + '</div>'
     end
     return cadena
   end
@@ -305,9 +305,9 @@ module ApplicationHelper
         ["fecha", "cliente.nombre", "fecha_devolucion"]
       when "facturas_productos"
         ["fecha", "codigo_mayusculas", "albaran.proveedor.nombre", "base_imponible", "iva_aplicado", "importe"]
-      when "facturas_clientes"
+      when "facturas_caja"
         ["fecha", "codigo_mayusculas", "albaran.cliente.nombre", "base_imponible", "iva_aplicado", "importe"]
-      when "facturas_servicios"
+      when "facturas_tesoreria"
         ["fecha", "codigo", "proveedor.nombre", "base_imponible", "valor_iva", "valor_irpf", "importe"]
       when "arqueo_caja"
         ["ventas", "compras", "pagos_servicios", "entradas/salidas", "total caja"]
@@ -361,7 +361,7 @@ module ApplicationHelper
 
   def etiqueta campo
     etiqueta = {	"albaran.cliente.nombre"	=> ["Cliente", "1", 36],
-			"albaran.proveedor.nombre"	=> ["Proveedor", "2_3", 36],
+			"albaran.proveedor.nombre"	=> ["Proveedor", "2_3", 20],
 			"cliente.nombre"		=> ["Cliente", "1", 36],
 			"familia.nombre"		=> ["Familia", "1_2", 13],
 			"proveedor.nombre"		=> ["Proveedor", "1", 36],
@@ -398,8 +398,8 @@ module ApplicationHelper
 			"nombre_param"			=> ["Parámetro","1", 36],
 			"valor_param"			=> ["Valor", "1", 36],
 			"base_imponible"		=> ["Base Imp.", "1_3", 14, "f"],
-			"valor_iva"			=> ["% IVA", "1_5", 8, "d"],
-			"valor_irpf"			=> ["% IRPF", "1_5", 8, "d"],
+			"valor_iva"			=> ["%IVA", "1_5", 8, "d"],
+			"valor_irpf"			=> ["%IRPF", "1_5", 8, "d"],
 			"acumulable"			=> ["% Reemb.", "1_3", 14, "d"],
 			"importe"			=> ["Importe", "1_3", 14, "f"],
 			"concepto"			=> ["Concepto", "1", 36],
