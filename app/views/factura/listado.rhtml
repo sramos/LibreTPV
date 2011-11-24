@@ -4,9 +4,9 @@
 
 <div class="caja_completa" id="listado_facturas">
 <% if params[:seccion] == "tesoreria" %>
-  <%= cabecera_listado "facturas_servicios", { :title => "Nueva Factura de Servicios", :url => { :action => :editar} } %>
+  <%= cabecera_listado "facturas_tesoreria", { :title => "Nueva Factura de Servicios", :url => { :action => :editar} } %>
 <% else %>
-  <%= cabecera_listado (params[:seccion] == "productos" ? "facturas_productos" : "facturas_clientes") %>
+  <%= cabecera_listado "facturas_" + params[:seccion] %>
 <% end %>
 <% for objeto in @facturas %>
   <div id="factura_<% objeto.id.to_s %>" class="listadofila">

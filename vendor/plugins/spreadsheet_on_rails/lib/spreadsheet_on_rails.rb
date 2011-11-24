@@ -16,7 +16,8 @@ module SpreadsheetOnRails
 
     def temp_file_path
       unless @@temp_file
-        temp = Tempfile.new('spreadsheet-', File.join(RAILS_ROOT, 'tmp') )
+        #temp = Tempfile.new('spreadsheet-', File.join(RAILS_ROOT, 'tmp') )
+        temp = Tempfile.new('spreadsheet-')
         @@temp_file = temp.path
         temp.close
       end

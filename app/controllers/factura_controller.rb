@@ -17,6 +17,15 @@ class FacturaController < ApplicationController
   end
 
   def listado
+    @formato_xls = @facturas.total_entries
+    respond_to do |format|
+      format.html
+      format.xls do
+        @tipo = "facturas_" + params[:seccion]
+        @objetos = @facturas
+        render 'comunes_xls/listado', :layout => false
+      end
+    end
   end
 
   def editar
@@ -146,7 +155,8 @@ private
       condicion += " AND facturas.pagado IS " + session[("filtrado_pagado").to_sym]
     end
 
-    @facturas = Factura.paginate :page => params[:page], :per_page => Configuracion.valor('PAGINADO'), :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => [ condicion ]
+    @facturas = Factura.paginate( :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => [ condicion ],
+        :page => (params[:format]=='xls' ? nil : params[:page]), :per_page => (params[:format_xls_count] || Configuracion.valor('PAGINADO') ))
   end
 
   def genera_pdf factura

@@ -9,7 +9,17 @@ class CajaController < ApplicationController
   end
 
   def listado
-    @caja = Caja.paginate :all, :page => params[:page], :per_page => Configuracion.valor('PAGINADO'), :order => 'id DESC'
+    @caja = Caja.paginate( :all, :order => 'id DESC',
+        :page => (params[:format]=='xls' ? nil : params[:page]), :per_page => (params[:format_xls_count] || Configuracion.valor('PAGINADO') ))
+    @formato_xls = @caja.total_entries
+    respond_to do |format|
+      format.html
+      format.xls do
+        @tipo = "movimientos_caja"
+        @objetos = @caja
+        render 'comunes_xls/listado', :layout => false
+      end
+    end
   end
 
   def arqueo 
@@ -23,7 +33,7 @@ class CajaController < ApplicationController
       @importe_ventas += pago.importe if pago.factura && !pago.factura.albaran.nil? && pago.factura.albaran.cliente
       @importe_compras += pago.importe if pago.factura && !pago.factura.albaran.nil? && pago.factura.albaran.proveedor
       @importe_gastos += pago.importe if pago.factura && pago.factura.albaran.nil? && pago.factura.proveedor
-      puts "---> ERROR: Pago con id " + pago.id.to_s + " no tiene factura asociada!!!!" if pago.factura.nil?
+      #puts "---> ERROR: Pago con id " + pago.id.to_s + " no tiene factura asociada!!!!" if pago.factura.nil?
     end
     # Encuentra todas las compras en caja realizadas desde el ultimo cierre de caja
     # Encuentra todos los pagos de servicios realizados desde el ultimo cierre de caja
