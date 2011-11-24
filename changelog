@@ -1,4 +1,4 @@
-2011-09-xx Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.4
+2011-11-24 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.4
 
   * Dejamos la barra de menu siempre visible
   * Ordenamos la salida de albaranes en deposito por fecha de devolucion
@@ -6,6 +6,8 @@
   * Incluido plugin spreadsheet_on_rails
   * Incluidos helpers para exportacion a xls de listados
   * Caja de avisos
+  * Retoques en la info de paginado
+  * Esportacion parcial a xls (sin sublistados) para facturas
 
 2011-09-21 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.3
 
