@@ -33,6 +33,26 @@ body {
   border-radius: 4px
 }
 
+#paginado {
+  color:gray;
+}
+
+#paginado a:hover {
+  color: black;
+}
+
+.current {
+  color: black;
+}
+
+a, a:link, a:visited {
+    -moz-text-blink: none;
+    -moz-text-decoration-color: -moz-use-text-color;
+    -moz-text-decoration-line: none;
+    -moz-text-decoration-style: solid;
+    color: grey;
+}
+
 .centro {
     clear:both;
     /* width:1014px; */
@@ -127,12 +147,13 @@ margin-top:15px;
 
 .listado_derecha, .elemento_derecha { float: right;}
 
-.listado_campo_1, .listado_campo_2_3, .listado_campo_2_3f, .listado_campo_1_2, .listado_campo_1_3, .listado_campo_1_3d, .listado_campo_1_3f, .listado_campo_1_5, .listado_campo_1_5d, .listado_campo_1_5f {
+.listado_campo_2, .listado_campo_1, .listado_campo_2_3, .listado_campo_2_3f, .listado_campo_1_2, .listado_campo_1_3, .listado_campo_1_3d, .listado_campo_1_3f, .listado_campo_1_5, .listado_campo_1_5d, .listado_campo_1_5f {
     float: left;
     font-size:11px;
     padding: 0 5 0 5;
 }
 
+.listado_campo_2 { width:760px; }
 .listado_campo_1 { width:380px; }
 .listado_campo_2_3, .listado_campo_2_3f { width:160px; }
 .listado_campo_1_2 { width:120px; }
@@ -142,6 +163,13 @@ margin-top:15px;
 
 .texto, .elemento, .elemento_x2, .elemento_x15, .elemento_x05, .elemento_x01, .elemento_c {
     font-size: 11px;
+}
+
+.icono {
+  margin-left: 2px;
+  width: 16px;
+  height: 16px;
+  float: left;
 }
 
 .elemento {

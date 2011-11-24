@@ -60,11 +60,33 @@ module ApplicationHelper
     return cadena
   end
 
-  def final_listado objeto=nil
+  def final_listado *objeto
     cadena = ""
-    cadena << "<div class='linea' id='paginado'><br/></div><div class='elemento_derecha'>" + (will_paginate(objeto) || "") + "</div>" if !objeto.nil?
+    #cadena << "<div class='linea' id='paginado'><br/></div><div class='elemento_derecha'>" + (will_paginate(objeto) || "") + "</div>" if !objeto.nil?
+    cadena << paginacion( objeto[0], session[:por_pagina] ) if objeto[0]
     cadena << "</div>"
     return cadena
+  end
+
+  # paginación, se integra en final_listado
+  def paginacion elementopaginado, elementosxpagina
+    formulario = "<div class='listadofila' id='paginado'>\n" + (will_paginate(elementopaginado, :prev_label => "<< "+ "Anterior", :next_label => "Siguiente" + " >>", :class => "listado_campo_2") or " ")
+    formulario << "<div class='listado_derecha'> "+ informacion_paginacion(elementopaginado)  + "</div>"
+    formulario << "<div class='linea'></div></div>"
+  end
+
+  # completa paginacion
+  def informacion_paginacion collection
+      if collection.total_pages < 2
+        case collection.size
+        when 0; "<b>" + "No tiene elementos" + "</b>"
+        when 1; "<b>" + "Mostrando 1 elemento" + "</b>"
+        else;   "<b>" + "Mostrando todos los elementos: " + (collection.size).to_s + "</b>"
+        end
+      else
+        "Mostrando elementos" + " <b>"+ (collection.offset + 1).to_s + " - " + (collection.offset + collection.length).to_s + "</b> de <b> " + (collection.total_entries).to_s +
+            "</b>" + " en total"
+      end
   end
 
   def cabecera_sublistado rotulo, tipo, sub_id, nuevo={}
@@ -105,7 +127,7 @@ module ApplicationHelper
 
   def icono tipo, propiedades={}
     size = propiedades[:size] == 'grande'? 32 : 16 
-    image_tag("/images/iconos/" + size.to_s + "/" + tipo + ".png", :border => 0, :title => propiedades[:title] || "", :style => propiedades[:style] || '', :alt => propiedades[:title], :onmouseover => "this.src='/images/iconos/" + size.to_s + "/" + tipo + ".png';", :onmouseout => "this.src='/images/iconos/" + size.to_s + "/" + tipo + ".png';" )
+    image_tag("/images/iconos/" + size.to_s + "/" + tipo + ".png", :border => 0, :class => "icono", :title => propiedades[:title] || "", :style => propiedades[:style] || '', :alt => propiedades[:title], :onmouseover => "this.src='/images/iconos/" + size.to_s + "/" + tipo + ".png';", :onmouseout => "this.src='/images/iconos/" + size.to_s + "/" + tipo + ".png';" )
   end
 
   def inicio_formulario url, ajax, otros={}
@@ -332,6 +354,9 @@ module ApplicationHelper
       when "formas_pago"
         ["nombre", "caja"]
     end
+  end
+
+  def campos_info tipo
   end
 
   def etiqueta campo
