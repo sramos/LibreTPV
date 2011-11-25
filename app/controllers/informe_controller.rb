@@ -19,9 +19,11 @@ class InformeController < ApplicationController
                  ]
 
     if params[:informe]
-      fecha_inicio = Date.civil(params[:informe][:"fecha_inicio(1i)"].to_i,params[:informe][:"fecha_inicio(2i)"].to_i,params[:informe][:"fecha_inicio(3i)"].to_i)
-      fecha_fin = Date.civil(params[:informe][:"fecha_fin(1i)"].to_i,params[:informe][:"fecha_fin(2i)"].to_i,params[:informe][:"fecha_fin(3i)"].to_i)
-      if params[:informe][:tipo] == "stock_productos" || fecha_fin > fecha_inicio
+      #fecha_inicio = Date.civil(params[:informe][:"fecha_inicio(1i)"].to_i,params[:informe][:"fecha_inicio(2i)"].to_i,params[:informe][:"fecha_inicio(3i)"].to_i)
+      #fecha_fin = Date.civil(params[:informe][:"fecha_fin(1i)"].to_i,params[:informe][:"fecha_fin(2i)"].to_i,params[:informe][:"fecha_fin(3i)"].to_i)
+      fecha_inicio = Date.strptime(params[:informe][:fecha_inicio], "%d.%m.%Y")
+      fecha_fin = Date.strptime(params[:informe][:fecha_fin], "%d.%m.%Y")
+      if params[:informe][:tipo] == "stock_productos" || (fecha_inicio && fecha_fin && fecha_fin > fecha_inicio)
         informe = send "#{params[:informe][:tipo]}", fecha_inicio, fecha_fin
         if informe
           tempfile = Tempfile.new("informe.xls")
