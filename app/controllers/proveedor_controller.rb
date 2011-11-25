@@ -5,6 +5,7 @@ class ProveedorController < ApplicationController
   end
 
   def listado
+    flash[:mensaje] = "Listado de proveedores"
     @proveedores = Proveedor.find :all, :order => 'nombre'
   end
 

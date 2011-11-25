@@ -127,7 +127,7 @@ module ApplicationHelper
 
   def icono tipo, propiedades={}
     size = propiedades[:size] == 'grande'? 32 : 16 
-    image_tag("/images/iconos/" + size.to_s + "/" + tipo + ".png", :border => 0, :class => "icono", :title => propiedades[:title] || "", :style => propiedades[:style] || '', :alt => propiedades[:title], :onmouseover => "this.src='/images/iconos/" + size.to_s + "/" + tipo + ".png';", :onmouseout => "this.src='/images/iconos/" + size.to_s + "/" + tipo + ".png';" )
+    image_tag("/images/iconos/" + size.to_s + "/" + tipo + ".png", :border => 0, :class => (propiedades[:size] == "grande" ? "" : "icono"), :title => propiedades[:title] || "", :style => propiedades[:style] || '', :alt => propiedades[:title], :onmouseover => "this.src='/images/iconos/" + size.to_s + "/" + tipo + ".png';", :onmouseout => "this.src='/images/iconos/" + size.to_s + "/" + tipo + ".png';" )
   end
 
   def inicio_formulario url, ajax, otros={}
@@ -196,8 +196,13 @@ module ApplicationHelper
   end
 
   # dibuja un mensage flash
-  def mensaje cadena
-    ("<div id = 'mensaje'>" + cadena + "</div>") if flash[:mensaje]
+  def mensaje msg
+    ("<div id = 'mensaje'>" + msg + "</div>") if msg 
+  end
+
+  # dibuja un mensaje flash de exito
+  def mensaje_ok msg 
+    ("<div id = 'mensajeok'>" + msg + "</div>") if msg 
   end
 
   # dibuja el mensaje de error o de exito

@@ -5,11 +5,26 @@ body {
 
 }
 
+/**************************************************************************************************
+  CONTENEDOR DE LA CABECERA Y EL PIE
+**************************************************************************************************/
+
 #cabecera {
   position: fixed;
   min-width: 1200px;
   width: 100%;
 }
+
+#pie {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: #FFF;
+  z-index: 999;
+  width: 100%;
+  height: 40px;
+}
+
 
 #avisos {
   width:400px;
@@ -281,11 +296,11 @@ legend{
 
 /* MENSAJES DE LA APLICACION */
 #mensaje, #mensajeok, #mensajeerror {
-  padding: 15 15 10 20 ;
+  padding: 15 20 10 20 ;
   width: 500;
-  min-height: 25;
+  min-height: 25px;
   text-align: center;
-  margin: 20 auto 0 auto;
+  margin: 15 auto auto auto;
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
   border-radius: 4px;
@@ -296,8 +311,13 @@ legend{
 
 #mensaje {
   background: #f5f5f5 url(/images/informacion.png) no-repeat scroll 4px 4px;
+  padding: 10 20 0 20 ;
   /*border:dotted 1px gray;*/
   color: gray;
+  position: fixed;
+  bottom: 5;
+  right: 5px;
+  z-index: 999;
 }
 
 #mensajeok {
@@ -310,7 +330,6 @@ legend{
   background:#FFE3E3 url(/images/error.gif) no-repeat scroll 4px 4px;
   border-color:#DD0000;
   color:#550000;
-
 }
 
 #spinner, .spinner {

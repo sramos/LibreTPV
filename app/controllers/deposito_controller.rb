@@ -4,6 +4,7 @@ class DepositoController < ApplicationController
   before_filter :obtiene_albaranes, :only => [ :listado ]
 
   def index
+    flash[:mensaje] = "Listado de Albaranes en Depósito"
     redirect_to :action => :listado 
   end
 

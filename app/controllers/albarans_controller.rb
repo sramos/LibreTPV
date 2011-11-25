@@ -5,6 +5,7 @@ class AlbaransController < ApplicationController
 
   def index
     flash[:mensaje] = "Listado de Albaranes de Proveedores pendientes de aceptar" if params[:seccion] == "productos"
+    flash[:mensaje] = "Ventas/Devoluciones Nuevas y Abiertas" if params[:seccion] == "caja"
     flash[:mensaje] = "Listado de Truekes pendientes de aceptar" if params[:seccion] == "trueke"
     redirect_to :action => :listado 
   end
@@ -50,11 +51,11 @@ class AlbaransController < ApplicationController
         flash[:mensaje] = "Albaran aceptado!"
       else
         if ( params[:forma_pago] && FormaPago.find_by_id(params[:forma_pago][:id]).caja )
-          flash[:mensaje] = "Asegúrese de cobrar la venta!!!<div class='importe_medio'>Importe: " + params[:importe] + "€"
-          flash[:mensaje] << "<br>Recibido: " + params[:recibido][0] + "€<br>Cambio: " + format("%.2f",(params[:recibido][0].to_f - params[:importe].to_f).to_s) + "€" if params[:recibido][0].to_f > 0
-          flash[:mensaje] << "</div>"
+          flash[:mensaje_ok] = "Asegúrese de cobrar la venta!!!<div class='importe_medio'>Importe: " + params[:importe] + "€"
+          flash[:mensaje_ok] << "<br>Recibido: " + params[:recibido][0] + "€<br>Cambio: " + format("%.2f",(params[:recibido][0].to_f - params[:importe].to_f).to_s) + "€" if params[:recibido][0].to_f > 0
+          flash[:mensaje_ok] << "</div>"
         else
-          flash[:mensaje] = "Pago realizado!"
+          flash[:mensaje_ok] = "Pago realizado!"
         end
       end
       albaran.cerrar(params[:seccion])

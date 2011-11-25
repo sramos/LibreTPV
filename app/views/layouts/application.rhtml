@@ -5,13 +5,13 @@
     <title>TPV: Terminal Punto de Venta - <%= controller.controller_name %></title>
     <%= stylesheet_link_tag 'tpv', :media => "all" %>
     <%= stylesheet_link_tag 'modalbox' %>
-    <%= javascript_include_tag 'tpv.js' %>
     <%= javascript_include_tag 'prototype' %>
     <%= javascript_include_tag :defaults %>
     <%= javascript_include_tag 'scriptaculous' %>
     <%= javascript_include_tag 'builder' %>
     <%= javascript_include_tag 'effects' %>
     <%= javascript_include_tag 'modalbox' %>
+    <%= javascript_include_tag 'tpv.js' %>
     <%= calendar_date_select_includes :locale => "es" %>
     <%# calendar_date_select_includes :locale => I18n.locale %>
 
@@ -20,7 +20,6 @@
     <META NAME="author" CONTENT="Santiago Ramos <sramos@sitiodistinto.net>">
     <META NAME="copyright" CONTENT="Copyright (C) 2011 Santiago Ramos">
     <META NAME="generator" CONTENT="LibreTPV - Version <%= ENV['TPV_VERSION'] %>"> 
-
 </head>
 <body>
 
@@ -72,15 +71,20 @@ Esto es un aviso
 <div id="centro" class="centro">
 
   <!-- Mensajes de informacion -->
-  <%= mensaje flash[:mensaje] %>
+  <%= mensaje_ok flash[:mensaje_ok] if flash[:mensaje_ok] %>
   <%= mensaje_error(flash[:error]) if flash[:error]%>
 
   <!-- Contenido de cada accion -->
   <%= @content_for_layout %>
 
-</div>
-<br>
+  <br/>
 
+</div>
+
+<%= mensaje flash[:mensaje] if flash[:mensaje] %>
+
+<!--<div id="pie" class="fila">-->
+<!--</div>-->
 
 </body>
 

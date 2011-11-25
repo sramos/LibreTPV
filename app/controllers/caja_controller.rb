@@ -3,7 +3,7 @@ class CajaController < ApplicationController
   require 'will_paginate'
 
   def index
-    flash[:mensaje] = "Entradas/Salidas de Caja" if params[:seccion] == 'caja'
+    flash[:mensaje] = "Listado de Movimientos de Caja (Entradas/Salidas Manuales)" if params[:seccion] == 'caja'
     redirect_to :action => :listado if params[:seccion] == 'caja'
     redirect_to :action => :arqueo if params[:seccion] == 'tesoreria'
   end

@@ -13,6 +13,8 @@ class FacturaController < ApplicationController
   before_filter :obtiene_facturas, :only => [ :listado, :aceptar_cobro ]
 
   def index
+    flash[:mensaje] = "Listado de Facturas de Proveedores" if params[:seccion] == "productos"
+    flash[:mensaje] = "Listado de Facturas de Clientes" if params[:seccion] == "caja"
     redirect_to :action => :listado
   end
 
