@@ -30,6 +30,14 @@ Email: sramos@sitiodistinto.net
 
 <b>NOTAS a la versión 0.x de libreTPV </b> 
 
+= Demo online.
+
+La aplicación está disponible para pruebas en http://libretpv-demo.sitiodistinto.net/
+
+Usuario: demo
+Password: demo
+
+
 = Instalación.
 
 En este punto solo enumeramos los pasos generales para una instalación. Remitimos al documento de instalación (INSTALL) para una explicación mas detallada.
