@@ -1,9 +1,14 @@
 
 <%= inicio_formulario( { :action => 'modificar', :id => @factura }, false ) %>
   <div class="linea">
+  <%= fecha "Fecha", "factura", "fecha" %>
+
   <% if params[:seccion] == 'productos' %>
     <div class="elemento" %>Proveedor<br/><%= proveedor %></div>
     <%= texto "Código de Factura", 'factura', 'codigo' %>
+    </div><div class="linea">
+    <%= fecha "Fecha Vencimiento", 'factura', 'fecha_vencimiento' %>
+
   <% elsif params[:seccion] == 'tesoreria' %>
     <%= texto "Base Imponible", 'factura', 'base_imponible' %>
     <%= texto "% IRPF", 'factura', 'valor_irpf' %>
@@ -12,11 +17,12 @@
     <%= texto "Código de Factura", 'factura', 'codigo' %>
     <%= selector "Proveedor", 'factura', 'proveedor_id', @proveedores.map {|u| [u.nombre,u.id]} %>
     </div><div class="linea">
+
   <% else %>
     <%= selector "Cliente", 'albaran', 'cliente_id', @clientes.map {|u| [u.nombre,u.id]} %>  
   <% end %>
-  <%= fecha "Fecha", "factura", "fecha" %>
   </div>
+
   <% if params[:seccion] == 'productos' %>
   <div class="linea">
     <%= checkbox "Forzar Precios de Proveedor", 'selector', 'fuerza_importe', {:checked => (@factura.importe_base?), :izquierda => true } %>

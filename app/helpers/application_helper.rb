@@ -309,7 +309,7 @@ module ApplicationHelper
       when "depositos_clientes"
         ["fecha", "cliente.nombre", "fecha_devolucion"]
       when "facturas_productos"
-        ["fecha", "codigo_mayusculas", "albaran.proveedor.nombre", "base_imponible", "iva_aplicado", "importe"]
+        ["fecha", "fecha_vencimiento", "codigo_mayusculas", "albaran.proveedor.nombre", "base_imponible", "iva_aplicado", "importe"]
       when "facturas_caja"
         ["fecha", "codigo_mayusculas", "albaran.cliente.nombre", "base_imponible", "iva_aplicado", "importe"]
       when "facturas_tesoreria"
@@ -398,6 +398,7 @@ module ApplicationHelper
 			"albaran.codigo"		=> ["Código de Albarán", "2_3", 20],
 			"albaran.fecha"			=> ["Fecha", "1_2", 13],
 			"fecha_devolucion"		=> ["Devolución", "1_2", 13],
+			"fecha_vencimiento"		=> ["Vencimiento", "1_2", 13],
 			"albaran.fecha_devolucion"	=> ["Devolución", "1_2", 13],
 			"email"				=> ["Email", "2_3", 20],
 			"nombre_param"			=> ["Parámetro","1", 36],

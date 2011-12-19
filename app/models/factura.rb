@@ -95,10 +95,10 @@ class Factura < ActiveRecord::Base
   class << self
     def proximos_vencimientos(dias=nil)
       dias ||= 7.days
-      Factura.all :conditions => { :fecha_vencimiento => Time.now..Time.now+dias.day }
+      Factura.all :conditions => { :fecha_vencimiento => Time.now..Time.now+dias.day, :pagado => false }
     end
     def vencidas
-      Factura.all :conditions => ["fecha_vencimiento < ?", Time.now.beginning_of_day]
+      Factura.all :conditions => ["fecha_vencimiento < ? AND pagado = ?", Time.now.beginning_of_day,false]
     end
   end
 
