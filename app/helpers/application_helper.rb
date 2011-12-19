@@ -70,7 +70,7 @@ module ApplicationHelper
 
   # paginación, se integra en final_listado
   def paginacion elementopaginado, elementosxpagina
-    formulario = "<div class='listadofila' id='paginado'>\n" + (will_paginate(elementopaginado, :prev_label => "<< "+ "Anterior", :next_label => "Siguiente" + " >>", :class => "listado_campo_2") or " ")
+    formulario = "<div class='listadofila' id='paginado'>\n" + (will_paginate(elementopaginado, :previous_label => "<< "+ "Anterior", :next_label => "Siguiente" + " >>", :class => "listado_campo_2") or " ")
     formulario << "<div class='listado_derecha'> "+ informacion_paginacion(elementopaginado)  + "</div>"
     formulario << "<div class='linea'></div></div>"
   end
