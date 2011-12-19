@@ -19,10 +19,13 @@ body {
   position: fixed;
   bottom: 0;
   left: 0;
-  background-color: #FFF;
-  z-index: 999;
+  background-color: #CACACA;
+  z-index: 990;
   width: 100%;
-  height: 40px;
+  height: 20px;
+  border-top-width: 1px
+  border-color: #000; 
+  border-top-style: groove;
 }
 
 
@@ -38,14 +41,37 @@ body {
   position: absolute;
   top: -1px;
   z-index: 5000;
+  border-top: 1px;
 
+  /*text-align: center;*/
+  padding: 5px;
+}
 
-  text-align: center;
-  padding:10px;
-  -moz-border-radius-bottomleft: 7px;
-  -moz-border-radius-bottomright: 7px;
-  -webkit-border-radius: 7px;
-  border-radius: 4px
+#carousel-wrapper {
+    width: 800px;
+    height: 20px;
+    overflow: hidden;
+}
+#carousel-content {
+    width: 2500px;
+}
+#carousel-content .slide {
+    float: left;
+    padding-left: 5px;
+    width: 800px;
+    height: 20px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.criticidad_1 a, .criticidad_1 a:link, .criticidad_1 a:visited {
+  color: gray;
+}
+.criticidad_2 a, .criticidad_2 a:link, .criticidad_2 a:visited {
+  color: #000;
+}
+.criticidad_3 a, .criticidad_3 a:link, .criticidad_3 a:visited {
+  color: #f00;
 }
 
 #paginado {
@@ -94,7 +120,6 @@ a, a:link, a:visited {
 
 .listado .listadofila, .filaDos, .filaDos{
     padding: 4 5 0 5;
-    /*border-bottom:dotted 1px #ccc;*/
     min-height: 20px;
     border-bottom:dotted 1px #ccc;
  }
