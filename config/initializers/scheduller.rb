@@ -6,7 +6,7 @@ scheduler = Rufus::Scheduler.start_new
 #end
 
 # Comprueba las facturas
-scheduler.every("1m") do
+scheduler.every("6h") do
   Factura.vencidas.each do |factura|
     diferencia = (factura.fecha_vencimiento - Time.now.to_date).abs.to_s
     valores = { :objeto => "Factura", :objeto_id => factura.id, :url => "/productos/factura/listado" }
