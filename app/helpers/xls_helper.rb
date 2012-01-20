@@ -36,8 +36,8 @@ module XlsHelper
     else
       _objetos = @objetos
       _subobjetos = @subobjetos
-      _titulo = params[:controller].capitalize
-      _cabecera = params[:seccion].capitalize + " - " + params[:controller].capitalize + (params[:action] == "index" ? "" : " - " + params[:action].capitalize)
+      _titulo = @xls_title || params[:controller].capitalize
+      _cabecera = @xls_head || (params[:seccion].capitalize + " - " + params[:controller].capitalize + (params[:action] == "index" ? "" : " - " + params[:action].capitalize))
       _tipo = @tipo
       _filtrado = @estado_filtrado
       _ordenado = session[(params[:controller]+"_cadena_orden").to_sym]

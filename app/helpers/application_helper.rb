@@ -84,6 +84,7 @@ module ApplicationHelper
     script = "document.getElementById('" +  sub_id + "').innerHTML=\"\";" if sub_id
     cadena = '<br><fieldset class="sublistado"> <legend>'+ rotulo +'</legend>'
     cadena << '<div class="listado_derecha" id="cerrarsublistado">'
+    cadena << link_to( icono( "Download", {:title => "Exportar a XLS"}), request.parameters.merge({:format => :xls}) ) if @formato_xls
     cadena << link_to_function( icono('Cancel',{:Title => "Ocultar"}), script, {:id => sub_id + "_ocultar_sublistado"} ) if sub_id
     cadena << "</div><br/><br/><div class='listadocabecera'>"
     for campo in @campos_sublistado

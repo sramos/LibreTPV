@@ -6,9 +6,30 @@ class AlbaranLineasController < ApplicationController
   def lineas
     albaran = Albaran.find(params[:albaran_id])
     @albaran_lineas = albaran.albaran_lineas 
-    render :update do |page|
-      page.replace_html params[:update], :partial => "lineas"
-    end    
+
+    @formato_xls = true
+    respond_to do |format|
+      format.xls do
+        @tipo = "lineas_deposito" if albaran.proveedor && albaran.deposito
+        @tipo = "lineas_compra" if albaran.proveedor && !albaran.deposito
+        @tipo = "lineas_venta" unless albaran.proveedor
+        codigo = albaran.factura.codigo if albaran.factura && albaran.factura.codigo && albaran.factura.codigo != "N/A"
+        codigo ||= albaran.codigo+" (*)"
+        fecha = (albaran.factura ? albaran.factura.fecha.to_s : nil) || albaran.fecha.to_s
+        fecha += " / Fecha Devolución: " + albaran.fecha_devolucion.to_s if albaran.deposito
+        @xls_head = "Venta " + codigo + " / Cliente: " + albaran.cliente.nombre + " / Fecha: " + fecha if albaran.cliente
+        @xls_head = (albaran.deposito ? "Depósito: " : "Factura: ") + codigo + " / Proveedor: " + albaran.proveedor.nombre + " / Fecha: " + fecha if albaran.proveedor
+        @xls_head += "  / ALBARAN ABIERTO" if !albaran.cerrado
+        @objetos = @albaran_lineas
+        @xls_title = "Albaran " + albaran.codigo
+        render 'comunes_xls/listado', :layout => false
+      end 
+      format.html do
+        render :update do |page|
+          page.replace_html params[:update], :partial => "lineas"
+        end
+      end
+    end
   end
 
   def editar
