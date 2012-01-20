@@ -13,4 +13,12 @@ class Proveedor < ActiveRecord::Base
     return false unless errors.empty?
   end
 
+  # Devuelve un array de las líneas de albaran compradas
+  def productos_comprados
+    albaranes = self.albarans.all :conditions => { :cerrado => true }, :order => "fecha desc"
+    # Obtiene las líneas de cada albaran del proveedor
+    lineas = []
+    albaranes.each { |albaran| albaran.albaran_lineas.each { |linea| lineas.push(linea) } }
+    return lineas
+  end
 end

@@ -52,6 +52,16 @@ class ProductosController < ApplicationController
     end
     if session[("productos_filtrado_tipo").to_sym] == "deposito"
       render "listado_deposito"
+    else
+      @formato_xls = @productos.total_entries
+      respond_to do |format|
+        format.html
+        format.xls do
+          @tipo = "inventario"
+          @objetos = @productos
+          render 'comunes_xls/listado', :layout => false
+        end
+      end
     end
   end
 

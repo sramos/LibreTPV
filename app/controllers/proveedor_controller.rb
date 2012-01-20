@@ -14,6 +14,7 @@ class ProveedorController < ApplicationController
       format.xls do
         @tipo = "proveedores"
         @objetos = @proveedores
+        @subhoja = { :titulo => "nombre", :cabecera => "Productos Comprados", :objetos => "productos_comprados", :tipo => "productos_comprados" } 
         render 'comunes_xls/listado', :layout => false
       end
     end
@@ -40,10 +41,8 @@ class ProveedorController < ApplicationController
 
   # Devuelve sublistado de productos comprados al proveedor
   def productos
-    albaranes = Albaran.find :all, :conditions => { :proveedor_id => params[:id], :cerrado => true }
-    # Obtiene las líneas de cada albaran del proveedor
-    @lineas = []
-    albaranes.each { |albaran| albaran.albaran_lineas.each { |linea| @lineas.push(linea) } }
+    proveedor = Proveedor.find_by_id(params[:id]) if params[:id]
+    @lineas = proveedor.productos_comprados if proveedor
     #puts "--------------->" + @lineas.to_s
     render :update do |page|
       page.replace_html params[:update], :partial => "productos"

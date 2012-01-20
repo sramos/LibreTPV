@@ -2,28 +2,16 @@
 module ApplicationHelper
 
   #--
-  # METODOS PARA SALIDAS XLS
-  #--
-
-  def formato_xls_negrita
-    return Spreadsheet::Format.new :weight => :bold, :align => :top, :text_wrap => true, :number_format => '#,##0.00'
-  end
-  def formato_xls_negrita_centrado
-    return Spreadsheet::Format.new :weight => :bold, :align => :top, :text_wrap => true, :number_format => '#,##0.00', :horizontal_align=>:center
-  end
-  def formato_xls_normal
-    return Spreadsheet::Format.new :text_wrap => true, :align => :top, :number_format => '#,##0.00'
-  end
-  def formato_xls_cabecera
-    return Spreadsheet::Format.new :weight => :bold, :align => :middle, :pattern => 1, :pattern_fg_color => :aqua
-  end
-  def formato_xls_centrado_resaltado
-    return Spreadsheet::Format.new :text_wrap => true, :align => :middle, :number_format => '#,##0.00', :horizontal_align=>:center, :pattern => 1, :pattern_fg_color => :silver
-  end
-
-  #--
   # METODOS GENERALES
   #++
+
+  # Obtiene el valor de un campo
+  def obtiene_valor_campo valor, campo
+    campo.split('.').each do |metodo|
+      valor = (metodo =~ /(\S+)\s(\S+)/ ? valor.send($1,$2) : valor.send(metodo)) if valor
+    end
+    return valor
+  end
 
   def cabecera_listado tipo, otros={}
     # Sacamos los campos a mostrar bien vengan como array (posicion global) o como tipo
@@ -47,8 +35,9 @@ module ApplicationHelper
       if objeto.class.name == "Array"
         valor=objeto[i] || ""
       else
-        valor=objeto
-        campo.split('.').each { |metodo| valor = valor.send(metodo) if valor } if objeto
+        #valor=objeto
+        #campo.split('.').each { |metodo| valor = valor.send(metodo) if valor } if objeto
+        valor = obtiene_valor_campo objeto, campo
       end
       i += 1
       etiqueta=etiqueta(campo)
@@ -111,8 +100,9 @@ module ApplicationHelper
   def fila_sublistado objeto
     cadena = ""
     for campo in @campos_sublistado
-      valor=objeto
-      campo.split('.').each { |metodo| valor = valor.send(metodo) if valor }
+      #valor=objeto
+      #campo.split('.').each { |metodo| valor = valor.send(metodo) if valor }
+      valor = obtiene_valor_campo objeto, campo
       valor = format('%0.2f',valor) if etiqueta(campo)[3] == "f" && valor
       valor = valor.strftime("%d/%m/%Y") if valor.class.name == "Date"
       cadena += "<div class='listado_campo_" + etiqueta(campo)[1] + (etiqueta(campo)[3]||"") + "' id='listado_campo_valor_" + campo + "' title='" + (valor ? valor.to_s : "&nbsp;") + "'>" + (valor && valor.to_s != "" ? truncate(valor.to_s, :length => etiqueta(campo)[2]):"&nbsp;") + '</div>'
@@ -330,7 +320,7 @@ module ApplicationHelper
       when "productos_vendidos"
         ["albaran.factura.fecha","cantidad","producto.nombre","albaran.factura.codigo"]
       when "productos_comprados"
-        ["albaran.fecha","cantidad","producto.nombre","albaran.factura.codigo"]
+        ["albaran.fecha","cantidad","producto.codigo", "nombre_producto","albaran.factura.codigo"]
       when "lista_reposicion"
         ["nombre_producto","fecha_devolucion"]
       when "resumen_facturas_servicios"
@@ -362,17 +352,21 @@ module ApplicationHelper
   end
 
   def campos_info tipo
+    case tipo
+      when "proveedores"
+        ["direccion", "contacto"]
+    end
   end
 
   def etiqueta campo
     etiqueta = {	"albaran.cliente.nombre"	=> ["Cliente", "1", 36],
 			"albaran.proveedor.nombre"	=> ["Proveedor", "2_3", 20],
 			"cliente.nombre"		=> ["Cliente", "1", 36],
-			"familia.nombre"		=> ["Familia", "1_2", 13],
+			"familia.nombre"		=> ["Familia", "1_2", 15],
 			"proveedor.nombre"		=> ["Proveedor", "1", 36],
 			"codigo"			=> ["Código", "2_3", 20],
                         "codigo_mayusculas"             => ["Código", "2_3", 20],
-			"producto.codigo"		=> ["Código/ISBN", "1_2", 13],
+			"producto.codigo"		=> ["Código/ISBN", "1_2", 15],
 			"producto.nombre"		=> ["Nombre/Título", "1", 36],
 			"producto.cantidad"		=> ["Stock", "1_5", 8, "d"],
 			"producto.autor"		=> ["Autor", "2_3", 20],
@@ -394,12 +388,12 @@ module ApplicationHelper
 			"forma_pago.nombre"		=> ["Forma de Pago", "1", 36],
 			"factura.codigo"		=> ["Código de Factura", "2_3", 20],
 			"albaran.factura.codigo"	=> ["Código de Factura", "2_3", 20],
-			"albaran.factura.fecha"		=> ["Fecha", "1_2", 13],
+			"albaran.factura.fecha"		=> ["Fecha", "1_2", 15],
 			"albaran.codigo"		=> ["Código de Albarán", "2_3", 20],
-			"albaran.fecha"			=> ["Fecha", "1_2", 13],
-			"fecha_devolucion"		=> ["Devolución", "1_2", 13],
-			"fecha_vencimiento"		=> ["Vencimiento", "1_2", 13],
-			"albaran.fecha_devolucion"	=> ["Devolución", "1_2", 13],
+			"albaran.fecha"			=> ["Fecha", "1_2", 15],
+			"fecha_devolucion"		=> ["Devolución", "1_2", 15],
+			"fecha_vencimiento"		=> ["Vencimiento", "1_2", 15],
+			"albaran.fecha_devolucion"	=> ["Devolución", "1_2", 15],
 			"email"				=> ["Email", "2_3", 20],
 			"nombre_param"			=> ["Parámetro","1", 36],
 			"valor_param"			=> ["Valor", "1", 36],
@@ -425,8 +419,10 @@ module ApplicationHelper
 			"total caja"			=> ["Total Caja", "2_3", 20, "f"],
                         "credito"			=> ["Crédito", "1_3", 14, "f"],
 			"credito_acumulado"		=> ["Acumulado", "1_3", 14, "f"],
+			"direccion"			=> ["Dirección", "1", "36"],
+			"contacto"			=> ["Dirección", "1", "36"],
 		}
-    return etiqueta[campo] || [campo.capitalize, "1_2", 13]
+    return etiqueta[campo] || [campo.capitalize, "1_2", 15]
   end
 
 end
