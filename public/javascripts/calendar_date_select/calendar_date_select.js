@@ -125,7 +125,7 @@ CalendarDateSelect.prototype = {
       var style = {}
     } else {
       var parent = document.body
-      var style = { position:"absolute", visibility: "hidden", left:0, top:0 }
+      var style = { position:"fixed", visibility: "hidden", left:0, top:0 }
     }
     this.calendar_div = $(parent).build('div', {className: "calendar_date_select"}, style);
     
