@@ -1,7 +1,7 @@
 # Construye la salida de un listado
 
     hoja = workbook.create_worksheet
-    hoja.name = params[:controller] 
+    hoja.name = params[:controller].capitalize
 
     hoja.default_format = formato_xls_normal
     hoja.row(0).default_format = formato_xls_cabecera

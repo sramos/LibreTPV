@@ -1,13 +1,28 @@
 class ProveedorController < ApplicationController
 
+  # Librerias para paginado
+  require 'will_paginate'
+
   def index
     redirect_to :action => :listado
   end
 
   def listado
     flash[:mensaje] = "Listado de proveedores"
-    @proveedores = Proveedor.find :all, :order => 'nombre'
+    @proveedores = Proveedor.paginate( :order => 'nombre',
+			:page => (params[:format]=='xls' ? nil : params[:page]), :per_page => (params[:format_xls_count] || Configuracion.valor('PAGINADO') ))
+    @formato_xls = @proveedores.total_entries
+    respond_to do |format|
+      format.html
+      format.xls do
+        @tipo = "proveedores"
+        @objetos = @proveedores
+        render 'comunes_xls/listado', :layout => false
+      end
+    end
   end
+
+
 
   def editar
     @proveedor = params[:id] ? Proveedor.find(params[:id]) : Proveedor.new

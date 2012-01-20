@@ -5,7 +5,17 @@ class ClienteController < ApplicationController
   end
 
   def listado
-    @clientes = Cliente.find(:all,:order => [ :nombre ])
+    @clientes = Cliente.paginate( :order => [ :nombre ],
+			:page => (params[:format]=='xls' ? nil : params[:page]), :per_page => (params[:format_xls_count] || Configuracion.valor('PAGINADO') ))
+    @formato_xls = @clientes.total_entries
+    respond_to do |format|
+      format.html
+      format.xls do
+        @tipo = "clientes"
+        @objetos = @clientes
+        render 'comunes_xls/listado', :layout => false
+      end
+    end
   end
 
   def editar
