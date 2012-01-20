@@ -1,8 +1,5 @@
 class ProveedorController < ApplicationController
 
-  # Librerias para paginado
-  require 'will_paginate'
-
   def index
     redirect_to :action => :listado
   end
@@ -21,8 +18,6 @@ class ProveedorController < ApplicationController
       end
     end
   end
-
-
 
   def editar
     @proveedor = params[:id] ? Proveedor.find(params[:id]) : Proveedor.new

@@ -32,7 +32,8 @@ class PagoController < ApplicationController
     end
     factura = Factura.find(@pago.factura_id)
     pago_pendiente
-    if @pago_pendiente <= 0 && !factura.pagado
+    #if @pago_pendiente <= 0 && !factura.pagado
+    if pago_completo(factura) && !factura.pagado
       factura.pagado = true
       factura.save
     end
@@ -52,7 +53,8 @@ class PagoController < ApplicationController
     #@pagos = Factura.find(params[:factura_id]).pagos
     factura = Factura.find(params[:factura_id])
     pago_pendiente
-    if @pago_pendiente > 0 && factura.pagado
+    #if @pago_pendiente > 0 && factura.pagado
+    if !pago_completo(factura) && factura.pagado
       factura.pagado = false 
       factura.save
     end
@@ -73,5 +75,7 @@ private
     @pago_pendiente = factura.importe
     @pagos.each { |pago| @pago_pendiente -= pago.importe }
   end
-
+  def pago_completo factura 
+    return (factura.importe >= 0) ^ (@pago_pendiente >= 0)
+  end
 end

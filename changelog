@@ -1,8 +1,13 @@
-2011-11-xx Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.5
+2012-01-20 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.5
 
   * Bug en informes
   * Bug en dimensiones de imagenes
   * Cambios en mensajes de informacion
+  * Incluida paginacion para proveedores y clientes
+  * Incluida vista xls para proveedores y clientes
+  * Evita aviso de pago si la factura tiene importe = 0
+  * Validaciones de datos en pagos
+  * Permitir pagos negativos (para devoluciones)
 
 2011-11-24 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.4
 

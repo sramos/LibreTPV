@@ -1,6 +1,6 @@
 <!--- Sublistado de pagos de una factura --->
 
-<% if @pago_pendiente > 0 %>
+<% if @pago_pendiente != 0 %>
   <%= cabecera_sublistado "Pagos", "pagos", params[:update], {:url => {:action => 'nuevo_pago', :update =>  params[:update], :factura_id => params[:factura_id]}, :title => "Generar pago"} %>
 <% else %>
   <%= cabecera_sublistado "Pagos", "pagos", params[:update] %>
