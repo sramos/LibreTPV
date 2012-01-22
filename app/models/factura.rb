@@ -91,17 +91,6 @@ class Factura < ActiveRecord::Base
     end
   end
 
-  # Metodos incluidos a la clase para chequeos desde el scheduller 
-  class << self
-    def proximos_vencimientos(dias=nil)
-      dias ||= 7.days
-      Factura.all :conditions => { :fecha_vencimiento => Time.now..Time.now+dias.day, :pagado => false }
-    end
-    def vencidas
-      Factura.all :conditions => ["fecha_vencimiento < ? AND pagado = ?", Time.now.beginning_of_day,false]
-    end
-  end
-
   private
     def verificar_borrado
       if !self.pagos.empty?

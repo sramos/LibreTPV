@@ -4,11 +4,13 @@
     <div class="elemento_x05">
       Stock<br><%= @albaran_linea.producto.cantidad %>
     </div>
+    <div class="elemento_x05">
+      Depósito<br><%= @albaran_linea.cantidad %>
+    </div>
     <div class="elemento_x01">&nbsp;</div>
     <div class="elemento_x2">
       Nombre<br><%= @albaran_linea.nombre_producto %>
     </div>
-    <%= selector "A reponer", 'selector', 'cantidad', 1.upto(@albaran_linea.cantidad).map {|i| [i,i]}, nil %>
+    <%= selector "A reponer", 'selector', 'cantidad', 1.upto(@albaran_linea.cantidad).map {|i| [i,i]}, (@albaran_linea.cantidad - @albaran_linea.producto.cantidad), "elemento_x05" %>
   </div>
-  <br><br><br>
 <%= final_formulario %>

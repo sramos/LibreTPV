@@ -1,0 +1,10 @@
+
+<%= inicio_formulario( { :action => 'modificar', :id => @aviso }, false ) %>
+  <%= selector "Criticidad", "aviso", "criticidad", [ ["Baja",1], ["Media",2], ["Alta",3] ] %>
+  <%= texto "Mensaje", 'aviso', 'mensaje' %>
+  <%= selector "Visible", "aviso", "visible", [ ["SI", true], ["NO", false] ] unless @aviso.id.nil? %>
+  <%= hidden_field 'aviso', 'url', :value => @aviso.url || "/admin/avisos/" %>
+  <%= hidden_field 'aviso', 'objeto', :value => @aviso.objeto || "avisos" %>
+<%= final_formulario %>
+
+

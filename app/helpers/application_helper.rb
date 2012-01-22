@@ -42,6 +42,8 @@ module ApplicationHelper
       i += 1
       etiqueta=etiqueta(campo)
       valor = valor.localtime.strftime("%d/%m/%Y %H:%M:%S") if valor.class.name == "ActiveSupport::TimeWithZone"
+      valor = "SI" if valor.class.name == "TrueClass"
+      valor = "NO" if valor.class.name == "FalseClass"
       valor = valor.strftime("%d/%m/%Y") if valor.class.name == "Date"
       cadena += "<div class='listado_campo_" + etiqueta[1] + (etiqueta[3]||"") + "' id='listado_campo_valor_" + campo + (objeto.class.name == "Array" ? "" : "_" + objeto.id.to_s) + "' title='" + (valor ? valor.to_s : "&nbsp;") + "'>" + (valor && valor.to_s != "" ? truncate( (etiqueta[3]=="f"?sprintf("%.2f",valor):valor.to_s), :length => etiqueta[2]):"&nbsp;") + '</div>'
     end
@@ -247,6 +249,7 @@ module ApplicationHelper
   end
 
   def controladores controlador={}
+    controladores = []
     case params[:seccion]
       when "caja"
         controladores = [ #{ :rotulo => "Pedidos", :controlador => "pedidos" },
@@ -276,7 +279,9 @@ module ApplicationHelper
 			  { :rotulo => "Parámetros", :controlador => "configuracion"},
                           { :rotulo => "Formas de Pago", :controlador => "forma_pago"},
                           { :rotulo => "Tipos de IVA", :controlador => "iva"},
-                          { :rotulo => "Familias de Productos", :controlador => "familia"} ]
+                          { :rotulo => "Familias de Productos", :controlador => "familia"},
+			  { :rotulo => "Avisos", :controlador => "avisos"} ]
+
     end
     return controladores
   end
@@ -311,6 +316,8 @@ module ApplicationHelper
         ["fecha", "concepto", "codigo", "debe", "haber"]
       when "movimientos_caja"
         ["fecha_hora","importe","comentarios"]
+      when "avisos"
+	["criticidad", "mensaje", "visible", "updated_at"]
 
       when "lineas_compra"
         ["cantidad","nombre_producto","precio_compra","descuento","subtotal","iva", "total"]
@@ -420,8 +427,10 @@ module ApplicationHelper
 			"total caja"			=> ["Total Caja", "2_3", 20, "f"],
                         "credito"			=> ["Crédito", "1_3", 14, "f"],
 			"credito_acumulado"		=> ["Acumulado", "1_3", 14, "f"],
-			"direccion"			=> ["Dirección", "1", "36"],
-			"contacto"			=> ["Dirección", "1", "36"],
+			"direccion"			=> ["Dirección", "1", 36],
+			"contacto"			=> ["Dirección", "1", 36],
+			"mensaje"			=> ["Mensaje", "1", 36],
+			"updated_at"			=> ["Modificado", "2_3", 20],	
 		}
     return etiqueta[campo] || [campo.capitalize, "1_2", 15]
   end

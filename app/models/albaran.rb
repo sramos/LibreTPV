@@ -90,6 +90,15 @@ class Albaran < ActiveRecord::Base
     return self.iva_aplicado + self.base_imponible
   end
 
+
+  private
+    def verificar_borrado
+      if !self.pagos.empty?
+        errors.add( "factura", "No se puede borrar la factura: Hay pagos realizados." ) unless self.pagos.empty?
+        false
+      end
+    end
+
   private
     def verificar_facturas
       if !self.factura.nil?

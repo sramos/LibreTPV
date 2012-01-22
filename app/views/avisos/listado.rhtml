@@ -1,0 +1,16 @@
+<!--- Listado de Avisos --->
+
+<div class="caja_completa">
+<%= cabecera_listado "avisos", { :title => "Nuevo", :url => { :action => :editar} } %>
+<% for objeto in @avisos %>
+  <div class="listadofila">
+    <%= fila_listado objeto %>
+    <div class="listado_derecha">
+      <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id }, "Editar Aviso" %>
+      <%= borrado icono('Trash',{:title => "Borrar"}), {:action => :borrar, :id => objeto}, 'Eliminar Aviso', "Aviso: " + objeto.mensaje, :ajax => false %>
+    </div>
+  </div>
+<% end %>
+<%= final_listado @avisos %>
+</div>
+
