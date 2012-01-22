@@ -194,6 +194,8 @@ margin-top:15px;
     font-size:11px;
     padding: 0 5 0 5;
     overflow: hidden;
+    /* Esto lo ponemos para evitar los descuadres */
+    height: 14px;
 }
 
 .listado_campo_2 { width:760px; }
