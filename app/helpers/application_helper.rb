@@ -275,7 +275,7 @@ module ApplicationHelper
       when "admin"
         controladores = [ #{ :rotulo => "Usuarios", :controlador => "usuarios"},
                           { :rotulo => "Backup", :controlador => "backup"},
-                          #{ :rotulo => "Recuperar Objetos", :controlador => "perdidos" },
+                          { :rotulo => "Recuperar Objetos", :controlador => "perdidos" },
 			  { :rotulo => "Parámetros", :controlador => "configuracion"},
                           { :rotulo => "Formas de Pago", :controlador => "forma_pago"},
                           { :rotulo => "Tipos de IVA", :controlador => "iva"},

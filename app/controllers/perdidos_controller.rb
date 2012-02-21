@@ -16,7 +16,7 @@ class PerdidosController < ApplicationController
 
     # Albaranes de compra perdidos (cerrados pero sin factura)
     @albaranes_compra = []
-    Albaran.find(:all, :conditions => { :cerrado => true, :cliente_id => nil }).each do |albaran|
+    Albaran.find(:all, :conditions => { :cerrado => true, :deposito => false, :cliente_id => nil }).each do |albaran|
       puts "---> (" + albaran.id.to_s + ") " + albaran.proveedor.nombre + " " + albaran.fecha.to_s if albaran.factura.nil?
       @albaranes_compra.push(albaran) if albaran.factura.nil?
     end
