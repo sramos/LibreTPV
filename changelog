@@ -13,6 +13,7 @@
   * En el volcado a XLS permite meter los sublistados como hojas
   * Volcado a XLS de sublistados (lineas de albaran)
   * Scheduller de avisos
+  * Activada opcion de albaranes perdidos
 
 2011-11-24 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.4
 
