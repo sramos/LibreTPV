@@ -162,9 +162,9 @@ module ApplicationHelper
   def selector rotulo, objeto, atributo, valores, valor=nil, tipo=nil, vacio=nil
     cadena = "<div class='elemento_" + (tipo || "x15") + "' id='selector_" + objeto + "_" + atributo + "'>" + rotulo + "<br/>"
     if valor && valor != ""
-      cadena << select(objeto, atributo, valores, {:class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :selected => valor, :include_blank => !vacio.nil?})
+      cadena << select(objeto, atributo, valores, {:id => "formulario_campo_" + objeto + "_" + atributo, :selected => valor, :include_blank => !vacio.nil?}, {:class => 'selector_' + (tipo || 'x15')})
     else
-      cadena << select(objeto, atributo, valores, {:class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :include_blank => !vacio.nil?})
+      cadena << select(objeto, atributo, valores, {:id => "formulario_campo_" + objeto + "_" + atributo, :include_blank => !vacio.nil?}, {:class => 'selector_' + (tipo || 'x15')})
     end
     return cadena << "</div>"
   end
