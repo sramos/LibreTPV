@@ -13,6 +13,12 @@ class Factura < ActiveRecord::Base
     (self.codigo == "N/A" && self.albaran && self.albaran.codigo != "") ? "(*) " + self.albaran.codigo.upcase : self.codigo.upcase
   end
 
+  # devuelve el importe pendiente de pago
+  def pago_pendiente
+    pago_pendiente = self.importe
+    self.pagos.each { |pago| pago_pendiente -= pago.importe }
+    return pago_pendiente
+  end
 
   # devuelve el debe de una factura
   def debe
