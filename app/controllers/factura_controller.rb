@@ -150,7 +150,9 @@ private
     end
     # Si hay un filtrado de fechas lo aplica
     if cookies[("filtrado_fecha_inicio").to_sym] && cookies[("filtrado_fecha_fin").to_sym]
-      condicion += " AND facturas.fecha BETWEEN '" + cookies[("filtrado_fecha_inicio").to_sym] + "' AND '" + cookies[("filtrado_fecha_fin").to_sym] + "'"
+      condicion += " AND facturas.fecha BETWEEN '" + cookies[("filtrado_fecha_inicio").to_sym] + "' AND '" + cookies[("filtrado_fecha_fin").to_sym] + "'" unless params[:seccion] == "productos" && cookies[("filtrado_tipo_fecha").to_sym] == "vencimiento"
+      condicion += " AND facturas.fecha_vencimiento BETWEEN '" + cookies[("filtrado_fecha_inicio").to_sym] + "' AND '" + cookies[("filtrado_fecha_fin").to_sym] + "'" if params[:seccion] == "productos" && cookies[("filtrado_tipo_fecha").to_sym] == "vencimiento"
+      puts "-----------> Escogemos solo las facturas con fecha de vencimiento entre los margenes" if params[:seccion] == "productos" && cookies[("filtrado_tipo_fecha").to_sym] == "vencimiento"
     end
     # Si hay filtrado de facturas pagadas lo aplica
     if session[("filtrado_pagado").to_sym] && session[("filtrado_pagado").to_sym] != ""

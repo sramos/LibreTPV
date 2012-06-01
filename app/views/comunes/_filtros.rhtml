@@ -1,7 +1,8 @@
 <!-- Filtros -->
 
-<% session[("filtrado_cliente").to_sym] = "" if session[("filtrado_cliente").to_sym].nil? %>
-<% session[("filtrado_proveedor").to_sym] = "" if session[("filtrado_proveedor").to_sym].nil? %>
+<% session[("filtrado_cliente").to_sym] ||= "" %>
+<% session[("filtrado_proveedor").to_sym] ||= "" %>
+<% cookies[("filtrado_tipo_fecha").to_sym] ||= "factura" %>
 <% cookies[("filtrado_fecha_inicio").to_sym] = (Date.today - 3.month).to_date if cookies[("filtrado_fecha_inicio").to_sym].nil? %>
 <% cookies[("filtrado_fecha_fin").to_sym] = (Date.today + 3.month).to_date if cookies[("filtrado_fecha_fin").to_sym].nil? %>
 
@@ -9,6 +10,7 @@
 <fieldset class="filtrado" id="filtro">
   <%= inicio_formulario( { :action => 'filtrado' }, false ) %>
     <div class="linea">
+      <%= selector("Fecha de:", "filtro", "tipo_fecha", [["Factura","factura"],["Vencimiento","vencimiento"]], cookies["filtrado_tipo_fecha"], "x1", false) if params[:seccion] == "productos" %>
       <%= fecha "Fecha Inicio (incluida)", "filtro", "fecha_inicio", cookies[("filtrado_fecha_inicio").to_sym].to_date %>
       <%= fecha "Fecha Fin (incluida)", "filtro", "fecha_fin", cookies[("filtrado_fecha_fin").to_sym].to_date %>
       <%= selector("Proveedor", 'filtro', 'proveedor', Proveedor.find(:all,:order=>"nombre ASC").map {|p| [p.nombre,p.id]}, session[("filtrado_proveedor").to_sym].to_i, "x15", true) if params[:seccion] == "productos" %>
