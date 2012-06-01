@@ -80,11 +80,11 @@ module ApplicationHelper
       end
   end
 
-  def cabecera_sublistado rotulo, tipo, sub_id, nuevo={}
+  def cabecera_sublistado rotulo, tipo, sub_id, nuevo={}, clase="sublistado"
     #@campos_sublistado = campos
     @campos_sublistado = tipo.is_a?(Array) ? tipo : campos_listado(tipo)
     script = "document.getElementById('" +  sub_id + "').innerHTML=\"\";" if sub_id
-    cadena = '<br><fieldset class="sublistado"> <legend>'+ rotulo +'</legend>'
+    cadena = '<br><fieldset class="' + clase + '"> <legend>'+ rotulo +'</legend>'
     cadena << '<div class="listado_derecha" id="cerrarsublistado">'
     cadena << link_to( icono( "Download", {:title => "Exportar a XLS"}), request.parameters.merge({:format => :xls}) ) if @formato_xls
     cadena << link_to_function( icono('Cancel',{:Title => "Ocultar"}), script, {:id => sub_id + "_ocultar_sublistado"} ) if sub_id
@@ -320,13 +320,13 @@ module ApplicationHelper
 	["criticidad", "mensaje", "visible", "updated_at"]
 
       when "lineas_compra"
-        ["cantidad","nombre_producto","precio_compra","descuento","subtotal","iva", "total"]
+        ["cantidad","producto.codigo","nombre_producto","precio_compra","descuento","subtotal","iva", "total"]
       when "lineas_deposito"
-        ["producto.cantidad","cantidad","nombre_producto","precio_compra","descuento","subtotal","iva", "total"]
+        ["producto.cantidad","cantidad","producto.codigo","nombre_producto","precio_compra","descuento","subtotal","iva", "total"]
       when "lineas_venta"
-        ["cantidad","nombre_producto","precio_venta","descuento","subtotal","iva", "total"]
+        ["cantidad","producto.codigo","nombre_producto","precio_venta","descuento","subtotal","iva", "total"]
       when "productos_vendidos"
-        ["albaran.factura.fecha","cantidad","producto.nombre","albaran.factura.codigo"]
+        ["albaran.factura.fecha","cantidad","producto.codigo","producto.nombre","albaran.factura.codigo"]
       when "productos_comprados"
         ["albaran.fecha","cantidad","producto.codigo", "nombre_producto","albaran.factura.codigo"]
       when "lista_reposicion"
@@ -381,24 +381,25 @@ module ApplicationHelper
 			"nombre_producto"		=> ["Nombre/Título", "1", 36],
 			"nombre"			=> ["Nombre/Título", "1", 36],
 			"autor"				=> ["Autor", "2_3", 20],
-			"producto.precio"		=> ["PVP", "1_3", 14, "f"],
+			"producto.precio"		=> ["PVP", "1_4", 14, "f"],
 			"cantidad"			=> ["Cant.", "1_5", 8, "d"],
-			"precio"			=> ["PVP", "1_3", 14, "f"],
-			"subtotal"			=> ["Subtotal", "1_3", 14, "f"],
+			"precio"			=> ["PVP", "1_4", 14, "f"],
+			"subtotal"			=> ["Subtotal", "1_4", 14, "f"],
 			"descuento"			=> ["% Dto.", "1_5", 8, "d"],
 			"producto.familia.iva.valor"	=> ["% IVA", "1_5", 8, "d"],
 			"iva.nombre"			=> ["IVA aplicado", "1", 36],
 			"iva"				=> ["% IVA", "1_5", 8, "d"],
-			"iva_aplicado"			=> ["IVA", "1_3", 14, "f"],
-			"precio_compra"			=> ["P.Prov.", "1_3", 14, "f"],
-			"precio_venta"			=> ["PVP", "1_3", 14, "f"],
-			"total"				=> ["Total", "1_3", 14, "f"],
+			"iva_aplicado"			=> ["IVA", "1_4", 14, "f"],
+			"precio_compra"			=> ["P.Prov.", "1_4", 14, "f"],
+			"precio_venta"			=> ["PVP", "1_4", 14, "f"],
+			"total"				=> ["Total", "1_4", 14, "f"],
 			"forma_pago.nombre"		=> ["Forma de Pago", "1", 36],
 			"factura.codigo"		=> ["Código de Factura", "2_3", 20],
 			"albaran.factura.codigo"	=> ["Código de Factura", "2_3", 20],
 			"albaran.factura.fecha"		=> ["Fecha", "1_2", 15],
 			"albaran.codigo"		=> ["Código de Albarán", "2_3", 20],
 			"albaran.codigo_detallado"	=> ["Código de Albarán", "2_3", 20],
+			"codigo_detallado"		=> ["Código de Albarán", "2_3", 20],
 			"albaran.fecha"			=> ["Fecha", "1_2", 15],
 			"fecha_devolucion"		=> ["Devolución", "1_2", 15],
 			"fecha_vencimiento"		=> ["Vencimiento", "1_2", 15],
@@ -409,8 +410,8 @@ module ApplicationHelper
 			"base_imponible"		=> ["Base Imp.", "1_3", 14, "f"],
 			"valor_iva"			=> ["%IVA", "1_5", 8, "d"],
 			"valor_irpf"			=> ["%IRPF", "1_5", 8, "d"],
-			"acumulable"			=> ["% Reemb.", "1_3", 14, "d"],
-			"importe"			=> ["Importe", "1_3", 14, "f"],
+			"acumulable"			=> ["% Reemb.", "1_4", 14, "d"],
+			"importe"			=> ["Importe", "1_4", 14, "f"],
 			"concepto"			=> ["Concepto", "1", 36],
 			"debe"				=> ["Debe", "1_3", 14, "f"],
 			"haber"				=> ["Haber", "1_3", 14, "f"],

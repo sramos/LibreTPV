@@ -139,13 +139,13 @@ margin-top:15px;
  /*border-bottom:dotted 1px #ccc;*/
 }
 
-.sublistado .fila {
+.sublistado .fila, .sublistado_entradas .fila {
     padding: 3 3 0 3;
     border-bottom:dotted 1px #ccc;
     min-height: 20px;
  }
 
-.sublistado {
+.sublistado, .sublistado_entradas {
   border:dotted 0px #ccc;
   /*margin-bottom: 10px;
   -moz-border-radius-bottomleft: 7px;
@@ -159,12 +159,18 @@ margin-top:15px;
   -moz-box-shadow: 2px 2px 4px  gray;
   -webkit-box-shadow: 2px 2px 4px  gray;
   box-shadow: 2px 2px 4px  gray;
-  width: 920px;
   margin: 10 auto 10 auto;
-
 }
 
-.sublistado legend{
+.sublistado {
+  width: 995px;
+}
+
+.sublistado_entradas {
+  width: 920px;
+}
+
+.sublistado legend, .sublistado_entradas legend{
   font-weight:bold;
   padding: 5 0 5 0;
   color: gray;
@@ -189,7 +195,7 @@ margin-top:15px;
 
 .listado_derecha, .elemento_derecha { float: right;}
 
-.listado_campo_2, .listado_campo_1, .listado_campo_2_3, .listado_campo_2_3f, .listado_campo_1_2, .listado_campo_1_3, .listado_campo_1_3d, .listado_campo_1_3f, .listado_campo_1_5, .listado_campo_1_5d, .listado_campo_1_5f {
+.listado_campo_2, .listado_campo_1, .listado_campo_2_3, .listado_campo_2_3f, .listado_campo_1_2, .listado_campo_1_3, .listado_campo_1_3d, .listado_campo_1_3f, .listado_campo_1_4, .listado_campo_1_4d, .listado_campo_1_4f, .listado_campo_1_5, .listado_campo_1_5d, .listado_campo_1_5f {
     float: left;
     font-size:11px;
     padding: 0 5 0 5;
@@ -199,12 +205,13 @@ margin-top:15px;
 }
 
 .listado_campo_2 { width:760px; }
-.listado_campo_1 { width:380px; }
+.listado_campo_1 { width:340px; }
 .listado_campo_2_3, .listado_campo_2_3f { width:160px; }
 .listado_campo_1_2 { width:120px; }
 .listado_campo_1_3, .listado_campo_1_3d, .listado_campo_1_3f { width:80px; }
+.listado_campo_1_4, .listado_campo_1_4d, .listado_campo_1_4f { width:70px; }
 .listado_campo_1_5, .listado_campo_1_5d, .listado_campo_1_5f { width:40px; }
-.listado_campo_2_3f, .listado_campo_1_3d, .listado_campo_1_3f, .listado_campo_1_5d, .listado_campo_1_5f { text-align: right; }
+.listado_campo_2_3f, .listado_campo_1_3d, .listado_campo_1_3f, .listado_campo_1_4d, .listado_campo_1_4f, .listado_campo_1_5d, .listado_campo_1_5f { text-align: right; }
 
 .texto, .selector_x05, .selector_x1, .selector_x15, .elemento, .elemento_x1, .elemento_x2, .elemento_x15, .elemento_x05, .elemento_x03, .elemento_x01, .elemento_c {
     font-size: 11px;
