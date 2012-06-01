@@ -90,6 +90,13 @@ class Albaran < ActiveRecord::Base
     return self.iva_aplicado + self.base_imponible
   end
 
+  # Devuelve un codigo detallado
+  def codigo_detallado
+    prefijo = "("
+    prefijo += (self.cerrado ? "C" : "A") unless deposito
+    prefijo += "D" if deposito
+    return prefijo + ") " + codigo
+  end
 
   private
     def verificar_borrado

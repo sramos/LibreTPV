@@ -340,7 +340,7 @@ module ApplicationHelper
       when "pagos"
         ["fecha","importe","forma_pago.nombre"]
       when "compras_producto"
-        ["fecha","codigo","factura.codigo","proveedor.nombre"]
+        ["fecha","codigo_detallado","factura.codigo","proveedor.nombre"]
       when "ventas_producto"
         ["fecha","factura.codigo","cliente.nombre"]
 
@@ -398,6 +398,7 @@ module ApplicationHelper
 			"albaran.factura.codigo"	=> ["Código de Factura", "2_3", 20],
 			"albaran.factura.fecha"		=> ["Fecha", "1_2", 15],
 			"albaran.codigo"		=> ["Código de Albarán", "2_3", 20],
+			"albaran.codigo_detallado"	=> ["Código de Albarán", "2_3", 20],
 			"albaran.fecha"			=> ["Fecha", "1_2", 15],
 			"fecha_devolucion"		=> ["Devolución", "1_2", 15],
 			"fecha_vencimiento"		=> ["Vencimiento", "1_2", 15],
