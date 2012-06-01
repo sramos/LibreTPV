@@ -102,17 +102,19 @@ class FacturaController < ApplicationController
   def aceptar_cobro
     factura = Factura.new
     factura.pagado = true
-    factura.codigo = codigo_factura_venta
+    factura.codigo = "PENDIENTE"
     factura.fecha = Time.now
     factura.update_attributes params[:factura]
     flash[:error] = factura
-    pago = Pago.new
-    pago.importe = factura.importe
-    pago.factura = factura
-    pago.fecha = Time.now 
-    pago.forma_pago_id = params[:forma_pago][:id]
-    pago.save
-    imprime_ticket( factura.albaran_id, FormaPago.find_by_id(params[:forma_pago][:id]).nombre) if params[:imprimeticket][:imprimeticket] == "true"
+    if factura.errors.empty?
+      pago = Pago.new
+      pago.importe = factura.importe
+      pago.factura = factura
+      pago.fecha = Time.now 
+      pago.forma_pago_id = params[:forma_pago][:id]
+      pago.save
+      imprime_ticket( factura.albaran_id, FormaPago.find_by_id(params[:forma_pago][:id]).nombre) if params[:imprimeticket][:imprimeticket] == "true"
+    end
     redirect_to :controller => :albarans, :action => :aceptar_albaran, :id => factura.albaran_id, :forma_pago => params[:forma_pago], :importe => params[:importe], :recibido => params[:recibido]
   end
 
@@ -261,16 +263,6 @@ private
       tab.render_on(pdf) 
     end
     return pdf.render
-  end
-
-  def codigo_factura_venta
-    codigo = 0 
-    prefijo = Configuracion.valor("PREFIJO FACTURA VENTA")
-    @facturas.each do |factura|
-      nuevo_codigo = /^#{prefijo}([0-9]+)$/.match(factura.codigo)
-      codigo = nuevo_codigo[1].to_i if nuevo_codigo && nuevo_codigo[1] && nuevo_codigo[1].to_i > codigo
-    end 
-    return prefijo + format("%010d", (codigo+1).to_s)
   end
 
   def imprime_ticket albaran_id, formadepago

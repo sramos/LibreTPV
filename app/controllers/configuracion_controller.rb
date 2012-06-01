@@ -16,16 +16,9 @@ class ConfiguracionController < ApplicationController
 
   def modificar 
     @config = Configuracion.find(params[:id])
-    @config.update_attributes params[:config]
+    @config.update_attributes params[:config] if @config.editable
     flash[:error] = @config
     redirect_to :action => :listado
   end
   
-#  def borrar 
-#    @iva = Iva.find(params[:id])
-#    @iva.destroy
-#    flash[:error] = @iva
-#    redirect_to :action => :listado
-#  end
-
 end

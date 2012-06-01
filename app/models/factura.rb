@@ -4,6 +4,7 @@ class Factura < ActiveRecord::Base
   belongs_to :proveedor
   has_many :pagos
 
+  after_create :generar_numero_factura
   before_destroy :verificar_borrado
   validates_numericality_of :importe, :message => "La factura debe tener un importe."
   validates_presence_of :codigo, :message => "La factura debe tener un código."
@@ -98,6 +99,15 @@ class Factura < ActiveRecord::Base
   end
 
   private
+    def generar_numero_factura
+      if albaran.cliente_id
+        prefijo = Configuracion.valor("PREFIJO FACTURA VENTA")
+        numero = Configuracion.numero_nueva_venta
+        self.codigo = prefijo + format("%010d", numero.to_s)
+        self.save
+      end
+    end
+
     def verificar_borrado
       if !self.pagos.empty?
         errors.add( "factura", "No se puede borrar la factura: Hay pagos realizados." ) unless self.pagos.empty?

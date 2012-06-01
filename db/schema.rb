@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120406102808) do
+ActiveRecord::Schema.define(:version => 20120601165409) do
 
   create_table "albaran_lineas", :force => true do |t|
     t.integer  "cantidad",                                         :default => 1
@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(:version => 20120406102808) do
     t.string   "valor_param"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "editable",     :default => true
   end
 
   create_table "facturas", :force => true do |t|
