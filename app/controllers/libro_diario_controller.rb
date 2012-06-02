@@ -1,7 +1,5 @@
 class LibroDiarioController < ApplicationController
 
-  require 'will_paginate'
-
   def index
     flash[:mensaje] = "Libro Diario."
     flash[:mensaje] << "<br>Informe de Facturas emitidas/recibidas para las fechas elegidas."

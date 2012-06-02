@@ -1,6 +1,4 @@
 class AvisosController < ApplicationController
-  # Librerias para paginado
-  require 'will_paginate'
 
   def index
     flash[:mensaje] = "Avisos"

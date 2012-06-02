@@ -260,6 +260,7 @@ module ApplicationHelper
       when "productos"
         controladores = [ { :rotulo => "Facturas Proveedores", :controlador => "factura"},
                           { :rotulo => "Depósitos", :controlador => "deposito"},
+			  { :rotulo => "Albaranes aceptados", :controlador => "albaranes_cerrados"},
                           { :rotulo => "Albaranes de entrada", :controlador => "albarans"},
                           { :rotulo => "Proveedores" , :controlador => "proveedor"},
                           { :rotulo => "Inventario", :controlador => "productos"} ]
@@ -298,6 +299,8 @@ module ApplicationHelper
         ["cif", "nombre", "email", "descuento","credito","credito_acumulado"]
       when "albaranes_productos"
         ["fecha", "proveedor.nombre", "codigo"]
+      when "albaranes_cerrados_compra"
+        ["fecha", "codigo", "proveedor.nombre", "base_imponible", "iva_aplicado", "total"]
       when "albaranes_clientes"
         ["fecha", "cliente.nombre"]
       when "depositos_productos"

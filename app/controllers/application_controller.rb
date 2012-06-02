@@ -1,7 +1,10 @@
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
 
+# Libreria para salida a hoja de calculo
 require 'spreadsheet'
+# Librerias para paginado
+require 'will_paginate'
 
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
@@ -17,6 +20,7 @@ class ApplicationController < ActionController::Base
       session[("filtrado_proveedor").to_sym] = (params[:filtro][:proveedor]=="0" ? nil : params[:filtro][:proveedor]) if params[:filtro][:proveedor]
       session[("filtrado_cliente").to_sym] = (params[:filtro][:cliente]=="0" ? nil : params[:filtro][:cliente]) if params[:filtro][:cliente]
       session[("filtrado_pagado").to_sym] = (params[:filtro][:pagado]=="0" ? nil : params[:filtro][:pagado]) if params[:filtro][:pagado]
+      session[("filtrado_facturado").to_sym] = (params[:filtro][:facturado]=="0" ? nil : params[:filtro][:facturado]) if params[:filtro][:facturado]
     end
     redirect_to :action => :listado
   end

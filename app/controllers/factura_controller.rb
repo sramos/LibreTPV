@@ -6,9 +6,6 @@ class FacturaController < ApplicationController
   require 'pdf/writer'
   require 'pdf/simpletable'
 
-  # Librerias para paginado
-  require 'will_paginate'
-
   # Hace una busqueda de "factura" para listado 
   before_filter :obtiene_facturas, :only => [ :listado, :aceptar_cobro ]
 
@@ -64,25 +61,11 @@ class FacturaController < ApplicationController
     redirect_to :action => :listado
   end
 
-  def aceptar_albaran_proveedor
-    albaran = Albaran.find_by_id params[:albaran_id]
-    # Genera una factura solo si no es de deposito
-    if !albaran.deposito
-      factura = Factura.new
-      factura.fecha = Time.now
-      factura.albaran_id = params[:albaran_id]
-      factura.codigo = "N/A"
-      factura.importe = params[:importe].to_f
-      factura.save
-    end
-    redirect_to :controller => :albarans, :action => :aceptar_albaran, :id => params[:albaran_id]
-  end
-
   def borrar 
-    factura = Factura.find(params[:id])
+    factura = Factura.find_by_id(params[:id])
 
     # Cuando no son facturas externas hay que modificar el inventario
-    if params[:seccion] != "tesoreria"
+    if params[:seccion] == "caja"
       albaran = factura.albaran
       albaran.reabrir(params[:seccion]) if factura.destroy
     else

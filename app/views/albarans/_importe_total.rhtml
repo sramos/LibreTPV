@@ -5,9 +5,8 @@ Total<br/><%= format("%0.2f",@importe_total) %> €
 <div class='elemento_derecha'>
   <% if ! @albaran.cerrado %>
     <% if params[:seccion] == "productos" %>
-      <%= link_to icono('Ok',{:title => "Cerrar Albaran" , :size => "grande"}), :controller => 'factura', :action => 'aceptar_albaran_proveedor', :albaran_id => params[:albaran_id], :importe => format("%0.2f",@importe_total) %>
+      <%= link_to icono('Ok',{:title => "Cerrar Albaran" , :size => "grande"}), :controller => 'albarans', :action => 'aceptar_albaran', :id => params[:albaran_id] %>
     <% else %>
-      <%# link_to icono('Currency Euro',{:title => "Efectuar Cobro", :size => "grande"}), :controller => 'albarans', :action => 'cobrar_albaran', :id => params[:albaran_id] %>
       <%= modal icono("Currency Euro",{:title => "Efectuar Cobro", :size => "grande"}), { :controller => 'factura', :action => 'cobrar_albaran', :albaran_id => params[:albaran_id], :importe => format("%0.2f",@importe_total)}, "Efectuar Cobro" %>
     <% end %>
   <% end %>
