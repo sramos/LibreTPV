@@ -7,8 +7,7 @@
 
 <div class="formulario_dcha">
 
-<%= inicio_formulario( { :action => 'aceptar_cobro', :importe => params[:importe] }, false ) %>
-  <%= hidden_field 'factura', 'albaran_id', :value => params[:albaran_id] %>
+<%= inicio_formulario( { :action => 'aceptar_cobro', :importe => params[:importe], :albaran_id => params[:albaran_id] }, false ) %>
   <%= hidden_field 'factura', 'importe', :value => params[:importe] %>
   <div class="linea">
     Fecha de Pago<br/><%= date_select('factura', 'fecha') %>

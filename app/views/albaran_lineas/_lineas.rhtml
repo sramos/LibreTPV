@@ -2,8 +2,8 @@
 
 <% albaran = Albaran.find_by_id(params[:albaran_id]) %>
 <% if params[:seccion ] == 'productos' %>
-  <%= cabecera_sublistado("Productos", "lineas_compra", params[:update], {}, "sublistado" + (defined?(edicion).nil? ? "" : "_entradas") ) unless albaran.deposito && albaran.cerrado %>
-  <%= cabecera_sublistado("Productos", "lineas_deposito", params[:update]) if albaran.deposito && albaran.cerrado %>
+  <%= cabecera_sublistado("Productos", "lineas_compra", params[:update], {}, "sublistado" + (defined?(edicion).nil? ? "" : "_entradas") ) if albaran.nil? || !(albaran.deposito && albaran.cerrado) %>
+  <%= cabecera_sublistado("Productos", "lineas_deposito", params[:update]) if albaran && albaran.deposito && albaran.cerrado %>
 <% else %>
   <%= cabecera_sublistado "Productos", "lineas_venta", params[:update], {}, "sublistado" + (defined?(edicion).nil? ? "" : "_entradas") %>
 <% end %>
@@ -12,11 +12,11 @@
   <div id="<%= params[:update] %>_linea_<%= (i += 1).to_s %>" class="fila" >
     <%= fila_sublistado linea %>
     <div class="listado_derecha" id="botones_<%= linea.id %>">
-      <% if ! albaran.cerrado %>
-        <%= link_to icono('Star',{:title => "Aplicar Acumulado"}), :controller => 'albaran_lineas', :action => 'usar_acumulado', :update => params[:update], :id => linea.id, :albaran_id => params[:albaran_id] if albaran.cliente && linea.producto && albaran.cliente.credito_acumulado > 0 && linea.linea_descuento.nil? %>
+      <% if ! linea.albaran.cerrado %>
+        <%= link_to icono('Star',{:title => "Aplicar Acumulado"}), :controller => 'albaran_lineas', :action => 'usar_acumulado', :update => params[:update], :id => linea.id, :albaran_id => params[:albaran_id] if linea.albaran.cliente && linea.producto && linea.albaran.cliente.credito_acumulado > 0 && linea.linea_descuento.nil? %>
         <%= modal(icono("Write",{:title => "Editar"}), { :controller => 'albaran_lineas', :action => 'editar', :id => linea.id, :albaran_id => params[:albaran_id] }, "Editar línea") if linea.producto %>
         <%= link_to icono('Trash',{:title => "Borrar"}), :controller => 'albaran_lineas', :action => 'borrar', :update => params[:update], :id => linea.id, :albaran_id => params[:albaran_id] %>
-      <% elsif albaran.deposito %>
+      <% elsif linea.albaran.deposito %>
         <%= render :partial => "deposito/iconos_producto_deposito", :locals => { :linea => linea, :update => "botones_" + linea.id.to_s } %>
       <% end %>
     </div>

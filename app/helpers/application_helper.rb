@@ -308,9 +308,9 @@ module ApplicationHelper
       when "depositos_clientes"
         ["fecha", "cliente.nombre", "fecha_devolucion"]
       when "facturas_productos"
-        ["fecha", "fecha_vencimiento", "codigo_mayusculas", "albaran.proveedor.nombre", "base_imponible", "iva_aplicado", "importe"]
+        ["fecha", "fecha_vencimiento", "codigo_mayusculas", "albarans.first.proveedor.nombre", "base_imponible", "iva_aplicado", "importe"]
       when "facturas_caja"
-        ["fecha", "codigo_mayusculas", "albaran.cliente.nombre", "base_imponible", "iva_aplicado", "importe"]
+        ["fecha", "codigo_mayusculas", "albarans.first.cliente.nombre", "base_imponible", "iva_aplicado", "importe"]
       when "facturas_tesoreria"
         ["fecha", "codigo", "proveedor.nombre", "base_imponible", "valor_iva", "valor_irpf", "importe"]
       when "arqueo_caja"
@@ -337,9 +337,9 @@ module ApplicationHelper
       when "resumen_facturas_servicios"
         ["fecha", "codigo", "proveedor.nombre", "importe"]
       when "resumen_facturas_compras"
-        ["fecha", "codigo", "albaran.proveedor.nombre", "importe"]
+        ["fecha", "codigo", "albarans.first.proveedor.nombre", "importe"]
       when "resumen_facturas_ventas"
-        ["fecha", "codigo", "albaran.cliente.nombre", "importe"]
+        ["fecha", "codigo", "albarans.first.cliente.nombre", "importe"]
       when "pagos"
         ["fecha","importe","forma_pago.nombre"]
       when "compras_producto"
@@ -372,6 +372,8 @@ module ApplicationHelper
   def etiqueta campo
     etiqueta = {	"albaran.cliente.nombre"	=> ["Cliente", "1", 36],
 			"albaran.proveedor.nombre"	=> ["Proveedor", "2_3", 20],
+			"albarans.first.cliente.nombre"	=> ["Cliente", "1", 36],
+			"albarans.first.proveedor.nombre"	=> ["Proveedor", "2_3", 20],
 			"cliente.nombre"		=> ["Cliente", "1", 36],
 			"familia.nombre"		=> ["Familia", "1_2", 15],
 			"proveedor.nombre"		=> ["Proveedor", "1", 36],

@@ -28,9 +28,9 @@ class CajaController < ApplicationController
     # Encuentra todas las ventas en caja realizados desde el ultimo cierre de caja
     @pagos = Pago.find :all, :include => "forma_pago", :conditions => [ "forma_pagos.caja IS TRUE AND fecha > ?", (@cierre_caja ? @cierre_caja.fecha_hora : Date.new) ]
     @pagos.each do |pago|
-      @importe_ventas += pago.importe if pago.factura && !pago.factura.albaran.nil? && pago.factura.albaran.cliente
-      @importe_compras += pago.importe if pago.factura && !pago.factura.albaran.nil? && pago.factura.albaran.proveedor
-      @importe_gastos += pago.importe if pago.factura && pago.factura.albaran.nil? && pago.factura.proveedor
+      @importe_ventas += pago.importe if pago.factura && !pago.factura.albarans.empty? && pago.factura.albarans.first.cliente
+      @importe_compras += pago.importe if pago.factura && !pago.factura.albarans.empty? && pago.factura.albarans.first.proveedor
+      @importe_gastos += pago.importe if pago.factura && pago.factura.albarans.empty? && pago.factura.proveedor
       #puts "---> ERROR: Pago con id " + pago.id.to_s + " no tiene factura asociada!!!!" if pago.factura.nil?
     end
     # Encuentra todas las compras en caja realizadas desde el ultimo cierre de caja

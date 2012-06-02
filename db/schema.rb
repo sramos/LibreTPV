@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120601165409) do
+ActiveRecord::Schema.define(:version => 20120602115839) do
 
   create_table "albaran_lineas", :force => true do |t|
     t.integer  "cantidad",                                         :default => 1
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20120601165409) do
     t.datetime "updated_at"
     t.boolean  "deposito",         :default => false
     t.date     "fecha_devolucion"
+    t.integer  "factura_id"
   end
 
   create_table "avisos", :force => true do |t|
@@ -89,7 +90,6 @@ ActiveRecord::Schema.define(:version => 20120601165409) do
     t.date     "fecha",                                                              :null => false
     t.string   "codigo",                                                             :null => false
     t.decimal  "importe",           :precision => 8, :scale => 2,                    :null => false
-    t.integer  "albaran_id"
     t.boolean  "pagado",                                          :default => false
     t.boolean  "metalico",                                        :default => true
     t.datetime "created_at"

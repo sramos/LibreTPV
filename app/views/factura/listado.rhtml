@@ -13,10 +13,10 @@
     <%= fila_listado objeto %>
     <div class="listado_derecha">
       <%= link_to_remote icono('Currency Euro',{:title => "Ver pagos"}), :url => { :controller => 'pago', :action => 'pagos', :factura_id => objeto.id, :update => "factura_sub_" + objeto.id.to_s + "_pago" }, :loading => "Element.show('spinner_#{objeto.id.to_s }')", :complete => "Element.hide('spinner_#{objeto.id.to_s}')" %>
-      <%= link_to_remote(icono((params[:seccion] == 'productos')?'Cart2':'Cart',{:title => "Ver productos"}), :url => { :controller => 'albaran_lineas', :action => 'lineas', :albaran_id => objeto.albaran_id, :update => "factura_sub_" + objeto.id.to_s + "_albaran" }, :loading => "Element.show('spinner_#{objeto.id.to_s }')", :complete => "Element.hide('spinner_#{objeto.id.to_s}')") if params[:seccion] != "tesoreria" %>
+      <%= link_to_remote(icono((params[:seccion] == 'productos')?'Cart2':'Cart',{:title => "Ver productos"}), :url => { :controller => 'albaran_lineas', :action => 'lineas', :factura_id => objeto.id, :update => "factura_sub_" + objeto.id.to_s + "_productos" }, :loading => "Element.show('spinner_#{objeto.id.to_s }')", :complete => "Element.hide('spinner_#{objeto.id.to_s}')") if params[:seccion] != "tesoreria" %>
       <%= link_to(icono('Printer',{:title => "Imprimir"}), :action => :imprimir, :id => objeto, :loading => "Element.show('spinner_#{objeto.id.to_s }')", :complete => "Element.hide('spinner_#{objeto.id.to_s}')") if params[:seccion] == "caja" %>
       <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id }, "Editar factura" %>
-      <%= link_to(icono('Clipboard Copy',{:title => "Copiar a Albarán Nuevo"}), :controller => "albarans", :action => :copiar, :id => objeto.albaran.id) if params[:seccion] == "productos" %>
+      <%= link_to(icono('Clipboard Copy',{:title => "Copiar a Albarán Nuevo"}), :controller => "albarans", :action => :copiar_desde_factura, :id => objeto.id) if params[:seccion] == "productos" %>
       <%= borrado icono('Trash',{:title => 'Borrar'}), { :action => 'borrar', :id => objeto.id } ,
 		'Borrar Factura', 'Factura: ' + objeto.codigo + " (" + objeto.fecha.to_s + ")" + '<br>IMPORTANTE: Sólo debería borrar la factura si no ha emitió aún ticket o comprobante o no se han realizado pagos sobre ésta.' , :ajax => false %>
     </div>
@@ -26,7 +26,7 @@
   </div>
   <div id="spinner_<%= objeto.id.to_s %>" class="spinner" style="display:none" ></div>
   <div id="factura_sub_<%= objeto.id.to_s %>_pago"></div>
-  <div id="factura_sub_<%= objeto.id.to_s %>_albaran"></div>
+  <div id="factura_sub_<%= objeto.id.to_s %>_productos"></div>
 <% end %>
 <%= final_listado @facturas %>
 </div>

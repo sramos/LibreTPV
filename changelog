@@ -1,6 +1,12 @@
 2012-04-06 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.7
 
-  * 
+  * Los albaranes de proveedores no pasan directamente a facturas
+  * Gestión de albaranes de proveedores cerrados
+  * Generación del número de factura para ventas
+  * Filtros de facturas de proveedores por fecha de vencimiento
+  * En los sublistados de albaranes muestra su estado (abierto, cerrado, deposito)
+  * Código ISBN mostrado en los sublistados de productos
+  * Vinculacion de N albaranes a 1 factura
 
 2012-04-06 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.6
 

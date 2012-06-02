@@ -100,11 +100,11 @@ class PosicionGlobalController < ApplicationController
       filtro_fecha = "facturas.fecha BETWEEN '" + cookies[("filtrado_fecha_inicio").to_sym].to_s + "' AND '" + cookies[("filtrado_fecha_fin").to_sym].to_s + "'"
       case tipo
         when "compras"
-          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => ["albarans.proveedor_id IS NOT NULL AND " + filtro_fecha]
+          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => ["albarans"], :conditions => ["albarans.proveedor_id IS NOT NULL AND " + filtro_fecha]
         when "ventas"
-          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => ["albarans.cliente_id IS NOT NULL AND " + filtro_fecha ]
+          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => ["albarans"], :conditions => ["albarans.cliente_id IS NOT NULL AND " + filtro_fecha ]
         when "servicios"
-          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :conditions => ["facturas.albaran_id IS NULL AND facturas.fecha AND " + filtro_fecha ]
+          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :conditions => ["facturas.proveedor_id IS NOT NULL AND facturas.fecha AND " + filtro_fecha ]
       end
     end
 end

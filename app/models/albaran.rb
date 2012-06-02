@@ -5,10 +5,12 @@ class Albaran < ActiveRecord::Base
   has_many :albaran_lineas
   belongs_to :cliente
   belongs_to :proveedor
-  has_one :factura
+  #has_one :factura
+  belongs_to :factura
 
   before_destroy :verificar_facturas, :borra_lineas_normales
   before_update :borra_lineas_descuento, :if => "cliente_id_changed? && !cerrado"
+  after_update :cierra_albaran_cliente, :if => "cliente_id && factura_id_changed? && factura_id_was.nil? && !cerrado"
 
   # Crea un albaran copiando todos los datos de otro
   def clonar
@@ -49,6 +51,7 @@ class Albaran < ActiveRecord::Base
       inventario_y_credito multiplicador
       # Cambia el estado del albaran a abierto
       self.cerrado = false
+      self.factura_id = nil
       self.save
     end
   end
@@ -99,6 +102,12 @@ class Albaran < ActiveRecord::Base
   end
 
   private
+    # Cierra un albaran de cliente despues de haberse asignado factura
+    def cierra_albaran_cliente
+      self.cerrado = true
+      self.save
+    end
+
     def verificar_borrado
       if !self.pagos.empty?
         errors.add( "factura", "No se puede borrar la factura: Hay pagos realizados." ) unless self.pagos.empty?

@@ -28,8 +28,8 @@ class FacturaController < ApplicationController
   end
 
   def editar
-    @factura = params[:id] ? Factura.find(params[:id]) : nil 
-    @albaran = @factura.albaran if @factura 
+    @factura = Factura.find_by_id(params[:id])
+    @albaran = @factura.albarans.first if @factura 
     if params[:seccion] == "tesoreria"
       @proveedores = Proveedor.find :all, :order => 'nombre'
       @ivas = Iva.all
@@ -39,16 +39,15 @@ class FacturaController < ApplicationController
   end
 
   def modificar
-    factura = params[:id] ? Factura.find(params[:id]) : Factura.new
+    factura = Factura.find_by_id(params[:id])
     # Para caja, actualizamos el cliente en el albaran
     if params[:seccion] == "caja"
-      albaran = factura.albaran
-      albaran.update_attributes params[:albaran]
+      factura.albarans.each { |albaran| albaran.update_attributes params[:albaran] }
     # Para productos comprobamos si queremos pisar los importes
     elsif params[:seccion] == "productos"
       unless params[:selector][:fuerza_importe] == "1" && params[:factura][:importe_base] && params[:factura][:importe_base].to_f.abs < params[:factura][:importe].to_f.abs
         params[:factura][:importe_base] = nil
-        params[:factura][:importe] = factura.albaran.total
+        params[:factura][:importe] = factura.albarans.inject(0) {|sum,alb| sum+alb.total}
       end
     # Para tesoreria actualizamos los campos
     elsif params[:seccion] == "tesoreria"
@@ -66,10 +65,13 @@ class FacturaController < ApplicationController
 
     # Cuando no son facturas externas hay que modificar el inventario
     if params[:seccion] == "caja"
-      albaran = factura.albaran
-      albaran.reabrir(params[:seccion]) if factura.destroy
+      albarans = factura.albarans
+      albarans.each {|alb| alb.reabrir(params[:seccion])} if factura.destroy
     else
-      factura.destroy
+      factura.albarans.each do |alb|
+        alb.factura_id = nil
+        alb.save
+      end if factura.destroy
     end
     flash[:error] = factura 
     redirect_to :action => :listado
@@ -83,22 +85,28 @@ class FacturaController < ApplicationController
   end
 
   def aceptar_cobro
-    factura = Factura.new
-    factura.pagado = true
-    factura.codigo = "PENDIENTE"
-    factura.fecha = Time.now
-    factura.update_attributes params[:factura]
-    flash[:error] = factura
-    if factura.errors.empty?
-      pago = Pago.new
-      pago.importe = factura.importe
-      pago.factura = factura
-      pago.fecha = Time.now 
-      pago.forma_pago_id = params[:forma_pago][:id]
-      pago.save
-      imprime_ticket( factura.albaran_id, FormaPago.find_by_id(params[:forma_pago][:id]).nombre) if params[:imprimeticket][:imprimeticket] == "true"
+    albaran = Albaran.find_by_id params[:albaran_id]
+    if albaran
+      puts "----------------> Tenemos albaran!!!!!"
+      factura = Factura.new
+      factura.pagado = true
+      factura.codigo = "PENDIENTE"
+      factura.fecha = Time.now
+      factura.albarans << albaran
+      factura.update_attributes params[:factura]
+      flash[:error] = factura
+      if factura.errors.empty?
+        puts "---------> Lo hemos guardado bien! y tenemos el albaran " + albaran.inspect
+        pago = Pago.new
+        pago.importe = factura.importe
+        pago.factura = factura
+        pago.fecha = Time.now 
+        pago.forma_pago_id = params[:forma_pago][:id]
+        pago.save
+        imprime_ticket( albaran.id, FormaPago.find_by_id(params[:forma_pago][:id]).nombre) if params[:imprimeticket][:imprimeticket] == "true"
+      end
     end
-    redirect_to :controller => :albarans, :action => :aceptar_albaran, :id => factura.albaran_id, :forma_pago => params[:forma_pago], :importe => params[:importe], :recibido => params[:recibido]
+    redirect_to :controller => :albarans, :action => :aceptar_albaran, :id => params[:albaran_id], :forma_pago => params[:forma_pago], :importe => params[:importe], :recibido => params[:recibido]
   end
 
   def calcula_cambio
@@ -107,8 +115,8 @@ class FacturaController < ApplicationController
   end
 
   def imprimir
-    factura = params[:id] ? Factura.find_by_id(params[:id]) : nil
-    if factura && factura.pagado && factura.albaran && factura.albaran.cliente
+    factura = Factura.find_by_id(params[:id])
+    if factura && factura.pagado && !factura.albarans.empty? && factura.albarans.first.cliente
       send_data genera_pdf(factura), :filename => 'Factura.' + factura.codigo + '.pdf', :type => 'application/pdf'
       #redirect_to :action => :listado
     else
@@ -129,7 +137,8 @@ private
         condicion = "albarans.proveedor_id IS NOT NULL" unless session[("filtrado_proveedor").to_sym] && session[("filtrado_proveedor").to_sym] != ""
         condicion = "albarans.proveedor_id = " + session[("filtrado_proveedor").to_sym] if session[("filtrado_proveedor").to_sym] && session[("filtrado_proveedor").to_sym] != ""
       when "tesoreria"
-        condicion = "albaran_id IS NULL"
+        #condicion = "albaran_id IS NULL"
+        condicion = "facturas.proveedor_id IS NOT NULL"
       when "trueke"
         condicion = "albarans.cliente_id IS NOT NULL"
     end
@@ -144,8 +153,8 @@ private
       condicion += " AND facturas.pagado IS " + session[("filtrado_pagado").to_sym]
     end
 
-    @facturas = Factura.paginate( :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => "albaran", :conditions => [ condicion ],
-        :page => (params[:format]=='xls' ? nil : params[:page]), :per_page => (params[:format_xls_count] || Configuracion.valor('PAGINADO') ))
+    @facturas = Factura.paginate( :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => ["albarans"], :conditions => [ condicion ],
+      :page => (params[:format]=='xls' ? nil : params[:page]), :per_page => (params[:format_xls_count] || Configuracion.valor('PAGINADO') ))
   end
 
   def genera_pdf factura
@@ -179,10 +188,10 @@ private
     pdf.text "Factura num.: " + factura.codigo
     pdf.start_new_page
     pdf.start_new_page
-    pdf.text "Cliente: " + factura.albaran.cliente.nombre 
-    pdf.text "N.I.F. " + factura.albaran.cliente.cif
-    pdf.text factura.albaran.cliente.direccion if factura.albaran.cliente.direccion
-    pdf.text factura.albaran.cliente.cp if factura.albaran.cliente.cp 
+    pdf.text "Cliente: " + factura.albarans.first.cliente.nombre 
+    pdf.text "N.I.F. " + factura.albarans.first.cliente.cif
+    pdf.text factura.albarans.first.cliente.direccion if factura.albarans.first.cliente.direccion
+    pdf.text factura.albarans.first.cliente.cp if factura.albarans.first.cliente.cp 
     pdf.stop_columns
     pdf.move_pointer(30) 
     iva_total = {}
@@ -205,16 +214,18 @@ private
         }
       end
       data = []
-      factura.albaran.albaran_lineas.each do |linea|
-        fila = Hash.new
-        columnas.each do |columna|
-          fila[columna[:atribute]] = columna[:format] ? format(columna[:format],linea.send(columna[:atribute])) : linea.send(columna[:atribute])
+      factura.albarans.each do |alb|
+        alb.albaran_lineas.each do |linea|
+          fila = Hash.new
+          columnas.each do |columna|
+            fila[columna[:atribute]] = columna[:format] ? format(columna[:format],linea.send(columna[:atribute])) : linea.send(columna[:atribute])
+          end
+          iva = linea.iva
+          iva_total[iva] = iva_total.key?(iva) ? iva_total[iva] + (linea.total-linea.subtotal) : linea.total-linea.subtotal
+          subtotal += linea.subtotal
+          precio_total += linea.total
+          data << fila 
         end
-        iva = linea.iva
-        iva_total[iva] = iva_total.key?(iva) ? iva_total[iva] + (linea.total-linea.subtotal) : linea.total-linea.subtotal
-        subtotal += linea.subtotal
-        precio_total += linea.total
-        data << fila 
       end
       tab.data.replace data
       tab.render_on(pdf)

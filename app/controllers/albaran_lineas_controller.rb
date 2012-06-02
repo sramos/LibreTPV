@@ -4,8 +4,15 @@ class AlbaranLineasController < ApplicationController
   # Metodos AJAX de Lineas de Albaran
 
   def lineas
-    albaran = Albaran.find(params[:albaran_id])
-    @albaran_lineas = albaran.albaran_lineas 
+    if params[:factura_id]
+      factura = Factura.find_by_id(params[:factura_id])
+      @albaran_lineas = []
+      factura.albarans.each{|alb| @albaran_lineas += alb.albaran_lineas}
+      albaran = factura.albarans.first
+    else
+      albaran = Albaran.find_by_id(params[:albaran_id])
+      @albaran_lineas = albaran.albaran_lineas 
+    end
 
     @formato_xls = true
     respond_to do |format|
