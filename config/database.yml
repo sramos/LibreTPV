@@ -22,3 +22,10 @@ production:
   database: tpv 
   username: tpv
   password: patata
+
+oscommerce:
+  adapter: mysql
+  socket: /var/run/mysqld/mysqld.sock
+  database: tpv_oscommerce 
+  username: tpv
+  password: patata

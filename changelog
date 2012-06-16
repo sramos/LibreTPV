@@ -6,7 +6,7 @@
   * Filtros de facturas de proveedores por fecha de vencimiento
   * En los sublistados de albaranes muestra su estado (abierto, cerrado, deposito)
   * Código ISBN mostrado en los sublistados de productos
-  * Vinculacion de N albaranes a 1 factura
+  * Vinculacion de N albaranes a 1 factura (en modelo de datos)
 
 2012-04-06 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.6
 
