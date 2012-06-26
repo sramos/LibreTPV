@@ -1,6 +1,7 @@
 2012-xx-xx Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.8
 
   * Corregido copyright
+  * Problema con el orden de los migrates
 
 2012-04-06 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.7
 
