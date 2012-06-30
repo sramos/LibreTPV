@@ -36,9 +36,8 @@ class AlbaranesCerradosController < ApplicationController
 
   def reabrir
     @albaran = Albaran.find_by_id params[:id]
-    if @albaran
-      @albaran.cerrado = false
-      @albaran.save
+    if @albaran && @albaran.cerrado
+      @albaran.reabrir params[:seccion]
       flash[:error] = @albaran
     end
     redirect_to :action => 'listado'

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120602115839) do
+ActiveRecord::Schema.define(:version => 20120601165409) do
 
   create_table "albaran_lineas", :force => true do |t|
     t.integer  "cantidad",                                         :default => 1

@@ -87,26 +87,31 @@ class FacturaController < ApplicationController
   def aceptar_cobro
     albaran = Albaran.find_by_id params[:albaran_id]
     if albaran
-      puts "----------------> Tenemos albaran!!!!!"
       factura = Factura.new
       factura.pagado = true
       factura.codigo = "PENDIENTE"
       factura.fecha = Time.now
       factura.albarans << albaran
       factura.update_attributes params[:factura]
-      flash[:error] = factura
+      flash[:error] = factura unless factura.errors.empty?
       if factura.errors.empty?
-        puts "---------> Lo hemos guardado bien! y tenemos el albaran " + albaran.inspect
         pago = Pago.new
         pago.importe = factura.importe
         pago.factura = factura
         pago.fecha = Time.now 
         pago.forma_pago_id = params[:forma_pago][:id]
         pago.save
-        imprime_ticket( albaran.id, FormaPago.find_by_id(params[:forma_pago][:id]).nombre) if params[:imprimeticket][:imprimeticket] == "true"
+        imprime_ticket( albaran.id, pago.forma_pago.nombre) if params[:imprimeticket][:imprimeticket] == "true"
+        if ( pago.forma_pago && pago.forma_pago.caja )
+          flash[:mensaje_ok] = "Asegúrese de cobrar la venta!!!<div class='importe_medio'>Importe: " + params[:importe] + "€"
+          flash[:mensaje_ok] << "<br>Recibido: " + params[:recibido][0] + "€<br>Cambio: " + format("%.2f",(params[:recibido][0].to_f - params[:importe].to_f).to_s) + "€" if params[:recibido][0].to_f > 0
+          flash[:mensaje_ok] << "</div>"
+        else
+          flash[:mensaje_ok] = "Pago realizado!"
+        end
       end
     end
-    redirect_to :controller => :albarans, :action => :aceptar_albaran, :id => params[:albaran_id], :forma_pago => params[:forma_pago], :importe => params[:importe], :recibido => params[:recibido]
+    redirect_to :controller => :albarans, :action => :aceptar_albaran, :albaran_id => params[:albaran_id], :forma_pago => params[:forma_pago], :importe => params[:importe], :recibido => params[:recibido]
   end
 
   def calcula_cambio

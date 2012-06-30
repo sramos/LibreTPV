@@ -45,18 +45,10 @@ class AlbaransController < ApplicationController
 
   # Segun la seccion borramos productos o los incluimos
   def aceptar_albaran
-    albaran = Albaran.find_by_id params[:id]
+    albaran = Albaran.find_by_id(params[:id]||params[:albaran_id])
     if albaran && !albaran.cerrado
       if params[:seccion] == "productos"
         flash[:mensaje] = "Albaran aceptado!"
-      else
-        if ( params[:forma_pago] && FormaPago.find_by_id(params[:forma_pago][:id]).caja )
-          flash[:mensaje_ok] = "Asegúrese de cobrar la venta!!!<div class='importe_medio'>Importe: " + params[:importe] + "€"
-          flash[:mensaje_ok] << "<br>Recibido: " + params[:recibido][0] + "€<br>Cambio: " + format("%.2f",(params[:recibido][0].to_f - params[:importe].to_f).to_s) + "€" if params[:recibido][0].to_f > 0
-          flash[:mensaje_ok] << "</div>"
-        else
-          flash[:mensaje_ok] = "Pago realizado!"
-        end
       end
       albaran.cerrar(params[:seccion])
     end

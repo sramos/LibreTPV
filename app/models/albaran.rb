@@ -10,7 +10,8 @@ class Albaran < ActiveRecord::Base
 
   before_destroy :verificar_facturas, :borra_lineas_normales
   before_update :borra_lineas_descuento, :if => "cliente_id_changed? && !cerrado"
-  after_update :cierra_albaran_cliente, :if => "cliente_id && factura_id_changed? && factura_id_was.nil? && !cerrado"
+  # No usamos porque no permite eliminar/incluir productos
+  #after_update :cierra_albaran_cliente, :if => "cliente_id && factura_id_changed? && factura_id_was.nil? && !cerrado"
 
   # Crea un albaran copiando todos los datos de otro
   def clonar
@@ -103,6 +104,7 @@ class Albaran < ActiveRecord::Base
 
   private
     # Cierra un albaran de cliente despues de haberse asignado factura
+    # No usamos porque no permite eliminar/incluir productos
     def cierra_albaran_cliente
       self.cerrado = true
       self.save
