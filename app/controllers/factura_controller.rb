@@ -39,7 +39,7 @@ class FacturaController < ApplicationController
   end
 
   def modificar
-    factura = Factura.find_by_id(params[:id])
+    factura = Factura.find_by_id(params[:id]) || Factura.new
     # Para caja, actualizamos el cliente en el albaran
     if params[:seccion] == "caja"
       factura.albarans.each { |albaran| albaran.update_attributes params[:albaran] }
