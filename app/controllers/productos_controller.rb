@@ -96,10 +96,36 @@ class ProductosController < ApplicationController
   end
 
   def borrar
-    @producto = Producto.find(params[:id])
+    @producto = Producto.find_by_id(params[:id])
     @producto.destroy
     flash[:error] = @producto
     redirect_to :action => :listado
+  end
+
+	# Busca imagen y descripcion en internet
+  def update_datos_externos
+    producto = Producto.find_by_id(params[:id])
+    if producto
+      producto.get_remote_description if producto.descripcion.nil? || producto.descripcion == ""
+      producto.get_remote_image
+      producto.save
+      render :update do |page|
+        page.replace params[:update], :partial => 'datos_externos', :locals => {:product => producto}
+        page.call("Modalbox.resizeToContent")
+      end
+    end
+  end
+
+	# Actualiza la descripcion asociada al libro
+  def update_description
+    producto = Producto.find_by_id(params[:id])
+    if params[:description] && producto 
+      producto.update_attribute(:descripcion, params[:description])
+      render :update do |page|
+        page.replace params[:update], :partial => 'datos_externos', :locals => {:product => producto}
+        page.call("Modalbox.resizeToContent")
+      end
+    end
   end
 
   def cambio_familia

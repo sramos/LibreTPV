@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120601165409) do
+ActiveRecord::Schema.define(:version => 20120730182653) do
 
   create_table "albaran_lineas", :force => true do |t|
     t.integer  "cantidad",                                         :default => 1
@@ -123,6 +123,12 @@ ActiveRecord::Schema.define(:version => 20120601165409) do
     t.datetime "updated_at"
   end
 
+  create_table "materia", :force => true do |t|
+    t.string   "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "pagos", :force => true do |t|
     t.decimal  "importe",       :precision => 8, :scale => 2, :null => false
     t.datetime "fecha",                                       :null => false
@@ -138,13 +144,14 @@ ActiveRecord::Schema.define(:version => 20120601165409) do
     t.string   "autor"
     t.string   "editor"
     t.string   "anno"
-    t.string   "descripcion"
+    t.text     "descripcion"
     t.string   "url_imagen"
     t.decimal  "precio",      :precision => 8, :scale => 2,                :null => false
     t.integer  "cantidad",                                  :default => 0
     t.integer  "familia_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "materia_id"
   end
 
   create_table "proveedors", :force => true do |t|

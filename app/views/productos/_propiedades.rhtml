@@ -1,42 +1,41 @@
 <div id="propiedades">
 <%= inicio_formulario( { :action => 'modificar', :id => @producto, :update => params[:update], :nuevo => params[:nuevo], :inventario => params[:inventario] }, !params[:inventario] ) %>
-  <!--
-  <div class="formulario_izqda">
-  -->
-  <% if @producto && !params[:nuevo] %>
-    <%= texto "Codigo o ISBN", 'producto', 'codigo' %>
-  <% else %>
-    <%= hidden_field('producto', 'codigo') %>
-  <% end %>
-  <%= hidden_field('producto', 'url_imagen') %>
-  <div class="linea"><br/></div>
-  <div class="linea">
-    <%= selector "Familia", "producto", "familia_id", @familias.map {|u| [u.nombre,u.id]} %>
-  </div>
-  <div class="linea">
-    <%= texto "Nombre", 'producto', 'nombre' %>
-    <%= texto "Autor", 'producto', 'autor' %>
-  </div><div class="linea">
-    <%= texto "Editor", 'producto', 'editor' %>
-    <%= texto "Año", 'producto', 'anno' %>
-  </div>
-  <div class="linea">
-    <%= texto "Descripcion", 'producto', 'descripcion' %>
-  </div>
-  <div class="linea"><br/></div>
-  <div class="linea">
-    <%= texto "Precio Venta (PVP)", 'producto', 'precio' %>
-    <% if params[:inventario] %>
-      <%= texto "Cantidad", 'producto', 'cantidad' %>
-    <% end %>
-  </div>
-  <div class="linea"><br/></div>
-  <!--
-  </div>
-  <div class="imagen_libro" id="imagen_libro">
-    <img src="<%# @producto.url_imagen %>">
-  </div>
-  -->
+ <div class="contenedor">
+   <div class="formulario_izqda">
+     <% if @producto && !params[:nuevo] %>
+       <%= texto "Codigo o ISBN", 'producto', 'codigo' %>
+     <% else %>
+       <%= hidden_field('producto', 'codigo') %>
+     <% end %>
+     <div class="linea"><br/></div>
+     <div class="linea">
+       <%= selector "Familia", "producto", "familia_id", @familias.map {|u| [u.nombre,u.id]} %>
+     </div>
+     <div class="linea">
+       <%= selector "Materia", "producto", "materia_id", Materia.all(:order => 'nombre').map {|u| [u.nombre,u.id]}, nil, 'x15', true %>
+     </div>
+     <div class="linea">
+       <%= texto "Nombre", 'producto', 'nombre' %>
+       <%= texto "Autor", 'producto', 'autor' %>
+     </div>
+     <div class="linea">
+       <%= texto "Editor", 'producto', 'editor' %>
+       <%= texto "Año", 'producto', 'anno' %>
+     </div>
+     <div class="linea">
+       <%= texto "Descripcion", 'producto', 'descripcion' %>
+     </div>
+     <div class="linea"><br/></div>
+     <div class="linea">
+       <%= texto "Precio Venta (PVP)", 'producto', 'precio' %>
+       <% if params[:inventario] %>
+         <%= texto "Cantidad", 'producto', 'cantidad' %>
+       <% end %>
+     </div>
+   </div>
+   <%= render :partial => 'datos_externos', :locals => {:product => @producto} %>
+ </div>
+ <div class="linea"><br/><div>
 <%= final_formulario %>
 </div>
 <br>

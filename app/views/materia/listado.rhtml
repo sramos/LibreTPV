@@ -1,0 +1,20 @@
+<!--- Listado de materias --->
+
+<div class="caja_completa">
+<%= cabecera_listado "materias", { :title => "Nuevo", :url => { :action => :editar } } %>
+<% i = 0 %>
+<% for objeto in @materias %>
+  <div id="materia_<%= i += 1 %>" class="listadofila">
+    <%= fila_listado objeto %>
+    <div class="listado_derecha">
+      <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id }, "Editar Materia" %>
+      <%= borrado icono('Trash',{:title => "Borrar"}), {:action => :borrar, :id => objeto}, 'Eliminar Materia', "Materia: " + objeto.nombre, :ajax => false %>
+    </div>
+  <div class='linea'></div>
+  <div id="spinner_<%= objeto.id.to_s %>" class="spinner" style="display:none" ></div>
+  <div id="materia_sub_<%= i %>" class="linea"></div>
+  </div>
+<% end %>
+<%= final_listado %>
+</div>
+

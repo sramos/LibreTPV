@@ -281,6 +281,7 @@ module ApplicationHelper
                           { :rotulo => "Formas de Pago", :controlador => "forma_pago"},
                           { :rotulo => "Tipos de IVA", :controlador => "iva"},
                           { :rotulo => "Familias de Productos", :controlador => "familia"},
+                          { :rotulo => "Materias", :controlador => "materia" },
 			  { :rotulo => "Avisos", :controlador => "avisos"} ]
 
     end
@@ -357,6 +358,8 @@ module ApplicationHelper
         ["nombre", "iva.nombre", "acumulable"]
       when "iva"
         ["nombre","valor"]
+      when "materias"
+        ["nombre"]
       when "formas_pago"
         ["nombre", "caja"]
     end

@@ -316,6 +316,9 @@ margin-top:15px;
   overflow-x: auto;
 }
 
+.contenedor {
+}
+
 .formulario_izqda {
     float: left;
     /* height:150px; */
@@ -325,12 +328,35 @@ margin-top:15px;
     float: right;
 }
 
-#imagen_libro {
-    float: right;
+.datos_externos {
+    float:left;
+    padding-left: 40px;
+    width: 380px;
+}
+
+#product_image {
+    float: left;
+    display: block;
+    margin: auto;
     /*border: dotted 1px #ccc;*/
     width: 130px;
-    height: 210px;  
-    margin: 0;
+    padding: 5px;
+    /*height: 190px;*/
+}
+
+#product_description_container {
+    /*float: right;*/
+    display: block;
+    text-align: justify;
+    margin: auto;
+    padding: 5px;
+    max-height: 400px;
+}
+#product_description_edit textarea {
+    width: 235px;
+}
+.boton {
+    float: right;
 }
 
 fieldset {

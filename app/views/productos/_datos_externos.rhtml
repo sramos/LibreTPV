@@ -1,0 +1,35 @@
+<div id="datos_externos" class="datos_externos">
+  <div class="boton">
+    <%= link_to_remote "Buscar imagen y descripción", :url => { :controller => :productos, :action => :update_datos_externos, :id => product.id, :update => "datos_externos" },
+		:loading => "Element.show('spinner')", :complete => "Element.hide('spinner')" %>
+  </div>
+  <div class="linea"><br/></div>
+  <!-- Imagen del libro -->
+  <div id="product_image">
+     <% if product.url_imagen && product.url_imagen != "" %>
+       <img src="<%= product.url_imagen %>">
+     <% end %>
+  </div>
+
+  <!-- Descripcion -->
+  <div id="product_description_container">
+   <div id="product_description_label" class="product_description"><%= product.descripcion %></div>
+     <div id="product_description_edit" class="product_description" style="display:none;">
+       <%= text_area("product", "descripcion", {:value => product.descripcion, :class => "form-field"}) %>
+       <div class="boton" style="margin-top:2px;">
+         <%= link_to_remote "Guardar Descripción", :url => { :controller => :productos, :action => :update_description, :id => product.id, :update => "datos_externos" },
+             :with => "'description='+encodeURIComponent($F('product_descripcion'))",
+             :loading => "Element.show('spinner')", :complete => "Element.hide('spinner')" %>
+       </div>
+     </div>
+  </div>
+</div>
+
+<!-- Permitimos la edicion del titulo -->
+  <script>
+    Event.observe('product_description_label', 'click', function() {
+      $('product_description_label').hide();
+      $('product_description_edit').show();
+      Modalbox.resizeToContent();
+    });
+  </script>

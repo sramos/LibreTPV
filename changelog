@@ -1,6 +1,10 @@
 2012-07-XX Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.9
 
   * Problema al editar una nueva factura de servicio
+  * Gestion de materias
+  * Modificada longitud del campo de comentarios de producto
+  * Edicion de descripcion de producto via ajax
+  * Obtencion de imagen y descripcion desde gbooks
 
 2012-07-01 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.8
 
