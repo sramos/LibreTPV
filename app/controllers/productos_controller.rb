@@ -104,13 +104,13 @@ class ProductosController < ApplicationController
 
 	# Busca imagen y descripcion en internet
   def update_datos_externos
-    producto = Producto.find_by_id(params[:id])
-    if producto
-      producto.get_remote_description if producto.descripcion.nil? || producto.descripcion == ""
-      producto.get_remote_image
-      producto.save
+    @producto = Producto.find_by_id(params[:id]) || Producto.new(:codigo => params[:codigo])
+    if params[:codigo]
+      @producto.get_remote_description if @producto.descripcion.nil? || @producto.descripcion == ""
+      @producto.get_remote_image
+      @producto.save if @producto.id
       render :update do |page|
-        page.replace params[:update], :partial => 'datos_externos', :locals => {:product => producto}
+        page.replace params[:update], :partial => 'datos_externos'
         page.call("Modalbox.resizeToContent")
       end
     end
@@ -118,11 +118,11 @@ class ProductosController < ApplicationController
 
 	# Actualiza la descripcion asociada al libro
   def update_description
-    producto = Producto.find_by_id(params[:id])
-    if params[:description] && producto 
-      producto.update_attribute(:descripcion, params[:description])
+    @producto = Producto.find_by_id(params[:id]) || Producto.new(:descripcion => params[:description])
+    if params[:description] && @producto 
+      @producto.update_attribute(:descripcion, params[:description]) if @producto.id
       render :update do |page|
-        page.replace params[:update], :partial => 'datos_externos', :locals => {:product => producto}
+        page.replace params[:update], :partial => 'datos_externos'
         page.call("Modalbox.resizeToContent")
       end
     end
@@ -264,18 +264,17 @@ class ProductosController < ApplicationController
 
   def producto_x_codigo_isbn_con_imagen isbn
     producto = producto_x_codigo_isbn isbn
-    data = Net::HTTP.get('books.google.com','/books?jscmd=viewapi&bibkeys=ISBN:' + isbn)
-    data =~ /^var _GBSBookInfo = (.+);$/
-    if $1
-      result = JSON.parse($1)
-
+    producto.get_remote_data
+    #data = Net::HTTP.get('books.google.com','/books?jscmd=viewapi&bibkeys=ISBN:' + isbn)
+    #data =~ /^var _GBSBookInfo = (.+);$/
+    #if $1
+    #  result = JSON.parse($1)
       # if the hash has 'Error' as a key, we raise an error
-      if result.has_key? 'Error'
-        raise "web service error"
-      end
-
-      producto.url_imagen = result['ISBN:'+isbn]['thumbnail_url'].to_s.gsub(/zoom=5/, 'zoom=1') if producto && result['ISBN:'+isbn]
-    end
+    #  if result.has_key? 'Error'
+    #    raise "web service error"
+    #  end
+    #  producto.url_imagen = result['ISBN:'+isbn]['thumbnail_url'].to_s.gsub(/zoom=5/, 'zoom=1') if producto && result['ISBN:'+isbn]
+    #end
     return producto
   end
 

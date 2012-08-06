@@ -23,7 +23,7 @@
        <%= texto "Año", 'producto', 'anno' %>
      </div>
      <div class="linea">
-       <%= texto "Descripcion", 'producto', 'descripcion' %>
+       <%# texto "Descripcion", 'producto', 'descripcion' %>
      </div>
      <div class="linea"><br/></div>
      <div class="linea">
@@ -33,7 +33,7 @@
        <% end %>
      </div>
    </div>
-   <%= render :partial => 'datos_externos', :locals => {:product => @producto} %>
+   <%= render :partial => 'datos_externos' %>
  </div>
  <div class="linea"><br/><div>
 <%= final_formulario %>

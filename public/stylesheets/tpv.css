@@ -334,7 +334,7 @@ margin-top:15px;
     width: 380px;
 }
 
-#product_image {
+#producto_image {
     float: left;
     display: block;
     margin: auto;
@@ -344,7 +344,7 @@ margin-top:15px;
     /*height: 190px;*/
 }
 
-#product_description_container {
+#producto_descripcion_container {
     /*float: right;*/
     display: block;
     text-align: justify;
@@ -352,7 +352,7 @@ margin-top:15px;
     padding: 5px;
     max-height: 400px;
 }
-#product_description_edit textarea {
+#producto_descripcion_edit textarea {
     width: 235px;
 }
 .boton {
