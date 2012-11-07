@@ -14,10 +14,12 @@ class Albaran < ActiveRecord::Base
   #after_update :cierra_albaran_cliente, :if => "cliente_id && factura_id_changed? && factura_id_was.nil? && !cerrado"
 
   # Crea un albaran copiando todos los datos de otro
-  def clonar
+  def clonar albaran=nil
     #albaran = clone
     #albaran.albaran_lineas = albaran_lineas.collect {|al| al.clone}
-    albaran = Albaran.create(self.attributes.merge({:codigo => "D-"+codigo, :cerrado => false, :factura_id => nil, :fecha => Date.today}))
+    unless albaran && albaran.class.name == "Albaran"
+      albaran = Albaran.create(self.attributes.merge({:codigo => "D-"+codigo, :cerrado => false, :factura_id => nil, :fecha => Date.today}))
+    end
     self.albaran_lineas.each do |al|
       albaran.albaran_lineas << AlbaranLinea.create(al.attributes)
     end

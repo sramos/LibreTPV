@@ -77,6 +77,16 @@ class FacturaController < ApplicationController
     redirect_to :action => :listado
   end
 
+  # Genera un albaran desde los de la factura indicada
+  def copiar
+    factura = Factura.find_by_id(params[:id])
+    albaran_nuevo = nil
+    factura.albarans.each { |albaran_factura| albaran_nuevo = albaran_factura.clonar(albaran_nuevo) } if factura
+    redirect_to :controller => :albarans, :action => :editar, :id => albaran_nuevo.id if albaran_nuevo.id
+    flash[:error] = "Problemas copiando factura" unless albaran_nuevo.id
+    redirect_to :controller => :factura unless albaran_nuevo.id
+  end
+
   def cobrar_albaran
     @factura = Factura.new
     @formasdepago = FormaPago.all

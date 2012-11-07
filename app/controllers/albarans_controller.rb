@@ -36,13 +36,6 @@ class AlbaransController < ApplicationController
     redirect_to :action => :editar, :id => @albaran.id
   end
 
-  # Copia un albaran desde otro ya cerrado
-  def copiar
-    albaran_viejo = Albaran.find_by_id params[:id]
-    albaran_nuevo = albaran_viejo.clonar
-    redirect_to :action => :editar, :id => albaran_nuevo.id
-  end
-
   # Segun la seccion borramos productos o los incluimos
   def aceptar_albaran
     albaran = Albaran.find_by_id(params[:id]||params[:albaran_id])
