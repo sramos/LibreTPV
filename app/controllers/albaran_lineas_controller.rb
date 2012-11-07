@@ -21,11 +21,18 @@ class AlbaranLineasController < ApplicationController
         @tipo = "lineas_compra" if albaran.proveedor && !albaran.deposito
         @tipo = "lineas_venta" unless albaran.proveedor
         codigo = albaran.factura.codigo if albaran.factura && albaran.factura.codigo && albaran.factura.codigo != "N/A"
-        codigo ||= albaran.codigo+" (*)"
+        codigo ||= albaran.codigo
+        codigo += " (*)" if albaran.factura && albaran.factura.codigo && albaran.factura.codigo == "N/A"
         fecha = (albaran.factura ? albaran.factura.fecha.to_s : nil) || albaran.fecha.to_s
         fecha += " / Fecha Devolución: " + albaran.fecha_devolucion.to_s if albaran.deposito
-        @xls_head = "Venta " + codigo + " / Cliente: " + albaran.cliente.nombre + " / Fecha: " + fecha if albaran.cliente
-        @xls_head = (albaran.deposito ? "Depósito: " : "Factura: ") + codigo + " / Proveedor: " + albaran.proveedor.nombre + " / Fecha: " + fecha if albaran.proveedor
+        tipo = "Albarán"
+        if albaran.cliente
+          @xls_head = "Venta " + codigo + " / Cliente: " + albaran.cliente.nombre + " / Fecha: " + fecha
+        else
+          tipo = "Depósito" if albaran.deposito
+          tipo = "Factura" if albaran.factura_id
+          @xls_head = tipo + ": " + codigo + " / Proveedor: " + albaran.proveedor.nombre + " / Fecha: " + fecha
+        end
         @xls_head += "  / ALBARAN ABIERTO" if !albaran.cerrado
         @objetos = @albaran_lineas
         @xls_title = "Albaran " + albaran.codigo

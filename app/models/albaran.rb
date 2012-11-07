@@ -17,7 +17,7 @@ class Albaran < ActiveRecord::Base
   def clonar
     #albaran = clone
     #albaran.albaran_lineas = albaran_lineas.collect {|al| al.clone}
-    albaran = Albaran.create(self.attributes.merge({:codigo => "D-"+codigo, :cerrado => false, :fecha => Date.today}))
+    albaran = Albaran.create(self.attributes.merge({:codigo => "D-"+codigo, :cerrado => false, :factura_id => nil, :fecha => Date.today}))
     self.albaran_lineas.each do |al|
       albaran.albaran_lineas << AlbaranLinea.create(al.attributes)
     end
@@ -145,7 +145,7 @@ class Albaran < ActiveRecord::Base
           producto.cantidad += (linea.cantidad * multiplicador)
           producto.save
           # En el caso de que sea una venta/devolucion, incluye el credito
-          total_credito += (-1 * multiplicador * linea.total * linea.producto.familia.acumulable/100) if self.cliente
+          total_credito += (-1 * multiplicador * linea.total * (linea.producto.familia.acumulable||0)/100) if self.cliente
         end
       end  
       # Actualiza el credito total si es una venta/devolucion y no es caja
