@@ -10,7 +10,7 @@
   <div id="<%= params[:update] %>_pago_<%= (i += 1).to_s %>" class="fila" >
     <%= fila_sublistado pago %>
     <div class="listado_derecha">
-      <%= borrado icono('Trash',{:title => "Borrar"}), {:controller => 'pago', :action => 'eliminar_pago', :id => pago.id, :factura_id => params[:factura_id], :update => params[:update]}, "Eliminar Pago", "Pago de " + pago.importe.to_s + "€ con fecha " + pago.fecha.to_s, :ajax => true %>
+      <%= borrado icono('Trash',{:title => "Borrar"}), {:controller => 'pago', :action => 'eliminar_pago', :id => pago.id, :factura_id => params[:factura_id], :update => params[:update]}, "Eliminar Pago", "Pago de " + pago.importe.to_s + "€ con fecha " + pago.fecha.to_s, :id => params[:update] + "_pago_" + i.to_s + "_borrar", :ajax => true %>
     </div>
   </div>
 <% end %>
