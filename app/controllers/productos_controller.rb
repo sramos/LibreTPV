@@ -69,7 +69,7 @@ class ProductosController < ApplicationController
     if params[:codigo]
       @producto = producto_x_codigo_isbn_con_imagen(params[:codigo])
     else
-      @producto = params[:id]?Producto.find(params[:id]) : nil
+      @producto = Producto.find_by_id(params[:id]) || Producto.new 
     end
     @producto_familia_id = @producto.familia_id if ! @producto.nil?
     if params[:inventario]
@@ -247,10 +247,10 @@ class ProductosController < ApplicationController
         if enlace
           enlace =~ /href="(.+)"/
           doc = Hpricot Net::HTTP.get('www.todostuslibros.com', $1)
-          producto.nombre = doc.search("div[@class='data']//h1/strong").first.inner_html
-          producto.autor = doc.search("div[@class='data']//h2/a").first.inner_html
+          producto.nombre = doc.search("h1[@class='title']").first.inner_html
+          producto.autor = doc.search("h2[@class='author']//a").first.inner_html
           producto.editor = doc.search("//dd[@class='publisher']//a").first.inner_html
-          producto.precio = doc.search("//dd[@class='precio']").first.inner_html.to_f.to_s
+          producto.precio = doc.search("//spam[@itemprop='price']").first.inner_html.to_f.to_s
           doc.search("//dd[@class='publication-date']").first.inner_html =~ /-([0-9]+)$/
           producto.anno = $1
           producto.familia_id = 1

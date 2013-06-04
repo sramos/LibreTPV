@@ -83,8 +83,8 @@ private
       enlace = Hpricot(data).search("//div[@class='details']//h2//a").first if data
       if enlace
         doc = Net::HTTP.get('www.todostuslibros.com', enlace[:href] )
-        remote_images = Hpricot(doc).search("//div[@class='image']//img")
-        remote_description = Hpricot(doc).search("//div[@class='sinopsis']//p").first.inner_html
+        remote_images = Hpricot(doc).search("//img[@class='portada']")
+        remote_description = Hpricot(doc).search("//p[@itemprop='description']").first.inner_html
         remote_image = nil
         remote_images.each do |ri|
           puts "----------> Revisando la imagen remota " + ri[:src] if ri && ri[:src]

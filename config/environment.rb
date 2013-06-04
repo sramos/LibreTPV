@@ -53,10 +53,10 @@ Rails::Initializer.run do |config|
   ENV['RAILS_ETC'] ||= "/etc/libretpv/#{ENV['LIBRETPV_SITEID']}"
   ENV['RAILS_LOG'] ||= "/var/log/libretpv/#{ENV['LIBRETPV_SITEID']}"
   ENV['RAILS_CACHE'] ||= "/var/cache/libretpv/#{ENV['LIBRETPV_SITEID']}"
-  ENV['RAILS_TMP'] ||= ENV['LIBRETPV_SITEID'] ? "/tmp/libretpv" : Rails.root.join('tmp')
+  #ENV['RAILS_TMP'] ||= ENV['LIBRETPV_SITEID'] ? "/tmp/libretpv" : Rails.root.join('tmp')
 
   # Si no existe, genera el directorio temporal
-  Dir.mkdir(ENV['RAILS_TMP']) unless File.directory?(ENV['RAILS_TMP'])
+  #Dir.mkdir(ENV['RAILS_TMP']) unless File.directory?(ENV['RAILS_TMP'])
   # Si no existe, genera el directorio de cache
   Dir.mkdir(ENV['RAILS_CACHE']) unless File.directory?(ENV['RAILS_CACHE']) || !ENV['LIBRETPV_SITEID']
 
