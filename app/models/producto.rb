@@ -72,14 +72,10 @@ private
 
   def get_data_from_todostuslibros
     return_data = nil
-    url = URI.parse('http://www.todostuslibros.com/busquedas')
     search = self.codigo
-    logger.info  "--------------------> Buscando en TTL: " + search
-    post_params = {     '_method'       => 'POST',
-                        'data[Busquedas][keyword]'      => search }
 
     begin
-      resp, data = Net::HTTP.post_form(url, post_params)
+      data = Net::HTTP.get('www.todostuslibros.com', '/busquedas/?keyword=' + search)
       enlace = Hpricot(data).search("//div[@class='details']//h2//a").first if data
       if enlace
         doc = Net::HTTP.get('www.todostuslibros.com', enlace[:href] )

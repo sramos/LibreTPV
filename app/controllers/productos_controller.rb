@@ -237,11 +237,7 @@ class ProductosController < ApplicationController
     end
 
     def producto_x_isbn_todostuslibros producto, isbn
-      url = URI.parse('http://www.todostuslibros.com/busquedas')
-      post_params = {     '_method'       => 'POST',
-                          'data[Busquedas][keyword]'      => isbn }
-
-      resp, data = Net::HTTP.post_form(url, post_params)
+      data = Net::HTTP.get('www.todostuslibros.com', '/busquedas/?keyword=' + isbn)
       begin 
         enlace = Hpricot(data).search("//div[@class='details']//a").first.to_html
         if enlace
