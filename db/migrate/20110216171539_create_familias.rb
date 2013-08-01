@@ -3,7 +3,7 @@ class CreateFamilias < ActiveRecord::Migration
     create_table :familias do |t|
       t.string :nombre
       t.integer :iva_id
-      t.ingeger :campo_id
+      t.integer :campo_id
 
       t.timestamps
     end

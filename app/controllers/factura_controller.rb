@@ -1,10 +1,12 @@
+# encoding: UTF-8
+
 class FacturaController < ApplicationController
   # Incluimos esto para un trucate en los tickets
   include ActionView::Helpers::TextHelper
 
   # Librerias para PDF
-  require 'pdf/writer'
-  require 'pdf/simpletable'
+  #require 'pdf/writer'
+  #require 'pdf/simpletable'
 
   # Hace una busqueda de "factura" para listado 
   before_filter :obtiene_facturas, :only => [ :listado, :aceptar_cobro ]
@@ -73,7 +75,8 @@ class FacturaController < ApplicationController
         alb.save
       end if factura.destroy
     end
-    flash[:error] = factura 
+    flash[:error] = factura if factura.errors.empty?
+    flash[:error] = factura.errors.collect{|k,v| v}.join("<br>".html_safe) unless factura.errors.empty?
     redirect_to :action => :listado
   end
 
@@ -111,17 +114,17 @@ class FacturaController < ApplicationController
         pago.fecha = Time.now 
         pago.forma_pago_id = params[:forma_pago][:id]
         pago.save
-        imprime_ticket( albaran.id, pago.forma_pago.nombre) if params[:imprimeticket][:imprimeticket] == "true"
+        imprime_ticket( albaran.id, pago.forma_pago.nombre) if params[:imprimeticket] && params[:imprimeticket][:imprimeticket] == "true"
         if ( pago.forma_pago && pago.forma_pago.caja )
-          flash[:mensaje_ok] = "Asegúrese de cobrar la venta!!!<div class='importe_medio'>Importe: " + params[:importe] + "€"
-          flash[:mensaje_ok] << "<br>Recibido: " + params[:recibido][0] + "€<br>Cambio: " + format("%.2f",(params[:recibido][0].to_f - params[:importe].to_f).to_s) + "€" if params[:recibido][0].to_f > 0
-          flash[:mensaje_ok] << "</div>"
+          flash[:mensaje_ok] = ("Asegúrese de cobrar la venta!!!<div class='importe_medio'>Importe: " + params[:importe] + "€").html_safe
+          flash[:mensaje_ok] << ("<br>Recibido: " + params[:recibido][0] + "€<br>Cambio: " + format("%.2f",(params[:recibido][0].to_f - params[:importe].to_f).to_s) + "€").html_safe if params[:recibido][0].to_f > 0
+          flash[:mensaje_ok] << "</div>".html_safe
         else
           flash[:mensaje_ok] = "Pago realizado!"
         end
       end
     end
-    redirect_to :controller => :albarans, :action => :aceptar_albaran, :albaran_id => params[:albaran_id], :forma_pago => params[:forma_pago], :importe => params[:importe], :recibido => params[:recibido]
+    redirect_to :controller => :albarans, :action => :aceptar_albaran, :albaran_id => params[:albaran_id], :forma_pago => params[:forma_pago], :importe => params[:importe], :recibido => params[:recibido], :mensaje_error => flash[:error], :mensaje_ok => flash[:mensaje_ok]
   end
 
   def calcula_cambio

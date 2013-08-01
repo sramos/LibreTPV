@@ -10,7 +10,7 @@ class FamiliaController < ApplicationController
   end
 
   def editar
-    @familia = params[:id] ?  Familia.find(params[:id]) : nil
+    @familia = Familia.find_by_id(params[:id])
     @ivas = Iva.all
     render :partial => "formulario"
   end

@@ -19,7 +19,7 @@ class PagoController < ApplicationController
     @pago.factura = factura 
     @pago_pendiente = factura.pago_pendiente
     pagofecha = Time.now.to_s
-    render :partial => "formulario", :update => params[:update]
+    render :partial => "formulario", :locals => {:update => params[:update]}
   end
 
   def modificar_pago

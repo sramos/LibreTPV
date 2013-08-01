@@ -1,0 +1,6 @@
+<%= inicio_formulario( { :action => 'modificar', :id => @familia }, false ) %>
+  <%= texto "Nombre", "familia", "nombre" %>
+  <%= selector "IVA", "familia", "iva_id", @ivas.map {|u| [u.nombre,u.id]} %>
+  <%= texto "% Reembolso", "familia", "acumulable" %>
+<%= final_formulario %>
+

@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class AlbaranLineasController < ApplicationController
 
 
@@ -62,10 +64,11 @@ class AlbaranLineasController < ApplicationController
     if albaran && !albaran.cerrado
       albaranlinea = params[:id] ? AlbaranLinea.find(params[:id]) : AlbaranLinea.new
       albaranlinea.producto_id = params[:producto][:id] if params[:producto]
+      params[:albaranlinea][:cantidad] = 1 unless params[:albaranlinea][:cantidad] && params[:albaranlinea][:cantidad] != ""
+      params[:albaranlinea][:descuento] = 0 unless params[:albaranlinea][:descuento] && params[:albaranlinea][:descuento] != ""
       albaranlinea.update_attributes params[:albaranlinea]
-
       if !Albaran.find_by_id(params[:albaranlinea][:albaran_id]).proveedor.nil? && params[:precios_relacionados]
-        if params[:precios_relacionados][1].to_s == "true"
+        if params[:precios_relacionados][0].to_s == "true"
           producto = Producto.find_by_id(params[:producto][:id])
           preciodeventa = producto.precio
           albaranlinea.precio_compra = preciodeventa / (1 + producto.familia.iva.valor.to_f/100)

@@ -1,3 +1,30 @@
+# encoding: UTF-8
+#--
+#
+#################################################################################
+# LibreTPV - Gestor TPV para Librerias
+# Copyright 2011-2013 Santiago Ramos <sramos@sitiodistinto.net> 
+#
+#    Este programa es software libre: usted puede redistribuirlo y/o modificarlo 
+#    bajo los términos de la Licencia Pública General GNU publicada 
+#    por la Fundación para el Software Libre, ya sea la versión 3 
+#    de la Licencia, o (a su elección) cualquier versión posterior.
+#
+#    Este programa se distribuye con la esperanza de que sea útil, pero 
+#    SIN GARANTÍA ALGUNA; ni siquiera la garantía implícita 
+#    MERCANTIL o de APTITUD PARA UN PROPÓSITO DETERMINADO. 
+#    Consulte los detalles de la Licencia Pública General GNU para obtener 
+#    una información más detallada. 
+#
+#    Debería haber recibido una copia de la Licencia Pública General GNU 
+#    junto a este programa. 
+#    En caso contrario, consulte <http://www.gnu.org/licenses/>.
+#################################################################################
+#
+#++
+
+
+
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
@@ -25,7 +52,7 @@ module ApplicationHelper
     cadena += link_to( icono( "Download", {:title => "Exportar a XLS"}), request.parameters.merge({:format => :xls, :format_xls_count => (@formato_xls.to_i+1)}) ) if @formato_xls
     cadena += modal icono('Plus',{:title => "Nuevo"}), otros[:url], otros[:title] || "Nuevo" if otros[:url]
     cadena += "</div></div>"
-    return cadena
+    return cadena.html_safe
   end
 
   def fila_listado objeto, id=nil
@@ -48,22 +75,23 @@ module ApplicationHelper
       cadena += "<div class='listado_campo_" + etiqueta[1] + (etiqueta[3]||"") + "' id='listado_campo_valor_" + campo + (objeto.class.name == "Array" ? "" : "_" + objeto.id.to_s) + "' title='" + (valor ? valor.to_s : "&nbsp;") + "'>" + (valor && valor.to_s != "" ? truncate( (etiqueta[3]=="f"?sprintf("%.2f",valor):valor.to_s), :length => etiqueta[2]):"&nbsp;") + '</div>'
     end
     #cadena += "</div>"
-    return cadena
+    return cadena.html_safe
   end
 
   def final_listado *objeto
     cadena = ""
     #cadena << "<div class='linea' id='paginado'><br/></div><div class='elemento_derecha'>" + (will_paginate(objeto) || "") + "</div>" if !objeto.nil?
-    cadena << paginacion( objeto[0], session[:por_pagina] ) if objeto[0]
-    cadena << "</div>"
-    return cadena
+    cadena += paginacion( objeto[0], session[:por_pagina] ) if objeto[0]
+    cadena += "</div>"
+    return cadena.html_safe
   end
 
   # paginación, se integra en final_listado
   def paginacion elementopaginado, elementosxpagina
     formulario = "<div class='listadofila' id='paginado'>\n" + (will_paginate(elementopaginado, :previous_label => "<< "+ "Anterior", :next_label => "Siguiente" + " >>", :class => "listado_campo_2") or " ")
-    formulario << "<div class='listado_derecha'> "+ informacion_paginacion(elementopaginado)  + "</div>"
-    formulario << "<div class='linea'></div></div>"
+    formulario += "<div class='listado_derecha'> "+ informacion_paginacion(elementopaginado)  + "</div>"
+    formulario += "<div class='linea'></div></div>"
+    return formulario.html_safe
   end
 
   # completa paginacion
@@ -85,19 +113,20 @@ module ApplicationHelper
     @campos_sublistado = tipo.is_a?(Array) ? tipo : campos_listado(tipo)
     script = "document.getElementById('" +  sub_id + "').innerHTML=\"\";" if sub_id
     cadena = '<br><fieldset class="' + clase + '"> <legend>'+ rotulo +'</legend>'
-    cadena << '<div class="listado_derecha" id="cerrarsublistado">'
-    cadena << link_to( icono( "Download", {:title => "Exportar a XLS"}), request.parameters.merge({:format => :xls}) ) if @formato_xls
-    cadena << link_to_function( icono('Cancel',{:Title => "Ocultar"}), script, {:id => sub_id + "_ocultar_sublistado"} ) if sub_id
-    cadena << "</div><br/><br/><div class='listadocabecera'>"
+    cadena += '<div class="listado_derecha" id="cerrarsublistado">'
+    cadena += link_to( icono( "Download", {:title => "Exportar a XLS"}), request.parameters.merge({:format => :xls}) ) if @formato_xls
+    cadena += link_to_function( icono('Cancel',{:Title => "Ocultar"}), script, {:id => sub_id + "_ocultar_sublistado"} ) if sub_id
+    cadena += "</div><br/><br/><div class='listadocabecera'>"
     for campo in @campos_sublistado
-      cadena << "<div class='listado_campo_" + etiqueta(campo)[1] + (etiqueta(campo)[3]||"") + "' id='sublistado_campo_valor_" + campo + "' >" + etiqueta(campo)[0] + "</div>"
+      cadena += "<div class='listado_campo_" + etiqueta(campo)[1] + (etiqueta(campo)[3]||"") + "' id='sublistado_campo_valor_" + campo + "' >" + etiqueta(campo)[0] + "</div>"
     end
     if nuevo[:url] && nuevo[:title]
-      cadena << '<div class="listado_derecha">'
-      cadena << modal(icono('Plus',{:title => nuevo[:title]}), nuevo[:url], nuevo[:title])
-      cadena << '</div>'
+      cadena += '<div class="listado_derecha">'
+      cadena += modal(icono('Plus',{:title => nuevo[:title]}), nuevo[:url], nuevo[:title])
+      cadena += '</div>'
     end
-    cadena << '</div>'
+    cadena += '</div>'
+    return cadena.html_safe
   end
 
   def fila_sublistado objeto
@@ -110,12 +139,12 @@ module ApplicationHelper
       valor = valor.strftime("%d/%m/%Y") if valor.class.name == "Date"
       cadena += "<div class='listado_campo_" + etiqueta(campo)[1] + (etiqueta(campo)[3]||"") + "' id='listado_campo_valor_" + campo + "' title='" + (valor ? valor.to_s : "&nbsp;") + "'>" + (valor && valor.to_s != "" ? truncate(valor.to_s, :length => etiqueta(campo)[2]):"&nbsp;") + '</div>'
     end
-    return cadena
+    return cadena.html_safe
   end
 
   # Dibuja los elementos del final del sublistado.
   def final_sublistado
-      return "</fieldset>"
+      return "</fieldset>".html_safe
   end
 
   def icono tipo, propiedades={}
@@ -126,29 +155,32 @@ module ApplicationHelper
   def inicio_formulario url, ajax, otros={}
     if ajax
       cadena = form_remote_tag( :url => url, :html => {:id => otros[:id]||"formulario_ajax", :class => "formulario"}, :multipart => true, :loading => "Element.show('spinner'); Element.hide('botonguardar');", :complete => "Element.hide('spinner')")
-      cadena << "<div class='fila' id='spinner' style='display:none'></div>"
+      cadena += "<div class='fila' id='spinner' style='display:none'></div>".html_safe
     else
       cadena = form_tag( url, :multipart => true, :id => otros[:id]||"formulario", :class => "formulario" )
     end
-    cadena << "<div class='fila'></div>\n"
-    return cadena
+    cadena += "<div class='fila'></div>".html_safe
+    return cadena.html_safe
   end
 
   def texto rotulo, objeto, atributo, valor=nil
-    cadena = "<div class='elemento'>" + rotulo +"<br/>"
-    cadena << text_field( objeto, atributo , {:class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :type => "d", :value => valor })
-    return cadena << "</div>"
+    cadena = ("<div class='elemento'>" + rotulo +"<br/>").html_safe
+    opciones = {:class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :type => "d" }
+    opciones[:value] = valor if valor
+    cadena << text_field( objeto, atributo, opciones)
+    return cadena + "</div>".html_safe
   end
 
   def fecha rotulo, objeto, atributo, valor=nil, discards=[false, false]
-    cadena = "<div class='elemento_x1'>" + rotulo + "<br/>"
+    cadena = ("<div class='elemento_x1'>" + rotulo + "<br/>").html_safe
     #cadena << date_select(objeto, atributo, {:discard_day=>discards[0], :discard_month=>discards[1], :order => [:day,:month,:year], :class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :default => valor})
     otros = {}
     otros[:year_range] =  [2000, Time.now.year + 10] if  otros[:year_range].nil?
     otros[:size] = "10"
     otros[:value] = I18n.l valor if valor
     cadena << calendar_date_select(objeto, atributo, otros)
-    return cadena << "</div>"
+    cadena += "</div>".html_safe
+    return cadena
   end
 
   def fecha_mes rotulo, objeto, atributo, valor=nil
@@ -160,65 +192,69 @@ module ApplicationHelper
   end
 
   def selector rotulo, objeto, atributo, valores, valor=nil, tipo=nil, vacio=false
-    cadena = "<div class='elemento_" + (tipo || "x15") + "' id='selector_" + objeto + "_" + atributo + "'>" + rotulo + "<br/>"
+    cadena = ("<div class='elemento_" + (tipo || "x15") + "' id='selector_" + objeto + "_" + atributo + "'>" + rotulo + "<br/>").html_safe
     if valor && valor != ""
       cadena << select(objeto, atributo, valores, {:id => "formulario_campo_" + objeto + "_" + atributo, :selected => valor, :include_blank => vacio}, {:class => 'selector_' + (tipo || 'x15')})
     else
       cadena << select(objeto, atributo, valores, {:id => "formulario_campo_" + objeto + "_" + atributo, :include_blank => vacio}, {:class => 'selector_' + (tipo || 'x15')})
     end
-    return cadena << "</div>"
+    cadena += "</div>".html_safe
+    return cadena
   end
 
   # check_box 
   def checkbox rotulo, objeto, atributo, otros={}
     if otros[:izquierda]
-      '<div class="elemento">' + check_box( objeto, atributo, {:checked => otros[:checked] } ) + rotulo + '</div>'
+      ('<div class="elemento">' + check_box( objeto, atributo, {:checked => otros[:checked] } ) + rotulo + '</div>').html_safe
     else
-      '<div class="elemento">' + rotulo + check_box( objeto, atributo, {:checked => otros[:checked] } ) + '</div>'
+      ('<div class="elemento">' + rotulo + check_box( objeto, atributo, {:checked => otros[:checked] } ) + '</div>').html_safe
     end
   end
 
   def final_formulario boton={}
-    cadena = '<div class="fila" id="botonguardar" > <div class="elemento_derecha">'
+    cadena = '<div class="fila" id="botonguardar"> <div class="elemento_derecha">'.html_safe
     if boton[:submit_disabled] != true
       cadena << submit_tag( boton[:etiqueta]?boton[:etiqueta]:"Guardar", :class => "boton", :onclick => "this.disabled=true")
     end
-    cadena << "</div></div>"
-    cadena << "<div class='fila' id='spinner' style='display:none'></div>"
-    cadena << "</FORM>"
+    cadena += "</div></div>".html_safe
+    cadena += "<div class='fila' id='spinner' style='display:none'></div>".html_safe
+    cadena += "</form>".html_safe
+    return cadena
   end
 
   # dibuja un mensage flash
   def mensaje msg
-    ("<div id = 'mensaje'>" + msg + "</div>") if msg 
+    ("<div id = 'mensaje'>" + msg + "</div>").html_safe if msg 
   end
 
   # dibuja un mensaje flash de exito
   def mensaje_ok msg 
-    ("<div id = 'mensajeok'>" + msg + "</div>") if msg 
+    ("<div id = 'mensajeok'>" + msg + "</div>").html_safe if msg 
   end
 
   # dibuja el mensaje de error o de exito
   def mensaje_error objeto, otros={}
     if objeto.class == String
-      cadena = '<div id="mensajeerror">'
-      cadena << objeto
+      cadena = '<div id="mensajeerror">'.html_safe
+      cadena << objeto.html_safe
     else
       if objeto.errors.empty?
-        cadena = '<div id="mensajeok">'
-        cadena << "Los datos se han guardado correctamente." unless otros[:borrar]
-        cadena << "Se ha eliminado correctamente." if otros[:borrar]
+        cadena = '<div id="mensajeok">'.html_safe
+        cadena << "Los datos se han guardado correctamente.".html_safe unless otros[:borrar]
+        cadena << "Se ha eliminado correctamente.".html_safe if otros[:borrar]
       else
-        cadena = '<div id="mensajeerror">'
-        cadena << "Se ha producido un error." + "<br>"
-        objeto.errors.each {|a, m| cadena += m + "<br>" }
+        cadena = '<div id="mensajeerror">'.html_safe
+        cadena << "Se ha producido un error.".html_safe + "<br>".html_safe
+        objeto.errors.each {|a, m| cadena += (m + "<br>").html_safe }
       end
     end
-    return cadena << "</div>"
+    cadena << "</div>".html_safe
+    return cadena
   end
 
   # Ventana modal (*otros para futuro uso)
   def modal( rotulo, url, titulo, otros={} )
+    # OJOOOOO CON ESTO!!!
     link_to rotulo, url, :title => titulo, :onclick => "Modalbox.show(this.href, {title: '" + titulo + "', width:820 }); return false;", :id => (otros[:id] || "")
   end
 
@@ -235,7 +271,19 @@ module ApplicationHelper
     cadena << "<a id=\"#{ (otros[:id] || url[:id].to_s )  }\" onclick=\"Modalbox.show($('#{ (otros[:id] || url[:id].to_s )  }_borrar'), {title: '" + titulo + "', width: 600}); return false;\" href=\"#\" title='"+ url[:action].to_s + "'>"
     cadena << rotulo
     cadena << "</a>"
-    return cadena
+    return cadena.html_safe
+  end
+
+ # Sustituye al helper de auto_complete para presentar los resultados
+ def auto_complete_result_2(entries, field, phrase = nil)
+    return unless entries
+    items = entries.map { |entry| phrase ? highlight(entry[field], phrase) : h(entry[field]) }
+    result = "<ul>"
+    items.uniq.each { |li|
+      result << "<li>" + li + "</li>"
+    }
+    result << "<ul>"
+    return result.html_safe
   end
 
   def set_focus_to_id(id)

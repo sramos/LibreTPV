@@ -1,0 +1,46 @@
+<!--- Entrada de linea de albaran por codigo --->
+
+<div id="div_formulario_codigo" class="formulario_izqda">
+  <%= inicio_formulario( { :controller => :albaran_lineas, :action => :asignar_linea, :update => params[:update] }, false, :id => "formulario_codigo" ) %>
+    <%# texto "Código/ISBN", 'producto', 'codigo' %>
+    <div id="formulario_seleccion_codigo" class="elemento">
+      <%= link_to_function("Código/ISBN", nil, :id => "cambio_a_titulo") do |page|
+           page.hide 'formulario_seleccion_codigo'
+           page.show 'formulario_seleccion_titulo' 
+          end %>
+      <br>
+      <%= text_field("producto", "codigo", {:class => "texto", :id => "formulario_campo_producto_codigo", :type => "d" }) %>
+        <%= observe_field( "formulario_campo_producto_codigo", :frequency => 2, :update => "propiedades_producto", :with => :codigo, :url => {:controller => 'productos', :action => :producto_x_codigo, :template => 'listado_propiedades'}, :before => "Element.show('spinner')", :success => "Element.hide('spinner')") %>
+    </div>
+    <div id="formulario_seleccion_titulo" class="elemento" style="display:none;">
+      <%= link_to_function("Título/Nombre", nil, :id => "cambio_a_codigo") do |page|
+           page.hide 'formulario_seleccion_titulo' 
+           page.show 'formulario_seleccion_codigo' 
+          end %>
+      <br>
+      <%# text_field("titulo", "", {:class => "texto", :id => "formulario_campo_producto_titulo" }) %>
+      <%= text_field_with_auto_complete( "libro", "titulo", {:class => "texto"}, {:method => :get, :with => "'search=' + element.value", :after_update_element => "function(element,value){" + remote_function(:url => { :controller => 'productos', :action => :producto_x_titulo }, :with =>"'titulo='+element.value") + "}" } ) %>
+    </div>
+
+    <% if params[:seccion] == "productos" %>
+      <div class="linea"></div>
+      <%= texto "Precio Proveedor (Sin IVA)", 'albaranlinea', 'precio_compra' %>
+      <div class="linea"></div>
+      <div class='elemento'>
+        <%= check_box("precios_relacionados", "", {:checked => true}, true, false) %> Obtener desde PVP 
+      </div>
+    <% end %>
+    <div class="linea"><br></div>
+    <%= texto "Cantidad", 'albaranlinea', 'cantidad', '1' %>
+    <div class="linea"></div>
+    <%= texto "% Descuento", 'albaranlinea', 'descuento', params[:descuento] %>
+    <%= hidden_field('albaranlinea', 'albaran_id', :value => params[:albaran_id])%>
+    <div class='linea'><br>
+      <%= link_to_function("Cambiar a entrada por Concepto", nil, :id => "cambio_a_concepto") { |page| page.show 'div_formulario_concepto'; page.hide 'div_formulario_codigo'} %>
+    </div>
+    <div id="propiedades_producto" class="formulario_izqda"></div>
+  <%= final_formulario :submit_disabled => true %>
+</div>
+
+<%= set_focus_to_id 'formulario_campo_producto_codigo' %>
+

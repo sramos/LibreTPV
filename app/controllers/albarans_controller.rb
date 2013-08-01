@@ -38,6 +38,8 @@ class AlbaransController < ApplicationController
 
   # Segun la seccion borramos productos o los incluimos
   def aceptar_albaran
+    flash[:mensaje_ok] = params[:mensaje_ok] if params[:mensaje_ok]
+    flash[:error] = params[:error] if params[:error]
     albaran = Albaran.find_by_id(params[:id]||params[:albaran_id])
     if albaran && !albaran.cerrado
       if params[:seccion] == "productos"
@@ -56,6 +58,12 @@ class AlbaransController < ApplicationController
     end
     redirect_to :action => :listado 
   end
+
+  def auto_complete_for_libro_titulo
+    @productos = Producto.all(:conditions => ['nombre like ?', "%#{params[:search]}%"])
+    render :inline => "<%= auto_complete_result_2 @productos, :nombre %>"
+  end
+
 
   private
     def obtiene_albaranes

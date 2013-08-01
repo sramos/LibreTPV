@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
@@ -7,11 +8,14 @@
 #   Major.create(:name => 'Daley', :city => cities.first)
 
 Iva.create([		{ :nombre => 'Superreducido', :valor => 4},
-			{ :nombre => 'Reducido', :valor => 8},
-			{ :nombre => 'General', :valor => 18} ])				if Iva.count == 0
+			{ :nombre => 'Reducido', :valor => 10},
+			{ :nombre => 'General', :valor => 21} ])				if Iva.count == 0
 
 Familia.create([	{ :nombre => 'Libros', :iva => Iva.find_by_nombre('Superreducido') },
-			{ :nombre => 'Entradas', :iva => Iva.find_by_nombre('Reducido') } ])	if Familia.count == 0
+			{ :nombre => 'Entradas', :iva => Iva.find_by_nombre('General') },
+			{ :nombre => 'Revistas/Periódicos', :iva => Iva.find_by_nombre('Superreducido') },
+			{ :nombre => 'Material Escolar', :iva => Iva.find_by_nombre('Superreducido')},
+			{ :nombre => 'Papelería', :iva => Iva.find_by_nombre('General') }  ])	if Familia.count == 0
 
 FormaPago.create([	{ :nombre => 'Efectivo', :caja => true}, { :nombre => 'Tarjeta' },
 			{ :nombre => 'Transferencia' }, { :nombre => 'Domiciliacion' } ])	if FormaPago.count == 0
@@ -31,8 +35,9 @@ Configuracion.create([	{ :nombre_param => 'PAGINADO', :valor_param => '25'},
 			{ :nombre_param => 'DIRECCION', :valor_param => 'c/ Sin Nombre, nº1'},
 			{ :nombre_param => 'CODIGO POSTAL', :valor_param => '28053 MADRID' },
 			{ :nombre_param => 'TELEFONO', :valor_param => '911760555' },
-			{ :nombre_param => 'PREFIJO FACTURA VENTA', :valor_param => 'LIB-'},
-			{ :nombre_param => 'COMANDO IMPRESION', :valor_param => 'lpr -P TM-T70 -o cpi=20'} ]) if Configuracion.count == 0
+			{ :nombre_param => 'PREFIJO FACTURA VENTA', :valor_param => 'LIB/2013-'},
+			{ :nombre_param => 'FACTURAS VENTA', :valor_param => '0'},
+			{ :nombre_param => 'COMANDO IMPRESION', :valor_param => 'lpr -P TM-T70 -o cpi=20', :editable => false} ]) if Configuracion.count == 0
 
 Materia.create([	{ :nombre => 'Cómic' }, { :nombre =>'Cuentos' }, { :nombre => 'Formación/Materias' },
 			{ :nombre => 'Libros para colorear' }, {:nombre => 'Literatura clásica' }, { :nombre => 'Narrativa' },

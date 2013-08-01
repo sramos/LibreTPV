@@ -1,10 +1,13 @@
+# encoding: UTF-8
+
 class ProductosController < ApplicationController
 
-  require 'json'
-  require 'barby'
-  require 'barby/outputter/rmagick_outputter'
-  require 'pdf/writer'
-  require 'hpricot'
+  #require 'json'
+  #require 'barby'
+  #require 'barby/outputter/rmagick_outputter'
+  #require 'pdf/writer'
+  #require 'hpricot'
+  require 'net/http'
 
   def index
     session[("productos_filtrado").to_sym] = ""
@@ -205,6 +208,19 @@ class ProductosController < ApplicationController
     else 
       @producto = producto_x_codigo_isbn params[:codigo]
       render :partial => params[:template]
+    end
+  end
+
+  def producto_x_titulo
+    puts "-----> nos llaman para meter el codigo ean " + params[:titulo]
+    @producto = Producto.first(:conditions => {:nombre => params[:titulo]} )
+    if @producto
+      render :update do |page|
+        page.replace 'formulario_campo_producto_codigo', :inline => '<%= text_field("producto", "codigo", {:class => "texto", :id => "formulario_campo_producto_codigo", :type => "d", :value => @producto.codigo }) %>'
+        page.replace 'propiedades_producto', :partial => 'productos/listado_propiedades'
+      end
+    else
+      render nothing: true
     end
   end
 

@@ -7,7 +7,7 @@ class CajaController < ApplicationController
   end
 
   def listado
-    @caja = Caja.paginate( :all, :order => 'id DESC',
+    @caja = Caja.paginate( :order => 'id DESC',
         :page => (params[:format]=='xls' ? nil : params[:page]), :per_page => (params[:format_xls_count] || Configuracion.valor('PAGINADO') ))
     @formato_xls = @caja.total_entries
     respond_to do |format|

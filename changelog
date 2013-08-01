@@ -1,7 +1,9 @@
-2012-11-xx Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.11
+2013-07-xx Santiago Ramos <sramos@sitiodistinto.net> Version 0.7.0.01
 
+  * Migracion a Rails3
   * En la copia de factura, coge los productos de todos los albaranes
   * Bug en el borrado de pagos (falta de id html)
+  * Cambios en las busquedas en internet
 
 2012-11-07 Santiago Ramos <sramos@sitiodistinto.net> Version 0.6.9.10
 

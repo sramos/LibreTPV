@@ -6,7 +6,7 @@ class AvisosController < ApplicationController
   end
 
   def listado
-    @avisos = Avisos.paginate :all, :order => "criticidad desc, updated_at asc",
+    @avisos = Avisos.paginate :order => "criticidad desc, updated_at asc",
 		:page => (params[:format]=='xls' ? nil : params[:page]), :per_page => (params[:format_xls_count] || Configuracion.valor('PAGINADO') )
   end
 

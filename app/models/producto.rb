@@ -1,5 +1,30 @@
+# encoding: UTF-8
+#--
+#
+#################################################################################
+# LibreTPV - Gestor TPV para Librerias
+# Copyright 2011-2013 Santiago Ramos <sramos@sitiodistinto.net> 
+#
+#    Este programa es software libre: usted puede redistribuirlo y/o modificarlo 
+#    bajo los términos de la Licencia Pública General GNU publicada 
+#    por la Fundación para el Software Libre, ya sea la versión 3 
+#    de la Licencia, o (a su elección) cualquier versión posterior.
+#
+#    Este programa se distribuye con la esperanza de que sea útil, pero 
+#    SIN GARANTÍA ALGUNA; ni siquiera la garantía implícita 
+#    MERCANTIL o de APTITUD PARA UN PROPÓSITO DETERMINADO. 
+#    Consulte los detalles de la Licencia Pública General GNU para obtener 
+#    una información más detallada. 
+#
+#    Debería haber recibido una copia de la Licencia Pública General GNU 
+#    junto a este programa. 
+#    En caso contrario, consulte <http://www.gnu.org/licenses/>.
+#################################################################################
+#
+#++
+
+
 class Producto < ActiveRecord::Base
-  require 'hpricot'
 
   validates_presence_of :nombre, :codigo
   #validates_numericality_of :precio, :cantidad
@@ -83,7 +108,7 @@ private
         remote_description = Hpricot(doc).search("//p[@itemprop='description']").first.inner_html
         remote_image = nil
         remote_images.each do |ri|
-          puts "----------> Revisando la imagen remota " + ri[:src] if ri && ri[:src]
+          #puts "----------> Revisando la imagen remota " + ri[:src] if ri && ri[:src]
           remote_image = ri[:src] if remote_image.nil? && ri && ri[:src] && ri[:src] != "/img/nodisponible.gif"
         end
         #puts "---------------------- IMAGEN "
