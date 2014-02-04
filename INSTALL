@@ -12,7 +12,7 @@ unlimited permission to copy, distribute and modify it.
 | MANUAL DE INSTALACIÓN DEL TPV  v1.0 |
 ---------------------------------------
 
-La instalación descrita fue efectuada sobre Debian 5.0 (Lenny). Es posible realizar los mismos pasos
+La instalación descrita fue efectuada sobre Debian 7.0. Es posible realizar los mismos pasos
 en cualquier otro sistema operativo, aunque algunos pasos es posible que sean distintos.
 
 
@@ -32,6 +32,10 @@ Indice
 
 1.- BBDD y servidor web
 
+Con mysql correctamente instalado, crear la BBDD desde su usuario root:
+
+> CREATE DATABASE libretpv DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+> GRANT ALL ON libretpv.* TO libretpv@'localhost' IDENTIFIED BY 'libretpv_pass'; 
 
 2.- Instalación de dependencias
 
