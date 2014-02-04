@@ -24,23 +24,166 @@ Una linea que empieza por "$" indica el prompt bash en consola.
 *********************************************************************************************
 
 Indice
-1.- BBDD y servidor web
-2.- Instalación de dependencias
+1.- Instalación de dependencias
+2.- BBDD
 3.- Instalación de TPV 
+4.- Instalación del entorno de ejecución
+5.- Carga Inicial de datos
+6.- Instalación del entorno de ejecución para Apache
+7.- Configuración del servidor web
 
 *********************************************************************************************
 
-1.- BBDD y servidor web
+1.- Instalación de dependencias
+
+Instalaremos las dependencias necesarias:
+
+  $ apt-get install bash curl git build-essential openssl libreadline6 libreadline6-dev \
+       curl git-core zlib1g zlib1g-dev libgnutls-dev libyaml-dev libsqlite3-0 libsqlite3-dev \
+       sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool \
+       libssl-dev bison subversion libmysqlclient-dev subversion
+
+y las que necesitaremos para configurar el servidor web:
+
+  $ apt-get install libcurl4-gnutls-dev apache2-prefork-dev libapr1-dev libaprutil1-dev
+
+
+2.- BBDD
 
 Con mysql correctamente instalado, crear la BBDD desde su usuario root:
 
-> CREATE DATABASE libretpv DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-> GRANT ALL ON libretpv.* TO libretpv@'localhost' IDENTIFIED BY 'libretpv_pass'; 
+  > CREATE DATABASE libretpv_bbdd DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+  > GRANT ALL ON libretpv_bbdd.* TO libretpv_user@'localhost' IDENTIFIED BY 'libretpv_pass';
 
-2.- Instalación de dependencias
-
-  $ apt-get install libjson-ruby, libwill-paginate-ruby, libpdf-writer-ruby, libbarby-ruby, libspreadsheet-ruby 
+Los valores para libretpv_bbdd, libretpv_user y libretpv_pass han de cambiarse por unos escogidos a nuestra
+elección, recordándolos con el fin de utilizarlos en el punto siguiente.
 
 
 3.- Instalación de TPV
+
+El directorio de instalación recomendado para LibreTPV es bajo /usr/share/libretpv, aunque es posible otro path
+de instalación.
+
+En primer lugar, descargaremos la copia del último tag estable (el indicado aquí puede cambiar desde la realización
+de este manual, asegúrese de seleccionar la última versión disponible):
+
+  $ svn export svn export https://github.com/sramos/LibreTPV/trunk /urs/share/libretpv
+
+Crear el directorio de configuración de la aplicación (habitualmente /etc/libretpv):
+
+  $ mkdir /etc/libretpv
+
+Y en él, copiar el fichero por defecto de configuración de la bbdd:
+
+  $ cp /usr/share/libretpv/config/database.yml /etc/libretpv/libretpv-database.yml
+
+y editarlo para cambiar los datos de conexión por los elegidos en el punto anterior.
+
+
+4.- Instalación del entorno de ejecución de LibreTPV
+
+La instalación del entorno de ejecución podemos realizarla para que afecte a todo nuestro sistema
+en el caso de vayamos a instalar un servidor dedicado a LibreTPV, o unicamente a un usuario particular
+en el caso de que no dispongamos de un servidor dedicado para LibreTPV o queramos desarrollar sobre
+él.
+
+Para la instalación de un servidor dedicado ejecutaremos los siguientes comandos como el usuario root,
+y si queremos una instalación personal, como el usuario que elijamos.
+
+En primer lugar instalaremos RVM (Ruby Version Manager) para gestionar las versiones de ruby y rails:
+
+  $ bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )
+
+si la instalación del entorno es para todo el sistema, además ejecutaremos:
+
+  $ source /etc/profile.d/rvm.sh
+
+y si no lo es, incluimos en el entorno del usuario (fichero ~/.bashrc) las siguientes dos líneas:
+
+  # This loads RVM into a shell session.
+  [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+
+Ejecutaremos el siguiente comando para probar que la instalación de RVM funciona y revisar las
+dependencias que nos indique la salida de pantalla:
+
+  $ rvm notes
+
+Instalar y configurar ruby:
+
+  $ rvm install 1.9.2
+  $ rvm --default ruby-1.9.2
+  $ rvm gemset create libretpv
+  $ rvm use 1.9.2@libretpv --default
+
+y desde el directorio donde hayamos descargado LibreTPV (/usr/share/libretpv) las gemas necesarias:
+
+  $ gem install bundle
+  $ RAILS_ENV=production bundle install
+
+
+5.- Carga inicial de datos
+
+Con todos los puntos anteriores ya instalados, es necesario hacer la carga inicial de datos en la BBDD.
+
+Para ello, desde el directorio de LibreTPV (/usr/share/libretpv) ejecutaremos:
+
+  $ rake db:migrate
+  $ rake db:seed
+
+Si lo que queremos es un entorno de desarrollo, LibreTPV está ya totalmente preparado y podemos comprobar su funcionamiento
+ejecutando el servidor web de desarrollo:
+
+  $ rails server
+
+y accediendo desde un navegador a la url
+
+   http://localhost:3000/
+
+
+Si lo que queremos es instalar un servicio funcional, procederemos con los pasos siguientes.
+
+
+
+6.- Instalación del entorno de ejecución para Apache
+
+Si queremos instalar LibreTPV para utilizarlo y no sólo para desarrollar sobre él, instalaremos el módulo de Apache:
+
+  $ gem install passenger -v=3.0.18
+
+lo compilaremos siguiendo las instrucciones del comando:
+
+  $ passenger-install-apache2-module -a
+
+y lo configuraremos en apache, creando como root el fichero /etc/apache2/mods-available/passenger.load con el contenido:
+
+   LoadModule passenger_module /usr/local/rvm/gems/ruby-1.9.2-p320@libretpv/gems/passenger-3.0.18/ext/apache2/mod_passenger.so
+   PassengerRoot /usr/local/rvm/gems/ruby-1.9.2-p320@libretpv/gems/passenger-3.0.18
+   PassengerRuby /usr/local/rvm/wrappers/ruby-1.9.2-p320@libretpv/ruby
+
+si estábamos instalándolo en todo el sistema, o con el contenido:
+
+   LoadModule passenger_module /home/USUARIO/.rvm/gems/ruby-1.9.2-p320@libretpv/gems/passenger-3.0.18/ext/apache2/mod_passenger.so
+   PassengerRoot /home/USUARIO/.rvm/gems/ruby-1.9.2-p320@libretpv/gems/passenger-3.0.18
+   PassengerRuby /home/USUARIO/.rvm/wrappers/ruby-1.9.2-p320@libretpv/ruby
+
+si estábamos instalando el entorno de ejecución anterior sólo para el usuario USUARIO (sustituya en las líneas anteriores esa
+cadena por el nombre real del usuario).
+
+
+Por último, como usuario root, active el módulo y reinicie Apache:
+
+  $ a2enmod passenger && /etc/init.d/apache2 restart
+
+
+Una vez configurado Passenger, instalamos las gemas necesarias para la precompilación de assets:
+
+  $ sudo apt-get install nodejs
+
+y si todo ha ido bien, realizamos la precompilación:
+
+  $ bundle exec rake assets:precompile
+
+
+7.- Configuración del servidor web
+
 
