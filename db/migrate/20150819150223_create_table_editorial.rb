@@ -13,7 +13,7 @@ class CreateTableEditorial < ActiveRecord::Migration
     puts "------> Generando relaciones con editoriales."
     puts "        Puede tardar un rato..."
     Producto.where("editor != ''").each do |producto|
-      editor = Editorial.find_or_create_by_nombre(producto.editor)
+      editor = Editorial.find_or_create_by_nombre(producto.editor.strip)
       producto.update_attribute(:editorial_id, editor.id) if editor
     end 
     # Eliminamos el campo antiguo de editor

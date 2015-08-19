@@ -30,6 +30,7 @@ class Editorial < ActiveRecord::Base
   has_one :relacion_web, as: :elemento
 
   validate :sanea_nombre
+  validates_uniqueness_of :nombre, :message => "Nombre repetido.", :case_sensitive => false
 
   before_destroy :verificar_borrado
   after_destroy :eliminar_relacion_web
@@ -44,7 +45,7 @@ class Editorial < ActiveRecord::Base
 
   private
     def sanea_nombre
-      self.nombre.strip!
+      self.nombre = self.nombre.strip.mb_chars.upcase
     end
 
     def verificar_borrado
