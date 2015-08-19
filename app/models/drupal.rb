@@ -3,7 +3,7 @@
 #
 #################################################################################
 # LibreTPV - Gestor TPV para Librerias
-# Copyright 2011-2015 Santiago Ramos <sramos@sitiodistinto.net> 
+# Copyright 2015 Santiago Ramos <sramos@sitiodistinto.net> 
 #
 #    Este programa es software libre: usted puede redistribuirlo y/o modificarlo 
 #    bajo los términos de la Licencia Pública General GNU publicada 
@@ -24,33 +24,24 @@
 #++
 
 
-class Materia < ActiveRecord::Base
+class Drupal < ActiveRecord::Base
+  # Para que no nos exija que exista una tabla en BBDD para esta clase
+  self.abstract_class = true
 
-  has_many :producto
-  has_one :relacion_web, as: :elemento
+  # Conecta con la definicion del database.yml segun el entorno en el que estamos
+  establish_connection "drupal_#{Rails.env}"
 
-  before_destroy :verificar_borrado
-  after_destroy :eliminar_relacion_web
+  # Desactiva el pluralize
+  self.pluralize_table_names = false
 
-  # Sincroniza con la BBDD de la web
-  def sincroniza_drupal
-    # Solo sincroniza si esta definida la conexion con la BBDD
-    if Rails.application.config.database_configuration["drupal_#{Rails.env}"]
-      # Hace falta una tabla de conversion NID <-> ID
-    end
+  # Desactiva la columna de herencia de clases
+  self.inheritance_column = nil 
+
+  # Evitamos errores de "ActiveRecord::DangerousAttributeError: changed is defined by ActiveRecord
+  def self.instance_method_already_implemented?(method_name)
+    (method_name == 'changed?' || method_name == "changed") ? true : super
   end
 
-  private
-    def verificar_borrado
-      productos=Producto.find :all, :conditions => { :materia_id => self.id }
-      if !productos.empty?
-        errors.add( "familia", "No se puede borrar la materia: Hay productos relacionados con ella." ) 
-        false
-      end
-    end
-
-    def eliminar_relacion_web
-      relacion_web.update_attribute(:eliminar, true) if self.relacion_web
-    end
-
+  # Definimos el prefijo de tablas a usar
+  self.table_name_prefix = Rails.application.config.database_configuration["drupal_#{Rails.env}"]['table_name_prefix']
 end

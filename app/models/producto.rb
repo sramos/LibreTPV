@@ -37,6 +37,15 @@ class Producto < ActiveRecord::Base
   belongs_to :familia
   belongs_to :materia
   has_many :albaran_linea
+  has_one :relacion_web, as: :elemento
+
+  # Sincroniza con la BBDD de la web
+  def sincroniza_drupal
+    # Solo sincroniza si esta definida la conexion con la BBDD
+    if Rails.application.config.database_configuration["drupal_#{Rails.env}"]
+      # Hace falta una tabla de conversion NID <-> ID
+    end
+  end
 
   def get_remote_data
     if self.codigo
@@ -60,6 +69,10 @@ class Producto < ActiveRecord::Base
 
 
 private
+
+  def eliminar_relacion_web
+    relacion_web.update_attribute(:eliminar, true) if self.relacion_web
+  end
 
   def get_data_from_google
     return_data = nil

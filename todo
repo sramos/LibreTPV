@@ -1,8 +1,12 @@
 == Listado de cambios pendientes ==
 
 * Documentacion
-* Seccion Caja -> Devoluciones
-* Seccion Financiera
 * Seccion Cambios
+* Generación de modelos de "Autor" y "Editorial"
+* Control de accesos
+* Revisión de locales
 * Sincronizacion con web
+  * Generación de modelos
+  * Revisar actualización de imágenes (permitir subir imagen manualmente)
+  * Controlador de actualización vía web
 

@@ -1,23 +1,35 @@
 development:
   adapter: mysql2
   socket: /var/run/mysqld/mysqld.sock
-  database: tpv 
-  username: tpv
-  password: patata 
+  database: libretpv 
+  username: libretpv_user
+  password: libretpv_pass 
+  encoding: utf8
+
+drupal_development:
+  adapter: mysql2
+  reconnect: false
+  pool: 5
+  socket: /tmp/mysql.sock
+  database: libretpv
+  username: libretpv_user
+  password: libretpv_pass
   encoding: utf8
 
 production:
   adapter: mysql2
   socket: /var/run/mysqld/mysqld.sock
-  database: tpv 
-  username: tpv
-  password: patata
+  database: libretpv 
+  username: libretpv_user
+  password: libretpv_pass 
   encoding: utf8
 
-oscommerce:
+drupal_production:
   adapter: mysql2
-  socket: /var/run/mysqld/mysqld.sock
-  database: tpv_oscommerce 
-  username: tpv
-  password: patata
+  reconnect: false
+  pool: 5
+  socket: /tmp/mysql.sock
+  database: libretpv
+  username: libretpv_user
+  password: libretpv_pass
   encoding: utf8

@@ -2,7 +2,7 @@
 --
 
 ################################################################################
-Copyright (C) 2011 Santiago Ramos
+Copyright (C) 2011-2015 Santiago Ramos
 
 This file is part of libreTPV. 
 
@@ -20,7 +20,6 @@ You should have received a copy of the GNU General Public License along with
 this program; if not, write to the Free Software Foundation, Inc., 51 Franklin
 Street, Fifth Floor, Boston, Dt. 02110-1301, USA. 
 
-Date: 27 May 2011 
 Authors: Santiago Ramos 
 You may contact the copyright holder at:
 Email: sramos@sitiodistinto.net

@@ -15,6 +15,6 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'configuracion', 'configuracion'
   inflect.irregular 'caja', 'caja'
   inflect.irregular 'materia', 'materia'
-  inflect.irregular 'oscommerce', 'oscommerce'
   inflect.irregular 'familia', 'familias'
+  inflect.irregular 'relacion_web', 'relacion_web'
 end

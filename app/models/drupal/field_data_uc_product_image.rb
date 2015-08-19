@@ -3,7 +3,7 @@
 #
 #################################################################################
 # LibreTPV - Gestor TPV para Librerias
-# Copyright 2011-2015 Santiago Ramos <sramos@sitiodistinto.net> 
+# Copyright 2015 Santiago Ramos <sramos@sitiodistinto.net> 
 #
 #    Este programa es software libre: usted puede redistribuirlo y/o modificarlo 
 #    bajo los términos de la Licencia Pública General GNU publicada 
@@ -24,33 +24,20 @@
 #++
 
 
-class Materia < ActiveRecord::Base
+class Drupal::FieldDataUcProductImage < Drupal
 
-  has_many :producto
-  has_one :relacion_web, as: :elemento
+  belongs_to :product, class_name: 'Drupal::Node', foreign_key: :entity_id
 
-  before_destroy :verificar_borrado
-  after_destroy :eliminar_relacion_web
+  validate :valores_por_defecto
+  validates_presence_of :product, :message => "El stock debe corresponder a un producto."
 
-  # Sincroniza con la BBDD de la web
-  def sincroniza_drupal
-    # Solo sincroniza si esta definida la conexion con la BBDD
-    if Rails.application.config.database_configuration["drupal_#{Rails.env}"]
-      # Hace falta una tabla de conversion NID <-> ID
-    end
+  # Genera los valores por defecto para algunos de los campos
+  def valores_por_defecto
+    entity_type ||= "node"
+    bundle ||= "product" 
+    revision_id ||= entity_id
+    language ||= "und"
+    delta ||= 0
   end
-
-  private
-    def verificar_borrado
-      productos=Producto.find :all, :conditions => { :materia_id => self.id }
-      if !productos.empty?
-        errors.add( "familia", "No se puede borrar la materia: Hay productos relacionados con ella." ) 
-        false
-      end
-    end
-
-    def eliminar_relacion_web
-      relacion_web.update_attribute(:eliminar, true) if self.relacion_web
-    end
 
 end
