@@ -24,7 +24,7 @@
 #++
 
 
-class Materia < ActiveRecord::Base
+class Editorial < ActiveRecord::Base
 
   has_many :producto
   has_one :relacion_web, as: :elemento
@@ -43,13 +43,12 @@ class Materia < ActiveRecord::Base
   end
 
   private
-
     def sanea_nombre
       self.nombre.strip!
     end
 
     def verificar_borrado
-      productos=Producto.find :all, :conditions => { :materia_id => self.id }
+      productos=Producto.where(editorial_id: self.id)
       if !productos.empty?
         errors.add( "familia", "No se puede borrar la materia: Hay productos relacionados con ella." ) 
         false

@@ -330,6 +330,7 @@ module ApplicationHelper
                           { :rotulo => "Tipos de IVA", :controlador => "iva"},
                           { :rotulo => "Familias de Productos", :controlador => "familia"},
                           { :rotulo => "Materias", :controlador => "materia" },
+                          { :rotulo => "Editoriales", :controlador => "editorial" },
 			  { :rotulo => "Avisos", :controlador => "avisos"} ]
 
     end
@@ -407,6 +408,8 @@ module ApplicationHelper
       when "iva"
         ["nombre","valor"]
       when "materias"
+        ["nombre"]
+      when "editoriales"
         ["nombre"]
       when "formas_pago"
         ["nombre", "caja"]

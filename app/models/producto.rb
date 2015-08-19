@@ -36,8 +36,11 @@ class Producto < ActiveRecord::Base
 
   belongs_to :familia
   belongs_to :materia
+  belongs_to :editorial
   has_many :albaran_linea
   has_one :relacion_web, as: :elemento
+
+  after_destroy :eliminar_relacion_web
 
   # Sincroniza con la BBDD de la web
   def sincroniza_drupal

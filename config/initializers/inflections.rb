@@ -16,5 +16,6 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'caja', 'caja'
   inflect.irregular 'materia', 'materia'
   inflect.irregular 'familia', 'familias'
+  inflect.irregular 'editorial', 'editorial'
   inflect.irregular 'relacion_web', 'relacion_web'
 end
