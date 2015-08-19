@@ -11,7 +11,7 @@ drupal_development:
   reconnect: false
   pool: 5
   socket: /tmp/mysql.sock
-  database: libretpv
+  database: drupal_database 
   username: libretpv_user
   password: libretpv_pass
   encoding: utf8
@@ -29,7 +29,7 @@ drupal_production:
   reconnect: false
   pool: 5
   socket: /tmp/mysql.sock
-  database: libretpv
+  database: drupal_database 
   username: libretpv_user
   password: libretpv_pass
   encoding: utf8
