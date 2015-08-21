@@ -163,11 +163,15 @@ module ApplicationHelper
     return cadena.html_safe
   end
 
-  def texto rotulo, objeto, atributo, valor=nil
+  def texto rotulo, objeto, atributo, valor=nil, otros={}
     cadena = ("<div class='elemento'>" + rotulo +"<br/>").html_safe
     opciones = {:class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :type => "d" }
     opciones[:value] = valor if valor
-    cadena << text_field( objeto, atributo, opciones)
+    if otros[:autocomplete]
+      cadena << text_field_with_auto_complete( objeto, atributo, {:class => "texto"}, {:method => :get, :with => "'search=' + element.value"} )
+    else
+      cadena << text_field( objeto, atributo, opciones)
+    end
     return cadena + "</div>".html_safe
   end
 

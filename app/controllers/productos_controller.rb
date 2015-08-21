@@ -119,7 +119,7 @@ class ProductosController < ApplicationController
     end
   end
 
-	# Actualiza la descripcion asociada al libro
+  # Actualiza la descripcion asociada al libro
   def update_description
     @producto = Producto.find_by_id(params[:id]) || Producto.new(:descripcion => params[:description])
     if params[:description] && @producto 
@@ -131,6 +131,13 @@ class ProductosController < ApplicationController
     end
   end
 
+  # Autocomplete para editoriales
+  def auto_complete_for_producto_editor
+    @editores = Editorial.where(['nombre like ?', "%#{params[:search]}%"]).order(:nombre)
+    render :inline => "<%= auto_complete_result_2 @editores, :nombre %>"
+  end
+
+  # Actualiza la familia del producto
   def cambio_familia
     @producto = params[:id] ? Producto.find(params[:id]) : nil 
     @producto.familia.id = params[:producto_familia_id]
