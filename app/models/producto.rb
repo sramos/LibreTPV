@@ -40,7 +40,16 @@ class Producto < ActiveRecord::Base
   has_many :albaran_linea
   has_one :relacion_web, as: :elemento
 
+  after_save :actualiza_editorial
   after_destroy :eliminar_relacion_web
+
+  # Creamos un attr_writer para guardar en @editor el valor
+  attr_writer :editor
+
+  # Devuelve el string del editor asociado (no usamos el attr_reader para poder pillar el valor del modelo asociado)
+  def editor
+    @editor || (editorial ? editorial.nombre : nil)
+  end
 
   # Sincroniza con la BBDD de la web
   def sincroniza_drupal
@@ -73,6 +82,13 @@ class Producto < ActiveRecord::Base
 
 private
 
+  # Actualiza la relacion con la editorial
+  def actualiza_editorial
+    ed_id = @editor.nil? ? nil : Editorial.find_or_create_by_nombre(@editor.strip).id
+    self.update_column(:editorial_id, ed_id) unless ed_id == self.editorial_id
+  end
+
+  # Marca el campo "eliminar" de la tabla de relaciones como true
   def eliminar_relacion_web
     relacion_web.update_attribute(:eliminar, true) if self.relacion_web
   end

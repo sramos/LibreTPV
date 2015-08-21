@@ -3,7 +3,6 @@ class CreateTableEditorial < ActiveRecord::Migration
     # Crea la tabla de editoriales
     create_table :editorial, force: true do |t|
       t.string  :nombre, null: false
-
       t.timestamps
     end
     # Genera el campo de relacion en el modelo de productos
@@ -13,8 +12,9 @@ class CreateTableEditorial < ActiveRecord::Migration
     puts "------> Generando relaciones con editoriales."
     puts "        Puede tardar un rato..."
     Producto.where("editor != ''").each do |producto|
-      editor = Editorial.find_or_create_by_nombre(producto.editor.strip)
-      producto.update_attribute(:editorial_id, editor.id) if editor
+      # Tenemos que usar esto por los ajustes en el modelo para hacer editor attr_accesible
+      nombre_editor = producto.read_attribute(:editor)
+      producto.update_attribute(:editor, nombre_editor.strip)
     end 
     # Eliminamos el campo antiguo de editor
     remove_column :productos, :editor
@@ -28,7 +28,7 @@ class CreateTableEditorial < ActiveRecord::Migration
     puts "------> Generando relaciones con editoriales."
     puts "        Puede tardar un rato..."
     Producto.where("editorial_id is not null").each do |producto|
-      producto.update_attribute(:editor, producto.editorial.nombre) if producto.editorial
+      producto.update_column(:editor, producto.editorial.nombre) if producto.editorial
     end
     # Eliminamos las tablas duplicadas
     remove_column :productos, :editorial_id

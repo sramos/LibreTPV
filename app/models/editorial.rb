@@ -45,7 +45,8 @@ class Editorial < ActiveRecord::Base
 
   private
     def sanea_nombre
-      self.nombre = self.nombre.strip.mb_chars.upcase
+      self.nombre = self.nombre.strip
+      #self.nombre = self.nombre.strip.mb_chars.upcase
     end
 
     def verificar_borrado
