@@ -23,47 +23,25 @@
 #
 #++
 
-
-class Drupal::Node < Drupal
+# Gestiona los terminos de taxonomias. Para "vid=2" recoge las taxonomias de "materia"
+class Drupal::TaxonomyTermData < Drupal
 
   # Eliminamos las materias porque se estan manejando como taxonomias
-  #scope :materia, -> { where(type: 'materias') }
-  scope :producto, -> { where(type: 'product') }
-  scope :autor, -> { where(type: 'autor') }
-  scope :editorial, -> { where(type: 'editorial') }
-  
-  has_one :stock, class_name: 'Drupal::UcProductStock', foreign_key: :nid
-  has_one :atributos, class_name: 'Drupal::UcProducts', foreign_key: :nid
-  has_one :body, class_name: 'Drupal::FieldDataBody', foreign_key: :entity_id
+  scope :materia, -> { where(vid: 2) }
 
-  validates_presence_of :type, :message => "El tipo no puede estar indefinido."
-  validates_presence_of :title, :message => "El nombre no puede estar vacío."
+  validates_presence_of :name, :message => "El nombre no puede estar vacío."
 
   after_initialize :defaults, :if => :new_record?
-  before_save  :valores_modificado
-  after_create :ajusta_vid
+  after_create  :asigna_formato
 
-  # Guarda la fecha de modificacion 
-  def valores_modificado
-    self.uid = 1
-    self.changed = Time.now.to_i
+  def defaults
+    self.vid ||= 2
+    # Format es una palabra reservada, asi que no podemos hacerlo asi...
+    #self.format ||= "plain_text"
+    self.description ||= ''
+    self.weight ||= 0
   end
-
-  # Asigna los valores por defecto
-  def defaults 
-    self.status = 1
-    self.comment = 2
-    self.promote = 1
-    self.sticky = 0
-    self.tnid = 0
-    self.language = "es"
-    self.translate = 0
-    self.created = Time.now.to_i
+  def asigna_formato
+    self.update_column(:format, 'plain_text')
   end
-
-  # Asigna el mismo vid que el nid obtenido
-  def ajusta_vid 
-    self.update_column(:vid, self.nid)
-  end
-
 end
