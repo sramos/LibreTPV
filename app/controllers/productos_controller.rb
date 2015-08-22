@@ -22,32 +22,19 @@ class ProductosController < ApplicationController
   end
 
   def listado
-    #@campos_filtro = [["Nombre","nombre"], ["Autor","autor"], ["Codigo","codigo"] ,["Editor","editor"], ["Familia","familias.nombre"], ["Proveedor","proveedores.nombre"]]
     @campos_filtro = [["Nombre","nombre"], ["Autor","autor"], ["Cantidad","cantidad"], ["Deposito","deposito"], ["Codigo","codigo"], ["Editor","editorial.nombre"], ["Familia","familias.nombre"]]
     paginado = Configuracion.valor('PAGINADO')
 
     if session[("productos_filtrado_tipo").to_sym] && session[("productos_filtrado_valor").to_sym]
-      if session[("productos_filtrado_tipo").to_sym] =~ /familias.nombre/
-        @productos = Producto.paginate :page => params[:page], :per_page => paginado, 
-		:order => 'productos.nombre ASC',
-                :include => [ :familia ],             
-                :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("productos_filtrado_valor").to_sym] + "%" ]
-      elsif session[("productos_filtrado_tipo").to_sym] =~ /editorial.nombre/
-        @productos = Producto.paginate :page => params[:page], :per_page => paginado,
-                :order => 'productos.nombre ASC',
-                :include => [ :editorial ],
-                :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("productos_filtrado_valor").to_sym] + "%" ]
-      elsif session[("productos_filtrado_tipo").to_sym] =~ /cantidad/
-        @productos = Producto.paginate :page => params[:page], :per_page => paginado,
-		:order => 'nombre ASC',
+      @productos = case session[("productos_filtrado_tipo").to_sym]
+        when "cantidad" then
+          Producto.paginate :page => params[:page], :per_page => paginado,
+                :order => 'nombre ASC',
                 :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' ' + session[("productos_filtrado_condicion").to_sym] + ' ?', session[("productos_filtrado_valor").to_sym].to_i ]
-      elsif session[("productos_filtrado_tipo").to_sym] =~ /proveedores.nombre/
-        @productos = Producto.paginate :page => params[:page], :per_page => paginado,
-		:order => 'nombre ASC'
-      else
-        @productos = Producto.paginate :page => params[:page], :per_page => paginado,
-		:order => 'nombre ASC',
-		:conditions => [ session[("productos_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("productos_filtrado_valor").to_sym] + "%" ]
+        else
+          Producto.joins(:familia, :editorial ).paginate :page => params[:page], :per_page => paginado,
+                :order => 'nombre ASC', 
+                :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("productos_filtrado_valor").to_sym] + "%" ]
       end
     elsif session[("productos_filtrado_tipo").to_sym] =~ /deposito/
         @lineas = AlbaranLinea.paginate :page => params[:page], :per_page => paginado,
