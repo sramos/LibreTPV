@@ -38,7 +38,11 @@ class Materia < ActiveRecord::Base
   def sincroniza_drupal
     # Solo sincroniza si esta definida la conexion con la BBDD
     if Rails.application.config.database_configuration["drupal_#{Rails.env}"]
-      # Hace falta una tabla de conversion NID <-> ID
+      # Las materias se tratan como taxonomias
+      dn = (relacion_web ? Drupal::TaxonomyTermData.find_by_tid(relacion_web.nid) : nil) || Drupal::TaxonomyTermData.new
+      dn.update_attribute(:name, self.nombre)
+      # Tenemos que capturar aqui los errores que existan
+      RelacionWeb.create(elemento_id: self.id, elemento_type: "Materia", nid: dn.tid) if dn && relacion_web.nil?
     end
   end
 
