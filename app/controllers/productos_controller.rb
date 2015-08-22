@@ -23,7 +23,7 @@ class ProductosController < ApplicationController
 
   def listado
     #@campos_filtro = [["Nombre","nombre"], ["Autor","autor"], ["Codigo","codigo"] ,["Editor","editor"], ["Familia","familias.nombre"], ["Proveedor","proveedores.nombre"]]
-    @campos_filtro = [["Nombre","nombre"], ["Autor","autor"], ["Cantidad","cantidad"], ["Deposito","deposito"], ["Codigo","codigo"], ["Editor","editor"], ["Familia","familias.nombre"]]
+    @campos_filtro = [["Nombre","nombre"], ["Autor","autor"], ["Cantidad","cantidad"], ["Deposito","deposito"], ["Codigo","codigo"], ["Editor","editorial.nombre"], ["Familia","familias.nombre"]]
     paginado = Configuracion.valor('PAGINADO')
 
     if session[("productos_filtrado_tipo").to_sym] && session[("productos_filtrado_valor").to_sym]
@@ -31,6 +31,11 @@ class ProductosController < ApplicationController
         @productos = Producto.paginate :page => params[:page], :per_page => paginado, 
 		:order => 'productos.nombre ASC',
                 :include => [ :familia ],             
+                :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("productos_filtrado_valor").to_sym] + "%" ]
+      elsif session[("productos_filtrado_tipo").to_sym] =~ /editorial.nombre/
+        @productos = Producto.paginate :page => params[:page], :per_page => paginado,
+                :order => 'productos.nombre ASC',
+                :include => [ :editorial ],
                 :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("productos_filtrado_valor").to_sym] + "%" ]
       elsif session[("productos_filtrado_tipo").to_sym] =~ /cantidad/
         @productos = Producto.paginate :page => params[:page], :per_page => paginado,
