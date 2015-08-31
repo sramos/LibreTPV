@@ -22,18 +22,18 @@ class ProductosController < ApplicationController
   end
 
   def listado
-    @campos_filtro = [["Nombre","nombre"], ["Autor","autor"], ["Cantidad","cantidad"], ["Deposito","deposito"], ["Codigo","codigo"], ["Editor","editorial.nombre"], ["Familia","familias.nombre"]]
+    @campos_filtro = [["Nombre","productos.nombre"], ["Autor","autor"], ["Cantidad","cantidad"], ["Deposito","deposito"], ["Codigo","codigo"], ["Editor","editorial.nombre"], ["Familia","familias.nombre"]]
     paginado = Configuracion.valor('PAGINADO')
 
     if session[("productos_filtrado_tipo").to_sym] && session[("productos_filtrado_valor").to_sym]
       @productos = case session[("productos_filtrado_tipo").to_sym]
         when "cantidad" then
           Producto.paginate :page => params[:page], :per_page => paginado,
-                :order => 'nombre ASC',
+                :order => 'productos.nombre ASC',
                 :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' ' + session[("productos_filtrado_condicion").to_sym] + ' ?', session[("productos_filtrado_valor").to_sym].to_i ]
         else
           Producto.joins(:familia, :editorial ).paginate :page => params[:page], :per_page => paginado,
-                :order => 'nombre ASC', 
+                :order => 'productos.nombre ASC',
                 :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("productos_filtrado_valor").to_sym] + "%" ]
       end
     elsif session[("productos_filtrado_tipo").to_sym] =~ /deposito/
@@ -276,45 +276,7 @@ class ProductosController < ApplicationController
   def producto_x_codigo_isbn_con_imagen isbn
     producto = producto_x_codigo_isbn isbn
     producto.get_remote_data
-    #data = Net::HTTP.get('books.google.com','/books?jscmd=viewapi&bibkeys=ISBN:' + isbn)
-    #data =~ /^var _GBSBookInfo = (.+);$/
-    #if $1
-    #  result = JSON.parse($1)
-      # if the hash has 'Error' as a key, we raise an error
-    #  if result.has_key? 'Error'
-    #    raise "web service error"
-    #  end
-    #  producto.url_imagen = result['ISBN:'+isbn]['thumbnail_url'].to_s.gsub(/zoom=5/, 'zoom=1') if producto && result['ISBN:'+isbn]
-    #end
     return producto
-  end
-
-  def libro_x_isbn_google
-    #isbn = "9788467426373"
-    @producto = params[:id] ? Producto.find(params[:id]) : Producto.new
-    @familias = Familia.all
-    isbn = params[:codigo]
-
-    # en JSON
-    #http://books.google.com/books?jscmd=viewapi&bibkeys=ISBN:
-    # y devuelve tambien la referencia a la portada del libro
-    refman = { "T1" => "Titulo", "A1" => "Autor", "Y1" => "Año", "PB" => "Editor", "T3" => "Coleccion", "UR" => "URL", "SN" => "ISBN" }
-
-    output = Net::HTTP.get('books.google.com', '/books/download/libro.ris?vid=' + isbn + '&output=ris').split("\r\n")
-    @propiedades={} 
-    output.each{|a|
-      a=~ /^([\S]{2})\s+-\s+(.+)$/
-      @propiedades[$1]? @propiedades[$1] += " - " + $2 : @propiedades[$1] = $2
-    }
-    if @propiedades["SN"]
-      @producto.nombre = @propiedades["T1"]
-      @producto.autor = @propiedades["A1"]
-      @producto.anno = @propiedades["Y1"] 
-      @producto.editor = @propiedades["PB"]
-      @producto.familia_id = 1
-    end
-    @producto.codigo = params[:codigo] 
-    render :partial => "propiedades"
   end
 
   def libro_x_isbn_mcu
