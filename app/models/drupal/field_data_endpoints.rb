@@ -23,35 +23,28 @@
 #
 #++
 
-# Gestiona las vinculaciones entre nodos y taxonomias
-class Drupal::TaxonomyIndex < Drupal
+# Gestiona las relaciones entre nodos
+class Drupal::FieldDataEndpoints < Drupal
 
-  #scope :materia, -> { where(vid: 2) }
-  self.primary_key = :nid 
+  after_initialize :defaults, :if => :new_record?
+  belongs_to :node, class_name: 'Drupal::Node', foreign_key: :endpoints_entity_id
 
-  belongs_to :product, class_name: 'Drupal::Node', foreign_key: :nid
-  belongs_to :materia, class_name: 'Drupal::TaxonomyTermData', foreign_key: :tid
+  scope :autor, -> { where(bundle: 'esta_escrito_por') }
+  scope :materia, -> { where(bundle: 'pertenece_a') }
 
-  validates_presence_of :nid, :message => "El libro no puede estar vacío."
-  validates_presence_of :tid, :message => "La materia no puede estar vacía."
 
-  #after_save   :valores_modificacion
-  after_create :valores_por_defecto
-
-  # Guarda la fecha de modificacion (no existe fecha de modificacion en esa tabla)
-  #def valores_modificacion
-  #  values = { uid: 1,
-  #             changed: Time.now.to_i,
-  #           }
-  #  # Necesitamos hacer esto porque hasta Rails4 no hay self.update_columns
-  #  values.each{|k,v| self.update_column(k,v)}
-  #end
-
-  def valores_por_defecto 
-    values = { created: Time.now.to_i,
-             }
-    # Necesitamos hacer esto porque hasta Rails4 no hay self.update_columns
-    values.each{|k,v| self.update_column(k,v)}
+  def relacionado
+    table_name = Drupal::FieldDataEndpoints.table_name
+    Drupal::Node.joins(:relation).where(table_name + ".entity_id = ? AND " + table_name + ".endpoints_r_index != ?", self.entity_id, self.endpoints_r_index).first
   end
 
+  def defaults
+    self.entity_type = "relation"
+    self.language = "und"
+    self.endpoints_entity_type = "node"
+    #self.bundle = "esta_escrito_por" -> Para autores de un libro
+    #self.bundle = "pertenece_a"      -> Para la materia de un libro
+    #self.endpoints_r_index = 0       -> Para un extremo
+    #self.endpoints_r_index = 1       -> Para otro extremo
+  end
 end

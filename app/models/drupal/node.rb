@@ -35,6 +35,8 @@ class Drupal::Node < Drupal
   has_one :stock, class_name: 'Drupal::UcProductStock', foreign_key: :nid
   has_one :atributos, class_name: 'Drupal::UcProducts', foreign_key: :nid
   has_one :body, class_name: 'Drupal::FieldDataBody', foreign_key: :entity_id
+  has_one :materia, class_name: 'Drupal::TaxonomyIndex', foreign_key: :nid
+  has_many :relation, class_name: 'Drupal::FieldDataEndpoints', foreign_key: :endpoints_entity_id
 
   validates_presence_of :type, :message => "El tipo no puede estar indefinido."
   validates_presence_of :title, :message => "El nombre no puede estar vacío."
@@ -65,5 +67,21 @@ class Drupal::Node < Drupal
   def ajusta_vid 
     self.update_column(:vid, self.nid)
   end
+
+  # Relaciones entre nodos
+  #
+  # Autores de un libro...
+  #SELECT node2.nid AS autores_nid FROM dr_node node1
+  #  LEFT JOIN dr_field_data_endpoints fde1 ON node1.nid = fde1.endpoints_entity_id AND fde1.bundle = 'esta_escrito_por' AND fde1.endpoints_entity_type = 'node'
+  #  LEFT JOIN dr_field_data_endpoints fde2 ON fde1.entity_id = fde2.entity_id AND fde2.endpoints_entity_type = 'node' AND fde1.endpoints_r_index != fde2.endpoints_r_index
+  #  LEFT JOIN dr_node node2 ON fde2.endpoints_entity_id = node2.nid AND fde2.endpoints_entity_type = 'node'
+  #  WHERE node1.nid = '54' AND node1.status = '1' AND node1.type = 'product';
+
+  # Editorial de un libro (igual, pero cambiando la relacion a 'pertenece_a'
+  #SELECT node2.nid AS materias_nid FROM dr_node node1
+  #  LEFT JOIN dr_field_data_endpoints fde1 ON node1.nid = fde1.endpoints_entity_id AND fde1.bundle = 'pertenece_a' AND fde1.endpoints_entity_type = 'node'
+  #  LEFT JOIN dr_field_data_endpoints fde2 ON fde1.entity_id = fde2.entity_id AND fde2.endpoints_entity_type = 'node' AND fde1.endpoints_r_index != fde2.endpoints_r_index
+  #  LEFT JOIN dr_node node2 ON fde2.endpoints_entity_id = node2.nid AND fde2.endpoints_entity_type = 'node'
+  #  WHERE node1.nid = '54' AND node1.status = '1' AND node1.type = 'product';
 
 end
