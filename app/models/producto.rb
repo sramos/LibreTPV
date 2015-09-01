@@ -43,7 +43,16 @@ class Producto < ActiveRecord::Base
   after_save :actualiza_editorial
   after_destroy :eliminar_relacion_web
 
-  # Creamos un attr_writer para guardar en @editor el valor
+  # Imagen asociada al producto
+  #attr_accessible :imagen
+  has_attached_file :imagen,
+    path: "public/cover/:id.:extension",
+    url: "/cover/:id.:extension",
+    default_url: "/cover/missing_cover.jpg"
+  validates_attachment_content_type :imagen, content_type: /\Aimage\/.*\Z/, :message => "La imagen de portada no es válida."
+
+
+  # Creamos un attr_writer para guardar en @editor el valor (y luego relacionarlo con el modelo)=
   attr_writer :editor
 
   # Devuelve el string del editor asociado (no usamos el attr_reader para poder pillar el valor del modelo asociado)
@@ -68,9 +77,25 @@ class Producto < ActiveRecord::Base
   end
 
   def get_remote_image
-    data = get_data_from_google
+    data = get_data_from_lcdl
+    data = get_data_from_google unless data && data[:image]
     data = get_data_from_todostuslibros unless data && data[:image]
     self.url_imagen = data[:image] if data && data[:image]
+  end
+
+  def get_available_images
+    # Primero metemos "Ninguna" imagen
+    images = {"Ninguna" => "/cover/missing_cover.jpg"}
+    # Mete las imagenes disponibles en sitios externos
+    data = get_data_from_lcdl
+    images["LCDL"] = data[:image] if data && data[:image]
+    data = get_data_from_google
+    images["Google Books"] = data[:image] if data && data[:image]
+    data = get_data_from_todostuslibros
+    images["TTL"] = data[:image] if data && data[:image]
+    # La propia subida si existe
+    images["Personalizada"] = self.imagen if self.imagen_file_name
+    return images
   end
 
   def get_remote_description
@@ -79,6 +104,12 @@ class Producto < ActiveRecord::Base
     self.descripcion = data[:description] if data && data[:description]
   end
 
+  # Descarga una imagen remota y la vincula
+  def upload_remote_image remote_url
+    puts "------> Descargando la imagen: " + remote_url 
+    self.imagen = open(remote_url)
+    self.save
+  end
 
 private
 
@@ -122,20 +153,22 @@ private
         end
       end
     rescue
-      logger.info "-----------------> Error obteniendo informacion del libro"
+      logger.info "-----------------> GOOGLE: Error obteniendo informacion del libro"
     end
     return return_data
   end
 
   def get_data_from_todostuslibros
     return_data = nil
-    search = self.codigo
+    host = 'www.todostuslibros.com'
+    search = '/busquedas/?keyword=' + self.codigo
 
+    logger.info  "-----------------> Buscando en TTL: " + search
     begin
-      data = Net::HTTP.get('www.todostuslibros.com', '/busquedas/?keyword=' + search)
+      data = Net::HTTP.get(host, search)
       enlace = Hpricot(data).search("//div[@class='details']//h2//a").first if data
       if enlace
-        doc = Net::HTTP.get('www.todostuslibros.com', enlace[:href] )
+        doc = Net::HTTP.get(host, enlace[:href] )
         remote_images = Hpricot(doc).search("//img[@class='portada']")
         remote_description = Hpricot(doc).search("//p[@itemprop='description']").first.inner_html
         remote_image = nil
@@ -153,10 +186,29 @@ private
         end
       end
     rescue
-      logger.info "-----------------> Error obteniendo informacion del libro"
+      logger.info "-----------------> TTL: Error obteniendo informacion del libro"
     end
     return return_data
   end
 
+  def get_data_from_lcdl
+    return_data = nil
+    host = 'www.casadellibro.com'
+    search = '/busqueda-generica?busqueda=isbn%3A' + self.codigo
+
+    logger.info  "-----------------> Buscando en LCDL: " + search
+    begin
+      data = Net::HTTP.get(host, search)
+      enlace = Hpricot(data).search("//div[@class='list-pag']//div//div[@class='mod-list-item']//div[@class='txt']//a").first if data
+      if enlace
+        doc = Net::HTTP.get(host, enlace[:href])
+        remote_image = Hpricot(doc).search("//img[@id='imgPrincipal']").first
+        return_data = {image: remote_image[:src]} if remote_image
+      end
+    rescue
+      logger.info "-----------------> LCDL: Error obteniendo informacion del libro"
+    end
+    return return_data
+  end
 
 end

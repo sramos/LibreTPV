@@ -69,7 +69,7 @@ end
 #gem "respond_to_parent", :git => 'git://github.com/itkin/respond_to_parent.git' # Da error cargando como gema. Cargado como plugin. 
 gem "spreadsheet"
 gem "spreadsheet_on_rails", :git => 'git://github.com/10to1/spreadsheet_on_rails.git'
-#gem "paperclip", "~> 3.0"
+gem "paperclip", "~> 4.3"
 gem 'will_paginate', '~> 3.0.0'
 gem 'calendar_date_select', :git => 'git://github.com/paneq/calendar_date_select.git'
 gem 'rufus-scheduler'

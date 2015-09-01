@@ -1,0 +1,21 @@
+<div id="producto_image_container">
+  <!-- Imagenes del libro -->
+  <div class="producto_image_edit">
+    <p>Selecciona la imagen a utilizar:</p>
+    <% for image_src,image_url in @imagenes %>
+      <% img = image_tag(image_url, {id: "imagen_preview_" + image_src.to_s}) %>
+      <div>
+        <%= image_src %>
+        <%= link_to_remote img,
+             url: { controller: :productos, action: :update_cover, id: @producto.id, codigo: @producto.codigo, image: image_url, source: image_src, update: "datos_externos" },
+             loading: "Element.show('spinner')", complete: "Element.hide('spinner')" %>
+      </div>
+    <% end %>
+  </div>
+  <% if @producto.id %>
+    <div class="producto_image_edit"><br><hr>
+      <p>Usar portada desde fichero:</p>
+      <%= file_field  'producto', 'imagen', :class => 'elementoizquierda' %>
+    </div>
+  <% end %>
+</div>

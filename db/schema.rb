@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150819150223) do
+ActiveRecord::Schema.define(:version => 20150831095433) do
 
   create_table "albaran_lineas", :force => true do |t|
     t.integer  "cantidad",                                         :default => 1
@@ -153,13 +153,17 @@ ActiveRecord::Schema.define(:version => 20150819150223) do
     t.string   "anno"
     t.text     "descripcion"
     t.string   "url_imagen"
-    t.decimal  "precio",       :precision => 8, :scale => 2,                :null => false
-    t.integer  "cantidad",                                   :default => 0
+    t.decimal  "precio",              :precision => 8, :scale => 2,                :null => false
+    t.integer  "cantidad",                                          :default => 0
     t.integer  "familia_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "materia_id"
     t.integer  "editorial_id"
+    t.string   "imagen_file_name"
+    t.string   "imagen_content_type"
+    t.integer  "imagen_file_size"
+    t.datetime "imagen_updated_at"
   end
 
   create_table "proveedors", :force => true do |t|

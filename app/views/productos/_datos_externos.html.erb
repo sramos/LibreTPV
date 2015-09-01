@@ -1,37 +1,25 @@
 <div id="datos_externos" class="datos_externos">
   <div class="boton">
-    <%= link_to_remote "Buscar imagen y descripción", :url => { :controller => :productos, :action => :update_datos_externos, :id => @producto.id, :codigo => @producto.codigo, :update => "datos_externos" },
+    <%# link_to_remote "Buscar imagen y descripción", :url => { :controller => :productos, :action => :update_datos_externos, :id => @producto.id, :codigo => @producto.codigo, :update => "datos_externos" },
 		:loading => "Element.show('spinner')", :complete => "Element.hide('spinner')" %>
   </div>
   <div class="linea"><br/></div>
-  <!-- Imagen del libro -->
-  <div id="producto_image">
-     <% if @producto.url_imagen && @producto.url_imagen != "" %>
-       <img src="<%= @producto.url_imagen %>">
-       <%= hidden_field "producto", :url_imagen %>
-     <% end %>
-  </div>
 
-  <!-- Descripcion -->
-  <div id="producto_descripcion_container">
-    <div id="producto_descripcion_label" class="product_description"><%= @producto.descripcion || "<br>".html_safe + "Pulsa aquí para cambiar la descripción" %></div>
-    <%= hidden_field "producto", :descripcion %>
-    <div id="producto_descripcion_edit" class="product_description" style="display:none;">
-      <%= text_area("product", "description", {:value => @producto.descripcion, :class => "form-field"}) %>
-      <div class="boton" style="margin-top:2px;">
-        <%= link_to_remote "Guardar Descripción", :url => { :controller => :productos, :action => :update_description, :id => @producto.id, :update => "datos_externos" },
-            :with => "'description='+encodeURIComponent($F('product_description'))",
-            :loading => "Element.show('spinner')", :complete => "Element.hide('spinner')" %>
-      </div>
+  <!-- Imagen del libro -->
+  <div id="producto_image_container">
+      <%= link_to_remote "Cambiar imagen", :url => { :controller => :productos, :action => :search_cover, :id => @producto.id, :codigo => @producto.codigo, :update => "producto_image_container" },
+                :loading => "Element.show('spinner')", :complete => "Element.hide('spinner')" %>
+    <br/><br/>
+    <div id="producto_image_label">
+      <% if @producto.imagen_file_name || @producto.url_imagen.blank? %>
+        <% image_url = @producto.imagen %>
+      <% else %>
+        <% image_url = @producto.url_imagen %>
+        <%= hidden_field "producto", :url_imagen %>
+      <% end %>
+      <%= image_tag image_url, {class: "image_cover"} %>
     </div>
   </div>
-</div>
 
-<!-- Permitimos la edicion del titulo -->
-  <script>
-    Event.observe('producto_descripcion_label', 'click', function() {
-      $('producto_descripcion_label').hide();
-      $('producto_descripcion_edit').show();
-      Modalbox.resizeToContent();
-    });
-  </script>
+  <%= render :partial => "datos_externos_descripcion" %>
+</div>

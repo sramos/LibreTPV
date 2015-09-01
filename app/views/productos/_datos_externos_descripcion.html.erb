@@ -1,0 +1,27 @@
+  <!-- Descripcion -->
+  <div id="producto_descripcion_container">
+    <div class="boton">
+      <%= link_to_remote "Buscar descripción", :url => { :controller => :productos, :action => :search_description, :id => @producto.id, :codigo => @producto.codigo, :update => "producto_descripcion_container" },
+                :loading => "Element.show('spinner')", :complete => "Element.hide('spinner')" %>
+    </div>
+    <br/><br/>
+    <div id="producto_descripcion_label" class="product_description"><%= @producto.descripcion || "<br>".html_safe + "Pulsa aquí para cambiar la descripción" %></div>
+    <%= hidden_field "producto", :descripcion %>
+    <div id="producto_descripcion_edit" class="product_description" style="display:none;">
+      <%= text_area("product", "description", {:value => @producto.descripcion, :class => "form-field"}) %>
+      <div class="boton" style="margin-top:2px;">
+        <%= link_to_remote "Guardar Descripción", :url => { :controller => :productos, :action => :update_description, :id => @producto.id, :update => "datos_externos" },
+            :with => "'description='+encodeURIComponent($F('product_description'))",
+            :loading => "Element.show('spinner')", :complete => "Element.hide('spinner')" %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Permitimos la edicion del titulo -->
+  <script>
+    Event.observe('producto_descripcion_label', 'click', function() {
+      $('producto_descripcion_label').hide();
+      $('producto_descripcion_edit').show();
+      Modalbox.resizeToContent();
+    });
+  </script>

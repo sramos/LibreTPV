@@ -330,20 +330,50 @@ margin-top:15px;
 
 .datos_externos {
     float:left;
-    padding-left: 30px;
-    width: 375px;
-    height: 380px;
+    width: 420px;
+    min-height: 380px;
     overflow-y: scroll;
 }
 
-#producto_image {
+.image_cover {
+    width: 200px;
+}
+
+#producto_image_container {
     float: left;
     display: block;
     margin: auto;
     /*border: dotted 1px #ccc;*/
-    width: 130px;
+    width: 200px;
     padding: 5px;
+    text-align: center;
     /*height: 190px;*/
+}
+
+#producto_image_label {
+    width: 200px;
+}
+
+.producto_image_edit {
+    width: 200px;
+    clear: both;
+}
+
+.producto_image_edit img {
+    width: 94px;
+}
+
+.producto_image_edit div {
+    float: left;
+    width: 94px;
+    height: 158px;
+    border: 1px inset;
+    padding: 2px;
+}
+
+.producto_image_edit div:hover {
+    border: 1px dashed;
+    cursor: pointer;
 }
 
 #producto_descripcion_container {
@@ -355,7 +385,7 @@ margin-top:15px;
     max-height: 380px;
 }
 #producto_descripcion_edit textarea {
-    width: 214px;
+    width: 205px;
 }
 .boton {
     float: right;

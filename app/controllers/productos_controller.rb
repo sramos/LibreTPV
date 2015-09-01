@@ -77,8 +77,11 @@ class ProductosController < ApplicationController
   def modificar
     @producto = params[:id] ?  Producto.find(params[:id]) : Producto.new
     @producto.update_attributes params[:producto]
+    # Aunque no guardemos, tenemos que hacer esto para que no casque al vincular a flash
+    @producto.imagen = nil
+    # Y por fin, mostramos la salida
     if params[:inventario]
-      flash[:error] = @producto 
+      flash[:error] = @producto
       redirect_to :action => :listado
     else
       render :update do |page|
@@ -97,7 +100,7 @@ class ProductosController < ApplicationController
     redirect_to :action => :listado
   end
 
-	# Busca imagen y descripcion en internet
+  # Busca imagen y descripcion en internet
   def update_datos_externos
     @producto = Producto.find_by_id(params[:id]) || Producto.new(:codigo => params[:codigo])
     if params[:codigo]
@@ -111,11 +114,58 @@ class ProductosController < ApplicationController
     end
   end
 
+  # Busca descripcion en internet
+  def search_description
+    @producto = Producto.find_by_id(params[:id]) || Producto.new(:codigo => params[:codigo])
+    if params[:codigo]
+      @producto.get_remote_description
+      render :update do |page|
+        page.replace params[:update], :partial => 'datos_externos_descripcion'
+        page.call("Modalbox.resizeToContent")
+      end
+    end
+  end
+
+  # Busca imagen en internet
+  def search_cover
+    @producto = Producto.find_by_id(params[:id]) || Producto.new(:codigo => params[:codigo])
+    if params[:codigo]
+      @imagenes = @producto.get_available_images
+      render :update do |page|
+        page.replace params[:update], :partial => 'datos_externos_imagenes'
+        page.call("Modalbox.resizeToContent")
+      end
+    end
+  end
+
   # Actualiza la descripcion asociada al libro
   def update_description
     @producto = Producto.find_by_id(params[:id]) || Producto.new(:descripcion => params[:description])
     if params[:description] && @producto 
       @producto.update_attribute(:descripcion, params[:description]) if @producto.id
+      render :update do |page|
+        page.replace params[:update], :partial => 'datos_externos'
+        page.call("Modalbox.resizeToContent")
+      end
+    end
+  end
+
+  # Actualiza la imagen asociada al libro descargandosela si no esta ya
+  def update_cover
+    @producto = Producto.find_by_id(params[:id])
+    if @producto
+      # Actualizamos la imagen segun el origen que tengamos
+      case params[:source]
+      # Si elegimos la imagen ya cargada, nos aseguramos de que no exista la url
+      when "uploaded"
+        @producto.update_attribute(:url_imagen, nil)
+      # Cuando no queremos, elimina la imagen
+      when "none" 
+        @producto.update_attributes(url_imagen: nil, imagen: nil)
+      # En cualquier otro caso, descarga la imagen y la sube como adjunto
+      else
+        @producto.upload_remote_image(params[:image])
+      end
       render :update do |page|
         page.replace params[:update], :partial => 'datos_externos'
         page.call("Modalbox.resizeToContent")
