@@ -32,7 +32,7 @@ class ProductosController < ApplicationController
                 :order => 'productos.nombre ASC',
                 :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' ' + session[("productos_filtrado_condicion").to_sym] + ' ?', session[("productos_filtrado_valor").to_sym].to_i ]
         else
-          Producto.joins(:familia, :editorial, :autor).paginate :page => params[:page], :per_page => paginado,
+          Producto.includes(:familia, :editorial, :autor).paginate :page => params[:page], :per_page => paginado,
                 :order => 'productos.nombre ASC',
                 :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("productos_filtrado_valor").to_sym] + "%" ]
       end
