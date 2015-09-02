@@ -6,7 +6,8 @@ class EditorialController < ApplicationController
   end
 
   def listado
-    @editoriales = Editorial.all(:order => 'nombre')
+    paginado = Configuracion.valor('PAGINADO')
+    @editoriales = Editorial.paginate :page => params[:page], :per_page => paginado, :order => 'nombre'
   end
 
   def editar
