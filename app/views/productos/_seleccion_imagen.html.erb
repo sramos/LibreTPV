@@ -7,7 +7,7 @@
       <div>
         <%= image_src %>
         <%= link_to_remote img,
-             url: { controller: :productos, action: :update_cover, id: @producto.id, codigo: @producto.codigo, image: image_url, source: image_src, update: "datos_externos" },
+             url: { controller: :productos, action: :update_cover, id: @producto.id, codigo: @producto.codigo, image: image_url, source: image_src, update: params[:update] },
              loading: "Element.show('spinner')", complete: "Element.hide('spinner')" %>
       </div>
     <% end %>

@@ -6,20 +6,8 @@
   <div class="linea"><br/></div>
 
   <!-- Imagen del libro -->
-  <div id="producto_image_container">
-      <%= link_to_remote "Cambiar imagen", :url => { :controller => :productos, :action => :search_cover, :id => @producto.id, :codigo => @producto.codigo, :update => "producto_image_container" },
-                :loading => "Element.show('spinner')", :complete => "Element.hide('spinner')" %>
-    <br/><br/>
-    <div id="producto_image_label">
-      <% if @producto.imagen_file_name || @producto.url_imagen.blank? %>
-        <% image_url = @producto.imagen %>
-      <% else %>
-        <% image_url = @producto.url_imagen %>
-        <%= hidden_field "producto", :url_imagen %>
-      <% end %>
-      <%= image_tag image_url, {class: "image_cover"} %>
-    </div>
-  </div>
+  <%= render :partial => "datos_externos_imagen" %>
 
+  <!-- Descripcion del libro -->
   <%= render :partial => "datos_externos_descripcion" %>
 </div>

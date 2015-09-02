@@ -26,6 +26,9 @@
 
 class Producto < ActiveRecord::Base
 
+  # Definimos la imagen por defecto a utilizar
+  DEFAULT_IMAGE_URL = '/cover/missing_cover.jpg'
+
   validates_presence_of :nombre, :codigo
   #validates_numericality_of :precio, :cantidad
 #  validates_format_of :url_imagen,
@@ -43,7 +46,7 @@ class Producto < ActiveRecord::Base
   has_many :autor_x_producto, dependent: :destroy
   has_many :autor, through: :autor_x_producto
 
-  after_save :actualiza_editorial, :actualiza_autores
+  after_save :actualiza_editorial, :actualiza_autores, :actualiza_imagen
   after_destroy :eliminar_relacion_web
 
   # Imagen asociada al producto
@@ -51,7 +54,7 @@ class Producto < ActiveRecord::Base
   has_attached_file :imagen,
     path: "public/cover/:id.:extension",
     url: "/cover/:id.:extension",
-    default_url: "/cover/missing_cover.jpg"
+    default_url: DEFAULT_IMAGE_URL 
   validates_attachment_content_type :imagen, content_type: /\Aimage\/.*\Z/, :message => "La imagen de portada no es válida."
 
 
@@ -96,7 +99,7 @@ class Producto < ActiveRecord::Base
 
   def get_available_images
     # Primero metemos "Ninguna" imagen
-    images = {"Ninguna" => "/cover/missing_cover.jpg"}
+    images = {"Ninguna" => DEFAULT_IMAGE_URL}
     # Mete las imagenes disponibles en sitios externos
     data = get_data_from_lcdl
     images["LCDL"] = data[:image] if data && data[:image]
@@ -123,6 +126,21 @@ class Producto < ActiveRecord::Base
   end
 
 private
+
+  # Actualiza la imagen a usar como cover
+  def actualiza_imagen
+    # Si se esta utilizando una imagen externa, la descarga a local
+    if self.url_imagen && (self.imagen.blank? || self.url_imagen != self.imagen.to_s)
+      puts "------> Descargando la imagen: " + url_imagen
+      # Desactivamos el propio callback
+      Producto.skip_callback :save, :after, :actualiza_imagen
+      self.imagen = open(url_imagen)
+      self.save
+      Producto.set_callback :save, :after, :actualiza_imagen
+    end
+    # En cualquier caso, al terminar pone siempre a nil url_imagen
+    self.update_column(:url_imagen, nil) if self.url_imagen
+  end
 
   # Actualiza la relacion con la editorial
   def actualiza_editorial

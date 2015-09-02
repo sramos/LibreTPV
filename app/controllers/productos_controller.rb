@@ -62,7 +62,8 @@ class ProductosController < ApplicationController
   def editar
     @familias = Familia.all
     if params[:codigo]
-      @producto = producto_x_codigo_isbn_con_imagen(params[:codigo])
+      #@producto = producto_x_codigo_isbn_con_imagen(params[:codigo])
+      @producto = producto_x_codigo_isbn(params[:codigo])
     else
       @producto = Producto.find_by_id(params[:id]) || Producto.new 
     end
@@ -132,7 +133,7 @@ class ProductosController < ApplicationController
     if params[:codigo]
       @imagenes = @producto.get_available_images
       render :update do |page|
-        page.replace params[:update], :partial => 'datos_externos_imagenes'
+        page.replace params[:update], :partial => 'seleccion_imagen'
         page.call("Modalbox.resizeToContent")
       end
     end
@@ -152,22 +153,24 @@ class ProductosController < ApplicationController
 
   # Actualiza la imagen asociada al libro descargandosela si no esta ya
   def update_cover
-    @producto = Producto.find_by_id(params[:id])
+    # No actualizamos el producto, sino solo su imagen. Los datos se guardaran cuando se salve el texto
+    @producto = Producto.find_by_id(params[:id]) || Producto.new(:codigo => params[:codigo])
     if @producto
       # Actualizamos la imagen segun el origen que tengamos
       case params[:source]
       # Si elegimos la imagen ya cargada, nos aseguramos de que no exista la url
       when "uploaded"
-        @producto.update_attribute(:url_imagen, nil)
+        @producto.url_imagen = nil
       # Cuando no queremos, elimina la imagen
       when "none" 
-        @producto.update_attributes(url_imagen: nil, imagen: nil)
+        @producto.url_imagen = nil
+        @producto.imagen = nil
       # En cualquier otro caso, descarga la imagen y la sube como adjunto
       else
-        @producto.upload_remote_image(params[:image])
+        @producto.url_imagen = params[:image]
       end
       render :update do |page|
-        page.replace params[:update], :partial => 'datos_externos'
+        page.replace params[:update], :partial => 'datos_externos_imagen'
         page.call("Modalbox.resizeToContent")
       end
     end
@@ -287,7 +290,7 @@ class ProductosController < ApplicationController
       propiedades={}
       output.each{|a|
         a=~ /^([\S]{2})\s+-\s+(.+)$/
-        propiedades[$1]? propiedades[$1] += " - " + $2 : propiedades[$1] = $2
+        propiedades[$1]? propiedades[$1] += " / " + $2 : propiedades[$1] = $2
       }
       if propiedades["SN"]
         producto.nombre = propiedades["T1"]
@@ -312,6 +315,13 @@ class ProductosController < ApplicationController
           producto.autores = doc.search("h2[@class='author']//a").first.inner_html
           producto.editor = doc.search("//dd[@class='publisher']//a").first.inner_html
           producto.precio = doc.search("//spam[@itemprop='price']").first.inner_html.to_f.to_s
+          producto.description = Hpricot(doc).search("//p[@itemprop='description']").first.inner_html
+          remote_images = Hpricot(doc).search("//img[@class='portada']")
+          remote_image = nil
+          remote_images.each do |ri|
+            remote_image = ri[:src] if remote_image.nil? && ri && ri[:src] && ri[:src] != "/img/nodisponible.gif"
+          end
+          producto.imagen_url = remote_image unless remote_image.blank?
           doc.search("//dd[@class='publication-date']").first.inner_html =~ /-([0-9]+)$/
           producto.anno = $1
           producto.familia_id = 1
