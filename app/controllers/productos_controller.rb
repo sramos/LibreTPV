@@ -22,7 +22,7 @@ class ProductosController < ApplicationController
   end
 
   def listado
-    @campos_filtro = [["Nombre","productos.nombre"], ["Autor","autor"], ["Cantidad","cantidad"], ["Deposito","deposito"], ["Codigo","codigo"], ["Editor","editorial.nombre"], ["Familia","familias.nombre"]]
+    @campos_filtro = [["Nombre","productos.nombre"], ["Autor","autor.nombre"], ["Cantidad","cantidad"], ["Deposito","deposito"], ["Codigo","codigo"], ["Editor","editorial.nombre"], ["Familia","familias.nombre"]]
     paginado = Configuracion.valor('PAGINADO')
 
     if session[("productos_filtrado_tipo").to_sym] && session[("productos_filtrado_valor").to_sym]
@@ -32,7 +32,7 @@ class ProductosController < ApplicationController
                 :order => 'productos.nombre ASC',
                 :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' ' + session[("productos_filtrado_condicion").to_sym] + ' ?', session[("productos_filtrado_valor").to_sym].to_i ]
         else
-          Producto.joins(:familia, :editorial ).paginate :page => params[:page], :per_page => paginado,
+          Producto.joins(:familia, :editorial, :autor).paginate :page => params[:page], :per_page => paginado,
                 :order => 'productos.nombre ASC',
                 :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("productos_filtrado_valor").to_sym] + "%" ]
       end
@@ -291,7 +291,7 @@ class ProductosController < ApplicationController
       }
       if propiedades["SN"]
         producto.nombre = propiedades["T1"]
-        producto.autor = propiedades["A1"]
+        producto.autores = propiedades["A1"]
         producto.anno = propiedades["Y1"]
         producto.editor = propiedades["PB"]
         producto.familia_id = 1
@@ -309,7 +309,7 @@ class ProductosController < ApplicationController
           enlace =~ /href="(.+)"/
           doc = Hpricot Net::HTTP.get('www.todostuslibros.com', $1)
           producto.nombre = doc.search("h1[@class='title']").first.inner_html
-          producto.autor = doc.search("h2[@class='author']//a").first.inner_html
+          producto.autores = doc.search("h2[@class='author']//a").first.inner_html
           producto.editor = doc.search("//dd[@class='publisher']//a").first.inner_html
           producto.precio = doc.search("//spam[@itemprop='price']").first.inner_html.to_f.to_s
           doc.search("//dd[@class='publication-date']").first.inner_html =~ /-([0-9]+)$/

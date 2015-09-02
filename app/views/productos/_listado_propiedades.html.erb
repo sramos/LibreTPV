@@ -15,7 +15,7 @@
     </script> 
   <% end %>
   <%= "Nombre: " + truncate(@producto.nombre, :length => 20) if @producto.nombre %><br/>
-  <%= "Autor: " + @producto.autor if @producto.autor %><br/>
+  <%= "Autor: " + @producto.autores if @producto.autores %><br/>
   <%= "Editor: " + @producto.editor if @producto.editor %><br/>
   <%# "Año: " + @producto.anno if @producto.anno %>
   <%# "Descripción: " + @producto.descripcion if @producto.descripcion %>
