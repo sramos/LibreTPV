@@ -134,12 +134,18 @@ private
       puts "------> Descargando la imagen: " + url_imagen
       # Desactivamos el propio callback
       Producto.skip_callback :save, :after, :actualiza_imagen
-      self.imagen = open(url_imagen)
-      self.save
+      # Metemos la descarga en un try-catch para que se active el callback de nuevo en caso de error
+      begin
+        self.imagen = open(url_imagen)
+        self.save
+      rescue
+        logger.error "----------------> ERRORES descargando la imagen " + url_imagen.to_s
+      end
+      # Activamos de nuevo el callback
       Producto.set_callback :save, :after, :actualiza_imagen
     end
-    # En cualquier caso, al terminar pone siempre a nil url_imagen
-    self.update_column(:url_imagen, nil) if self.url_imagen
+    # En cualquier caso, al terminar pone siempre a nil url_imagen si tenemos imagen bien subida
+    self.update_column(:url_imagen, nil) unless self.url_imagen.blank? && self.imagen.blank?
   end
 
   # Actualiza la relacion con la editorial
