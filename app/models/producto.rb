@@ -43,7 +43,7 @@ class Producto < ActiveRecord::Base
   has_many :autor_x_producto, dependent: :destroy
   has_many :autor, through: :autor_x_producto
 
-  after_save :actualiza_editorial
+  after_save :actualiza_editorial, :actualiza_autores
   after_destroy :eliminar_relacion_web
 
   # Imagen asociada al producto
@@ -63,9 +63,12 @@ class Producto < ActiveRecord::Base
     @editor || (editorial ? editorial.nombre : nil)
   end
 
+  # Creamos un attr_writer para guardar en @autores el valor (y luego relacionarlo con los modelos)
+  attr_writer :autores
+
   # Devuelve un string con los nombres de todos los autores
   def autores
-    self.autor.collect{|a| a.nombre}.join(' / ')
+    @autores || self.autor.collect{|a| a.nombre}.join(' / ')
   end
 
   # Sincroniza con la BBDD de la web
@@ -125,6 +128,23 @@ private
   def actualiza_editorial
     ed_id = @editor.nil? ? nil : Editorial.find_or_create_by_nombre(@editor.strip).id
     self.update_column(:editorial_id, ed_id) unless ed_id == self.editorial_id
+  end
+
+  # Actualiza las relaciones con los autores
+  def actualiza_autores
+    # Primero limpiamos todo a no ser que no hayamos tocado el campo @autores
+    self.autor_x_producto.destroy_all unless @autores.nil?
+    if @autores
+      # Separamos los autores por "/"
+      @autores.strip.mb_chars.upcase.split(%r{\s*/\s*}).each do |str_autor|
+        # Genera el autor corrigiendo previamente el nombre:
+        #  * Varios espacios se convierten en uno solo
+        #  * Se eliminan espacios antes de la coma (separacion de apellido del nombre) 
+        nom = str_autor.gsub(/\s+,\s./, ', ').gsub(/\s+/, ' ')
+        aut = Autor.find_or_create_by_nombre nom
+        axp = AutorXProducto.create(autor_id: aut.id, producto_id: self.id) if aut.errors.empty?
+      end  
+    end
   end
 
   # Marca el campo "eliminar" de la tabla de relaciones como true
