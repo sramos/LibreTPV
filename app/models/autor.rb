@@ -24,9 +24,11 @@
 #++
 
 
-class Editorial < ActiveRecord::Base
+class Autor < ActiveRecord::Base
 
-  has_many :producto
+  has_many :autor_x_producto
+  has_many :producto, through: :autor_x_producto
+
   has_one :relacion_web, as: :elemento
 
   validate :sanea_nombre
@@ -45,12 +47,14 @@ class Editorial < ActiveRecord::Base
 
   private
     def sanea_nombre
-      self.nombre = self.nombre.strip
-      #self.nombre = self.nombre.strip.mb_chars.upcase
+      self.nombre = nil if self.nombre.upcase == "&NBSP;"
+      self.nombre = self.nombre.strip.mb_chars.upcase if self.nombre
+      self.errors.add :base, "Nombre no puede estar vacío" if self.nombre.blank?
+      return self.errors.empty?
     end
 
     def verificar_borrado
-      errors.add(:base, "No se puede borrar la editorial. Hay productos asociados a ella.") unless self.producto.empty?
+      errors.add( :base, "No se puede borrar el autor: Hay productos asociados a él." ) unless self.autor_x_producto.empty?
       return self.errors.empty?
     end
 

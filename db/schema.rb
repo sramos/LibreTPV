@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150831095433) do
+ActiveRecord::Schema.define(:version => 20150902082503) do
 
   create_table "albaran_lineas", :force => true do |t|
     t.integer  "cantidad",                                         :default => 1
@@ -38,6 +38,20 @@ ActiveRecord::Schema.define(:version => 20150831095433) do
     t.boolean  "deposito",         :default => false
     t.date     "fecha_devolucion"
     t.integer  "factura_id"
+  end
+
+  create_table "autor", :force => true do |t|
+    t.string   "nombre",     :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "autor_x_producto", :force => true do |t|
+    t.integer  "autor_id",    :null => false
+    t.integer  "producto_id", :null => false
+    t.string   "rol"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "avisos", :force => true do |t|
@@ -149,7 +163,6 @@ ActiveRecord::Schema.define(:version => 20150831095433) do
   create_table "productos", :force => true do |t|
     t.string   "codigo"
     t.string   "nombre"
-    t.string   "autor"
     t.string   "anno"
     t.text     "descripcion"
     t.string   "url_imagen"

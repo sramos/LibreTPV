@@ -40,6 +40,9 @@ class Producto < ActiveRecord::Base
   has_many :albaran_linea
   has_one :relacion_web, as: :elemento
 
+  has_many :autor_x_producto, dependent: :destroy
+  has_many :autor, through: :autor_x_producto
+
   after_save :actualiza_editorial
   after_destroy :eliminar_relacion_web
 
@@ -58,6 +61,11 @@ class Producto < ActiveRecord::Base
   # Devuelve el string del editor asociado (no usamos el attr_reader para poder pillar el valor del modelo asociado)
   def editor
     @editor || (editorial ? editorial.nombre : nil)
+  end
+
+  # Devuelve un string con los nombres de todos los autores
+  def autores
+    self.autor.collect{|a| a.nombre}.join(' / ')
   end
 
   # Sincroniza con la BBDD de la web

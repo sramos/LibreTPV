@@ -24,38 +24,12 @@
 #++
 
 
-class Editorial < ActiveRecord::Base
+class AutorXProducto < ActiveRecord::Base
 
-  has_many :producto
-  has_one :relacion_web, as: :elemento
+  belongs_to :autor
+  belongs_to :producto
 
-  validate :sanea_nombre
-  validates_uniqueness_of :nombre, :message => "Nombre repetido.", :case_sensitive => false
-
-  before_destroy :verificar_borrado
-  after_destroy :eliminar_relacion_web
-
-  # Sincroniza con la BBDD de la web
-  def sincroniza_drupal
-    # Solo sincroniza si esta definida la conexion con la BBDD
-    if Rails.application.config.database_configuration["drupal_#{Rails.env}"]
-      # Hace falta una tabla de conversion NID <-> ID
-    end
-  end
-
-  private
-    def sanea_nombre
-      self.nombre = self.nombre.strip
-      #self.nombre = self.nombre.strip.mb_chars.upcase
-    end
-
-    def verificar_borrado
-      errors.add(:base, "No se puede borrar la editorial. Hay productos asociados a ella.") unless self.producto.empty?
-      return self.errors.empty?
-    end
-
-    def eliminar_relacion_web
-      relacion_web.update_attribute(:eliminar, true) if self.relacion_web
-    end
-
+  validates_presence_of :autor_id, :message => "Autor no puede estar vacío."
+  validates_presence_of :producto_id, :message => "Producto no puede estar vacío."
+  validates_uniqueness_of :autor_id, :scope => :producto_id, :message => "Autor repetido."
 end

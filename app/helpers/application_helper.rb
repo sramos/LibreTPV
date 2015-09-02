@@ -335,6 +335,7 @@ module ApplicationHelper
                           { :rotulo => "Familias de Productos", :controlador => "familia"},
                           { :rotulo => "Materias", :controlador => "materia" },
                           { :rotulo => "Editoriales", :controlador => "editorial" },
+                          { :rotulo => "Autores", :controlador => "autor" },
 			  { :rotulo => "Avisos", :controlador => "avisos"} ]
 
     end
@@ -344,9 +345,9 @@ module ApplicationHelper
   def campos_listado tipo
     case tipo
       when "inventario"
-        ["codigo", "familia.nombre", "nombre", "autor", "cantidad", "precio"]
+        ["codigo", "familia.nombre", "nombre", "autores", "cantidad", "precio"]
       when "inventario_deposito"
-        ["producto.cantidad", "cantidad", "producto.nombre", "producto.autor", "albaran.proveedor.nombre", "albaran.fecha_devolucion", "producto.precio"]
+        ["producto.cantidad", "cantidad", "producto.nombre", "producto.autores", "albaran.proveedor.nombre", "albaran.fecha_devolucion", "producto.precio"]
       when "proveedores"
         ["cif", "nombre", "telefono", "email", "descuento"]
       when "clientes"
@@ -415,6 +416,8 @@ module ApplicationHelper
         ["nombre"]
       when "editoriales"
         ["nombre"]
+      when "autores"
+        ["nombre"]
       when "formas_pago"
         ["nombre", "caja"]
     end
@@ -440,10 +443,10 @@ module ApplicationHelper
 			"producto.codigo"		=> ["Código/ISBN", "1_2", 15],
 			"producto.nombre"		=> ["Nombre/Título", "1", 36],
 			"producto.cantidad"		=> ["Stock", "1_5", 8, "d"],
-			"producto.autor"		=> ["Autor", "2_3", 20],
+			"producto.autores"		=> ["Autor", "2_3", 20],
 			"nombre_producto"		=> ["Nombre/Título", "1", 36],
 			"nombre"			=> ["Nombre/Título", "1", 36],
-			"autor"				=> ["Autor", "2_3", 20],
+			"autores"			=> ["Autor", "2_3", 20],
 			"producto.precio"		=> ["PVP", "1_4", 14, "f"],
 			"cantidad"			=> ["Cant.", "1_5", 8, "d"],
 			"precio"			=> ["PVP", "1_4", 14, "f"],

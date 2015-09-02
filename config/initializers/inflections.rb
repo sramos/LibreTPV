@@ -17,5 +17,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'materia', 'materia'
   inflect.irregular 'familia', 'familias'
   inflect.irregular 'editorial', 'editorial'
+  inflect.irregular 'autor', 'autor'
+  inflect.irregular 'autor_x_producto', 'autor_x_producto'
   inflect.irregular 'relacion_web', 'relacion_web'
 end
