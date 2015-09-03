@@ -1,0 +1,13 @@
+<!--- Sublistado de productos de un autor --->
+
+<%= cabecera_sublistado "Productos del Autor", "productos_autor", params[:update] %>
+<% for objeto in @productos %>
+  <div id="<%= params[:update] %>_producto_<%= objeto.id.to_s %>" class="fila" >
+    <%= fila_sublistado objeto %>
+    <div class="listado_derecha">
+    </div>
+  </div>
+<% end %>
+<%= final_sublistado %>
+<br/>
+

@@ -1,18 +1,19 @@
 <!--- Listado de autores --->
 
 <div class="caja_completa">
-<%= cabecera_listado "autores", { :title => "Nuevo", :url => { :action => :editar } } %>
-<% i = 0 %>
+<%= cabecera_listado "autores", { title: "Nuevo", url: { action: :editar } } %>
 <% for objeto in @autores %>
-  <div id="autor_<%= i += 1 %>" class="listadofila">
+  <% id = "autor_" + objeto.id.to_s %>
+  <div id="<%= id %>" class="listadofila">
     <%= fila_listado objeto %>
     <div class="listado_derecha">
+      <%= link_to_remote icono('Cart2',{title: "Ver Productos"}), url: { action: :listado_productos, id: objeto.id, update: id + "_sub" }, loading: "Element.show('#{id}_spinner')", :complete => "Element.hide('#{id}_spinner')" %>
       <%= modal icono("Write",{:title => "Editar"}), { action: :editar, id: objeto.id, page: params[:page] }, 'Editar Autor' %>
-      <%= borrado icono('Trash',{:title => "Borrar"}), { action: :borrar, id: objeto, page: params[:page] }, 'Eliminar Autor', 'Autor: ' + objeto.nombre, ajax: false %>
+      <%= borrado icono('Trash',{:title => "Borrar"}), { action: :borrar, id: objeto.id, page: params[:page] }, 'Eliminar Autor', 'Autor: ' + objeto.nombre, ajax: false %>
     </div>
   <div class='linea'></div>
-  <div id="spinner_<%= objeto.id.to_s %>" class="spinner" style="display:none" ></div>
-  <div id="autor_sub_<%= i %>" class="linea"></div>
+  <div id="<%= id %>_spinner" class="spinner" style="display:none" ></div>
+  <div id="<%= id %>_sub" class="linea"></div>
   </div>
 <% end %>
 <%= final_listado @autores %>

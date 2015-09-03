@@ -2,17 +2,17 @@
 
 <div class="caja_completa">
 <%= cabecera_listado "editoriales", { :title => "Nuevo", :url => { :action => :editar } } %>
-<% i = 0 %>
 <% for objeto in @editoriales %>
-  <div id="editorial_<%= i += 1 %>" class="listadofila">
+  <% id = "editorial_" + objeto.id.to_s %>
+  <div id="<%= id %>" class="listadofila">
     <%= fila_listado objeto %>
     <div class="listado_derecha">
       <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id }, "Editar Editorial" %>
-      <%= borrado icono('Trash',{:title => "Borrar"}), {:action => :borrar, :id => objeto}, 'Eliminar Editorial', "Editorial: " + objeto.nombre, :ajax => false %>
+      <%= borrado icono('Trash',{:title => "Borrar"}), {:action => :borrar, :id => objeto.id }, 'Eliminar Editorial', "Editorial: " + objeto.nombre, :ajax => false %>
     </div>
   <div class='linea'></div>
-  <div id="spinner_<%= objeto.id.to_s %>" class="spinner" style="display:none" ></div>
-  <div id="editorial_sub_<%= i %>" class="linea"></div>
+  <div id="<%= id %>_spinner" class="spinner" style="display:none" ></div>
+  <div id="<%= id %>_sub" class="linea"></div>
   </div>
 <% end %>
 <%= final_listado @editoriales %>

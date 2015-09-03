@@ -420,6 +420,8 @@ module ApplicationHelper
         ["nombre"]
       when "autores"
         ["nombre", "autor_x_producto.count"]
+      when "productos_autor"
+        ["codigo", "familia.nombre", "nombre", "autores", "cantidad"]
       when "formas_pago"
         ["nombre", "caja"]
     end
