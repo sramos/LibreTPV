@@ -12,8 +12,8 @@
       <%= link_to_remote icono('Cart2',{:title => "Ver Compras"}), :url => { :action => 'albaranes_compra', :id => objeto.id, :update => "productos_sub_" + i.to_s + "_compras" }, :loading => "Element.show('spinner_#{i.to_s }')", :complete => "Element.hide('spinner_#{i.to_s}')" %>
       <%= link_to_remote icono('Cart',{:title => "Ver Ventas"}), :url => { :action => 'albaranes_venta', :id => objeto.id, :update => "productos_sub_" + i.to_s + "_ventas"}, :loading => "Element.show('spinner_#{i.to_s }')", :complete => "Element.hide('spinner_#{i.to_s}')" %>
       <%# link_to icono('Tag', {:title => "Generar Etiqueta"}), :action => 'etiqueta', :id => objeto.id %>
-      <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id, :inventario => true }, "Editar Libro" %>
-      <%= borrado icono('Trash',{:title => 'Borrar'}), { :action => 'borrar', :id => objeto.id } , 'Borrar Libro', objeto.nombre , :ajax => false %>
+      <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id, :inventario => true, :page => params[:page] }, "Editar Libro" %>
+      <%= borrado icono('Trash',{:title => 'Borrar'}), { :action => 'borrar', :id => objeto.id, :page => params[:page] } , 'Borrar Libro', objeto.nombre , :ajax => false %>
     </div>
   </div>
   <div id="spinner_<%= i.to_s %>" class="spinner" style="display:none" ></div>

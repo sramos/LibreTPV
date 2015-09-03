@@ -1,5 +1,5 @@
 <div id="propiedades">
-<%= inicio_formulario( { :action => 'modificar', :id => @producto, :update => params[:update], :nuevo => params[:nuevo], :inventario => params[:inventario] }, !params[:inventario] ) %>
+<%= inicio_formulario( { action: :modificar, id: @producto, update: params[:update], nuevo: params[:nuevo], page: params[:page], inventario: params[:inventario] }, !params[:inventario] ) %>
  <div class="contenedor">
    
    <div class="formulario_izqda linea">

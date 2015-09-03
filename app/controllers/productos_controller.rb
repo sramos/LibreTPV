@@ -83,7 +83,7 @@ class ProductosController < ApplicationController
     # Y por fin, mostramos la salida
     if params[:inventario]
       flash[:error] = @producto
-      redirect_to :action => :listado
+      redirect_to action: :listado, page: params[:page]
     else
       render :update do |page|
         page.replace_html params[:update], :partial => "listado_propiedades"
@@ -98,7 +98,7 @@ class ProductosController < ApplicationController
     @producto = Producto.find_by_id(params[:id])
     @producto.destroy
     flash[:error] = @producto
-    redirect_to :action => :listado
+    redirect_to action: :listado, page: params[:page]
   end
 
   # Busca imagen y descripcion en internet
