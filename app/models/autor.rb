@@ -31,7 +31,7 @@ class Autor < ActiveRecord::Base
 
   has_one :relacion_web, as: :elemento
 
-  validate :sanea_nombre
+  validate :valida_nombre
   validates_uniqueness_of :nombre, :message => "Nombre repetido.", :case_sensitive => false
 
   before_destroy :verificar_borrado
@@ -45,12 +45,33 @@ class Autor < ActiveRecord::Base
     end
   end
 
+  # Renombra a un autor (si ya existe alguno con el nombre propuesto, mueve los libros al nuevo
+  def renombra_autor nuevo_nombre=nil, reasigna_productos=false
+    nuevo_nombre = sanea_nombre(nuevo_nombre)
+    if nuevo_nombre && self.nombre != nuevo_nombre
+      # Busca si existe ya algun autor con ese nombre
+      autor_existente = Autor.find_by_nombre nuevo_nombre
+      # Si ya existe el autor, 
+      if autor_existente && reasigna_productos
+        autor_x_producto.update_all(autor_id: autor_existente.id)
+        self.destroy
+      else
+        self.update_attributes(nombre: nuevo_nombre) 
+      end
+    end 
+  end
+
   private
-    def sanea_nombre
-      self.nombre = nil if self.nombre.upcase == "&NBSP;"
-      self.nombre = self.nombre.strip.mb_chars.upcase if self.nombre
+    def valida_nombre
+      self.nombre = sanea_nombre(self.nombre)
       self.errors.add :base, "Nombre no puede estar vacío" if self.nombre.blank?
       return self.errors.empty?
+    end
+
+    def sanea_nombre nom
+      nom = nil if nom.upcase == "&NBSP;"
+      nom = nom.strip.mb_chars.upcase if nom
+      return nom
     end
 
     def verificar_borrado

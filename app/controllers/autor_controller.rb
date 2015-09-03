@@ -7,7 +7,7 @@ class AutorController < ApplicationController
 
   def listado
     paginado = Configuracion.valor('PAGINADO')
-    @autores = Autor.paginate :page => params[:page], :per_page => paginado, :order => 'nombre'
+    @autores = Autor.paginate page: params[:page], per_page: paginado, order: 'nombre'
   end
 
   def editar
@@ -17,16 +17,20 @@ class AutorController < ApplicationController
 
   def modificar
     @autor = Autor.find_by_id(params[:id]) || Autor.new
-    @autor.update_attributes params[:autor]
+    if params[:renombra_autor] == "1"
+      @autor.renombra_autor params[:autor][:nombre], true
+    else
+      @autor.update_attributes params[:autor]
+    end
     flash[:error] = @autor
-    redirect_to :action => :listado
+    redirect_to action: :listado, page: params[:page]
   end
 
   def borrar
     @autor = Autor.find_by_id(params[:id])
     @autor.destroy
     flash[:error] = @autor
-    redirect_to :action => :listado
+    redirect_to action: :listado, page: params[:page]
   end
 
 end

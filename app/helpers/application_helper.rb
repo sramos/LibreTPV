@@ -88,7 +88,7 @@ module ApplicationHelper
 
   # paginación, se integra en final_listado
   def paginacion elementopaginado, elementosxpagina
-    formulario = "<div class='listadofila' id='paginado'>\n" + (will_paginate(elementopaginado, :previous_label => "<< "+ "Anterior", :next_label => "Siguiente" + " >>", :class => "listado_campo_2") or " ")
+    formulario  = "<div class='listadofila' id='paginado'>" + (will_paginate(elementopaginado, class: "listado_campo_2") || " ")
     formulario += "<div class='listado_derecha'> "+ informacion_paginacion(elementopaginado)  + "</div>"
     formulario += "<div class='linea'></div></div>"
     return formulario.html_safe
@@ -208,10 +208,12 @@ module ApplicationHelper
 
   # check_box 
   def checkbox rotulo, objeto, atributo, otros={}
+    clase = otros[:clase]||'' 
+    title = otros[:title] ? ("title = '" + otros[:title] + "'" ) : ""
     if otros[:izquierda]
-      ('<div class="elemento">' + check_box( objeto, atributo, {:checked => otros[:checked] } ) + rotulo + '</div>').html_safe
+      ('<div class="elemento' + clase + '" #{title}>' + ( ("<br>" if otros[:abajo]) || "")).html_safe +  check_box( objeto, atributo, {:checked => otros[:checked], :disabled => otros[:disabled]} ) + rotulo + "</div>".html_safe
     else
-      ('<div class="elemento">' + rotulo + check_box( objeto, atributo, {:checked => otros[:checked] } ) + '</div>').html_safe
+      ('<div class="elemento' + clase + '" #{title}>' + ( ("<br>" if otros[:abajo]) || "")).html_safe + rotulo + check_box( objeto, atributo, {:checked => otros[:checked], :disabled => otros[:disabled]} ) + "</div>".html_safe
     end
   end
 
@@ -417,7 +419,7 @@ module ApplicationHelper
       when "editoriales"
         ["nombre"]
       when "autores"
-        ["nombre"]
+        ["nombre", "autor_x_producto.count"]
       when "formas_pago"
         ["nombre", "caja"]
     end
@@ -434,7 +436,7 @@ module ApplicationHelper
     etiqueta = {	"albaran.cliente.nombre"	=> ["Cliente", "1", 36],
 			"albaran.proveedor.nombre"	=> ["Proveedor", "2_3", 20],
 			"albarans.first.cliente.nombre"	=> ["Cliente", "1", 36],
-			"albarans.first.proveedor.nombre"	=> ["Proveedor", "2_3", 20],
+			"albarans.first.proveedor.nombre" => ["Proveedor", "2_3", 20],
 			"cliente.nombre"		=> ["Cliente", "1", 36],
 			"familia.nombre"		=> ["Familia", "1_2", 15],
 			"proveedor.nombre"		=> ["Proveedor", "1", 36],
@@ -498,7 +500,8 @@ module ApplicationHelper
 			"direccion"			=> ["Dirección", "1", 36],
 			"contacto"			=> ["Dirección", "1", 36],
 			"mensaje"			=> ["Mensaje", "1", 36],
-			"updated_at"			=> ["Modificado", "2_3", 20],	
+			"updated_at"			=> ["Modificado", "2_3", 20],
+                        "autor_x_producto.count"        => ["Núm.Productos", "1_4", 14, "d"],
 		}
     return etiqueta[campo] || [campo.capitalize, "1_2", 15]
   end

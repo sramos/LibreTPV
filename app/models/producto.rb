@@ -108,7 +108,7 @@ class Producto < ActiveRecord::Base
     data = get_data_from_todostuslibros
     images["TTL"] = data[:image] if data && data[:image]
     # La propia subida si existe
-    images["Personalizada"] = self.imagen if self.imagen_file_name
+    images["Actual"] = self.imagen if self.imagen_file_name
     return images
   end
 

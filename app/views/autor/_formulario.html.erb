@@ -1,5 +1,6 @@
 
-<%= inicio_formulario( { :action => 'modificar', :id => @autor }, false ) %>
+<%= inicio_formulario( { action: 'modificar', id: @autor, page: params[:page] }, false ) %>
   <%= texto "Nombre", 'autor', 'nombre' %>
+  <%= checkbox "Mezclar si ya exite un autor con ese nombre", '', 'renombra_autor', {abajo: true, clase: "2"} if @autor.id %>
 <%= final_formulario %>
 
