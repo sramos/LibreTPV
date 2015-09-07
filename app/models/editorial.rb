@@ -66,7 +66,7 @@ class Editorial < ActiveRecord::Base
     end
 
     def verificar_borrado
-      errors.add(:base, "No se puede borrar la editorial. Hay productos asociados a ella.") unless self.producto.empty?
+      self.errors.add(:base, "No se puede borrar la editorial. Hay productos asociados a ella.") unless self.producto.empty?
       return self.errors.empty?
     end
 

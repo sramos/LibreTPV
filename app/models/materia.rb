@@ -61,11 +61,8 @@ class Materia < ActiveRecord::Base
     end
 
     def verificar_borrado
-      productos=Producto.find :all, :conditions => { :materia_id => self.id }
-      if !productos.empty?
-        errors.add( "familia", "No se puede borrar la materia: Hay productos relacionados con ella." ) 
-        false
-      end
+      self.errors.add( "familia", "No se puede borrar la materia: Hay productos relacionados con ella." ) unless self.producto.empty?
+      return self.errors.empty?
     end
 
     def eliminar_relacion_web

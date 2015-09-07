@@ -16,11 +16,8 @@ class Familia < ActiveRecord::Base
 
   private
     def verificar_borrado
-      productos=Producto.find :all, :conditions => { :familia_id => self.id }
-      if !productos.empty?
-        errors.add( "familia", "No se puede borrar la familia: Hay productos relacionados con ella." ) 
-        false
-      end
+      self.errors.add( "familia", "No se puede borrar la familia: Hay productos relacionados con ella." ) unless self.producto.empty?
+      return self.errors.empty?
     end
 
 end
