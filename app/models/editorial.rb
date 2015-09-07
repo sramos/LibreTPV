@@ -35,6 +35,22 @@ class Editorial < ActiveRecord::Base
   before_destroy :verificar_borrado
   after_destroy :eliminar_relacion_web
 
+  # Renombra una editorial (si ya existe alguno con el nombre propuesto, mueve los libros al nuevo)
+  def renombra nuevo_nombre=nil, reasigna_productos=false
+    nuevo_nombre.strip!
+    if nuevo_nombre && self.nombre != nuevo_nombre
+      # Busca si existe ya alguna editorial con ese nombre
+      existente = Editorial.find_by_nombre nuevo_nombre
+      # Si ya existe la editorial 
+      if existente && reasigna_productos
+        producto.update_all(editorial_id: existente.id)
+        self.destroy
+      else
+        self.update_attributes(nombre: nuevo_nombre)
+      end
+    end
+  end
+
   # Sincroniza con la BBDD de la web
   def sincroniza_drupal
     # Solo sincroniza si esta definida la conexion con la BBDD

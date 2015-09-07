@@ -417,7 +417,7 @@ module ApplicationHelper
       when "materias"
         ["familia.nombre", "nombre", "valor_defecto"]
       when "editoriales"
-        ["nombre"]
+        ["nombre", "producto.count"]
       when "autores"
         ["nombre", "autor_x_producto.count"]
       when "productos_autor"
@@ -504,6 +504,7 @@ module ApplicationHelper
 			"mensaje"			=> ["Mensaje", "1", 36],
 			"updated_at"			=> ["Modificado", "2_3", 20],
                         "autor_x_producto.count"        => ["Núm.Productos", "1_4", 14, "d"],
+                        "producto.count"                => ["Núm.Productos", "1_4", 14, "d"],
                         "valor_defecto"                 => ["Valor por defecto", "2_3", 20],
 		}
     return etiqueta[campo] || [campo.capitalize, "1_2", 15]

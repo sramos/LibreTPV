@@ -38,8 +38,8 @@ class AutorController < ApplicationController
   # Actualiza o crea la informacion de un autor
   def modificar
     @autor = Autor.find_by_id(params[:id]) || Autor.new
-    if params[:renombra_autor] == "1"
-      @autor.renombra_autor params[:autor][:nombre], true
+    if @autor.id && params[:renombra_autor] == "1"
+      @autor.renombra params[:autor][:nombre], true
     else
       @autor.update_attributes params[:autor]
     end

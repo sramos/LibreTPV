@@ -1,5 +1,6 @@
 
 <%= inicio_formulario( { :action => 'modificar', :id => @editorial }, false ) %>
   <%= texto "Nombre", 'editorial', 'nombre' %>
+  <%= checkbox "Mezclar si ya exite una editorial con ese nombre", '', 'renombra_editorial', {abajo: true, clase: "2"} if @editorial.id %>
 <%= final_formulario %>
 

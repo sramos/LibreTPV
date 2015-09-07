@@ -35,7 +35,11 @@ class EditorialController < ApplicationController
 
   def modificar
     @editorial = Editorial.find_by_id(params[:id]) || Editorial.new
-    @editorial.update_attributes params[:editorial]
+    if @editorial.id && params[:renombra_editorial] == "1"
+      @editorial.renombra params[:editorial][:nombre], true
+    else
+      @editorial.update_attributes params[:autor]
+    end
     flash[:error] = @editorial
     redirect_to :action => :listado
   end

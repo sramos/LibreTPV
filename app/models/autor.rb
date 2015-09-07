@@ -45,15 +45,15 @@ class Autor < ActiveRecord::Base
     end
   end
 
-  # Renombra a un autor (si ya existe alguno con el nombre propuesto, mueve los libros al nuevo
-  def renombra_autor nuevo_nombre=nil, reasigna_productos=false
+  # Renombra a un autor (si ya existe alguno con el nombre propuesto, mueve los libros al nuevo)
+  def renombra nuevo_nombre=nil, reasigna_productos=false
     nuevo_nombre = sanea_nombre(nuevo_nombre)
     if nuevo_nombre && self.nombre != nuevo_nombre
       # Busca si existe ya algun autor con ese nombre
-      autor_existente = Autor.find_by_nombre nuevo_nombre
+      existente = Autor.find_by_nombre nuevo_nombre
       # Si ya existe el autor, 
-      if autor_existente && reasigna_productos
-        autor_x_producto.update_all(autor_id: autor_existente.id)
+      if existente && reasigna_productos
+        autor_x_producto.update_all(autor_id: existente.id)
         self.destroy
       else
         self.update_attributes(nombre: nuevo_nombre) 
