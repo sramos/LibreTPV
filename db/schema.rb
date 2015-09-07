@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150904095317) do
+ActiveRecord::Schema.define(:version => 20150907132336) do
 
   create_table "albaran_lineas", :force => true do |t|
     t.integer  "cantidad",                                         :default => 1
@@ -128,7 +128,8 @@ ActiveRecord::Schema.define(:version => 20150904095317) do
     t.integer  "iva_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "acumulable", :default => 0
+    t.integer  "acumulable",     :default => 0
+    t.boolean  "sincroniza_web", :default => false, :null => false
   end
 
   create_table "forma_pagos", :force => true do |t|

@@ -1,6 +1,13 @@
 <%= inicio_formulario( { :action => 'modificar', :id => @familia }, false ) %>
-  <%= texto "Nombre", "familia", "nombre" %>
-  <%= selector "IVA", "familia", "iva_id", @ivas.map {|u| [u.nombre,u.id]} %>
-  <%= texto "% Reembolso", "familia", "acumulable" %>
+  <div class="linea">
+    <%= texto "Nombre", "familia", "nombre" %>
+    <%= selector "IVA", "familia", "iva_id", @ivas.map {|u| [u.nombre,u.id]} %>
+    <%= texto "% Reembolso", "familia", "acumulable" %>
+  </div>
+  <div class="linea">
+    <div class="elemento"><br/></div>
+    <div class="elemento_x15"><br/></div>
+    <%= checkbox "Sincroniza productos en la web", 'familia', 'sincroniza_web', {abajo: true, izquierda: true, clase: "_x2", checked: @familia.sincroniza_web} %>
+  </div>
 <%= final_formulario %>
 
