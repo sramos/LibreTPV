@@ -1,5 +1,7 @@
 <!--- Listado de editoriales --->
 
+<%= render :partial => "filtro" %>
+
 <div class="caja_completa">
 <%= cabecera_listado "editoriales", { :title => "Nuevo", :url => { :action => :editar } } %>
 <% for objeto in @editoriales %>

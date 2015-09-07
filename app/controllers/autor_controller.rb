@@ -6,9 +6,9 @@ class AutorController < ApplicationController
   end
 
   def filtrado
-    session[("autores_filtrado_tipo").to_sym] = params[:filtro][:tipo] if params[:filtro]
-    session[("autores_filtrado_valor").to_sym] = ( params[:filtro] && params[:filtro][:valor] != "" ) ? params[:filtro][:valor] : nil
-    session[("autores_filtrado_condicion").to_sym] = params[:filtro] ? params[:filtro][:condicion] : nil 
+    session[("autor_filtrado_tipo").to_sym] = params[:filtro][:tipo] if params[:filtro]
+    session[("autor_filtrado_valor").to_sym] = ( params[:filtro] && params[:filtro][:valor] != "" ) ? params[:filtro][:valor] : nil
+    session[("autor_filtrado_condicion").to_sym] = params[:filtro] ? params[:filtro][:condicion] : nil 
     redirect_to :action => :listado
   end
 
@@ -17,12 +17,12 @@ class AutorController < ApplicationController
     @campos_filtro = [["Nombre","nombre"]]
     paginado = Configuracion.valor('PAGINADO')
 
-    if session[("autores_filtrado_tipo").to_sym] && session[("autores_filtrado_valor").to_sym]
-      @autores = case session[("autores_filtrado_tipo").to_sym]
+    if session[("autor_filtrado_tipo").to_sym] && session[("autor_filtrado_valor").to_sym]
+      @autores = case session[("autor_filtrado_tipo").to_sym]
         when "nombre" then
           Autor.paginate :page => params[:page], :per_page => paginado,
                 :order => 'nombre ASC',
-                :conditions => [ session[("autores_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("autores_filtrado_valor").to_sym] + "%" ]
+                :conditions => [ session[("autor_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("autor_filtrado_valor").to_sym] + "%" ]
         end
     else
       @autores = Autor.paginate page: params[:page], per_page: paginado, order: 'nombre'

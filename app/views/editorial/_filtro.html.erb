@@ -1,4 +1,4 @@
-<fieldset class="filtrado" id="filtro_autor">
+<fieldset class="filtrado" id="filtro_editorial">
   <%= inicio_formulario( { :action => 'filtrado' }, false ) %>
     <div class="linea">
       <%= selector 'Criterio de Filtrado', 'filtro', 'tipo', @campos_filtro.map {|u| [u[0],u[1]]} %>
@@ -14,11 +14,11 @@
       </div>
     </div>
   </form>
-  <% if session[("autor_filtrado_valor").to_sym] && session[("autor_filtrado_valor").to_sym] != '' %>
+  <% if session[("editorial_filtrado_valor").to_sym] && session[("editorial_filtrado_valor").to_sym] != '' %>
     <div class='linea texto_filtrado' id="texto_filtrado">
-      Filtrado por <%= session[("autor_filtrado_tipo").to_sym].capitalize %>
-      <%= session[("autor_filtrado_condicion").to_sym] ? session[("autor_filtrado_condicion").to_sym] : " >> " %>
-      "<%= session[("autor_filtrado_valor").to_sym] %>"
+      Filtrado por <%= session[("editorial_filtrado_tipo").to_sym].capitalize %>
+      <%= session[("editorial_filtrado_condicion").to_sym] ? session[("editorial_filtrado_condicion").to_sym] : " >> " %>
+      "<%= session[("editorial_filtrado_valor").to_sym] %>"
     </div>
   <% end %>
 </fieldset>
