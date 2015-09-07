@@ -1,5 +1,7 @@
 <!--- Listado de autores --->
 
+<%= render :partial => "filtro" %>
+
 <div class="caja_completa">
 <%= cabecera_listado "autores", { title: "Nuevo", url: { action: :editar } } %>
 <% for objeto in @autores %>

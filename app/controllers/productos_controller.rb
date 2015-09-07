@@ -16,7 +16,7 @@ class ProductosController < ApplicationController
 
   def filtrado
     session[("productos_filtrado_tipo").to_sym] = params[:filtro][:tipo] if params[:filtro]
-    session[("productos_filtrado_valor").to_sym] = ( params[:filtro] && params[:filtro][:valor] != "" ) ? params[:filtro][:valor] :nil 
+    session[("productos_filtrado_valor").to_sym] = ( params[:filtro] && params[:filtro][:valor] != "" ) ? params[:filtro][:valor] : nil
     session[("productos_filtrado_condicion").to_sym] = params[:filtro] ? params[:filtro][:condicion] : nil 
     redirect_to :action => :listado
   end

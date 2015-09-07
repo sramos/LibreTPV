@@ -5,10 +5,28 @@ class AutorController < ApplicationController
     redirect_to :action => :listado
   end
 
+  def filtrado
+    session[("autores_filtrado_tipo").to_sym] = params[:filtro][:tipo] if params[:filtro]
+    session[("autores_filtrado_valor").to_sym] = ( params[:filtro] && params[:filtro][:valor] != "" ) ? params[:filtro][:valor] : nil
+    session[("autores_filtrado_condicion").to_sym] = params[:filtro] ? params[:filtro][:condicion] : nil 
+    redirect_to :action => :listado
+  end
+
   # Obtiene el listado de autores
   def listado
+    @campos_filtro = [["Nombre","nombre"]]
     paginado = Configuracion.valor('PAGINADO')
-    @autores = Autor.paginate page: params[:page], per_page: paginado, order: 'nombre'
+
+    if session[("autores_filtrado_tipo").to_sym] && session[("autores_filtrado_valor").to_sym]
+      @autores = case session[("autores_filtrado_tipo").to_sym]
+        when "nombre" then
+          Autor.paginate :page => params[:page], :per_page => paginado,
+                :order => 'nombre ASC',
+                :conditions => [ session[("autores_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("autores_filtrado_valor").to_sym] + "%" ]
+        end
+    else
+      @autores = Autor.paginate page: params[:page], per_page: paginado, order: 'nombre'
+    end
   end
 
   # Prepara y presenta el formulario de edicion de un autor
