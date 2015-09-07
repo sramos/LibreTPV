@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150902082503) do
+ActiveRecord::Schema.define(:version => 20150904095317) do
 
   create_table "albaran_lineas", :force => true do |t|
     t.integer  "cantidad",                                         :default => 1
@@ -149,6 +149,8 @@ ActiveRecord::Schema.define(:version => 20150902082503) do
     t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "valor_defecto", :default => false, :null => false
+    t.integer  "familia_id",                       :null => false
   end
 
   create_table "pagos", :force => true do |t|

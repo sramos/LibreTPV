@@ -5,6 +5,7 @@ class Familia < ActiveRecord::Base
   belongs_to :campo
 
   before_destroy :verificar_borrado
+  validates_uniqueness_of :nombre, :message => "Nombre repetido.", :case_sensitive => false
 
   private
     def verificar_borrado

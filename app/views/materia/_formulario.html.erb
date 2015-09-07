@@ -1,5 +1,7 @@
 
 <%= inicio_formulario( { :action => 'modificar', :id => @materia }, false ) %>
   <%= texto "Nombre", 'materia', 'nombre' %>
+  <%= selector "Familia", 'materia', 'familia_id', @familias.map {|u| [u.nombre,u.id]} %>
+  <%= checkbox "Valor por defecto para la familia de productos", 'materia', 'valor_defecto', {checked: @materia.valor_defecto, abajo: true, clase: "2"} %>
 <%= final_formulario %>
 

@@ -118,29 +118,23 @@ class Producto < ActiveRecord::Base
     self.descripcion = data[:description] if data && data[:description]
   end
 
-  # Descarga una imagen remota y la vincula
-  def upload_remote_image remote_url
-    puts "------> Descargando la imagen: " + remote_url 
-    self.imagen = open(remote_url)
-    self.save
-  end
-
 private
 
   # Actualiza la imagen a usar como cover
   def actualiza_imagen
     # Si se esta utilizando una imagen externa, la descarga a local
-    if self.url_imagen && (self.imagen.blank? || self.url_imagen != self.imagen.to_s)
-      puts "------> Descargando la imagen: " + url_imagen
+    if Producto.column_names.include?("imagen_path") && !self.url_imagen.blank? && (self.imagen.blank? || self.url_imagen != self.imagen.to_s)
+      puts "------> (" + (self.id||"NEW").to_s + ") Descargando la imagen remota: " + url_imagen
       # Desactivamos el propio callback
       Producto.skip_callback :save, :after, :actualiza_imagen
       # Metemos la descarga en un try-catch para que se active el callback de nuevo en caso de error
+      # y solo lo invocamos cuando exista el campo para contenerlo (para evitar que haya descargas antes de que se haya completado la migracion)
       begin
         self.imagen = open(url_imagen)
         self.save
       rescue
         logger.error "----------------> ERRORES descargando la imagen " + url_imagen.to_s
-      end
+      end if Producto.column_names.include?("imagen_file_name")
       # Activamos de nuevo el callback
       Producto.set_callback :save, :after, :actualiza_imagen
     end

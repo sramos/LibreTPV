@@ -69,8 +69,8 @@ module ApplicationHelper
       i += 1
       etiqueta=etiqueta(campo)
       valor = valor.localtime.strftime("%d/%m/%Y %H:%M:%S") if valor.class.name == "ActiveSupport::TimeWithZone"
-      valor = "SI" if valor.class.name == "TrueClass"
-      valor = "NO" if valor.class.name == "FalseClass"
+      valor = "SÍ" if valor.class.name == "TrueClass"
+      valor = "NO" if valor.class.name == "FalseClass" && campo != "valor_defecto"
       valor = valor.strftime("%d/%m/%Y") if valor.class.name == "Date"
       cadena += "<div class='listado_campo_" + etiqueta[1] + (etiqueta[3]||"") + "' id='listado_campo_valor_" + campo + (objeto.class.name == "Array" ? "" : "_" + objeto.id.to_s) + "' title='" + (valor ? valor.to_s : "&nbsp;") + "'>" + (valor && valor.to_s != "" ? truncate( (etiqueta[3]=="f"?sprintf("%.2f",valor):valor.to_s), :length => etiqueta[2]):"&nbsp;") + '</div>'
     end
@@ -415,7 +415,7 @@ module ApplicationHelper
       when "iva"
         ["nombre","valor"]
       when "materias"
-        ["nombre"]
+        ["familia.nombre", "nombre", "valor_defecto"]
       when "editoriales"
         ["nombre"]
       when "autores"
@@ -504,6 +504,7 @@ module ApplicationHelper
 			"mensaje"			=> ["Mensaje", "1", 36],
 			"updated_at"			=> ["Modificado", "2_3", 20],
                         "autor_x_producto.count"        => ["Núm.Productos", "1_4", 14, "d"],
+                        "valor_defecto"                 => ["Valor por defecto", "2_3", 20],
 		}
     return etiqueta[campo] || [campo.capitalize, "1_2", 15]
   end

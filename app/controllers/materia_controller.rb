@@ -11,6 +11,7 @@ class MateriaController < ApplicationController
 
   def editar
     @materia = Materia.find_by_id(params[:id]) || Materia.new 
+    @familias = Familia.order(:nombre)
     render :partial => "formulario"
   end
 

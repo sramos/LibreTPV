@@ -28,9 +28,12 @@ class Materia < ActiveRecord::Base
 
   has_many :producto
   has_one :relacion_web, as: :elemento
+  belongs_to :familia
 
   validate :sanea_nombre
+  validates_uniqueness_of :nombre, scope: [:familia_id], message: "Nombre repetido.", case_sensitive: false
 
+  after_save :comprueba_valor_defecto
   before_destroy :verificar_borrado
   after_destroy :eliminar_relacion_web
 
@@ -50,6 +53,11 @@ class Materia < ActiveRecord::Base
 
     def sanea_nombre
       self.nombre.strip!
+    end
+
+    # Comprueba que sea el unico valor por defecto de la familia
+    def comprueba_valor_defecto
+      Materia.where(familia_id: self.familia_id, valor_defecto: true).where("id != ?", self.id).first.update_column(:valor_defecto, false) if valor_defecto && (familia_id_changed? || valor_defecto_changed?)
     end
 
     def verificar_borrado
