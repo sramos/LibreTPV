@@ -98,7 +98,7 @@ class ProductosController < ApplicationController
   def borrar
     @producto = Producto.find_by_id(params[:id])
     @producto.destroy
-    flash[:error] = @producto
+    flash[:error] = @producto.errors.full_messages.join(" ")
     redirect_to action: :listado, page: params[:page]
   end
 

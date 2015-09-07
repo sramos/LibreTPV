@@ -25,7 +25,7 @@ class FamiliaController < ApplicationController
   def borrar
     @familia = Familia.find(params[:id])
     @familia.destroy
-    flash[:error] = @familia
+    flash[:error] = @familia.errors.full_messages.join(" ")
     redirect_to :action => :listado
   end
 

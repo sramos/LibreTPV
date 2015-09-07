@@ -25,7 +25,7 @@ class MateriaController < ApplicationController
   def borrar
     @materia = Materia.find_by_id(params[:id])
     @materia.destroy
-    flash[:error] = @materia
+    flash[:error] = @materia.errors.full_messages.join(" ")
     redirect_to :action => :listado
   end
 

@@ -38,7 +38,7 @@ class EditorialController < ApplicationController
     if @editorial.id && params[:renombra_editorial] == "1"
       @editorial.renombra params[:editorial][:nombre], true
     else
-      @editorial.update_attributes params[:autor]
+      @editorial.update_attributes params[:editorial]
     end
     flash[:error] = @editorial
     redirect_to :action => :listado
@@ -47,7 +47,7 @@ class EditorialController < ApplicationController
   def borrar
     @editorial = Editorial.find_by_id(params[:id])
     @editorial.destroy
-    flash[:error] = @editorial
+    flash[:error] = @editorial.errors.full_messages.join(" ")
     redirect_to :action => :listado
   end
 

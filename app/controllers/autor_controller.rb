@@ -51,7 +51,7 @@ class AutorController < ApplicationController
   def borrar
     @autor = Autor.find_by_id(params[:id])
     @autor.destroy
-    flash[:error] = @autor
+    flash[:error] = @autor.errors.full_messages.join(" ")
     redirect_to action: :listado, page: params[:page]
   end
 

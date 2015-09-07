@@ -240,11 +240,11 @@ module ApplicationHelper
 
   # dibuja el mensaje de error o de exito
   def mensaje_error objeto, otros={}
-    if objeto.class == String
+    if objeto.class == String && !objeto.blank?
       cadena = '<div id="mensajeerror">'.html_safe
       cadena << objeto.html_safe
     else
-      if objeto.errors.empty?
+      if objeto.blank? || objeto.errors.empty?
         cadena = '<div id="mensajeok">'.html_safe
         cadena << "Los datos se han guardado correctamente.".html_safe unless otros[:borrar]
         cadena << "Se ha eliminado correctamente.".html_safe if otros[:borrar]
