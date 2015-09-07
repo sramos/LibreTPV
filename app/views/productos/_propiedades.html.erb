@@ -11,9 +11,10 @@
      <div class="linea"><br/></div>
      <div class="linea">
        <%= selector "Familia", "producto", "familia_id", @familias.map {|u| [u.nombre,u.id]} %>
+         <%= observe_field( "producto_familia_id", update: "formulario_materia", with: "familia_id", url: {action: :refresca_formulario_materia, id: @producto.id}, loading: "Element.show('spinner'); Element.hide('botonguardar');", complete: "Element.hide('spinner'); Element.show('botonguardar');") %>
      </div>
-     <div class="linea">
-       <%= selector "Materia", "producto", "materia_id", Materia.all(:order => 'nombre').map {|u| [u.nombre,u.id]}, nil, 'x15', true %>
+     <div id="formulario_materia" class="linea">
+       <%= render :partial => 'formulario_materia' %>
      </div>
      <div class="linea">
        <%= texto "Nombre", 'producto', 'nombre' %>

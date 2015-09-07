@@ -67,7 +67,8 @@ class ProductosController < ApplicationController
     else
       @producto = Producto.find_by_id(params[:id]) || Producto.new 
     end
-    @producto_familia_id = @producto.familia_id if ! @producto.nil?
+    @materias = @producto.familia.materia.order("materia.nombre") if @producto.id
+    #@producto_familia_id = @producto.familia_id if @producto.id
     if params[:inventario]
       render :partial => "formulario"
     else
@@ -99,6 +100,15 @@ class ProductosController < ApplicationController
     @producto.destroy
     flash[:error] = @producto
     redirect_to action: :listado, page: params[:page]
+  end
+
+  # Ajax para el cambio la familia de un producto (implica cambio en materia tambien)
+  def refresca_formulario_materia
+    @producto = Producto.find_by_id(params[:id])
+    familia = Familia.find_by_id(params[:familia_id])
+    @materias = familia.materia.order("materia.nombre")
+    @valor_materia_defecto = familia.materia_defecto_id if @producto && familia && @producto.familia_id != familia.id
+    render partial: 'formulario_materia'
   end
 
   # Busca imagen y descripcion en internet
@@ -183,14 +193,14 @@ class ProductosController < ApplicationController
   end
 
   # Actualiza la familia del producto
-  def cambio_familia
-    @producto = params[:id] ? Producto.find(params[:id]) : nil 
-    @producto.familia.id = params[:producto_familia_id]
-    @producto_familia_id = params[:producto_familia_id]
-    @familias = Familia.all
-
-    render :partial => "propiedades"
-  end
+  #def cambio_familia
+  #  @producto = params[:id] ? Producto.find(params[:id]) : nil 
+  #  @producto.familia.id = params[:producto_familia_id]
+  #  @producto_familia_id = params[:producto_familia_id]
+  #  @familias = Familia.all
+#
+#    render :partial => "propiedades"
+#  end
 
   def etiqueta
     producto = params[:id] ? Producto.find(params[:id]) : nil
