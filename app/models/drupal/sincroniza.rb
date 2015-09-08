@@ -182,7 +182,7 @@ class Drupal::Sincroniza < ActiveRecord::Base
     nodo = Drupal::TaxonomyTermData.materia.find_by_tid(objeto.nid) if objeto.nid
     nodo = Drupal::TaxonomyTermData.materia.find_by_name(objeto.elemento.nombre) unless objeto.nid
     nodo ||= Drupal::TaxonomyTermData.materia.new
-    nodo.update_attributes(name: objeto.elemento.nombre)
+    nodo.update_attributes(name: objeto.elemento.nombre, weight: (objeto.elemento.valor_defecto ? 0 : 1) )
     return nodo
   end
 

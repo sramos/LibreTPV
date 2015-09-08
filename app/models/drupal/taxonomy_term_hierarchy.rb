@@ -23,32 +23,7 @@
 #
 #++
 
-# Gestiona los terminos de taxonomias. Para "vid=2" recoge las taxonomias de "materia"
-# Las relaciones con los productos se hacen a traves del taxonomy_index
-class Drupal::TaxonomyTermData < Drupal
+# Gestiona la jerarquia de terminos de taxonomias.
+class Drupal::TaxonomyTermHierarchy < Drupal
 
-  # Eliminamos las materias porque se estan manejando como taxonomias
-  scope :materia, -> { where(vid: 2) }
-
-  has_one :taxonomy_term_hierarchy, class_name: 'Drupal::TaxonomyTermHierarchy', foreign_key: :tid, dependent: :destroy
-
-  validates_presence_of :name, :message => "El nombre no puede estar vacío."
-
-  after_initialize :defaults, :if => :new_record?
-  after_create  :asigna_formato
-  after_save    :ajusta_jerarquia
-
-  def defaults
-    self.vid ||= 2
-    # Format es una palabra reservada, asi que no podemos hacerlo asi...
-    #self.format ||= "plain_text"
-    self.description ||= ''
-    self.weight ||= 1
-  end
-  def asigna_formato
-    self.update_column(:format, 'plain_text')
-  end
-  def ajusta_jerarquia
-    Drupal::TaxonomyTermHierarchy.find_or_create_by_tid(self.tid)
-  end
 end

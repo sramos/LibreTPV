@@ -34,8 +34,8 @@ class Drupal::Node < Drupal
   scope :autor, -> { where(type: 'autor') }
   scope :editorial, -> { where(type: 'editorial') }
   
-  has_one :stock, class_name: 'Drupal::UcProductStock', foreign_key: :nid
-  has_one :atributos, class_name: 'Drupal::UcProducts', foreign_key: :nid
+  has_one :stock, class_name: 'Drupal::ProductStock', foreign_key: :nid
+  has_one :atributos, class_name: 'Drupal::Products', foreign_key: :nid
   has_one :body, class_name: 'Drupal::FieldDataBody', foreign_key: :entity_id
   has_one :materia, class_name: 'Drupal::TaxonomyIndex', foreign_key: :nid
   has_many :relation, class_name: 'Drupal::FieldDataEndpoints', foreign_key: :endpoints_entity_id
