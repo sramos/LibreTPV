@@ -23,26 +23,7 @@
 #
 #++
 
-# Gestiona los terminos de taxonomias. Para "vid=2" recoge las taxonomias de "materia"
-# Las relaciones con los productos se hacen a traves del taxonomy_index
-class Drupal::TaxonomyTermData < Drupal
 
-  # Eliminamos las materias porque se estan manejando como taxonomias
-  scope :materia, -> { where(vid: 2) }
+class LogSincronizacionWeb < ActiveRecord::Base
 
-  validates_presence_of :name, :message => "El nombre no puede estar vacío."
-
-  after_initialize :defaults, :if => :new_record?
-  after_create  :asigna_formato
-
-  def defaults
-    self.vid ||= 2
-    # Format es una palabra reservada, asi que no podemos hacerlo asi...
-    #self.format ||= "plain_text"
-    self.description ||= ''
-    self.weight ||= 0
-  end
-  def asigna_formato
-    self.update_column(:format, 'plain_text')
-  end
 end

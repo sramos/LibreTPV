@@ -74,14 +74,6 @@ class Producto < ActiveRecord::Base
     @autores || self.autor.collect{|a| a.nombre}.join(' / ')
   end
 
-  # Sincroniza con la BBDD de la web
-  def sincroniza_drupal
-    # Solo sincroniza si esta definida la conexion con la BBDD
-    if Rails.application.config.database_configuration["drupal_#{Rails.env}"]
-      # Hace falta una tabla de conversion NID <-> ID
-    end
-  end
-
   def get_remote_data
     if self.codigo
       data = get_data_from_google || get_data_from_todostuslibros

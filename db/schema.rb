@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150907132336) do
+ActiveRecord::Schema.define(:version => 20150907135550) do
 
   create_table "albaran_lineas", :force => true do |t|
     t.integer  "cantidad",                                         :default => 1
@@ -144,6 +144,15 @@ ActiveRecord::Schema.define(:version => 20150907132336) do
     t.integer  "valor"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "log_sincronizacion_web", :force => true do |t|
+    t.string   "elemento_type",                    :null => false
+    t.boolean  "status_ok",     :default => false, :null => false
+    t.integer  "actualizados",  :default => 0,     :null => false
+    t.integer  "eliminados",    :default => 0,     :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
   end
 
   create_table "materia", :force => true do |t|

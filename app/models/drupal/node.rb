@@ -22,7 +22,9 @@
 #################################################################################
 #
 #++
-
+#
+# hay que actualizar tambien?
+#  * dr_node_comment_statistics
 
 class Drupal::Node < Drupal
 
@@ -37,13 +39,15 @@ class Drupal::Node < Drupal
   has_one :body, class_name: 'Drupal::FieldDataBody', foreign_key: :entity_id
   has_one :materia, class_name: 'Drupal::TaxonomyIndex', foreign_key: :nid
   has_many :relation, class_name: 'Drupal::FieldDataEndpoints', foreign_key: :endpoints_entity_id
+  has_many :node_revision, class_name: 'Drupal::NodeRevision', foreign_key: :nid, dependent: :destroy
 
   validates_presence_of :type, :message => "El tipo no puede estar indefinido."
   validates_presence_of :title, :message => "El nombre no puede estar vacío."
 
   after_initialize :defaults, :if => :new_record?
   before_save  :valores_modificado
-  after_create :ajusta_vid
+  after_save :ajusta_vid
+  after_destroy :elimina_vid
 
   # Guarda la fecha de modificacion 
   def valores_modificado
@@ -63,9 +67,15 @@ class Drupal::Node < Drupal
     self.created = Time.now.to_i
   end
 
-  # Asigna el mismo vid que el nid obtenido
+  # Asigna la revision del nodo 
   def ajusta_vid 
-    self.update_column(:vid, self.nid)
+    #  * dr_node_revision
+    #     (112,112,117,'Grijalbo','',1369206981,1,2,1,0) -> (nid, vid, uid, title, log, timestamp, status, comment, promote, sticky)
+    revision = Drupal::NodeRevision.find_or_create_by_nid(self.nid)
+    if revision
+      revision.update_column(:title, self.title)
+      self.update_column(:vid, revision.vid)
+    end
   end
 
   # Relaciones entre nodos

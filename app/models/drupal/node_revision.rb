@@ -23,26 +23,18 @@
 #
 #++
 
-# Gestiona los terminos de taxonomias. Para "vid=2" recoge las taxonomias de "materia"
-# Las relaciones con los productos se hacen a traves del taxonomy_index
-class Drupal::TaxonomyTermData < Drupal
-
-  # Eliminamos las materias porque se estan manejando como taxonomias
-  scope :materia, -> { where(vid: 2) }
-
-  validates_presence_of :name, :message => "El nombre no puede estar vacío."
+class Drupal::NodeRevision < Drupal
 
   after_initialize :defaults, :if => :new_record?
-  after_create  :asigna_formato
 
+  # Asigna los valores por defecto
   def defaults
-    self.vid ||= 2
-    # Format es una palabra reservada, asi que no podemos hacerlo asi...
-    #self.format ||= "plain_text"
-    self.description ||= ''
-    self.weight ||= 0
-  end
-  def asigna_formato
-    self.update_column(:format, 'plain_text')
+    self.status = 1
+    self.comment = 2
+    self.promote = 1
+    self.sticky = 0
+    self.uid = 1
+    self.log = ''
+    self.timestamp = Time.now.to_i
   end
 end

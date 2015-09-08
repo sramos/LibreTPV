@@ -20,4 +20,5 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'autor', 'autor'
   inflect.irregular 'autor_x_producto', 'autor_x_producto'
   inflect.irregular 'relacion_web', 'relacion_web'
+  inflect.irregular 'log_sincronizacion_web', 'log_sincronizacion_web'
 end

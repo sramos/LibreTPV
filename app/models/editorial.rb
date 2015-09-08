@@ -51,14 +51,6 @@ class Editorial < ActiveRecord::Base
     end
   end
 
-  # Sincroniza con la BBDD de la web
-  def sincroniza_drupal
-    # Solo sincroniza si esta definida la conexion con la BBDD
-    if Rails.application.config.database_configuration["drupal_#{Rails.env}"]
-      # Hace falta una tabla de conversion NID <-> ID
-    end
-  end
-
   private
     def sanea_nombre
       self.nombre = self.nombre.strip

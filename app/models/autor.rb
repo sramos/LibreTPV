@@ -37,14 +37,6 @@ class Autor < ActiveRecord::Base
   before_destroy :verificar_borrado
   after_destroy :eliminar_relacion_web
 
-  # Sincroniza con la BBDD de la web
-  def sincroniza_drupal
-    # Solo sincroniza si esta definida la conexion con la BBDD
-    if Rails.application.config.database_configuration["drupal_#{Rails.env}"]
-      # Hace falta una tabla de conversion NID <-> ID
-    end
-  end
-
   # Renombra a un autor (si ya existe alguno con el nombre propuesto, mueve los libros al nuevo)
   def renombra nuevo_nombre=nil, reasigna_productos=false
     nuevo_nombre = sanea_nombre(nuevo_nombre)
