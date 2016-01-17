@@ -67,7 +67,7 @@ de instalación.
 En primer lugar, descargaremos la copia del último tag estable (el indicado aquí puede cambiar desde la realización
 de este manual, asegúrese de seleccionar la última versión disponible):
 
-  $ svn export svn export https://github.com/sramos/LibreTPV/trunk /urs/share/libretpv
+  $ svn export https://github.com/sramos/LibreTPV/trunk /urs/share/libretpv
 
 Crear el directorio de configuración de la aplicación (habitualmente /etc/libretpv):
 
