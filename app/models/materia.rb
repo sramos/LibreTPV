@@ -57,7 +57,10 @@ class Materia < ActiveRecord::Base
 
     # Comprueba que sea el unico valor por defecto de la familia
     def comprueba_valor_defecto
-      Materia.where(familia_id: self.familia_id, valor_defecto: true).where("id != ?", self.id).first.update_column(:valor_defecto, false) if valor_defecto && (familia_id_changed? || valor_defecto_changed?)
+      if valor_defecto && (familia_id_changed? || valor_defecto_changed?)
+        mat = Materia.where(familia_id: self.familia_id, valor_defecto: true).where("id != ?", self.id).first
+        mat.first.update_column(:valor_defecto, false) if mat
+      end
     end
 
     def verificar_borrado
