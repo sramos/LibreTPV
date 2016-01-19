@@ -74,7 +74,7 @@ gem 'will_paginate', '~> 3.0.0'
 gem 'calendar_date_select', :git => 'git://github.com/paneq/calendar_date_select.git'
 gem 'rufus-scheduler'
 gem 'hpricot'
-# Problemas con utf8 us-ascii
-#gem 'pdf-writer'
-#gem 'dav4rack'
+# Versiones posteriores de prawn requieren ruby 2
+gem 'prawn', '~> 1.3'
+gem 'prawn-table', '~> 0.2.2'
 

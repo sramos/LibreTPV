@@ -4,10 +4,6 @@ class FacturaController < ApplicationController
   # Incluimos esto para un trucate en los tickets
   include ActionView::Helpers::TextHelper
 
-  # Librerias para PDF
-  #require 'pdf/writer'
-  #require 'pdf/simpletable'
-
   # Hace una busqueda de "factura" para listado 
   before_filter :obtiene_facturas, :only => [ :listado, :aceptar_cobro ]
 
@@ -135,8 +131,8 @@ class FacturaController < ApplicationController
   def imprimir
     factura = Factura.find_by_id(params[:id])
     if factura && factura.pagado && !factura.albarans.empty? && factura.albarans.first.cliente
-      send_data genera_pdf(factura), :filename => 'Factura.' + factura.codigo + '.pdf', :type => 'application/pdf'
-      #redirect_to :action => :listado
+      pdf = FacturaPdf.new(factura, view_context)
+      send_data pdf.render, filename: "Factura.#{factura.codigo}.pdf", type: 'application/pdf'
     else
       flash[:error] = "Imposible imprimir. La factura no existe o no está completamente pagada."
       redirect_to :action => :listado
@@ -164,117 +160,16 @@ private
     if cookies[("filtrado_fecha_inicio").to_sym] && cookies[("filtrado_fecha_fin").to_sym]
       condicion += " AND facturas.fecha BETWEEN '" + cookies[("filtrado_fecha_inicio").to_sym] + "' AND '" + cookies[("filtrado_fecha_fin").to_sym] + "'" unless params[:seccion] == "productos" && cookies[("filtrado_tipo_fecha").to_sym] == "vencimiento"
       condicion += " AND facturas.fecha_vencimiento BETWEEN '" + cookies[("filtrado_fecha_inicio").to_sym] + "' AND '" + cookies[("filtrado_fecha_fin").to_sym] + "'" if params[:seccion] == "productos" && cookies[("filtrado_tipo_fecha").to_sym] == "vencimiento"
-      puts "-----------> Escogemos solo las facturas con fecha de vencimiento entre los margenes" if params[:seccion] == "productos" && cookies[("filtrado_tipo_fecha").to_sym] == "vencimiento"
+      #puts "-----------> Escogemos solo las facturas con fecha de vencimiento entre los margenes" if params[:seccion] == "productos" && cookies[("filtrado_tipo_fecha").to_sym] == "vencimiento"
     end
     # Si hay filtrado de facturas pagadas lo aplica
     if session[("filtrado_pagado").to_sym] && session[("filtrado_pagado").to_sym] != ""
       condicion += " AND facturas.pagado IS " + session[("filtrado_pagado").to_sym]
     end
 
-    @facturas = Factura.paginate( :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => ["albarans"], :conditions => [ condicion ],
-      :page => (params[:format]=='xls' ? nil : params[:page]), :per_page => (params[:format_xls_count] || Configuracion.valor('PAGINADO') ))
-  end
-
-  def genera_pdf factura
-    columnas = [	{ :atribute => "cantidad", :title => '', :width => 20, :align => :right },
-			{ :atribute => "nombre_producto", :title => 'Nombre', :width => 180 },
-			{ :atribute => "precio_venta", :title => 'PVP', :width => 50, :format => "%.2f", :align => :right },
-			{ :atribute => "descuento", :title => '%Dto', :width => 35, :align => :right },
-			{ :atribute => "subtotal", :title => 'B.Imp.', :width => 50, :format => "%.2f", :align => :right },
-			{ :atribute => "iva", :title => '%IVA', :width => 35, :align => :right },
-			{ :atribute => "total", :title => 'Total', :width => 50, :format => "%.2f", :align => :right } ]
-
-    pdf = PDF::Writer.new(:paper => 'A4')
-    pdf.select_font"Helvetica"
-    pdf.margins_mm(30)
-    pdf.font_size = 9
-    pdf.start_columns 3
-    pdf.image "public/images/logo_factura.png"
-    pdf.start_new_page
-    pdf.start_new_page
-    pdf.move_pointer(15)
-    pdf.text Configuracion.valor('NOMBRE CORTO EMPRESA').upcase
-    pdf.text Configuracion.valor('NOMBRE LARGO EMPRESA')
-    pdf.text "C.I.F. " + Configuracion.valor('CIF')
-    pdf.text Configuracion.valor('DIRECCION') if Configuracion.valor('DIRECCION')
-    pdf.text Configuracion.valor('CODIGO POSTAL') if Configuracion.valor('CODIGO POSTAL')
-    pdf.text "Tfn. " + Configuracion.valor('TELEFONO') if Configuracion.valor('TELEFONO')
-    pdf.stop_columns
-    pdf.move_pointer(30)
-    pdf.start_columns 3
-    pdf.text "Fecha: " + factura.fecha.to_s
-    pdf.text "Factura num.: " + factura.codigo
-    pdf.start_new_page
-    pdf.start_new_page
-    pdf.text "Cliente: " + factura.albarans.first.cliente.nombre 
-    pdf.text "N.I.F. " + factura.albarans.first.cliente.cif
-    pdf.text factura.albarans.first.cliente.direccion if factura.albarans.first.cliente.direccion
-    pdf.text factura.albarans.first.cliente.cp if factura.albarans.first.cliente.cp 
-    pdf.stop_columns
-    pdf.move_pointer(30) 
-    iva_total = {}
-    subtotal = precio_total = 0
-    PDF::SimpleTable.new do |tab|
-      #tab.show_lines = :all
-      tab.show_headings = true
-      tab.bold_headings = true
-      tab.orientation = :center
-      tab.font_size = 9
-      tab.heading_font_size = 9 
-      tab.shade_color = Color::RGB::Grey90
-      tab.column_order = columnas.collect { |columna| columna[:atribute] } 
-      columnas.each do |columna|
-        tab.columns[columna[:atribute]] = PDF::SimpleTable::Column.new(columna[:atribute]) { |col|
-          col.width = columna[:width]
-          col.heading = columna[:title]
-          col.heading.justification = :center
-          col.justification = columna[:align] if columna[:align]
-        }
-      end
-      data = []
-      factura.albarans.each do |alb|
-        alb.albaran_lineas.each do |linea|
-          fila = Hash.new
-          columnas.each do |columna|
-            fila[columna[:atribute]] = columna[:format] ? format(columna[:format],linea.send(columna[:atribute])) : linea.send(columna[:atribute])
-          end
-          iva = linea.iva
-          iva_total[iva] = iva_total.key?(iva) ? iva_total[iva] + (linea.total-linea.subtotal) : linea.total-linea.subtotal
-          subtotal += linea.subtotal
-          precio_total += linea.total
-          data << fila 
-        end
-      end
-      tab.data.replace data
-      tab.render_on(pdf)
-    end
-    pdf.move_pointer(9)
-    PDF::SimpleTable.new do |tab|
-      tab.show_lines = :none
-      tab.orientation = :center
-      tab.show_headings = false
-      tab.shade_rows = :none
-      tab.font_size = 10 
-      tab.column_order = [ "vacio","atributo","valor" ]
-      tab.columns["vacio"] = PDF::SimpleTable::Column.new("vacio") { |col| col.width = 180 }
-      tab.columns["atributo"] = PDF::SimpleTable::Column.new("atributo") { |col|
-        col.width = 200
-        col.justification = :left
-      }
-      tab.columns["valor"] = PDF::SimpleTable::Column.new("valor") { |col|
-        col.width = 50
-        col.justification = :right
-      }
-      data = []
-      data << {  "atributo" => "Subtotal", "valor" => format("%.2f",subtotal) } 
-      iva_total.each do |tipo,parcial|
-        data << { "atributo" => "IVA " + tipo.to_s + "%", "valor" => format("%.2f",parcial) } 
-      end
-      data << { "atributo" => "Total Euros (IVA incluido)", "valor" => format("%.2f",precio_total) } 
-      tab.data.replace data
-      tab.render_on(pdf) 
-    end
-    return pdf.render
+    @facturas = Factura.joins(:albarans).where(condicion).order('facturas.fecha DESC, facturas.codigo DESC').
+                        paginate( page: (params[:format]=='xls' ? nil : params[:page]),
+                                  per_page: (params[:format_xls_count] || Configuracion.valor('PAGINADO')) )
   end
 
   def imprime_ticket albaran_id, formadepago
