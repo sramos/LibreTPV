@@ -71,13 +71,14 @@ module LibreTPV
     ENV['RAILS_ETC'] ||= "/etc/libretpv/"
     ENV['RAILS_LOG'] ||= "/var/log/libretpv/"
     ENV['RAILS_CACHE'] ||= "/var/cache/libretpv/#{ENV['LIBRETPV_SITEID']}"
+    ENV['RAILS_TMP'] ||= ENV['LIBRETPV_SITEID'] ? "/tmp/#{ENV['LIBRETPV_SITEID']}" : "/tmp/libretpv"
+    # Si no existe, genera el directorio temporal
+    Dir.mkdir(ENV['RAILS_TMP']) unless File.directory?(ENV['RAILS_TMP'])
  
     if ENV['LIBRETPV_SITEID']
       # Configura la BBDD a usar, logs y directorio de cache
       self.paths['config/database'] = ENV['RAILS_ETC'] + ENV['LIBRETPV_SITEID'] + '-database.yml'
       config.logger = ActiveSupport::BufferedLogger.new(File.join(ENV['RAILS_LOG'], ENV['LIBRETPV_SITEID'] + "." + Rails.env.to_s + ".log"))
-      # Si no existe, genera el directorio temporal
-      Dir.mkdir("/tmp/libretpv") unless File.directory?("/tmp/libretpv")
       # Si no existe, genera el directorio de cache
       Dir.mkdir(ENV['RAILS_CACHE']) unless File.directory?(ENV['RAILS_CACHE'])
       # Y lo utiliza 
