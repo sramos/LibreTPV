@@ -269,6 +269,11 @@ class ProductosController < ApplicationController
     # Si no existe el libro lo busca y se prepara para guardarlos
     else 
       @producto = producto_x_codigo_isbn params[:codigo]
+      if @producto.familia
+        @materias = @producto.familia.materia
+	materia_defecto = @producto.familia.materia.find_by_valor_defecto(true)
+        @valor_materia_defecto = materia_defecto.id if materia_defecto
+      end
       render :partial => params[:template]
     end
   end
@@ -322,6 +327,7 @@ class ProductosController < ApplicationController
           enlace =~ /href="(.+)"/
           doc = Hpricot Net::HTTP.get('www.todostuslibros.com', $1)
           producto.nombre = doc.search("h1[@class='title']").first.inner_html
+	  producto.familia_id = 1
           producto.autores = doc.search("h2[@class='author']//a").first.inner_html
           producto.editor = doc.search("//dd[@class='publisher']//a").first.inner_html
           producto.precio = doc.search("//spam[@itemprop='price']").first.inner_html.to_f.to_s
@@ -334,7 +340,6 @@ class ProductosController < ApplicationController
           producto.imagen_url = remote_image unless remote_image.blank?
           doc.search("//dd[@class='publication-date']").first.inner_html =~ /-([0-9]+)$/
           producto.anno = $1
-          producto.familia_id = 1
           producto.codigo = isbn 
         end
       rescue
