@@ -39,11 +39,12 @@ Configuracion.create([	{ :nombre_param => 'PAGINADO', :valor_param => '25'},
 			{ :nombre_param => 'FACTURAS VENTA', :valor_param => '0'},
 			{ :nombre_param => 'COMANDO IMPRESION', :valor_param => 'lpr -P TM-T70 -o cpi=20', :editable => false} ]) if Configuracion.count == 0
 
-Materia.create([	{ :nombre => 'Cómic' }, { :nombre =>'Cuentos' }, { :nombre => 'Formación/Materias' },
-			{ :nombre => 'Libros para colorear' }, {:nombre => 'Literatura clásica' }, { :nombre => 'Narrativa' },
-			{ :nombre => 'Narrativa breve' }, { :nombre => 'Narrativa de humor' }, { :nombre => 'Narrativa erótica' },
-			{ :nombre => 'Narrativa fantástica' }, { :nombre => 'Narrativa histórica' }, { :nombre => 'Narrativa idiomas' },
-			{ :nombre => 'Narrativa infantil' }, { :nombre => 'Narrativa juvenil' }, { :nombre => 'Narrativa romántica' },
-			{ :nombre => 'Narrativa terror' }, { :nombre => 'Narrativa viajes' }, { :nombre => 'Novela gráfica' },
-			{ :nombre => 'Novela negra' }, { :nombre => 'Poesía' }, { :nombre => 'Segunda mano' }, { :nombre => 'Teatro' },
-			{ :nombre => 'Viajes' }, { :nombre => 'Ensayo' } ])			if Materia.count == 0
+familia_id = Familia.first.id
+Materia.create([	{ :nombre => 'Cómic', :familia_id => familia_id }, { :nombre =>'Cuentos', :familia_id => familia_id }, { :nombre => 'Formación/Materias', :familia_id => familia_id },
+			{ :nombre => 'Libros para colorear', :familia_id => familia_id  }, {:nombre => 'Literatura clásica', :familia_id => familia_id }, { :nombre => 'Narrativa', :familia_id => familia_id },
+			{ :nombre => 'Narrativa breve', :familia_id => familia_id }, { :nombre => 'Narrativa de humor', :familia_id => familia_id }, { :nombre => 'Narrativa erótica', :familia_id => familia_id },
+			{ :nombre => 'Narrativa fantástica', :familia_id => familia_id }, { :nombre => 'Narrativa histórica', :familia_id => familia_id }, { :nombre => 'Narrativa idiomas', :familia_id => familia_id },
+			{ :nombre => 'Narrativa infantil', :familia_id => familia_id }, { :nombre => 'Narrativa juvenil', :familia_id => familia_id }, { :nombre => 'Narrativa romántica', :familia_id => familia_id },
+			{ :nombre => 'Narrativa terror', :familia_id => familia_id }, { :nombre => 'Narrativa viajes', :familia_id => familia_id }, { :nombre => 'Novela gráfica', :familia_id => familia_id },
+			{ :nombre => 'Novela negra', :familia_id => familia_id }, { :nombre => 'Poesía', :familia_id => familia_id }, { :nombre => 'Segunda mano', :familia_id => familia_id }, { :nombre => 'Teatro', :familia_id => familia_id },
+			{ :nombre => 'Viajes', :familia_id => familia_id }, { :nombre => 'Ensayo', :familia_id => familia_id } ])			if Materia.count == 0
