@@ -77,4 +77,4 @@ gem 'hpricot'
 # Versiones posteriores de prawn requieren ruby 2
 gem 'prawn', '~> 1.3'
 gem 'prawn-table', '~> 0.2.2'
-
+gem 'test-unit'
