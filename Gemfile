@@ -54,7 +54,7 @@ group :development do
   # Para buscar traducciones
   gem 'gettext', '>=1.9.3', :require => false
   # Para debug
-  gem 'ruby-debug19',:platform => :ruby_19
+  gem 'byebug'
   # Para generar UML
   #gem "rails-erd"
   # Para hacer volcados de BBDD en un seeds
