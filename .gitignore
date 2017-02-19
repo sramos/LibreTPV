@@ -5,3 +5,4 @@ config/database.yml
 !/log/.keep
 /tmp
 !/tmp/.keep
+.idea
