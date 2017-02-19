@@ -176,10 +176,12 @@ DEPENDENCIES
   prototype-rails (~> 3.2.1)
   prototype_legacy_helper (= 0.0.0)!
   rails (= 3.2.9)
-  ruby-debug19
   rufus-scheduler
   sass-rails (~> 3.2.3)
   spreadsheet
   spreadsheet_on_rails!
   uglifier (>= 1.0.3)
   will_paginate (~> 3.0.0)
+
+BUNDLED WITH
+   1.14.4
