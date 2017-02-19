@@ -165,7 +165,10 @@ es:
     month_names: [~, Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre]
     abbr_month_names: [~, Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic]
     # Used in date_select and datime_select.
-    order: [ :day, :month, :year ]
+    order:
+      - day
+      - month
+      - year
 
   time:
     formats:
