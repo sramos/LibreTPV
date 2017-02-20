@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.9'
+gem 'rails', '3.2.22.5'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -54,7 +54,7 @@ group :development do
   # Para buscar traducciones
   gem 'gettext', '>=1.9.3', :require => false
   # Para debug
-  gem 'ruby-debug19',:platform => :ruby_19
+  gem 'byebug'
   # Para generar UML
   #gem "rails-erd"
   # Para hacer volcados de BBDD en un seeds
@@ -77,4 +77,4 @@ gem 'hpricot'
 # Versiones posteriores de prawn requieren ruby 2
 gem 'prawn', '~> 1.3'
 gem 'prawn-table', '~> 0.2.2'
-
+gem 'test-unit'
