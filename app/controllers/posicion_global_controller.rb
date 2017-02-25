@@ -105,7 +105,7 @@ class PosicionGlobalController < ApplicationController
         when "ventas"
           Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => ["albarans"], :conditions => ["albarans.cliente_id IS NOT NULL AND " + filtro_fecha ]
         when "servicios"
-          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :conditions => ["facturas.proveedor_id IS NOT NULL AND facturas.fecha AND " + filtro_fecha ]
+          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :conditions => ["facturas.proveedor_id IS NOT NULL AND facturas.fecha IS NOT NULL AND " + filtro_fecha ]
       end
     end
 end

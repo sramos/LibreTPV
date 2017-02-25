@@ -20,13 +20,14 @@ class CajaController < ApplicationController
     end
   end
 
-  def arqueo 
+  def arqueo
     @importe_ventas = @importe_compras = @importe_gastos = 0
     # Calcula la fecha/hora del ultimo cierre de caja
     @cierre_caja = Caja.last :conditions => { :cierre_caja => true }
     @importe_caja = @cierre_caja ? @cierre_caja.importe : 0
     # Encuentra todas las ventas en caja realizados desde el ultimo cierre de caja
-    @pagos = Pago.find :all, :include => "forma_pago", :conditions => [ "forma_pagos.caja IS TRUE AND fecha > ?", (@cierre_caja ? @cierre_caja.fecha_hora : Date.new) ]
+    conditions = @cierre_caja ? { :conditions => ['forma_pagos.caja IS TRUE AND fecha > ?', @cierre_caja.fecha_hora] } : {}
+    @pagos = Pago.find(:all, conditions.merge(:include => "forma_pago"))
     @pagos.each do |pago|
       @importe_ventas += pago.importe if pago.factura && !pago.factura.albarans.empty? && pago.factura.albarans.first.cliente
       @importe_compras += pago.importe if pago.factura && !pago.factura.albarans.empty? && pago.factura.albarans.first.proveedor
@@ -36,7 +37,8 @@ class CajaController < ApplicationController
     # Encuentra todas las compras en caja realizadas desde el ultimo cierre de caja
     # Encuentra todos los pagos de servicios realizados desde el ultimo cierre de caja
     # Encuentra todas las entradas/salidas de caja realizadas desde el ultimo cierre de caja
-    @salidas = Caja.find :all, :conditions => [ "fecha_hora > ?", (@cierre_caja ? @cierre_caja.fecha_hora : Date.new) ]
+    conditions = @cierre_caja ? { :conditions => ['fecha_hora > ?', @cierre_caja.fecha_hora] } : {}
+    @salidas = Caja.find(:all, conditions)
     @salidas.each do |salida|
       @importe_caja += salida.importe
     end
