@@ -9,7 +9,6 @@ gem 'pg'
 
 gem 'railties', "= 4.2.8"
 gem 'actionpack', '= 4.2.8'
-gem 'jquery-ui-rails'
 gem 'activerecord-session_store'
 
 # Gems used only for assets and not required
