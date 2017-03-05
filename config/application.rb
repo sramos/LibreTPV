@@ -9,7 +9,7 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-module LibreTPV 
+module LibreTPV
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -63,7 +63,7 @@ module LibreTPV
     config.assets.version = '1.0'
 
     #
-    # Configura los paths para multisitio. Con la variable de entorno LIBRETPV_SITEID se 
+    # Configura los paths para multisitio. Con la variable de entorno LIBRETPV_SITEID se
     # define los paths particulares de una instancia concreta.
     # En apache se define a traves de la directiva:
     #         SetEnv LIBRETPV_SITEID "nombre_instancia"
@@ -74,14 +74,14 @@ module LibreTPV
     ENV['RAILS_TMP'] ||= ENV['LIBRETPV_SITEID'] ? "/tmp/#{ENV['LIBRETPV_SITEID']}" : "/tmp/libretpv"
     # Si no existe, genera el directorio temporal
     Dir.mkdir(ENV['RAILS_TMP']) unless File.directory?(ENV['RAILS_TMP'])
- 
+
     if ENV['LIBRETPV_SITEID']
       # Configura la BBDD a usar, logs y directorio de cache
       self.paths['config/database'] = ENV['RAILS_ETC'] + ENV['LIBRETPV_SITEID'] + '-database.yml'
       config.logger = ActiveSupport::BufferedLogger.new(File.join(ENV['RAILS_LOG'], ENV['LIBRETPV_SITEID'] + "." + Rails.env.to_s + ".log"))
       # Si no existe, genera el directorio de cache
       Dir.mkdir(ENV['RAILS_CACHE']) unless File.directory?(ENV['RAILS_CACHE'])
-      # Y lo utiliza 
+      # Y lo utiliza
       config.cache_store = [ :file_store, ENV['RAILS_CACHE'] ]
       config.assets.cache_store = [ :file_store, ENV['RAILS_CACHE'] + "/assets" ]
     end
@@ -106,22 +106,22 @@ module LibreTPV
     ENV['TPV-PRINTER'] = "lpr -P TM-T70 -o cpi=20"
 
 
-    # Configuracion inicial del calendar
-    CalendarDateSelect.format = :italian
-    CalendarDateSelect::FORMATS[:italian] = {
-      # Here's the code to pass to Date#strftime
-      :date => "%m/%d/%Y",
-      :time => " %I:%M %p",  # notice the space before time.  If you want date and time to be seperated with a space, put the leading space here.
-      :javascript_include => "format_italian"
-    }
+    # # Configuracion inicial del calendar
+    # CalendarDateSelect.format = :italian
+    # CalendarDateSelect::FORMATS[:italian] = {
+    #   # Here's the code to pass to Date#strftime
+    #   :date => "%m/%d/%Y",
+    #   :time => " %I:%M %p",  # notice the space before time.  If you want date and time to be seperated with a space, put the leading space here.
+    #   :javascript_include => "format_italian"
+    # }
 
-    # Selecciona el path donde estara el logo de la Tienda 
+    # Selecciona el path donde estara el logo de la Tienda
     if ENV['LIBRETPV_SITEID'] && File.file?(ENV['RAILS_ETC'] + "logo/" + ENV['LIBRETPV_SITEID'] + ".png")
-      config.middleware.use Rack::Static, :urls => [ '/logo' ], :root => ENV['RAILS_ETC'] 
+      config.middleware.use Rack::Static, :urls => [ '/logo' ], :root => ENV['RAILS_ETC']
       ENV['TPV_LOGO'] = "/logo/" + ENV['LIBRETPV_SITEID'] + ".png"
     else
       ENV['TPV_LOGO'] = "/images/logo.png"
     end
-    
+
   end
 end
