@@ -1,13 +1,13 @@
 class AlbaransController < ApplicationController
 
-  # Hace una busqueda de "albaranes" eliminando los vacios 
-  before_filter :obtiene_albaranes, :only => [ :listado ]
+  # Hace una busqueda de "albaranes" eliminando los vacios
+  before_filter :obtiene_albaranes, only: [:listado]
 
   def index
     flash[:mensaje] = "Listado de Albaranes de Proveedores pendientes de aceptar" if params[:seccion] == "productos"
     flash[:mensaje] = "Ventas/Devoluciones Nuevas y Abiertas" if params[:seccion] == "caja"
     flash[:mensaje] = "Listado de Truekes pendientes de aceptar" if params[:seccion] == "trueke"
-    redirect_to :action => :listado 
+    redirect_to action: 'listado'
   end
 
   def listado
@@ -56,7 +56,7 @@ class AlbaransController < ApplicationController
       albaran.destroy
       flash[:error] = albaran
     end
-    redirect_to :action => :listado 
+    redirect_to :action => :listado
   end
 
   def auto_complete_for_libro_titulo
@@ -71,18 +71,18 @@ class AlbaransController < ApplicationController
       case params[:seccion]
         when "caja"
           condicion = "cliente_id"
-          @clientes = Cliente.find :all, :order => 'nombre'
+          @clientes = Cliente.order('nombre')
         when "productos"
           condicion = "proveedor_id"
-          @proveedores = Proveedor.find :all, :order => 'nombre'
+          @proveedores = Proveedor.order('nombre')
         when "trueke"
           condicion = "cliente_id"
       end
-      @albarans = Albaran.find :all, :conditions => { :cerrado => false } 
+      @albarans = Albaran.where(cerrado: false)
       @albarans.each do |albaran|
         limpiar = false
-        albaran.destroy if AlbaranLinea.find_by_albaran_id(albaran.id).nil?
+        albaran.destroy if AlbaranLinea.find_by(id: albaran.id)
       end
-      @albarans = Albaran.find :all, :order => 'fecha DESC', :conditions => [ condicion + " IS NOT NULL AND NOT cerrado" ]
+      @albarans = Albaran.where(order: 'fecha DESC', conditions: condicion + " IS NOT NULL AND NOT cerrado")
     end
 end
