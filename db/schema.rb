@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150907135550) do
+ActiveRecord::Schema.define(:version => 20170416160115) do
 
   create_table "albaran_lineas", :force => true do |t|
     t.integer  "cantidad",                                         :default => 1
@@ -27,6 +27,9 @@ ActiveRecord::Schema.define(:version => 20150907135550) do
     t.integer  "linea_descuento_id"
   end
 
+  add_index "albaran_lineas", ["albaran_id"], :name => "albaran_lineas_idx"
+  add_index "albaran_lineas", ["producto_id"], :name => "albaran_lineas_producto_idx"
+
   create_table "albarans", :force => true do |t|
     t.string   "codigo"
     t.date     "fecha"
@@ -39,6 +42,9 @@ ActiveRecord::Schema.define(:version => 20150907135550) do
     t.date     "fecha_devolucion"
     t.integer  "factura_id"
   end
+
+  add_index "albarans", ["factura_id"], :name => "albarans_factura_idx"
+  add_index "albarans", ["proveedor_id", "cliente_id"], :name => "albarans_idx"
 
   create_table "autor", :force => true do |t|
     t.string   "nombre",     :null => false
@@ -53,6 +59,8 @@ ActiveRecord::Schema.define(:version => 20150907135550) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  add_index "autor_x_producto", ["producto_id", "autor_id"], :name => "autor_x_producto_idx"
 
   create_table "avisos", :force => true do |t|
     t.string   "mensaje",                      :null => false
@@ -122,6 +130,8 @@ ActiveRecord::Schema.define(:version => 20150907135550) do
     t.decimal  "importe_base",      :precision => 8, :scale => 2
     t.date     "fecha_vencimiento"
   end
+
+  add_index "facturas", ["proveedor_id"], :name => "factura_idx"
 
   create_table "familias", :force => true do |t|
     t.string   "nombre"

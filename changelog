@@ -1,3 +1,14 @@
+2017-xx-xx Santiago Ramos <sramos@sitiodistinto.net> Version 0.8.01.dev
+
+  * Generacion de indices para acelerar las consultas
+  * Migracion a ruby 2.2 (007lva)
+  * Plugins pasados a estilo rails3 (007lva)
+  * Cambios para permitir mysql 5.7 (007lva)
+  * Cambios en las relaciones con entidad autor
+  * Mejoras en recuperacion de info de libros desde inet
+  * Preparanda sincronizacion con ecommerce drupal
+  * Correccion de bugs
+
 2013-07-xx Santiago Ramos <sramos@sitiodistinto.net> Version 0.7.0.01
 
   * Migracion a Rails3
