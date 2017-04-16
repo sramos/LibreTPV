@@ -9,10 +9,10 @@ unlimited permission to copy, distribute and modify it.
 
 
 ---------------------------------------
-| MANUAL DE INSTALACIÓN DEL TPV  v1.0 |
+| MANUAL DE INSTALACIÓN DEL TPV  v1.1 |
 ---------------------------------------
 
-La instalación descrita fue efectuada sobre Debian 7.0. Es posible realizar los mismos pasos
+La instalación descrita fue efectuada sobre Debian 8.0. Es posible realizar los mismos pasos
 en cualquier otro sistema operativo, aunque algunos pasos es posible que sean distintos.
 
 
@@ -67,7 +67,7 @@ de instalación.
 En primer lugar, descargaremos la copia del último tag estable (el indicado aquí puede cambiar desde la realización
 de este manual, asegúrese de seleccionar la última versión disponible):
 
-  $ svn export https://github.com/sramos/LibreTPV/trunk /urs/share/libretpv
+  $ git clone https://github.com/sramos/LibreTPV /urs/share/libretpv
 
 Crear el directorio de configuración de la aplicación (habitualmente /etc/libretpv):
 
@@ -110,10 +110,10 @@ dependencias que nos indique la salida de pantalla:
 
 Instalar y configurar ruby:
 
-  $ rvm install 1.9.2
-  $ rvm --default ruby-1.9.2
+  $ rvm install 2.2.6
+  $ rvm --default ruby-2.2.6
   $ rvm gemset create libretpv
-  $ rvm use 1.9.2@libretpv --default
+  $ rvm use 2.2.6@libretpv --default
 
 y desde el directorio donde hayamos descargado LibreTPV (/usr/share/libretpv) las gemas necesarias:
 
@@ -148,7 +148,7 @@ Si lo que queremos es instalar un servicio funcional, procederemos con los pasos
 
 Si queremos instalar LibreTPV para utilizarlo y no sólo para desarrollar sobre él, instalaremos el módulo de Apache:
 
-  $ gem install passenger -v=3.0.18
+  $ gem install passenger
 
 lo compilaremos siguiendo las instrucciones del comando:
 
@@ -156,15 +156,15 @@ lo compilaremos siguiendo las instrucciones del comando:
 
 y lo configuraremos en apache, creando como root el fichero /etc/apache2/mods-available/passenger.load con el contenido:
 
-   LoadModule passenger_module /usr/local/rvm/gems/ruby-1.9.2-p320@libretpv/gems/passenger-3.0.18/ext/apache2/mod_passenger.so
-   PassengerRoot /usr/local/rvm/gems/ruby-1.9.2-p320@libretpv/gems/passenger-3.0.18
-   PassengerRuby /usr/local/rvm/wrappers/ruby-1.9.2-p320@libretpv/ruby
+   LoadModule passenger_module /usr/local/rvm/gems/ruby-2.2.6@libretpv/gems/passenger-5.1.2/ext/apache2/mod_passenger.so
+   PassengerRoot /usr/local/rvm/gems/ruby-2.2.6@libretpv/gems/passenger-5.1.2
+   PassengerRuby /usr/local/rvm/wrappers/ruby-2.2.6@libretpv/ruby
 
 si estábamos instalándolo en todo el sistema, o con el contenido:
 
-   LoadModule passenger_module /home/USUARIO/.rvm/gems/ruby-1.9.2-p320@libretpv/gems/passenger-3.0.18/ext/apache2/mod_passenger.so
-   PassengerRoot /home/USUARIO/.rvm/gems/ruby-1.9.2-p320@libretpv/gems/passenger-3.0.18
-   PassengerRuby /home/USUARIO/.rvm/wrappers/ruby-1.9.2-p320@libretpv/ruby
+   LoadModule passenger_module /home/USUARIO/.rvm/gems/ruby-2.2.6@libretpv/gems/passenger-5.1.2/ext/apache2/mod_passenger.so
+   PassengerRoot /home/USUARIO/.rvm/gems/ruby-2.2.6@libretpv/gems/passenger-5.1.2
+   PassengerRuby /home/USUARIO/.rvm/wrappers/ruby-2.2.6@libretpv/ruby
 
 si estábamos instalando el entorno de ejecución anterior sólo para el usuario USUARIO (sustituya en las líneas anteriores esa
 cadena por el nombre real del usuario).
