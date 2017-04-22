@@ -54,13 +54,6 @@ GEM
     climate_control (0.1.0)
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
-    coffee-rails (3.2.2)
-      coffee-script (>= 2.2.0)
-      railties (~> 3.2.0)
-    coffee-script (2.4.1)
-      coffee-script-source
-      execjs
-    coffee-script-source (1.12.2)
     erubis (2.7.0)
     execjs (2.7.0)
     gettext (3.2.2)
@@ -155,7 +148,6 @@ PLATFORMS
 DEPENDENCIES
   byebug
   calendar_date_select!
-  coffee-rails (~> 3.2.1)
   gettext (>= 1.9.3)
   hpricot
   mysql2 (~> 0.3.10)
