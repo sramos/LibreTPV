@@ -110,8 +110,6 @@ class Producto < ActiveRecord::Base
     self.descripcion = data[:description] if data && data[:description]
   end
 
-#private
-
   # Actualiza la imagen a usar como cover
   def actualiza_imagen
     # Si se esta utilizando una imagen externa, la descarga a local
@@ -207,21 +205,31 @@ class Producto < ActiveRecord::Base
       data = URI.parse("#{protocol}://#{host}/#{search}").read
       enlace = Hpricot(data).search("//div[@class='details']//h2//a").first if data
       if enlace
-	doc = URI.parse("#{protocol}://#{host}/#{enlace[:href]}").read
-        remote_images = Hpricot(doc).search("//img[@class='portada']")
-        remote_description = Hpricot(doc).search("//p[@itemprop='description']").first.inner_html
+	doc = Hpricot URI.parse("#{protocol}://#{host}/#{enlace[:href]}").read
+	remote_name = html_inner_value doc, "h1[@class='title']"
+	remote_authors = html_inner_value doc, "h2[@class='author']//a"
+	remote_publisher = html_inner_value doc, "//dd[@class='publisher']//a"
+	remote_price = html_inner_value doc, "//spam[@itemprop='price']"
+	remote_description = html_inner_value doc, "//p[@itemprop='description']"
+	remote_year = html_inner_value doc, "//dd[@class='publication-date']"
+        remote_images = doc.search("//img[@class='portada']")
         remote_image = nil
         remote_images.each do |ri|
           #puts "----------> Revisando la imagen remota " + ri[:src] if ri && ri[:src]
           remote_image = ri[:src] if remote_image.nil? && ri && ri[:src] && ri[:src] != "/img/nodisponible.gif"
         end
-        #puts "---------------------- IMAGEN "
-        #puts "---------------------> " + remote_image if remote_image
-        #puts "---------------------- IMAGEN "
         if (remote_image || remote_description)
           return_data = Hash.new
-          return_data[:image] = remote_image if remote_image && remote_image != ""
+	  return_data[:image] = remote_image unless remote_image.blank?
           return_data[:description] = remote_description if remote_description
+	  return_data[:name] = sanetize_html_text remote_name unless remote_name.blank?
+	  return_data[:authors] = sanetize_html_text remote_authors unless remote_authors.blank?
+	  return_data[:publisher] = sanetize_html_text remote_publisher unless remote_authors.blank?
+	  return_data[:price] = remote_price.to_f unless remote_price.blank?
+	  unless remote_year.blank?
+            remote_year =~/-([0-9]+)$/
+	    return_data[:year] = $1 
+	  end
         end
       end
     rescue
@@ -249,6 +257,23 @@ class Producto < ActiveRecord::Base
       logger.info "-----------------> LCDL: Error obteniendo informacion del libro"
     end
     return return_data
+  end
+
+  # Obtiene el contenido del html del elemento del DOM referido
+  def html_inner_value dom, element
+    result = nil
+    begin
+      obj = dom.search(element).first
+      result = obj.inner_html if obj
+    rescue
+      logger.info "-----------------> Error obteniendo elemento #{element} del DOM"
+    end
+    return result
+  end
+
+  # Sanea un texto html
+  def sanetize_html_text text
+    text.gsub(/\s+/){" "}.strip
   end
 
 end

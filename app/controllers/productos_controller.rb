@@ -320,31 +320,17 @@ class ProductosController < ApplicationController
     end
 
     def producto_x_isbn_todostuslibros producto, isbn
-      data = Net::HTTP.get('www.todostuslibros.com', '/busquedas/?keyword=' + isbn)
-      begin 
-        enlace = Hpricot(data).search("//div[@class='details']//a").first.to_html
-        if enlace
-          enlace =~ /href="(.+)"/
-          doc = Hpricot Net::HTTP.get('www.todostuslibros.com', $1)
-          producto.nombre = doc.search("h1[@class='title']").first.inner_html
-	  producto.familia_id = 1
-          producto.autores = doc.search("h2[@class='author']//a").first.inner_html
-          producto.editor = doc.search("//dd[@class='publisher']//a").first.inner_html
-          producto.precio = doc.search("//spam[@itemprop='price']").first.inner_html.to_f.to_s
-          producto.description = Hpricot(doc).search("//p[@itemprop='description']").first.inner_html
-          remote_images = Hpricot(doc).search("//img[@class='portada']")
-          remote_image = nil
-          remote_images.each do |ri|
-            remote_image = ri[:src] if remote_image.nil? && ri && ri[:src] && ri[:src] != "/img/nodisponible.gif"
-          end
-          producto.imagen_url = remote_image unless remote_image.blank?
-          doc.search("//dd[@class='publication-date']").first.inner_html =~ /-([0-9]+)$/
-          producto.anno = $1
-          producto.codigo = isbn 
-        end
-      rescue
+      if data = Producto.new(codigo: isbn).get_data_from_todostuslibros
+	producto.nombre = data[:name]
+	producto.familia_id = 1
+        producto.autores = data[:authors]
+	producto.editor = data[:publisher]
+	producto.precio = data[:price]
+	producto.descripcion = data[:description]
+	producto.anno = data[:year]
+	producto.url_imagen = data[:image]
+        producto.codigo = isbn
       end
-
       return producto
     end
 
