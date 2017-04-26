@@ -110,7 +110,7 @@ class Producto < ActiveRecord::Base
     self.descripcion = data[:description] if data && data[:description]
   end
 
-private
+#private
 
   # Actualiza la imagen a usar como cover
   def actualiza_imagen
@@ -198,15 +198,16 @@ private
 
   def get_data_from_todostuslibros
     return_data = nil
+    protocol = "https"
     host = 'www.todostuslibros.com'
-    search = '/busquedas/?keyword=' + self.codigo
+    search = '/busquedas/?isbn=' + self.codigo
 
     logger.info  "-----------------> Buscando en TTL: " + search
     begin
-      data = Net::HTTP.get(host, search)
+      data = URI.parse("#{protocol}://#{host}/#{search}").read
       enlace = Hpricot(data).search("//div[@class='details']//h2//a").first if data
       if enlace
-        doc = Net::HTTP.get(host, enlace[:href] )
+	doc = URI.parse("#{protocol}://#{host}/#{enlace[:href]}").read
         remote_images = Hpricot(doc).search("//img[@class='portada']")
         remote_description = Hpricot(doc).search("//p[@itemprop='description']").first.inner_html
         remote_image = nil
@@ -231,15 +232,16 @@ private
 
   def get_data_from_lcdl
     return_data = nil
+    protocol = "https"
     host = 'www.casadellibro.com'
     search = '/busqueda-generica?busqueda=isbn%3A' + self.codigo
 
     logger.info  "-----------------> Buscando en LCDL: " + search
     begin
-      data = Net::HTTP.get(host, search)
+      data = URI.parse("#{protocol}://#{host}/#{search}").read
       enlace = Hpricot(data).search("//div[@class='list-pag']//div//div[@class='mod-list-item']//div[@class='txt']//a").first if data
       if enlace
-        doc = Net::HTTP.get(host, enlace[:href])
+	doc = URI.parse("#{protocol}://#{host}/#{enlace[:href]}").read
         remote_image = Hpricot(doc).search("//img[@id='imgPrincipal']").first
         return_data = {image: remote_image[:src]} if remote_image
       end
