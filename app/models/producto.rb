@@ -3,21 +3,21 @@
 #
 #################################################################################
 # LibreTPV - Gestor TPV para Librerias
-# Copyright 2011-2013 Santiago Ramos <sramos@sitiodistinto.net> 
+# Copyright 2011-2013 Santiago Ramos <sramos@sitiodistinto.net>
 #
-#    Este programa es software libre: usted puede redistribuirlo y/o modificarlo 
-#    bajo los términos de la Licencia Pública General GNU publicada 
-#    por la Fundación para el Software Libre, ya sea la versión 3 
+#    Este programa es software libre: usted puede redistribuirlo y/o modificarlo
+#    bajo los términos de la Licencia Pública General GNU publicada
+#    por la Fundación para el Software Libre, ya sea la versión 3
 #    de la Licencia, o (a su elección) cualquier versión posterior.
 #
-#    Este programa se distribuye con la esperanza de que sea útil, pero 
-#    SIN GARANTÍA ALGUNA; ni siquiera la garantía implícita 
-#    MERCANTIL o de APTITUD PARA UN PROPÓSITO DETERMINADO. 
-#    Consulte los detalles de la Licencia Pública General GNU para obtener 
-#    una información más detallada. 
+#    Este programa se distribuye con la esperanza de que sea útil, pero
+#    SIN GARANTÍA ALGUNA; ni siquiera la garantía implícita
+#    MERCANTIL o de APTITUD PARA UN PROPÓSITO DETERMINADO.
+#    Consulte los detalles de la Licencia Pública General GNU para obtener
+#    una información más detallada.
 #
-#    Debería haber recibido una copia de la Licencia Pública General GNU 
-#    junto a este programa. 
+#    Debería haber recibido una copia de la Licencia Pública General GNU
+#    junto a este programa.
 #    En caso contrario, consulte <http://www.gnu.org/licenses/>.
 #################################################################################
 #
@@ -54,7 +54,7 @@ class Producto < ActiveRecord::Base
   has_attached_file :imagen,
     path: "public/cover/:id.:extension",
     url: "/cover/:id.:extension",
-    default_url: DEFAULT_IMAGE_URL 
+    default_url: DEFAULT_IMAGE_URL
   validates_attachment_content_type :imagen, content_type: /\Aimage\/.*\Z/, :message => "La imagen de portada no es válida."
 
 
@@ -78,7 +78,7 @@ class Producto < ActiveRecord::Base
     if self.codigo
       data = get_data_from_google || get_data_from_todostuslibros
       self.url_imagen = data[:image] if data && data[:image]
-      self.descripcion = data[:description] if data && data[:description] 
+      self.descripcion = data[:description] if data && data[:description]
     end
   end
 
@@ -147,11 +147,11 @@ class Producto < ActiveRecord::Base
       @autores.strip.mb_chars.upcase.split(%r{\s*/\s*}).each do |str_autor|
         # Genera el autor corrigiendo previamente el nombre:
         #  * Varios espacios se convierten en uno solo
-        #  * Se eliminan espacios antes de la coma (separacion de apellido del nombre) 
+        #  * Se eliminan espacios antes de la coma (separacion de apellido del nombre)
         nom = str_autor.gsub(/\s+,\s./, ', ').gsub(/\s+/, ' ')
         aut = Autor.find_or_create_by_nombre nom
         axp = AutorXProducto.create(autor_id: aut.id, producto_id: self.id) if aut.errors.empty?
-      end  
+      end
     end
   end
 
@@ -162,7 +162,7 @@ class Producto < ActiveRecord::Base
 
   def get_data_from_google
     return_data = nil
-    search = '/books?q=isbn%3A' + self.codigo 
+    search = '/books?q=isbn%3A' + self.codigo
 
     logger.info  "-----------------> Buscando en GOOGLE: " + search
     begin
@@ -228,7 +228,7 @@ class Producto < ActiveRecord::Base
 	  return_data[:price] = remote_price.to_f unless remote_price.blank?
 	  unless remote_year.blank?
             remote_year =~/-([0-9]+)$/
-	    return_data[:year] = $1 
+	    return_data[:year] = $1
 	  end
         end
       end
@@ -238,6 +238,8 @@ class Producto < ActiveRecord::Base
     return return_data
   end
 
+  # Una forma rapida de obtener solo la imagen:
+  # http://image.casadellibro.com/a/l/t0/#{ean[-2..-1]}/#{ean}.jpg
   def get_data_from_lcdl
     return_data = nil
     protocol = "https"
