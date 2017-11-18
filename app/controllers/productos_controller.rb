@@ -23,7 +23,13 @@ class ProductosController < ApplicationController
 
   def listado
     @campos_filtro = [["Nombre","productos.nombre"], ["Autor","autor.nombre"], ["Cantidad","cantidad"], ["Deposito","deposito"], ["Codigo","codigo"], ["Editor","editorial.nombre"], ["Familia","familias.nombre"]]
-    paginado = Configuracion.valor('PAGINADO')
+    if params[:format_xls_count]
+      paginado = params[:format_xls_count]
+      page = 1
+    else
+      paginado = Configuracion.valor('PAGINADO')
+      page = params[:page]
+    end
 
     if session[("productos_filtrado_tipo").to_sym] && session[("productos_filtrado_valor").to_sym]
       @productos = case session[("productos_filtrado_tipo").to_sym]
