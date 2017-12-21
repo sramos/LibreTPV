@@ -22,7 +22,10 @@ class ProductosController < ApplicationController
   end
 
   def listado
-    @campos_filtro = [["Nombre","productos.nombre"], ["Autor","autor.nombre"], ["Cantidad","cantidad"], ["Deposito","deposito"], ["Codigo","codigo"], ["Editor","editorial.nombre"], ["Familia","familias.nombre"]]
+    @campos_filtro = [["Nombre","productos.nombre"], ["Autor","autor.nombre"],
+                      ["Cantidad","cantidad"], ["Deposito","deposito"],
+                      ["Codigo","codigo"], ["Editor","editorial.nombre"],
+                      ["Familia","familias.nombre"]]
     if params[:format_xls_count]
       paginado = params[:format_xls_count]
       page = 1
@@ -34,21 +37,21 @@ class ProductosController < ApplicationController
     if session[("productos_filtrado_tipo").to_sym] && session[("productos_filtrado_valor").to_sym]
       @productos = case session[("productos_filtrado_tipo").to_sym]
         when "cantidad" then
-          Producto.paginate :page => params[:page], :per_page => paginado,
+          Producto.paginate :page => page, :per_page => paginado,
                 :order => 'productos.nombre ASC',
                 :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' ' + session[("productos_filtrado_condicion").to_sym] + ' ?', session[("productos_filtrado_valor").to_sym].to_i ]
         else
-          Producto.includes(:familia, :editorial, :autor).paginate :page => params[:page], :per_page => paginado,
+          Producto.includes(:familia, :editorial, :autor).paginate :page => page, :per_page => paginado,
                 :order => 'productos.nombre ASC',
                 :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("productos_filtrado_valor").to_sym] + "%" ]
       end
     elsif session[("productos_filtrado_tipo").to_sym] =~ /deposito/
-        @lineas = AlbaranLinea.paginate :page => params[:page], :per_page => paginado,
+        @lineas = AlbaranLinea.paginate :page => page, :per_page => paginado,
                 :order => 'nombre_producto ASC',
                 :include => [ :albaran ],
                 :conditions => "producto_id IS NOT NULL AND albarans.deposito IS true"
     else
-      @productos = Producto.paginate :page => params[:page], :per_page => paginado, :order => 'nombre'
+      @productos = Producto.paginate :page => page, :per_page => paginado, :order => 'nombre'
     end
     if session[("productos_filtrado_tipo").to_sym] == "deposito"
       render "listado_deposito"
