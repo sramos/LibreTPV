@@ -18,17 +18,17 @@ drupal_development:
 
 production:
   adapter: mysql2
-  socket: /var/run/mysqld/mysqld.sock
-  database: libretpv 
-  username: libretpv_user
-  password: libretpv_pass 
+  host: <%= ENV['DB_HOST'] %>
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASS'] %>
   encoding: utf8
 
 drupal_production:
   adapter: mysql2
   reconnect: false
   pool: 5
-  socket: /tmp/mysql.sock
+  host: drupal_host 
   database: drupal_database 
   username: libretpv_user
   password: libretpv_pass
