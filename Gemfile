@@ -22,7 +22,7 @@ end
 
 #gem 'jquery-rails'
 gem "prototype-rails", "~> 3.2.1"
-gem 'prototype_legacy_helper', '0.0.0', :git => 'git://github.com/rails/prototype_legacy_helper.git' # Esto es para mantener soporte de form_remote_tag en Rails3
+gem 'prototype_legacy_helper', '0.0.0', :git => 'https://github.com/rails/prototype_legacy_helper.git' # Esto es para mantener soporte de form_remote_tag en Rails3
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -67,13 +67,16 @@ end
 #gem "auto_complete", :git => 'git://github.com/david-kerins/auto_complete.git'
 #gem "respond_to_parent", :git => 'git://github.com/itkin/respond_to_parent.git' # Da error cargando como gema. Cargado como plugin. 
 gem "spreadsheet"
-gem "spreadsheet_on_rails", :git => 'git://github.com/10to1/spreadsheet_on_rails.git'
+gem "spreadsheet_on_rails", :git => 'https://github.com/10to1/spreadsheet_on_rails.git'
 gem "paperclip", "~> 4.3"
 gem 'will_paginate', '~> 3.0.0'
-gem 'calendar_date_select', :git => 'git://github.com/paneq/calendar_date_select.git'
+gem 'calendar_date_select', :git => 'https://github.com/paneq/calendar_date_select.git'
 gem 'rufus-scheduler'
 gem 'hpricot'
 # Versiones posteriores de prawn requieren ruby 2
 gem 'prawn', '~> 1.3'
 gem 'prawn-table', '~> 0.2.2'
 gem 'test-unit'
+
+# Usamos puma para el servidor de aplicaciones
+gem 'puma'
