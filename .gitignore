@@ -6,3 +6,4 @@ config/database.yml
 /tmp
 !/tmp/.keep
 .idea
+/public/assets/*
