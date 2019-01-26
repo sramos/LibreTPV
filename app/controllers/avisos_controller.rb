@@ -8,7 +8,7 @@ class AvisosController < ApplicationController
   def listado
     @avisos = Avisos.order("criticidad desc, updated_at asc").
                      paginate(page: (params[:format]=='xls' ? nil : params[:page]),
-                              per_page: (params[:format_xls_count] || Configuracion.valor('PAGINADO') )
+                              per_page: (params[:format_xls_count] || Configuracion.valor('PAGINADO')) )
   end
 
   def editar

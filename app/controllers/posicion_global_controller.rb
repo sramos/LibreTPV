@@ -21,7 +21,7 @@ class PosicionGlobalController < ApplicationController
         desglose = factura.desglose_por_iva
         desglose.each_key do |k|
           desglose_por_iva_sopor[k] = [0,0,0] if desglose_por_iva_sopor[k].nil?
-          desglose_por_iva_sopor[k][0] += desglose[k][0] 
+          desglose_por_iva_sopor[k][0] += desglose[k][0]
           desglose_por_iva_sopor[k][1] += desglose[k][1]
           desglose_por_iva_sopor[k][2] += desglose[k][2]
         end
@@ -101,11 +101,16 @@ class PosicionGlobalController < ApplicationController
       filtro_fecha = "facturas.fecha BETWEEN '" + cookies[("filtrado_fecha_inicio").to_sym].to_s + "' AND '" + cookies[("filtrado_fecha_fin").to_sym].to_s + "'"
       case tipo
         when "compras"
-          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => ["albarans"], :conditions => ["albarans.proveedor_id IS NOT NULL AND " + filtro_fecha]
+          Factura.joins(:albarans).
+                  where("albarans.proveedor_id IS NOT NULL AND " + filtro_fecha).
+                  order('facturas.fecha DESC, facturas.codigo DESC')
         when "ventas"
-          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :include => ["albarans"], :conditions => ["albarans.cliente_id IS NOT NULL AND " + filtro_fecha ]
+          Factura.joins(:albarans).
+                  where("albarans.cliente_id IS NOT NULL AND " + filtro_fecha).
+                  order('facturas.fecha DESC, facturas.codigo DESC')
         when "servicios"
-          Factura.find :all, :order => 'facturas.fecha DESC, facturas.codigo DESC', :conditions => ["facturas.proveedor_id IS NOT NULL AND facturas.fecha IS NOT NULL AND " + filtro_fecha ]
+          Factura.where("facturas.proveedor_id IS NOT NULL AND facturas.fecha IS NOT NULL AND " + filtro_fecha).
+                  order('facturas.fecha DESC, facturas.codigo DESC')
       end
     end
 end

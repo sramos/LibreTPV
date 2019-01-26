@@ -8,20 +8,20 @@ class PerdidosController < ApplicationController
   def listado
     # Albaranes de compra perdidos (cerrados pero sin factura)
     @albaranes_compra = []
-    Albaran.find(:all, :conditions => { :cerrado => true, :deposito => false, :cliente_id => nil }).each do |albaran|
+    Albaran.where(cerrado: true, deposito: false, cliente_id: nil).each do |albaran|
       puts "---> (" + albaran.id.to_s + ") " + albaran.proveedor.nombre + " " + albaran.fecha.to_s if albaran.factura.nil?
       @albaranes_compra.push(albaran) if albaran.factura.nil?
     end
 
     # Albaranes de venta perdidos (cerrados pero sin factura)
     @albaranes_venta = []
-    Albaran.find(:all, :conditions => { :cerrado => true, :proveedor_id => nil }).each do |albaran|
+    Albaran.where(cerrado: true, proveedor_id: nil).each do |albaran|
       puts "---> (" + albaran.id.to_s + ") " + albaran.proveedor.nombre + " " + albaran.fecha.to_s if albaran.factura.nil?
       @albaranes_venta.push(albaran) if albaran.factura.nil?
     end
 
     # Líneas de albaran perdidas (sin albaran asociado)
-    
+
     render "listado"
   end
 
