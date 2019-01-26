@@ -9,7 +9,7 @@ class InformeController < ApplicationController
 
   def listado
     @informes = [	["Stock de Productos", "stock_productos"],
-			["Productos Vendidos por Fecha", "productos_vendidos"], 
+			["Productos Vendidos por Fecha", "productos_vendidos"],
 			["Productos Vendidos (Resumen)", "productos_vendidos_resumen"],
                         ["Productos Recibidos por Fecha", "productos_recibidos"],
 			["Productos Recibidos (Resumen)", "productos_recibidos_resumen"],
@@ -28,12 +28,12 @@ class InformeController < ApplicationController
         if informe
           tempfile = Tempfile.new("informe.xls")
           informe.write(tempfile.path)
-          send_file tempfile.path, :filename => 'Informe.xls', :type => 'application/vnd.ms-excel' 
+          send_file tempfile.path, :filename => 'Informe.xls', :type => 'application/vnd.ms-excel'
         else
           flash[:error] = "Informe no disponible"
         end
       else
-        flash[:error] = "La fecha de inicio debe ser mayor que la fecha de fin del informe." unless fecha_fin > fecha_inicio 
+        flash[:error] = "La fecha de inicio debe ser mayor que la fecha de fin del informe." unless fecha_fin > fecha_inicio
       end
     end
   end
@@ -41,7 +41,7 @@ class InformeController < ApplicationController
   # Stock de Productos
   def stock_productos fecha_inicio, fecha_fin
     campos = [	["Cantidad", "cantidad"], ["Codigo", "codigo"], ["Nombre", "nombre"] ]
-    objetos = Producto.find :all, :order => [ "nombre ASC" ], :conditions => [ "cantidad > 0" ]
+    objetos = Producto.where("cantidad > 0").order(:nombre)
     return genera_informe(objetos,campos)
   end
 
@@ -51,7 +51,7 @@ class InformeController < ApplicationController
 		["Cantidad", "cantidad"], ["PVP", "precio_venta", true], ["% Descuento", "descuento"], ["Base Imponible", "subtotal", true], ["% IVA", "iva"], ["Total", "total", true] ]
     objetos = []
     condicion = [ "cliente_id IS NOT NULL AND facturas.fecha BETWEEN '" + fecha_inicio.to_s + "' AND '" + fecha_fin.to_s + "'" ]
-    Albaran.find(:all, :order => 'facturas.fecha DESC', :include => "factura", :conditions => condicion).each do |albaran|
+    Albaran.joins(:factura).where(condicio).order('facturas.fecha DESC').each do |albaran|
       objetos += albaran.albaran_lineas
     end
     return genera_informe(objetos,campos)
@@ -63,17 +63,17 @@ class InformeController < ApplicationController
     productos = {}
     condicion = condicion = "cliente_id IS NOT NULL"
     condicion += " AND facturas.fecha BETWEEN '" + fecha_inicio.to_s + "' AND '" + fecha_fin.to_s + "'"
-    Albaran.find(:all, :include => "factura", :conditions => condicion).each do |albaran|
+    Albaran.joins(:factura).where(condicion).each do |albaran|
       albaran.albaran_lineas.each do |linea|
         if productos[linea.producto_id]
           productos[linea.producto_id]['cantidad'] += linea.cantidad
         else
           productos[linea.producto_id] = {'nombre_producto' => linea.nombre_producto, 'cantidad' => linea.cantidad }
           productos[linea.producto_id]['codigo'] = linea.producto.codigo if linea.producto
-        end 
+        end
       end
     end
-    objetos=productos.each_value 
+    objetos=productos.each_value
     tempfile = Tempfile.new("informe.xls")
     return genera_informe(objetos,campos)
   end
@@ -83,7 +83,7 @@ class InformeController < ApplicationController
                 ["Cantidad", "cantidad"], ["P.Dist.", "precio_compra", true], ["% Descuento", "descuento"], ["Base Imponible", "subtotal", true], ["% IVA", "iva"], ["Total", "total", true] ]
     condicion  = "albarans.proveedor_id IS NOT NULL AND albarans.cerrado"
     condicion += " AND albarans.fecha BETWEEN '" + fecha_inicio.to_s + "' AND '" + fecha_fin.to_s + "'"
-    objetos = AlbaranLinea.find(:all, :order => 'albarans.fecha DESC', :include => 'albaran', :conditions => [ condicion ])
+    objetos = AlbaranLinea.joins(:albaran).where(condicion).order('albarans.fecha DESC')
     return genera_informe(objetos,campos)
   end
 
@@ -92,7 +92,7 @@ class InformeController < ApplicationController
     productos = {}
     condicion  = "albarans.proveedor_id IS NOT NULL AND albarans.cerrado"
     condicion += " AND albarans.fecha BETWEEN '" + fecha_inicio.to_s + "' AND '" + fecha_fin.to_s + "'"
-    AlbaranLinea.find(:all, :include => 'albaran', :conditions => [ condicion ]).each do |linea|
+    AlbaranLinea.joins(:albaran).where(condicion).each do |linea|
       if productos[linea.producto_id]
         productos[linea.producto_id]['cantidad'] += linea.cantidad
       else
@@ -108,7 +108,7 @@ class InformeController < ApplicationController
     campos = [  ["Fecha", "fecha"], ["Codigo", "codigo"], ["Cliente", "albaran.cliente.nombre"],
                 ["Base Imponible", "base_imponible", true], ["IVA", "iva_aplicado", true], ["Total", "importe", true] ]
     condicion = "albarans.cliente_id IS NOT NULL AND facturas.fecha BETWEEN '" + fecha_inicio.to_s + "' AND '" + fecha_fin.to_s + "'"
-    objetos = Factura.find(:all, :order => 'facturas.fecha DESC', :include => 'albaran', :conditions => [ condicion ])
+    objetos = Factura.joins(:albaran).where(condicion).order('facturas.fecha DESC')
     return genera_informe(objetos,campos)
   end
 
@@ -116,15 +116,15 @@ class InformeController < ApplicationController
     campos = [	["Fecha", "fecha"], ["Codigo", "codigo"], ["Proveedor", "albaran.proveedor.nombre"],
 		["Base Imponible", "base_imponible", true], ["IVA", "iva_aplicado", true], ["Total", "importe", true] ]
     condicion = "albarans.proveedor_id IS NOT NULL AND facturas.fecha BETWEEN '" + fecha_inicio.to_s + "' AND '" + fecha_fin.to_s + "'"
-    objetos = Factura.find(:all, :order => 'facturas.fecha DESC', :include => 'albaran', :conditions => [ condicion ])
+    objetos = Factura.joins(:albaran).where(condicion).order('facturas.fecha DESC')
     return genera_informe(objetos,campos)
   end
 
   def facturas_servicios fecha_inicio, fecha_fin
     campos = [  ["Fecha", "fecha"], ["Codigo", "codigo"], ["Proveedor", "proveedor.nombre"],
-		["Base Imponible", "base_imponible", true], ["IVA", "iva_aplicado", true], ["IRPF", "irpf"], ["Total", "importe", true] ] 
+		["Base Imponible", "base_imponible", true], ["IVA", "iva_aplicado", true], ["IRPF", "irpf"], ["Total", "importe", true] ]
     condicion = "albaran_id IS NULL AND facturas.fecha BETWEEN '" + fecha_inicio.to_s + "' AND '" + fecha_fin.to_s + "'"
-    objetos = Factura.find(:all, :order => 'facturas.fecha DESC', :include => 'albaran', :conditions => [ condicion ])
+    objetos = Factura.joins(:albaran).where(condicion).order('facturas.fecha DESC')
     return genera_informe(objetos,campos)
   end
 
@@ -134,7 +134,7 @@ class InformeController < ApplicationController
       fmt_numero = Spreadsheet::Format.new :number_format => '0.00'
       #fmt_color = Spreadsheet::Format.new :pattern => 1, :pattern_fg_color => :aqua
       nombre = "Informe/Resumen"
-      hoja = libro.create_worksheet :name => nombre 
+      hoja = libro.create_worksheet :name => nombre
       # Genera la cabecera de la hoja
       campos.each_index do |indice|
         hoja[0,indice] = campos[indice][0]

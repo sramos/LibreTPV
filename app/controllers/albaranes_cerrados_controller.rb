@@ -19,9 +19,10 @@ class AlbaranesCerradosController < ApplicationController
     condicion += " AND factura_id IS NULL" if session[("filtrado_facturado").to_sym] && session[("filtrado_facturado").to_sym] == "false"
     condicion += " AND factura_id IS NOT NULL" if session[("filtrado_facturado").to_sym] && session[("filtrado_facturado").to_sym] == "true"
 
-    @albaranes = Albaran.paginate( 
-	:order => 'fecha DESC, codigo DESC', :conditions => condicion, 
-        :page => (params[:format]=='xls' ? nil : params[:page]), :per_page => (params[:format_xls_count] || Configuracion.valor('PAGINADO') ))
+    @albaranes = Albaran.where(condicion).
+                         order("fecha DESC, codigo DESC").
+                         paginate(page: params[:format]=='xls' ? nil : params[:page],
+                                  per_page: params[:format_xls_count] || Configuracion.valor('PAGINADO') )
 
     @formato_xls = @albaranes.total_entries
     respond_to do |format|

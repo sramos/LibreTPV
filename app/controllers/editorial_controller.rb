@@ -17,19 +17,16 @@ class EditorialController < ApplicationController
     paginado = Configuracion.valor('PAGINADO')
 
     if session[("editorial_filtrado_tipo").to_sym] && session[("editorial_filtrado_valor").to_sym]
-      @editoriales = case session[("editorial_filtrado_tipo").to_sym]
-        when "nombre" then
-          Editorial.paginate :page => params[:page], :per_page => paginado,
-                :order => 'nombre ASC',
-                :conditions => [ session[("editorial_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("editorial_filtrado_valor").to_sym] + "%" ]
-        end
+      @editoriales = Editorial.where('nombre LIKE ?', "%" + session[("editorial_filtrado_valor").to_sym] + "%").
+                               order("nombre ASC").
+                               paginate(page: params[:page], per_page: paginado) if session[("editorial_filtrado_tipo").to_sym] == "nombre"
     else
-      @editoriales = Editorial.paginate :page => params[:page], :per_page => paginado, :order => 'nombre'
+      @editoriales = Editorial.order(:nombre).paginate(page: params[:page], pero_page: paginado)
     end
   end
 
   def editar
-    @editorial = Editorial.find_by_id(params[:id]) || Editorial.new 
+    @editorial = Editorial.find_by_id(params[:id]) || Editorial.new
     render :partial => "formulario"
   end
 

@@ -8,7 +8,7 @@ class AutorController < ApplicationController
   def filtrado
     session[("autor_filtrado_tipo").to_sym] = params[:filtro][:tipo] if params[:filtro]
     session[("autor_filtrado_valor").to_sym] = ( params[:filtro] && params[:filtro][:valor] != "" ) ? params[:filtro][:valor] : nil
-    session[("autor_filtrado_condicion").to_sym] = params[:filtro] ? params[:filtro][:condicion] : nil 
+    session[("autor_filtrado_condicion").to_sym] = params[:filtro] ? params[:filtro][:condicion] : nil
     redirect_to :action => :listado
   end
 
@@ -20,18 +20,18 @@ class AutorController < ApplicationController
     if session[("autor_filtrado_tipo").to_sym] && session[("autor_filtrado_valor").to_sym]
       @autores = case session[("autor_filtrado_tipo").to_sym]
         when "nombre" then
-          Autor.paginate :page => params[:page], :per_page => paginado,
-                :order => 'nombre ASC',
-                :conditions => [ session[("autor_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("autor_filtrado_valor").to_sym] + "%" ]
+          Autor.where( session[("autor_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("autor_filtrado_valor").to_sym] + "%" ] ).
+                order("nombre ASC").
+                paginate( page: params[:page], per_page: paginado)
         end
     else
-      @autores = Autor.paginate page: params[:page], per_page: paginado, order: 'nombre'
+      @autores = Autor.order(:nombre).paginate(page: params[:page], per_page: paginado)
     end
   end
 
   # Prepara y presenta el formulario de edicion de un autor
   def editar
-    @autor = Autor.find_by_id(params[:id]) || Autor.new 
+    @autor = Autor.find_by_id(params[:id]) || Autor.new
     render :partial => "formulario"
   end
 
@@ -56,7 +56,7 @@ class AutorController < ApplicationController
   end
 
   #+++
-  # Acciones sobre otros elementos relacionados 
+  # Acciones sobre otros elementos relacionados
   #---
 
   # Sublistado de libros relacionados

@@ -6,12 +6,13 @@ class AvisosController < ApplicationController
   end
 
   def listado
-    @avisos = Avisos.paginate :order => "criticidad desc, updated_at asc",
-		:page => (params[:format]=='xls' ? nil : params[:page]), :per_page => (params[:format_xls_count] || Configuracion.valor('PAGINADO') )
+    @avisos = Avisos.order("criticidad desc, updated_at asc").
+                     paginate(page: (params[:format]=='xls' ? nil : params[:page]),
+                              per_page: (params[:format_xls_count] || Configuracion.valor('PAGINADO') )
   end
 
   def editar
-    @aviso = params[:id] ?  Avisos.find(params[:id]) : Avisos.new 
+    @aviso = params[:id] ?  Avisos.find(params[:id]) : Avisos.new
     render :partial => "formulario"
   end
 

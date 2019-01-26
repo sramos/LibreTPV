@@ -7,8 +7,9 @@ class CajaController < ApplicationController
   end
 
   def listado
-    @caja = Caja.paginate( :order => 'id DESC',
-        :page => (params[:format]=='xls' ? nil : params[:page]), :per_page => (params[:format_xls_count] || Configuracion.valor('PAGINADO') ))
+    @caja = Caja.order('id DESC').
+                 paginate(page: (params[:format]=='xls' ? nil : params[:page]),
+                          per_page: (params[:format_xls_count] || Configuracion.valor('PAGINADO') ))
     @formato_xls = @caja.total_entries
     respond_to do |format|
       format.html
@@ -27,7 +28,7 @@ class CajaController < ApplicationController
     @importe_caja = @cierre_caja ? @cierre_caja.importe : 0
     # Encuentra todas las ventas en caja realizados desde el ultimo cierre de caja
     conditions = @cierre_caja ? { :conditions => ['forma_pagos.caja IS TRUE AND fecha > ?', @cierre_caja.fecha_hora] } : {}
-    @pagos = Pago.find(:all, conditions.merge(:include => "forma_pago"))
+    @pagos = Pago.joins("forma_pago").where(coditions)
     @pagos.each do |pago|
       @importe_ventas += pago.importe if pago.factura && !pago.factura.albarans.empty? && pago.factura.albarans.first.cliente
       @importe_compras += pago.importe if pago.factura && !pago.factura.albarans.empty? && pago.factura.albarans.first.proveedor
@@ -38,7 +39,7 @@ class CajaController < ApplicationController
     # Encuentra todos los pagos de servicios realizados desde el ultimo cierre de caja
     # Encuentra todas las entradas/salidas de caja realizadas desde el ultimo cierre de caja
     conditions = @cierre_caja ? { :conditions => ['fecha_hora > ?', @cierre_caja.fecha_hora] } : {}
-    @salidas = Caja.find(:all, conditions)
+    @salidas = Caja.where(conditions)
     @salidas.each do |salida|
       @importe_caja += salida.importe
     end
@@ -67,12 +68,12 @@ class CajaController < ApplicationController
     render :partial => "formulario"
   end
 
-  def modificar 
+  def modificar
     @caja = Caja.new
     @caja.fecha_hora = Time.now
     @caja.update_attributes params[:caja]
     flash[:error] = @caja
     redirect_to :action => :listado
   end
-  
+
 end

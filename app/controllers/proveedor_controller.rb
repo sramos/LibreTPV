@@ -6,15 +6,16 @@ class ProveedorController < ApplicationController
 
   def listado
     flash[:mensaje] = "Listado de proveedores"
-    @proveedores = Proveedor.paginate( :order => 'nombre',
-			:page => (params[:format]=='xls' ? nil : params[:page]), :per_page => (params[:format_xls_count] || Configuracion.valor('PAGINADO') ))
+    @proveedores = Proveedor.order(:nombre).
+                             paginate(page: (params[:format]=='xls' ? nil : params[:page]),
+                                      per_page:(params[:format_xls_count] || Configuracion.valor('PAGINADO')) )
     @formato_xls = @proveedores.total_entries
     respond_to do |format|
       format.html
       format.xls do
         @tipo = "proveedores"
         @objetos = @proveedores
-        #@subhoja = { :titulo => "nombre", :cabecera => "Productos Comprados", :objetos => "productos_comprados", :tipo => "productos_comprados" } 
+        #@subhoja = { :titulo => "nombre", :cabecera => "Productos Comprados", :objetos => "productos_comprados", :tipo => "productos_comprados" }
         render 'comunes_xls/listado', :layout => false
       end
     end
@@ -28,14 +29,14 @@ class ProveedorController < ApplicationController
   def modificar
     proveedor = params[:id] ? Proveedor.find(params[:id]) : Proveedor.new
     proveedor.update_attributes params[:proveedor]
-    flash[:error] = proveedor 
+    flash[:error] = proveedor
     redirect_to :action => :listado
   end
 
   def borrar
     proveedor = Proveedor.find_by_id params[:id]
     proveedor.destroy
-    flash[:error] = proveedor 
+    flash[:error] = proveedor
     redirect_to :action => :listado
   end
 
@@ -52,7 +53,7 @@ class ProveedorController < ApplicationController
         @xls_title = "Productos"
         @xls_head = "Productos Comprados " + proveedor.nombre
         render 'comunes_xls/listado', :layout => false
-      end 
+      end
       format.html do
         render :update do |page|
           page.replace_html params[:update], :partial => "productos"

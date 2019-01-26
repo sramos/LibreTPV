@@ -17,7 +17,7 @@ class ProductosController < ApplicationController
   def filtrado
     session[("productos_filtrado_tipo").to_sym] = params[:filtro][:tipo] if params[:filtro]
     session[("productos_filtrado_valor").to_sym] = ( params[:filtro] && params[:filtro][:valor] != "" ) ? params[:filtro][:valor] : nil
-    session[("productos_filtrado_condicion").to_sym] = params[:filtro] ? params[:filtro][:condicion] : nil 
+    session[("productos_filtrado_condicion").to_sym] = params[:filtro] ? params[:filtro][:condicion] : nil
     redirect_to :action => :listado
   end
 
@@ -37,21 +37,22 @@ class ProductosController < ApplicationController
     if session[("productos_filtrado_tipo").to_sym] && session[("productos_filtrado_valor").to_sym]
       @productos = case session[("productos_filtrado_tipo").to_sym]
         when "cantidad" then
-          Producto.paginate :page => page, :per_page => paginado,
-                :order => 'productos.nombre ASC',
-                :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' ' + session[("productos_filtrado_condicion").to_sym] + ' ?', session[("productos_filtrado_valor").to_sym].to_i ]
+          Producto.where(["cantidad " + session[("productos_filtrado_condicion").to_sym] + " ?", session[("productos_filtrado_valor").to_sym].to_i]).
+                   order('productos.nombre ASC').
+                   paginate(page: page, per_page: paginado)
         else
-          Producto.includes(:familia, :editorial, :autor).paginate :page => page, :per_page => paginado,
-                :order => 'productos.nombre ASC',
-                :conditions => [ session[("productos_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("productos_filtrado_valor").to_sym] + "%" ]
+          Producto.joins(:familia, :editorial, :autor).
+                   where([ session[("productos_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("productos_filtrado_valor").to_sym] + "%" ]).
+                   order('productos.nombre ASC').
+                   paginate(page: page, per_page: paginado)
       end
     elsif session[("productos_filtrado_tipo").to_sym] =~ /deposito/
-        @lineas = AlbaranLinea.paginate :page => page, :per_page => paginado,
-                :order => 'nombre_producto ASC',
-                :include => [ :albaran ],
-                :conditions => "producto_id IS NOT NULL AND albarans.deposito IS true"
+        @lineas = AlbaranLinea.joins(:albaran).
+                               where("producto_id IS NOT NULL AND albarans.deposito IS true").
+                               order('nombre_producto ASC')
+
     else
-      @productos = Producto.paginate :page => page, :per_page => paginado, :order => 'nombre'
+      @productos = Producto.order(:nombre).paginate(page: page, per_page: paginado)
     end
     if session[("productos_filtrado_tipo").to_sym] == "deposito"
       render "listado_deposito"
@@ -74,7 +75,7 @@ class ProductosController < ApplicationController
       #@producto = producto_x_codigo_isbn_con_imagen(params[:codigo])
       @producto = producto_x_codigo_isbn(params[:codigo])
     else
-      @producto = Producto.find_by_id(params[:id]) || Producto.new 
+      @producto = Producto.find_by_id(params[:id]) || Producto.new
     end
     @materias = @producto.familia.materia.order("materia.nombre") if @producto.id
     #@producto_familia_id = @producto.familia_id if @producto.id
@@ -136,7 +137,7 @@ class ProductosController < ApplicationController
 
   # Busca descripcion en internet
   def search_description
-    @producto = Producto.find_by_id(params[:id]) || Producto.new(:codigo => params[:codigo])
+    @producto = Producto.find_by_id(params[:id]) || Producto.new(codigo: params[:codigo])
     if params[:codigo]
       @producto.get_remote_description
       render :update do |page|
@@ -148,7 +149,7 @@ class ProductosController < ApplicationController
 
   # Busca imagen en internet
   def search_cover
-    @producto = Producto.find_by_id(params[:id]) || Producto.new(:codigo => params[:codigo])
+    @producto = Producto.find_by_id(params[:id]) || Producto.new(codigo: params[:codigo])
     if params[:codigo]
       @imagenes = @producto.get_available_images
       render :update do |page|
@@ -160,8 +161,8 @@ class ProductosController < ApplicationController
 
   # Actualiza la descripcion asociada al libro
   def update_description
-    @producto = Producto.find_by_id(params[:id]) || Producto.new(:descripcion => params[:description])
-    if params[:description] && @producto 
+    @producto = Producto.find_by_id(params[:id]) || Producto.new(descripcion: params[:description])
+    if params[:description] && @producto
       @producto.update_attribute(:descripcion, params[:description]) if @producto.id
       render :update do |page|
         page.replace params[:update], :partial => 'datos_externos'
@@ -173,7 +174,7 @@ class ProductosController < ApplicationController
   # Actualiza la imagen asociada al libro descargandosela si no esta ya
   def update_cover
     # No actualizamos el producto, sino solo su imagen. Los datos se guardaran cuando se salve el texto
-    @producto = Producto.find_by_id(params[:id]) || Producto.new(:codigo => params[:codigo])
+    @producto = Producto.find_by_id(params[:id]) || Producto.new(codigo: params[:codigo])
     if @producto
       # Actualizamos la imagen segun el origen que tengamos
       case params[:source]
@@ -181,7 +182,7 @@ class ProductosController < ApplicationController
       when "uploaded"
         @producto.url_imagen = nil
       # Cuando no queremos, elimina la imagen
-      when "none" 
+      when "none"
         @producto.url_imagen = nil
         @producto.imagen = nil
       # En cualquier otro caso, descarga la imagen y la sube como adjunto
@@ -203,7 +204,7 @@ class ProductosController < ApplicationController
 
   # Actualiza la familia del producto
   #def cambio_familia
-  #  @producto = params[:id] ? Producto.find(params[:id]) : nil 
+  #  @producto = params[:id] ? Producto.find(params[:id]) : nil
   #  @producto.familia.id = params[:producto_familia_id]
   #  @producto_familia_id = params[:producto_familia_id]
   #  @familias = Familia.all
@@ -219,12 +220,12 @@ class ProductosController < ApplicationController
       #pdf = PDF::Writer.new(:paper => 'C8', :orientation => :landscape)
       pdf = PDF::Writer.new( :paper => [8.8,5] )
       pdf.margins_mm(5)
-      pdf.y = pdf.absolute_top_margin - 5 
+      pdf.y = pdf.absolute_top_margin - 5
       pdf.text Configuracion.valor('NOMBRE CORTO EMPRESA').upcase, :justification => :center, :font_size => 10
       pdf.add_image barcode.to_jpg(:height => altura_codigo, :margin => 5), pdf.left_margin + 10, pdf.y - 52
-      pdf.move_pointer altura_codigo + 20 
-      pdf.text producto.codigo, :font_size => 8, :left => 15 
-      pdf.move_pointer 10 
+      pdf.move_pointer altura_codigo + 20
+      pdf.text producto.codigo, :font_size => 8, :left => 15
+      pdf.move_pointer 10
       pdf.text producto.nombre.first(32)+" ...", :justification => :right, :right => 5, :font_size => 9
       pdf.text "PVP: " + format("%.2f",producto.precio.to_s) + " euros", :justification => :right, :right => 5
       pdf.rounded_rectangle(pdf.left_margin, pdf.absolute_top_margin, pdf.margin_width,
@@ -234,7 +235,7 @@ class ProductosController < ApplicationController
       #barcode = Barby::Code128B.new(producto.codigo)
       #File.open('/tmp/code128b.png', 'w') do |f|
       #  f.write barcode.to_png(:height => 20, :margin => 5)
-      #end 
+      #end
     end
   end
 
@@ -253,7 +254,7 @@ class ProductosController < ApplicationController
 
   # Devuelve sublistado de ventas del producto
   def albaranes_venta
-    lineas = AlbaranLinea.find :all, :conditions=>{:producto_id => params[:id]}
+    lineas = AlbaranLinea.where(producto_id: params[:id])
     # Obtiene los albaranes donde esta el producto
     @albaranes=[]
     lineas.each { |linea| @albaranes.push(linea.albaran) if linea.albaran && linea.albaran.cliente && linea.albaran.cerrado }
@@ -265,18 +266,18 @@ class ProductosController < ApplicationController
   end
 
   def producto_x_codigo
-    @producto = Producto.find_by_codigo(params[:codigo]) 
+    @producto = Producto.find_by_codigo(params[:codigo])
     @familias = Familia.all
 
     if params[:codigo]==""
       render :inline => ""
- 
+
     # Si existe el libro coge los datos y envia el formulario
     elsif !@producto.nil?
-      render :partial => params[:template] 
+      render :partial => params[:template]
 
     # Si no existe el libro lo busca y se prepara para guardarlos
-    else 
+    else
       @producto = producto_x_codigo_isbn params[:codigo]
       if @producto.familia
         @materias = @producto.familia.materia
@@ -289,8 +290,7 @@ class ProductosController < ApplicationController
 
   def producto_x_titulo
     puts "-----> nos llaman para meter el codigo ean " + params[:titulo]
-    @producto = Producto.first(:conditions => {:nombre => params[:titulo]} )
-    if @producto
+    if @producto = Producto.where(nombre: params[:titulo]).first
       render :update do |page|
         page.replace 'formulario_campo_producto_codigo', :inline => '<%= text_field("producto", "codigo", {:class => "texto", :id => "formulario_campo_producto_codigo", :type => "d", :value => @producto.codigo }) %>'
         page.replace 'propiedades_producto', :partial => 'productos/listado_propiedades'
@@ -322,7 +322,7 @@ class ProductosController < ApplicationController
         producto.anno = propiedades["Y1"]
         producto.editor = propiedades["PB"]
         producto.familia_id = 1
-        producto.codigo = isbn 
+        producto.codigo = isbn
       end
 
       return producto
@@ -371,7 +371,7 @@ class ProductosController < ApplicationController
 #  Syntax: IBERMAC
 #
 # Biblioteca Nacional
-#  Host: sigb.bne.es 
+#  Host: sigb.bne.es
 #  Port: 2200
 #  Database: Unicorn / bimo
 #  Syntax: IBERMAC / USMARC
@@ -393,9 +393,9 @@ class ProductosController < ApplicationController
 # 005 19980710092633.8
 # 008 970604s1997    inuab    b    001 0 eng
 # 035    $9 (DLC)   97023698
-# 906    $a 7 $b cbc $c orignew $d 1 $e ocip $f 19 $g y-gencatlg 
+# 906    $a 7 $b cbc $c orignew $d 1 $e ocip $f 19 $g y-gencatlg
 # 955    $a pc16 to ja00 06-04-97; jd25 06-05-97; jd99 06-05-97; jd11 06-06-97;aa05 06-10-97; CIP ver. pv08 11-05-97
-# 010    $a    97023698 
+# 010    $a    97023698
 # 020    $a 0253333490 (alk. paper)
 # 040    $a DLC $c DLC $d DLC
 # 050 00 $a QE862.D5 $b C697 1997
@@ -435,8 +435,8 @@ class ProductosController < ApplicationController
 #(Length implementation at offset 22 should hold a digit. Assuming 0)
 #01149namaa2200301 b 4500
 #001 Mimo0000964332
-#005 20080212        
-#008 980807s1983    esp|          ||| ||spa  
+#005 20080212
+#008 980807s1983    esp|          ||| ||spa
 #016 7  $a bimoBNE19982105873 $2 SpMaBN
 #017    $a B 1701-1983
 #020    $a 84-350-0390-6

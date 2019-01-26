@@ -2,12 +2,12 @@
 
 class DepositoController < ApplicationController
 
-  # Hace una busqueda de "albaranes" eliminando los vacios 
+  # Hace una busqueda de "albaranes" eliminando los vacios
   before_filter :obtiene_albaranes, :only => [ :listado ]
 
   def index
     flash[:mensaje] = "Listado de Albaranes en Depósito"
-    redirect_to :action => :listado 
+    redirect_to :action => :listado
   end
 
   def listado
@@ -65,7 +65,7 @@ class DepositoController < ApplicationController
   # Vaciar lista de reposicion
   def vaciar_lista_reposicion
     session[("reposicion").to_sym] = Hash.new
-    redirect_to :action => :listado 
+    redirect_to :action => :listado
   end
 
   # Reponer los productos de la lista de reposicion
@@ -77,7 +77,7 @@ class DepositoController < ApplicationController
       albaran = Albaran.create( :fecha => Date.today, :proveedor_id => albaran_viejo.proveedor_id, :cerrado => false, :codigo => "R-" + albaran_viejo.codigo)
       elemento.each do |linea_id,cant|
         cantidad = cant["cantidad".to_sym].to_s
-        al = AlbaranLinea.find_by_id(linea_id.to_s.to_i) 
+        al = AlbaranLinea.find_by_id(linea_id.to_s.to_i)
         linea = AlbaranLinea.create( al.attributes.merge({:cantidad => cantidad, :albaran_id => albaran.id}) )
         session[("reposicion").to_sym][albaran_id].delete(linea_id)
       end
@@ -94,11 +94,12 @@ class DepositoController < ApplicationController
       albaran.reabrir(params[:seccion])
       flash[:error] = albaran
     end
-    redirect_to :action => :listado 
+    redirect_to :action => :listado
   end
 
   private
     def obtiene_albaranes
-      @albarans = Albaran.find :all, :order => 'fecha_devolucion ASC', :conditions => [ "proveedor_id IS NOT NULL AND cerrado AND deposito" ]
+      @albarans = Albaran.where("proveedor_id IS NOT NULL AND cerrado AND deposito").
+                          order(:fecha_devolucion)
     end
 end

@@ -5,8 +5,9 @@ class ClienteController < ApplicationController
   end
 
   def listado
-    @clientes = Cliente.paginate( :order => [ :nombre ],
-			:page => (params[:format]=='xls' ? nil : params[:page]), :per_page => (params[:format_xls_count] || Configuracion.valor('PAGINADO') ))
+    @clientes = Cliente.order(:nombre).
+                        paginate(page: (params[:format]=='xls' ? nil : params[:page]),
+                                 per_page: (params[:format_xls_count] || Configuracion.valor('PAGINADO')) )
     @formato_xls = @clientes.total_entries
     respond_to do |format|
       format.html
@@ -33,7 +34,7 @@ class ClienteController < ApplicationController
   def borrar
     cliente = Cliente.find_by_id params[:id]
     cliente.destroy
-    flash[:error] = cliente 
+    flash[:error] = cliente
     redirect_to :action => :listado
   end
 
@@ -67,9 +68,9 @@ class ClienteController < ApplicationController
     redirect_to :action => :listado
   end
 
-  # Devuelve sublistado de productos vendidos al cliente 
+  # Devuelve sublistado de productos vendidos al cliente
   def productos
-    albaranes = Albaran.find :all, :conditions => { :cliente_id => params[:id], :cerrado => true }
+    albaranes = Albaran.where(cliente_id: params[:id], cerrado: true)
     # Obtiene las líneas de cada albaran del proveedor
     @lineas = []
     albaranes.each { |albaran| albaran.albaran_lineas.each { |linea| @lineas.push(linea) } }

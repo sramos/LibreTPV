@@ -13,8 +13,8 @@
       <%= selector("Fecha de:", "filtro", "tipo_fecha", [["Factura","factura"],["Vencimiento","vencimiento"]], cookies["filtrado_tipo_fecha"], "x1", false) if params[:seccion] == "productos" && params[:controller] == "factura" %>
       <%= fecha "Fecha Inicio (incluida)", "filtro", "fecha_inicio", cookies[("filtrado_fecha_inicio").to_sym].to_date %>
       <%= fecha "Fecha Fin (incluida)", "filtro", "fecha_fin", cookies[("filtrado_fecha_fin").to_sym].to_date %>
-      <%= selector("Proveedor", 'filtro', 'proveedor', Proveedor.find(:all,:order=>"nombre ASC").map {|p| [p.nombre,p.id]}, session[("filtrado_proveedor").to_sym].to_i, "x15", true) if params[:seccion] == "productos" %>
-      <%= selector("Cliente", 'filtro', 'cliente', Cliente.find(:all,:order=>"nombre ASC").map {|p| [p.nombre,p.id]}, session[("filtrado_cliente").to_sym].to_i, "x15", true) if params[:seccion] == "caja" %>
+      <%= selector("Proveedor", 'filtro', 'proveedor', Proveedor.order(:nombre).collect{|p| [p.nombre,p.id]}, session[("filtrado_proveedor").to_sym].to_i, "x15", true) if params[:seccion] == "productos" %>
+      <%= selector("Cliente", 'filtro', 'cliente', Cliente.order(:nombre).collect{|p| [p.nombre, p.id]}, session[("filtrado_cliente").to_sym].to_i, "x15", true) if params[:seccion] == "caja" %>
       <%= selector("Pagada", 'filtro', 'pagado', [["Si","true"],["No","false"]], session[("filtrado_pagado").to_sym], "x05", true) if (params[:seccion] == "productos" && params[:controller] != "albaranes_cerrados") || params[:seccion] == "caja" %>
       <%= selector("Facturado", 'filtro', 'facturado', [["Si","true"],["No","false"]], session[("filtrado_facturado").to_sym], "x05", true) if params[:seccion] == "productos" && params[:controller] == "albaranes_cerrados" %>
       <div class='elemento_derecha' id='boton_filtrado'><br/>
@@ -23,4 +23,3 @@
     </div>
   </form>
 </fieldset>
-

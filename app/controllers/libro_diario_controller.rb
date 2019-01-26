@@ -8,7 +8,9 @@ class LibroDiarioController < ApplicationController
 
   def listado
     if cookies[("filtrado_fecha_inicio").to_sym] && cookies[("filtrado_fecha_fin").to_sym]
-      @facturas = Factura.paginate :page => params[:page], :per_page => Configuracion.valor('PAGINADO'), :order => 'facturas.fecha DESC, facturas.codigo DESC', :conditions => { 'facturas.fecha' => cookies[("filtrado_fecha_inicio").to_sym]..cookies[("filtrado_fecha_fin").to_sym]}
+      @facturas = Factura.where('facturas.fecha' => cookies[("filtrado_fecha_inicio").to_sym]..cookies[("filtrado_fecha_fin").to_sym]).
+                          order('facturas.fecha DESC, facturas.codigo DESC').
+                          paginate(page: params[:page], per_page: Configuracion.valor('PAGINADO'))
     end
   end
 
