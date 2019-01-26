@@ -27,8 +27,8 @@ class CajaController < ApplicationController
     @cierre_caja = Caja.where(cierre_caja: true).last
     @importe_caja = @cierre_caja ? @cierre_caja.importe : 0
     # Encuentra todas las ventas en caja realizados desde el ultimo cierre de caja
-    conditions = @cierre_caja ? { :conditions => ['forma_pagos.caja IS TRUE AND fecha > ?', @cierre_caja.fecha_hora] } : {}
-    @pagos = Pago.joins("forma_pago").where(coditions)
+    conditions = @cierre_caja ? ['forma_pagos.caja IS TRUE AND fecha > ?', @cierre_caja.fecha_hora] : {}
+    @pagos = Pago.joins(:forma_pago).where(conditions)
     @pagos.each do |pago|
       @importe_ventas += pago.importe if pago.factura && !pago.factura.albarans.empty? && pago.factura.albarans.first.cliente
       @importe_compras += pago.importe if pago.factura && !pago.factura.albarans.empty? && pago.factura.albarans.first.proveedor
@@ -38,7 +38,7 @@ class CajaController < ApplicationController
     # Encuentra todas las compras en caja realizadas desde el ultimo cierre de caja
     # Encuentra todos los pagos de servicios realizados desde el ultimo cierre de caja
     # Encuentra todas las entradas/salidas de caja realizadas desde el ultimo cierre de caja
-    conditions = @cierre_caja ? { :conditions => ['fecha_hora > ?', @cierre_caja.fecha_hora] } : {}
+    conditions = @cierre_caja ? ['fecha_hora > ?', @cierre_caja.fecha_hora] : {}
     @salidas = Caja.where(conditions)
     @salidas.each do |salida|
       @importe_caja += salida.importe
