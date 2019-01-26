@@ -9,230 +9,229 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170416160115) do
+ActiveRecord::Schema.define(version: 20170416160115) do
 
-  create_table "albaran_lineas", :force => true do |t|
-    t.integer  "cantidad",                                         :default => 1
-    t.integer  "descuento",                                        :default => 0
-    t.decimal  "precio_compra",      :precision => 8, :scale => 2
-    t.decimal  "precio_venta",       :precision => 8, :scale => 2
-    t.integer  "producto_id"
-    t.integer  "albaran_id"
-    t.datetime "created_at",                                                      :null => false
-    t.datetime "updated_at",                                                      :null => false
-    t.string   "nombre_producto"
-    t.integer  "iva"
-    t.integer  "linea_descuento_id"
+  create_table "albaran_lineas", force: :cascade do |t|
+    t.integer  "cantidad",           limit: 4,                           default: 1
+    t.integer  "descuento",          limit: 4,                           default: 0
+    t.decimal  "precio_compra",                  precision: 8, scale: 2
+    t.decimal  "precio_venta",                   precision: 8, scale: 2
+    t.integer  "producto_id",        limit: 4
+    t.integer  "albaran_id",         limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "nombre_producto",    limit: 255
+    t.integer  "iva",                limit: 4
+    t.integer  "linea_descuento_id", limit: 4
   end
 
-  add_index "albaran_lineas", ["albaran_id"], :name => "albaran_lineas_idx"
-  add_index "albaran_lineas", ["producto_id"], :name => "albaran_lineas_producto_idx"
+  add_index "albaran_lineas", ["albaran_id"], name: "albaran_lineas_idx", using: :btree
+  add_index "albaran_lineas", ["producto_id"], name: "albaran_lineas_producto_idx", using: :btree
 
-  create_table "albarans", :force => true do |t|
-    t.string   "codigo"
+  create_table "albarans", force: :cascade do |t|
+    t.string   "codigo",           limit: 255
     t.date     "fecha"
-    t.boolean  "cerrado",          :default => false
-    t.integer  "proveedor_id"
-    t.integer  "cliente_id"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
-    t.boolean  "deposito",         :default => false
+    t.boolean  "cerrado",                      default: false
+    t.integer  "proveedor_id",     limit: 4
+    t.integer  "cliente_id",       limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "deposito",                     default: false
     t.date     "fecha_devolucion"
-    t.integer  "factura_id"
+    t.integer  "factura_id",       limit: 4
   end
 
-  add_index "albarans", ["factura_id"], :name => "albarans_factura_idx"
-  add_index "albarans", ["proveedor_id", "cliente_id"], :name => "albarans_idx"
+  add_index "albarans", ["factura_id"], name: "albarans_factura_idx", using: :btree
+  add_index "albarans", ["proveedor_id", "cliente_id"], name: "albarans_idx", using: :btree
 
-  create_table "autor", :force => true do |t|
-    t.string   "nombre",     :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "autor", force: :cascade do |t|
+    t.string   "nombre",     limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
-  create_table "autor_x_producto", :force => true do |t|
-    t.integer  "autor_id",    :null => false
-    t.integer  "producto_id", :null => false
-    t.string   "rol"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+  create_table "autor_x_producto", force: :cascade do |t|
+    t.integer  "autor_id",    limit: 4,   null: false
+    t.integer  "producto_id", limit: 4,   null: false
+    t.string   "rol",         limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
-  add_index "autor_x_producto", ["producto_id", "autor_id"], :name => "autor_x_producto_idx"
+  add_index "autor_x_producto", ["producto_id", "autor_id"], name: "autor_x_producto_idx", using: :btree
 
-  create_table "avisos", :force => true do |t|
-    t.string   "mensaje",                      :null => false
-    t.integer  "criticidad", :default => 1
-    t.boolean  "visible",    :default => true
-    t.string   "url"
-    t.string   "objeto",                       :null => false
-    t.integer  "objeto_id"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+  create_table "avisos", force: :cascade do |t|
+    t.string   "mensaje",    limit: 255,                null: false
+    t.integer  "criticidad", limit: 4,   default: 1
+    t.boolean  "visible",                default: true
+    t.string   "url",        limit: 255
+    t.string   "objeto",     limit: 255,                null: false
+    t.integer  "objeto_id",  limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "caja", :force => true do |t|
-    t.datetime "fecha_hora",                                :null => false
-    t.decimal  "importe",     :precision => 8, :scale => 2, :null => false
-    t.string   "comentarios"
+  create_table "caja", force: :cascade do |t|
+    t.datetime "fecha_hora",                                      null: false
+    t.decimal  "importe",                 precision: 8, scale: 2, null: false
+    t.string   "comentarios", limit: 255
     t.boolean  "cierre_caja"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "campos", :force => true do |t|
-    t.string   "nombre"
-    t.string   "tipo"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "campos", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
+    t.string   "tipo",       limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "clientes", :force => true do |t|
-    t.string   "nombre"
-    t.integer  "descuento",                                       :default => 0
-    t.string   "email"
-    t.string   "cif"
-    t.datetime "created_at",                                                       :null => false
-    t.datetime "updated_at",                                                       :null => false
-    t.decimal  "credito",           :precision => 8, :scale => 2
-    t.string   "direccion"
-    t.string   "cp"
-    t.decimal  "credito_acumulado", :precision => 8, :scale => 2, :default => 0.0
+  create_table "clientes", force: :cascade do |t|
+    t.string   "nombre",            limit: 255
+    t.integer  "descuento",         limit: 4,                           default: 0
+    t.string   "email",             limit: 255
+    t.string   "cif",               limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.decimal  "credito",                       precision: 8, scale: 2
+    t.string   "direccion",         limit: 255
+    t.string   "cp",                limit: 255
+    t.decimal  "credito_acumulado",             precision: 8, scale: 2, default: 0.0
   end
 
-  create_table "configuracion", :force => true do |t|
-    t.string   "nombre_param"
-    t.string   "valor_param"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
-    t.boolean  "editable",     :default => true
+  create_table "configuracion", force: :cascade do |t|
+    t.string   "nombre_param", limit: 255
+    t.string   "valor_param",  limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "editable",                 default: true
   end
 
-  create_table "editorial", :force => true do |t|
-    t.string   "nombre",     :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "editorial", force: :cascade do |t|
+    t.string   "nombre",     limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
-  create_table "facturas", :force => true do |t|
-    t.date     "fecha",                                                              :null => false
-    t.string   "codigo",                                                             :null => false
-    t.decimal  "importe",           :precision => 8, :scale => 2,                    :null => false
-    t.boolean  "pagado",                                          :default => false
-    t.boolean  "metalico",                                        :default => true
-    t.datetime "created_at",                                                         :null => false
-    t.datetime "updated_at",                                                         :null => false
-    t.integer  "proveedor_id"
-    t.integer  "valor_iva"
-    t.integer  "valor_irpf"
-    t.decimal  "importe_base",      :precision => 8, :scale => 2
+  create_table "facturas", force: :cascade do |t|
+    t.date     "fecha",                                                                 null: false
+    t.string   "codigo",            limit: 255,                                         null: false
+    t.decimal  "importe",                       precision: 8, scale: 2,                 null: false
+    t.boolean  "pagado",                                                default: false
+    t.boolean  "metalico",                                              default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "proveedor_id",      limit: 4
+    t.integer  "valor_iva",         limit: 4
+    t.integer  "valor_irpf",        limit: 4
+    t.decimal  "importe_base",                  precision: 8, scale: 2
     t.date     "fecha_vencimiento"
   end
 
-  add_index "facturas", ["proveedor_id"], :name => "factura_idx"
+  add_index "facturas", ["proveedor_id"], name: "factura_idx", using: :btree
 
-  create_table "familias", :force => true do |t|
-    t.string   "nombre"
-    t.integer  "iva_id"
-    t.integer  "campo_id"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.integer  "acumulable",     :default => 0
-    t.boolean  "sincroniza_web", :default => false, :null => false
+  create_table "familias", force: :cascade do |t|
+    t.string   "nombre",         limit: 255
+    t.integer  "iva_id",         limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "acumulable",     limit: 4,   default: 0
+    t.boolean  "sincroniza_web",             default: false, null: false
   end
 
-  create_table "forma_pagos", :force => true do |t|
-    t.string   "nombre"
-    t.boolean  "caja",       :default => false
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+  create_table "forma_pagos", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
+    t.boolean  "caja",                   default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "ivas", :force => true do |t|
-    t.string   "nombre"
-    t.integer  "valor"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "ivas", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
+    t.integer  "valor",      limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "log_sincronizacion_web", :force => true do |t|
-    t.string   "elemento_type",                    :null => false
-    t.boolean  "status_ok",     :default => false, :null => false
-    t.integer  "actualizados",  :default => 0,     :null => false
-    t.integer  "eliminados",    :default => 0,     :null => false
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+  create_table "log_sincronizacion_web", force: :cascade do |t|
+    t.string   "elemento_type", limit: 255,                 null: false
+    t.boolean  "status_ok",                 default: false, null: false
+    t.integer  "actualizados",  limit: 4,   default: 0,     null: false
+    t.integer  "eliminados",    limit: 4,   default: 0,     null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
   end
 
-  create_table "materia", :force => true do |t|
-    t.string   "nombre"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
-    t.boolean  "valor_defecto", :default => false, :null => false
-    t.integer  "familia_id",                       :null => false
+  create_table "materia", force: :cascade do |t|
+    t.string   "nombre",        limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "valor_defecto",             default: false, null: false
+    t.integer  "familia_id",    limit: 4,                   null: false
   end
 
-  create_table "pagos", :force => true do |t|
-    t.decimal  "importe",       :precision => 8, :scale => 2, :null => false
-    t.datetime "fecha",                                       :null => false
-    t.integer  "factura_id"
-    t.integer  "forma_pago_id",                               :null => false
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
+  create_table "pagos", force: :cascade do |t|
+    t.decimal  "importe",                 precision: 8, scale: 2, null: false
+    t.datetime "fecha",                                           null: false
+    t.integer  "factura_id",    limit: 4
+    t.integer  "forma_pago_id", limit: 4,                         null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "productos", :force => true do |t|
-    t.string   "codigo"
-    t.string   "nombre"
-    t.string   "anno"
-    t.text     "descripcion"
-    t.string   "url_imagen"
-    t.decimal  "precio",              :precision => 8, :scale => 2,                :null => false
-    t.integer  "cantidad",                                          :default => 0
-    t.integer  "familia_id"
-    t.datetime "created_at",                                                       :null => false
-    t.datetime "updated_at",                                                       :null => false
-    t.integer  "materia_id"
-    t.integer  "editorial_id"
-    t.string   "imagen_file_name"
-    t.string   "imagen_content_type"
-    t.integer  "imagen_file_size"
+  create_table "productos", force: :cascade do |t|
+    t.string   "codigo",              limit: 255
+    t.string   "nombre",              limit: 255
+    t.string   "anno",                limit: 255
+    t.text     "descripcion",         limit: 65535
+    t.string   "url_imagen",          limit: 255
+    t.decimal  "precio",                            precision: 8, scale: 2,             null: false
+    t.integer  "cantidad",            limit: 4,                             default: 0
+    t.integer  "familia_id",          limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "materia_id",          limit: 4
+    t.integer  "editorial_id",        limit: 4
+    t.string   "imagen_file_name",    limit: 255
+    t.string   "imagen_content_type", limit: 255
+    t.integer  "imagen_file_size",    limit: 4
     t.datetime "imagen_updated_at"
   end
 
-  create_table "proveedors", :force => true do |t|
-    t.string   "nombre"
-    t.string   "direccion"
-    t.string   "email"
-    t.string   "telefono"
-    t.string   "contacto"
-    t.integer  "descuento",  :default => 0
-    t.string   "cif"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+  create_table "proveedors", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
+    t.string   "direccion",  limit: 255
+    t.string   "email",      limit: 255
+    t.string   "telefono",   limit: 255
+    t.string   "contacto",   limit: 255
+    t.integer  "descuento",  limit: 4,   default: 0
+    t.string   "cif",        limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "relacion_web", :force => true do |t|
-    t.string   "elemento_type",                    :null => false
-    t.integer  "elemento_id",                      :null => false
-    t.integer  "nid",                              :null => false
-    t.boolean  "eliminar",      :default => false, :null => false
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+  create_table "relacion_web", force: :cascade do |t|
+    t.string   "elemento_type", limit: 255,                 null: false
+    t.integer  "elemento_id",   limit: 4,                   null: false
+    t.integer  "nid",           limit: 4,                   null: false
+    t.boolean  "eliminar",                  default: false, null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
   end
 
-  add_index "relacion_web", ["elemento_id", "elemento_type"], :name => "index_relacion_web_on_elemento_id_and_elemento_type"
+  add_index "relacion_web", ["elemento_id", "elemento_type"], name: "index_relacion_web_on_elemento_id_and_elemento_type", using: :btree
 
-  create_table "sessions", :force => true do |t|
-    t.string   "session_id", :null => false
-    t.text     "data"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "sessions", force: :cascade do |t|
+    t.string   "session_id", limit: 255,        null: false
+    t.text     "data",       limit: 4294967295
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
-  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", using: :btree
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
 end

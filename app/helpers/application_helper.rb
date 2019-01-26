@@ -3,21 +3,21 @@
 #
 #################################################################################
 # LibreTPV - Gestor TPV para Librerias
-# Copyright 2011-2013 Santiago Ramos <sramos@sitiodistinto.net> 
+# Copyright 2011-2013 Santiago Ramos <sramos@sitiodistinto.net>
 #
-#    Este programa es software libre: usted puede redistribuirlo y/o modificarlo 
-#    bajo los términos de la Licencia Pública General GNU publicada 
-#    por la Fundación para el Software Libre, ya sea la versión 3 
+#    Este programa es software libre: usted puede redistribuirlo y/o modificarlo
+#    bajo los términos de la Licencia Pública General GNU publicada
+#    por la Fundación para el Software Libre, ya sea la versión 3
 #    de la Licencia, o (a su elección) cualquier versión posterior.
 #
-#    Este programa se distribuye con la esperanza de que sea útil, pero 
-#    SIN GARANTÍA ALGUNA; ni siquiera la garantía implícita 
-#    MERCANTIL o de APTITUD PARA UN PROPÓSITO DETERMINADO. 
-#    Consulte los detalles de la Licencia Pública General GNU para obtener 
-#    una información más detallada. 
+#    Este programa se distribuye con la esperanza de que sea útil, pero
+#    SIN GARANTÍA ALGUNA; ni siquiera la garantía implícita
+#    MERCANTIL o de APTITUD PARA UN PROPÓSITO DETERMINADO.
+#    Consulte los detalles de la Licencia Pública General GNU para obtener
+#    una información más detallada.
 #
-#    Debería haber recibido una copia de la Licencia Pública General GNU 
-#    junto a este programa. 
+#    Debería haber recibido una copia de la Licencia Pública General GNU
+#    junto a este programa.
 #    En caso contrario, consulte <http://www.gnu.org/licenses/>.
 #################################################################################
 #
@@ -148,7 +148,7 @@ module ApplicationHelper
   end
 
   def icono tipo, propiedades={}
-    size = propiedades[:size] == 'grande'? 32 : 16 
+    size = propiedades[:size] == 'grande'? 32 : 16
     image_tag("/images/iconos/" + size.to_s + "/" + tipo + ".png", :border => 0, :class => (propiedades[:size] == "grande" ? "" : "icono"), :title => propiedades[:title] || "", :style => propiedades[:style] || '', :alt => propiedades[:title], :onmouseover => "this.src='/images/iconos/" + size.to_s + "/" + tipo + ".png';", :onmouseout => "this.src='/images/iconos/" + size.to_s + "/" + tipo + ".png';" )
   end
 
@@ -179,10 +179,13 @@ module ApplicationHelper
     cadena = ("<div class='elemento_x1'>" + rotulo + "<br/>").html_safe
     #cadena << date_select(objeto, atributo, {:discard_day=>discards[0], :discard_month=>discards[1], :order => [:day,:month,:year], :class => "texto", :id => "formulario_campo_" + objeto + "_" + atributo, :default => valor})
     otros = {}
-    otros[:year_range] =  [2000, Time.now.year + 10] if  otros[:year_range].nil?
+    year_range = [2010, Time.now.year + 5]
+    otros[:min] = Date.new(year_range[0])
+    otros[:max] = Date.new(year_range[1])
     otros[:size] = "10"
     otros[:value] = I18n.l valor if valor
-    cadena << calendar_date_select(objeto, atributo, otros)
+    #cadena << calendar_date_select(objeto, atributo, otros)
+    cadena += date_field(objeto, atributo, otros)
     cadena += "</div>".html_safe
     return cadena
   end
@@ -206,9 +209,9 @@ module ApplicationHelper
     return cadena
   end
 
-  # check_box 
+  # check_box
   def checkbox rotulo, objeto, atributo, otros={}
-    clase = otros[:clase]||'' 
+    clase = otros[:clase]||''
     title = otros[:title] ? ("title = '" + otros[:title] + "'" ) : ""
     if otros[:izquierda]
       ('<div class="elemento' + clase + '" #{title}>' + ( ("<br>" if otros[:abajo]) || "")).html_safe +  check_box( objeto, atributo, {:checked => otros[:checked], :disabled => otros[:disabled]} ) + rotulo + "</div>".html_safe
@@ -230,12 +233,12 @@ module ApplicationHelper
 
   # dibuja un mensage flash
   def mensaje msg
-    ("<div id = 'mensaje'>" + msg + "</div>").html_safe if msg 
+    ("<div id = 'mensaje'>" + msg + "</div>").html_safe if msg
   end
 
   # dibuja un mensaje flash de exito
-  def mensaje_ok msg 
-    ("<div id = 'mensajeok'>" + msg + "</div>").html_safe if msg 
+  def mensaje_ok msg
+    ("<div id = 'mensajeok'>" + msg + "</div>").html_safe if msg
   end
 
   # dibuja el mensaje de error o de exito
@@ -294,7 +297,7 @@ module ApplicationHelper
 
   def set_focus_to_id(id)
     javascript_tag("$('#{id}').focus()");
-  end 
+  end
 
   def controlador_rotulo controlador={}
     rotulo=""

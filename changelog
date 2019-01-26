@@ -8,6 +8,7 @@
   * Mejoras en recuperacion de info de libros desde inet
   * Preparanda sincronizacion con ecommerce drupal
   * Correccion de bugs
+  * Migracion a ruby 2.4/rails 4.2
 
 2013-07-xx Santiago Ramos <sramos@sitiodistinto.net> Version 0.7.0.01
 

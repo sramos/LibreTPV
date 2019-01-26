@@ -1,27 +1,27 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.22.5'
+gem 'rails', '~> 4.2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 #gem 'sqlite3'
-gem 'mysql2', '~> 0.3.10'
-
+gem 'mysql2', '~> 0.4'
+gem 'activerecord-session_store'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
+  gem 'sass-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
 
-  gem 'uglifier', '>= 1.0.3'
+  gem 'uglifier'
 end
 
 #gem 'jquery-rails'
-gem "prototype-rails", "~> 3.2.1"
+gem 'prototype-rails', git: 'https://github.com/rails/prototype-rails', branch: '4.2'
 gem 'prototype_legacy_helper', '0.0.0', :git => 'https://github.com/rails/prototype_legacy_helper.git' # Esto es para mantener soporte de form_remote_tag en Rails3
 
 # To use ActiveModel has_secure_password
@@ -50,33 +50,37 @@ gem 'prototype_legacy_helper', '0.0.0', :git => 'https://github.com/rails/protot
 
 # Solo para el entorno de desarrollo
 group :development do
+  # Para ocultar los logs de los assets en consola
+  gem 'quiet_assets'
   # Para buscar traducciones
-  gem 'gettext', '>=1.9.3', :require => false
+  gem 'gettext'#, '>=1.9.3', :require => false
   # Para debug
   gem 'byebug'
   # Para generar UML
   #gem "rails-erd"
   # Para hacer volcados de BBDD en un seeds
-  #gem "seed_dump", "~> 0.4.2"
+  gem "seed_dump"
+  # gem 'web-console'
+  # Test-unit deja de estar en el core, pero se carga como gema
+  # gem 'test-unit'
+
+  # Embed the V8 JavaScript interpreter into Ruby
+  gem 'therubyracer'
 end
 
 
 # Otras gemas
-#gem "autocomplete" # Da un error al arrancar
-#gem "autocomplete", :git => 'git://github.com/voislavj/autocomplete.git'
-#gem "auto_complete", :git => 'git://github.com/david-kerins/auto_complete.git'
-#gem "respond_to_parent", :git => 'git://github.com/itkin/respond_to_parent.git' # Da error cargando como gema. Cargado como plugin. 
 gem "spreadsheet"
 gem "spreadsheet_on_rails", :git => 'https://github.com/10to1/spreadsheet_on_rails.git'
-gem "paperclip", "~> 4.3"
-gem 'will_paginate', '~> 3.0.0'
-gem 'calendar_date_select', :git => 'https://github.com/paneq/calendar_date_select.git'
+gem "paperclip", "~> 6"
+gem 'will_paginate', '~> 3.1'
+#gem 'calendar_date_select', :git => 'https://github.com/paneq/calendar_date_select.git'
 gem 'rufus-scheduler'
 gem 'hpricot'
 # Versiones posteriores de prawn requieren ruby 2
-gem 'prawn', '~> 1.3'
-gem 'prawn-table', '~> 0.2.2'
-gem 'test-unit'
+gem 'prawn'#, '~> 1.3'
+gem 'prawn-table'#, '~> 0.2.2'
 
 # Usamos puma para el servidor de aplicaciones
 gem 'puma'
+gem 'non-stupid-digest-assets'

@@ -108,13 +108,13 @@ module LibreTPV
 
 
     # Configuracion inicial del calendar
-    CalendarDateSelect.format = :italian
-    CalendarDateSelect::FORMATS[:italian] = {
-      # Here's the code to pass to Date#strftime
-      :date => "%m/%d/%Y",
-      :time => " %I:%M %p",  # notice the space before time.  If you want date and time to be seperated with a space, put the leading space here.
-      :javascript_include => "format_italian"
-    }
+    #CalendarDateSelect.format = :italian
+    #CalendarDateSelect::FORMATS[:italian] = {
+    #  # Here's the code to pass to Date#strftime
+    #  :date => "%m/%d/%Y",
+    #  :time => " %I:%M %p",  # notice the space before time.  If you want date and time to be seperated with a space, put the leading space here.
+    #  :javascript_include => "format_italian"
+    #}
 
     # Selecciona el path donde estara el logo de la Tienda 
     if ENV['LIBRETPV_SITEID'] && File.file?(ENV['RAILS_ETC'] + "logo/" + ENV['LIBRETPV_SITEID'] + ".png")
