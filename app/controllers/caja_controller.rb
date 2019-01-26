@@ -24,7 +24,7 @@ class CajaController < ApplicationController
   def arqueo
     @importe_ventas = @importe_compras = @importe_gastos = 0
     # Calcula la fecha/hora del ultimo cierre de caja
-    @cierre_caja = Caja.last :conditions => { :cierre_caja => true }
+    @cierre_caja = Caja.where(cierre_caja: true).last
     @importe_caja = @cierre_caja ? @cierre_caja.importe : 0
     # Encuentra todas las ventas en caja realizados desde el ultimo cierre de caja
     conditions = @cierre_caja ? { :conditions => ['forma_pagos.caja IS TRUE AND fecha > ?', @cierre_caja.fecha_hora] } : {}
