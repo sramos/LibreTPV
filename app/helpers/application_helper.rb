@@ -264,7 +264,9 @@ module ApplicationHelper
   # Ventana modal (*otros para futuro uso)
   def modal( rotulo, url, titulo, otros={} )
     # OJOOOOO CON ESTO!!!
-    link_to rotulo, url, :title => titulo, :onclick => "Modalbox.show(this.href, {title: '" + titulo + "', width:820 }); return false;", :id => (otros[:id] || "")
+    link_to rotulo, nil, remote: true, title: titulo,
+            onclick: "Modalbox.show('#{url_for(url)}', {title: '#{titulo}', width:820 }); return false;",
+            id: (otros[:id]||""), class: (otros[:class]||"")
   end
 
   # Ventana modal que pide confirmacion para el borrado de un elemento

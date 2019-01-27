@@ -13,4 +13,3 @@
 //= require prototype
 //= require prototype_ujs
 //= require_tree .
-

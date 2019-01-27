@@ -21,14 +21,14 @@ class ClienteController < ApplicationController
 
   def editar
     @cliente = params[:id] ? Cliente.find(params[:id]) : Cliente.new
-    render :partial => "formulario"
+    render partial: "formulario"
   end
 
   def modificar
     cliente = params[:id] ? Cliente.find(params[:id]) : Cliente.new
     cliente.update_attributes params[:cliente]
     flash[:error] = cliente
-    redirect_to :action => :listado
+    redirect_to action: :listado
   end
 
   def borrar

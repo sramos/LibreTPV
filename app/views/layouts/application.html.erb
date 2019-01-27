@@ -4,14 +4,15 @@
     <title>TPV: Terminal Punto de Venta - <%= controller.controller_name %></title>
     <%= stylesheet_link_tag 'application', :media => "all" %>
     <%= javascript_include_tag 'application' %>
-    <%#= calendar_date_select_includes :locale => "es" %>
-    <%# calendar_date_select_includes :locale => I18n.locale %>
+    <%= javascript_include_tag '/javascripts/scriptaculous' %>
+    <%= javascript_include_tag '/javascripts/modalbox' %>
+    <%= javascript_include_tag '/javascripts/popup' %>
 
     <!--<link rel="icon" type="image/ico" href="/images/favicon.ico" />-->
 
     <META NAME="author" CONTENT="Santiago Ramos <sramos@sitiodistinto.net>">
-    <META NAME="copyright" CONTENT="Copyright (C) 2011-2018 Santiago Ramos">
-    <META NAME="generator" CONTENT="LibreTPV - Version <%= ENV['TPV_VERSION'] %>"> 
+    <META NAME="copyright" CONTENT="Copyright (C) 2011-2019 Santiago Ramos">
+    <META NAME="generator" CONTENT="LibreTPV - Version <%= ENV['TPV_VERSION'] %>">
 </head>
 <body>
 
@@ -84,12 +85,12 @@ Esto es un aviso
     <% avisos_activos.each do |aviso| %>
       <div class="slide criticidad_<%= aviso.criticidad %>">
         <%= link_to aviso.mensaje, (aviso.url || "") %>
-      </div> 
+      </div>
     <% end %>
     <div class="slide criticidad_<%= avisos_activos.first.criticidad %>">
       <%= link_to avisos_activos.first.mensaje, (avisos_activos.first.url || "") %>
     </div>
-    </div></div> 
+    </div></div>
     <script>
       new Carousel('carousel-wrapper', $$('#carousel-content .slide'), $$(), {
         <%= '"auto": "true", "circular": "false", "duration": "3", "frequency": "5"' if avisos_activos.count > 1 %>
