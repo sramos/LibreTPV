@@ -74,12 +74,14 @@ gem "spreadsheet"
 gem "spreadsheet_on_rails", :git => 'https://github.com/10to1/spreadsheet_on_rails.git'
 gem "paperclip", "~> 6"
 gem 'will_paginate', '~> 3.1'
-#gem 'calendar_date_select', :git => 'https://github.com/paneq/calendar_date_select.git'
 gem 'rufus-scheduler'
 gem 'hpricot'
-# Versiones posteriores de prawn requieren ruby 2
-gem 'prawn'#, '~> 1.3'
-gem 'prawn-table'#, '~> 0.2.2'
+gem 'prawn'
+gem 'prawn-table'
+
+# Gestion de usuarios
+gem 'devise'
+gem 'devise-i18n'
 
 # Usamos puma para el servidor de aplicaciones
 gem 'puma'

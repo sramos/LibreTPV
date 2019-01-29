@@ -9,6 +9,7 @@ require 'will_paginate'
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
+  before_action :authenticate_user!
 
   def filtrado
     if params[:filtro]
@@ -24,9 +25,6 @@ class ApplicationController < ActionController::Base
     end
     redirect_to :action => :listado
   end
-
-  # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
 
   # Para usar en exportaciones a XLS
   def xls_filename

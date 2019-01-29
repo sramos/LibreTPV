@@ -7,6 +7,11 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Major.create(:name => 'Daley', :city => cities.first)
 
+if User.count == 0
+  User.create email: "admin@sitiodistinto.net", password: "Passw0rd", password_confirmation: "Passw0rd",
+              name: "Default Admin User"
+end
+
 Iva.create([		{ :nombre => 'Superreducido', :valor => 4},
 			{ :nombre => 'Reducido', :valor => 10},
 			{ :nombre => 'General', :valor => 21} ])				if Iva.count == 0
