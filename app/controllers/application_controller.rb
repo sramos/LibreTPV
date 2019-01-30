@@ -10,6 +10,10 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   before_action :authenticate_user!
+  before_filter :authorize_user
+
+  # Evitamos strong_params (pendiente de ir sustituyendo en todos los controladores)
+  before_filter { params.permit! }
 
   def filtrado
     if params[:filtro]
@@ -29,6 +33,18 @@ class ApplicationController < ActionController::Base
   # Para usar en exportaciones a XLS
   def xls_filename
     params[:seccion]+"-" + params[:controller] + "-" + params[:action] + ".xls"
+  end
+
+  # Autoriza al usuario a usar la seccion
+  def authorize_user
+    unless params[:seccion] &&
+           user_signed_in? &&
+           ['caja', 'productos', 'tesoreria', 'distribuidora', 'admin'].include?(params[:seccion]) &&
+           current_user.send("acceso_#{params[:seccion]}")
+      flash[:error] = "No tiene perimisos suficientes para acceder a la sección '%{seccion}'"%{seccion: params[:seccion].titleize}
+      redirect_to root_path
+      return false
+    end
   end
 
 end

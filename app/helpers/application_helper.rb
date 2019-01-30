@@ -320,7 +320,7 @@ module ApplicationHelper
       when "productos"
         controladores = [ { :rotulo => "Facturas Proveedores", :controlador => "factura"},
                           { :rotulo => "Depósitos", :controlador => "deposito"},
-			  { :rotulo => "Albaranes aceptados", :controlador => "albaranes_cerrados"},
+                          { :rotulo => "Albaranes aceptados", :controlador => "albaranes_cerrados"},
                           { :rotulo => "Albaranes de entrada", :controlador => "albarans"},
                           { :rotulo => "Proveedores" , :controlador => "proveedor"},
                           { :rotulo => "Inventario", :controlador => "productos"} ]
@@ -337,14 +337,14 @@ module ApplicationHelper
         controladores = [ #{ :rotulo => "Usuarios", :controlador => "usuarios"},
                           { :rotulo => "Backup", :controlador => "backup"},
                           { :rotulo => "Recuperar Objetos", :controlador => "perdidos" },
-			  { :rotulo => "Parámetros", :controlador => "configuracion"},
+			                    { :rotulo => "Parámetros", :controlador => "configuracion"},
                           { :rotulo => "Formas de Pago", :controlador => "forma_pago"},
                           { :rotulo => "Tipos de IVA", :controlador => "iva"},
                           { :rotulo => "Familias de Productos", :controlador => "familia"},
                           { :rotulo => "Materias", :controlador => "materia" },
                           { :rotulo => "Editoriales", :controlador => "editorial" },
                           { :rotulo => "Autores", :controlador => "autor" },
-			  { :rotulo => "Avisos", :controlador => "avisos"} ]
+                          { :rotulo => "Avisos", :controlador => "avisos"} ]
 
     end
     return controladores

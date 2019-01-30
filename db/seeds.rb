@@ -9,7 +9,10 @@
 
 if User.count == 0
   User.create email: "admin@sitiodistinto.net", password: "Passw0rd", password_confirmation: "Passw0rd",
-              name: "Default Admin User"
+              name: "Default Admin User",
+	      acceso_caja: true, acceso_productos: true,
+	      acceso_distribuidora: true, acceso_tesoreria: true,
+	      acceso_admin: true
 end
 
 Iva.create([		{ :nombre => 'Superreducido', :valor => 4},
