@@ -1,7 +1,6 @@
 LibreTPV::Application.routes.draw do
   devise_for :users
-  root to: 'albarans#index', seccion: "caja", controller: "albarans", action: "index"
-  # map.connect ':seccion/:controller/:action/:id'
+  root to: 'inicio#index', seccion: "inicio", controller: "inicio", action: "index"
+  #root to: 'albarans#index', seccion: "caja", controller: "albarans", action: "index"
   match ':seccion/:controller(/:action(/:id))', via: [:get, :post, :put, :delete, :patch]
-  # map.root :seccion => "caja", :controller => "albarans"
 end

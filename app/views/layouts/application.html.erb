@@ -27,18 +27,12 @@ Esto es un aviso
     <% if params[:seccion] %>
       <div>
         <ul id="secciones">
-          <% if current_user.acceso_caja %>
-            <li><a id="seccion_caja" href="/caja/albarans"> <div class="<%= params[:seccion] == 'caja' ? 'seleccionado' : ''%>" > Caja </div> </a> </li>
-          <% end %>
-          <% if current_user.acceso_productos %>
-            <li><a id="seccion_productos" href="/productos/productos/"> <div class="<%= params[:seccion] == 'productos' ? 'seleccionado' : ''%>" > Productos </div> </a> </li>
-          <% end %>
-<!--        <li><a id="seccion_trueke" href="/caja/albarans"> <div class="<%# params[:seccion] == 'trueke' ? 'seleccionado' : ''%>" > Trueke </div> </a> </li> -->
-          <% if current_user.acceso_tesoreria %>
-            <li><a id="seccion_tesoreria" href="/tesoreria/caja/"> <div class="<%= params[:seccion] == 'tesoreria' ? 'seleccionado' : ''%>" > Tesorería </div> </a> </li>
-          <% end %>
-          <% if current_user.acceso_admin %>
-            <li><a id="seccion_admin" href="/admin/avisos/"> <div class="<%= params[:seccion] == 'admin' ? 'seleccionado' : ''%>" > Admin </div> </a> </li>
+          <% secciones(current_user).each do |seccion| %>
+            <li><a id="seccion_<%= seccion[:seccion] %>" title="<%= seccion[:title] %>" href="<%= seccion[:url] %>">
+              <div class="<%= params[:seccion] == seccion[:seccion] ? 'seleccionado' : ''%>" >
+                <%= seccion[:title] %>
+              </div>
+            </a></li>
           <% end %>
         </ul>
       </div>

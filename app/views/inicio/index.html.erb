@@ -1,0 +1,44 @@
+<style>
+.ph-button {
+    border-style: solid;
+    border-width: 0px 0px 3px;
+    box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1) inset;
+    color: #FFFFFF;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-block;
+    font-style: normal;
+    overflow: hidden;
+    text-align: center;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    transition: all 200ms ease-in-out 0s;
+    white-space: nowrap;
+    font-family: "Gotham Rounded A","Gotham Rounded B",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    padding: 19px 39px 18px;
+    font-size: 18px;
+    width: 33%;
+}
+.ph-btn-grey {
+     background-color: #C6CCD2;
+     border-color: #AAB3BB;
+}
+.ph-btn-grey:hover, .ph-btn-grey:focus, .ph-btn-grey:active {
+    background-color: #B8BFC7;
+    border-color: #AAB3BB;
+}
+.ph-container{margin:0 auto;display:inline;}
+.ph-float{padding:10px;text-align:center;}
+.ph-clear{clear:both;}
+</style>
+
+<br />
+
+<div class="ph-container ph-clear">
+  <% secciones(current_user).each do |seccion| %>
+    <div class="ph-float">
+      <a href='<%= seccion[:url] %>' class='ph-button ph-btn-grey'><%= seccion[:title] %></a>
+    </div>
+  <% end %>
+</div>

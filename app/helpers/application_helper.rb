@@ -303,9 +303,23 @@ module ApplicationHelper
   end
 
   def controlador_rotulo controlador={}
-    rotulo=""
+    rotulo="LibreTPV"
     controladores.each{|elemento| rotulo = elemento[:rotulo] if elemento[:controlador] == controlador}
     return rotulo
+  end
+
+  # Devuelve las secciones disponibles para el usuario
+  def secciones user
+     secciones = [ { seccion: "caja",          url: "/caja/albarans",        title: "Caja"},
+                   { seccion: "productos",     url: "/productos/productos/", title: "Productos"},
+                   { seccion: "tesoreria",     url: "/tesoreria/caja/",      title: "Tesorería"},
+                   #{ seccion: "distribuidora", url: "/",                     title: "Distribuidora"},
+                   { seccion: "admin",         url: "/admin/avisos/",        title: "Administración"} ]
+     if user && user.class.name == "User"
+       return secciones.select{|sec| user.send("acceso_#{sec[:seccion]}") }
+     else
+       return secciones
+     end
   end
 
   def controladores controlador={}

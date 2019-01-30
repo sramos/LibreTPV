@@ -39,8 +39,9 @@ class ApplicationController < ActionController::Base
   def authorize_user
     unless params[:seccion] &&
            user_signed_in? &&
-           ['caja', 'productos', 'tesoreria', 'distribuidora', 'admin'].include?(params[:seccion]) &&
-           current_user.send("acceso_#{params[:seccion]}")
+           ( params[:seccion] == "inicio" ||
+                 ( ['caja', 'productos', 'tesoreria', 'distribuidora', 'admin'].include?(params[:seccion]) &&
+                   current_user.send("acceso_#{params[:seccion]}") ) )
       flash[:error] = "No tiene perimisos suficientes para acceder a la sección '%{seccion}'"%{seccion: params[:seccion].titleize}
       redirect_to root_path
       return false
