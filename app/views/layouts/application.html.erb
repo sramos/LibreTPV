@@ -38,7 +38,7 @@ Esto es un aviso
         <%= params[:seccion].capitalize + " - " + controlador_rotulo(params[:controller]) %>
       </div>
     <% else %>
-      <div id="estado">Acceso Restringido</div>
+      <div id="estado"><%= t("Acceso Restringido") %></div>
     <% end %>
     <div id="logo"></div>
   </div>
