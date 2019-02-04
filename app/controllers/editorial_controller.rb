@@ -21,7 +21,7 @@ class EditorialController < ApplicationController
                                order("nombre ASC").
                                paginate(page: params[:page], per_page: paginado) if session[("editorial_filtrado_tipo").to_sym] == "nombre"
     else
-      @editoriales = Editorial.order(:nombre).paginate(page: params[:page], pero_page: paginado)
+      @editoriales = Editorial.order(:nombre).paginate(page: params[:page], per_page: paginado)
     end
   end
 
