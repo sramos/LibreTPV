@@ -6,11 +6,11 @@ class MateriaController < ApplicationController
   end
 
   def listado
-    @materias = Materia.all(:order => 'nombre')
+    @materias = Materia.order :nombre
   end
 
   def editar
-    @materia = Materia.find_by_id(params[:id]) || Materia.new 
+    @materia = Materia.find_by_id(params[:id]) || Materia.new
     @familias = Familia.order(:nombre)
     render :partial => "formulario"
   end
