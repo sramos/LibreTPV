@@ -398,8 +398,7 @@ module ApplicationHelper
       when "movimientos_caja"
         ["fecha_hora","importe","comentarios"]
       when "avisos"
-	["criticidad", "mensaje", "visible", "updated_at"]
-
+	      ["criticidad", "mensaje", "visible", "updated_at"]
       when "lineas_compra"
         ["cantidad","producto.codigo","nombre_producto","precio_compra","descuento","subtotal","iva", "total"]
       when "lineas_deposito"
@@ -424,7 +423,6 @@ module ApplicationHelper
         ["fecha","codigo_detallado","factura.codigo","proveedor.nombre"]
       when "ventas_producto"
         ["fecha","factura.codigo","cliente.nombre"]
-
       when "configuracion"
         ["nombre_param","valor_param"]
       when "perdidos_compra"
@@ -445,6 +443,8 @@ module ApplicationHelper
         ["codigo", "familia.nombre", "nombre", "autores", "cantidad"]
       when "formas_pago"
         ["nombre", "caja"]
+      when "users"
+        ["name", "email", "user_sections"]
     end
   end
 
@@ -464,7 +464,7 @@ module ApplicationHelper
 			"familia.nombre"		=> ["Familia", "1_2", 15],
 			"proveedor.nombre"		=> ["Proveedor", "1", 36],
 			"codigo"			=> ["Código", "2_3", 20],
-                        "codigo_mayusculas"             => ["Código", "2_3", 20],
+      "codigo_mayusculas"             => ["Código", "2_3", 20],
 			"producto.codigo"		=> ["Código/ISBN", "1_2", 15],
 			"producto.nombre"		=> ["Nombre/Título", "1", 36],
 			"producto.cantidad"		=> ["Stock", "1_5", 8, "d"],
@@ -513,20 +513,23 @@ module ApplicationHelper
 			"importe_total"			=> ["Total Bruto", "1_3", 14, "f"],
 			"fecha_hora"			=> ["Fecha", "2_3", 20],
 			"comentarios"			=> ["Observaciones", "1", 36],
-                        "ventas"			=> ["Ventas", "2_3", 20, "f"],
+      "ventas"			=> ["Ventas", "2_3", 20, "f"],
 			"compras"			=> ["Compras", "2_3", 20, "f"],
 			"pagos_servicios"		=> ["Otros Gastos", "2_3", 20, "f"],
 			"entradas/salidas"		=> ["Entradas/Salidas", "2_3", 20, "f"],
 			"total caja"			=> ["Total Caja", "2_3", 20, "f"],
-                        "credito"			=> ["Crédito", "1_3", 14, "f"],
+      "credito"			=> ["Crédito", "1_3", 14, "f"],
 			"credito_acumulado"		=> ["Acumulado", "1_3", 14, "f"],
 			"direccion"			=> ["Dirección", "1", 36],
 			"contacto"			=> ["Dirección", "1", 36],
 			"mensaje"			=> ["Mensaje", "1", 36],
 			"updated_at"			=> ["Modificado", "2_3", 20],
-                        "autor_x_producto.count"        => ["Núm.Productos", "1_4", 14, "d"],
-                        "producto.count"                => ["Núm.Productos", "1_4", 14, "d"],
-                        "valor_defecto"                 => ["Valor por defecto", "2_3", 20],
+      "autor_x_producto.count"        => ["Núm.Productos", "1_4", 14, "d"],
+      "producto.count"                => ["Núm.Productos", "1_4", 14, "d"],
+      "valor_defecto"                 => ["Valor por defecto", "2_3", 20],
+      "email"                         => ["email", "1", 48],
+      "name"                          => ["Nombre", "1", 48],
+      "user_sections"                 => ["Permisos", "1", 48],
 		}
     return etiqueta[campo] || [campo.humanize, "1_2", 15]
   end

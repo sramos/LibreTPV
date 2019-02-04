@@ -1,0 +1,17 @@
+<!--- Listado de usuarios --->
+
+<div class="caja_completa">
+<%= cabecera_listado "users", { :title => "Nuevo", :url => { :action => :editar } } %>
+<% i = 0 %>
+<% for objeto in @users %>
+  <div id="user_<%= i += 1 %>" class="listadofila">
+    <%= fila_listado objeto %>
+    <div class="listado_derecha">
+      <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id }, "Editar Usuario" %>
+      <%= borrado icono('Trash',{:title => "Borrar"}), {:action => :borrar, :id => objeto}, 'Eliminar Usuario', "Usuario: " + objeto.name, :ajax => false %>
+    </div>
+  <div class='linea'></div>
+  </div>
+<% end %>
+<%= final_listado %>
+</div>
