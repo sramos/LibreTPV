@@ -20,7 +20,7 @@ class AutorController < ApplicationController
     if session[("autor_filtrado_tipo").to_sym] && session[("autor_filtrado_valor").to_sym]
       @autores = case session[("autor_filtrado_tipo").to_sym]
         when "nombre" then
-          Autor.where( session[("autor_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("autor_filtrado_valor").to_sym] + "%" ] ).
+          Autor.where('nombre LIKE ?', '%' + session[("autor_filtrado_valor").to_sym] + '%' ).
                 order("nombre ASC").
                 paginate( page: params[:page], per_page: paginado)
         end
