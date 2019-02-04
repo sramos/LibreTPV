@@ -43,6 +43,11 @@ Esto es un aviso
       <div id="estado"><%= t("Acceso Restringido") %></div>
     <% end %>
     <div id="logo"></div>
+    <% if user_signed_in? %>
+      <div id="signed_user">
+        <%= current_user.name %> | <%= link_to "Salir", destroy_user_session_path %>
+      </div>
+    <% end %>
   </div>
 </div>
 

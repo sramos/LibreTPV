@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   before_action :authenticate_user!
-  before_filter :authorize_user
+  before_filter :authorize_user, unless: :devise_controller?
 
   # Evitamos strong_params (pendiente de ir sustituyendo en todos los controladores)
   before_filter { params.permit! }
@@ -35,10 +35,11 @@ class ApplicationController < ActionController::Base
     params[:seccion]+"-" + params[:controller] + "-" + params[:action] + ".xls"
   end
 
+  private
+
   # Autoriza al usuario a usar la seccion
   def authorize_user
-    unless params[:seccion] &&
-           user_signed_in? &&
+    unless user_signed_in? &&
            ( params[:seccion] == "inicio" ||
                  ( ['caja', 'productos', 'tesoreria', 'distribuidora', 'admin'].include?(params[:seccion]) &&
                    current_user.send("acceso_#{params[:seccion]}") ) )
