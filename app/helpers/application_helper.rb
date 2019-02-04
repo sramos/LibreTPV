@@ -313,7 +313,7 @@ module ApplicationHelper
      secciones = [ { seccion: "caja",          url: "/caja/albarans",        title: "Caja"},
                    { seccion: "productos",     url: "/productos/productos/", title: "Productos"},
                    { seccion: "tesoreria",     url: "/tesoreria/caja/",      title: "Tesorería"},
-                   #{ seccion: "distribuidora", url: "/",                     title: "Distribuidora"},
+                   { seccion: "distribuidora", url: "/",                     title: "Distribuidora"},
                    { seccion: "admin",         url: "/admin/avisos/",        title: "Administración"} ]
      if user && user.class.name == "User"
        return secciones.select{|sec| user.send("acceso_#{sec[:seccion]}") }
@@ -349,16 +349,17 @@ module ApplicationHelper
 
       when "admin"
         controladores = [ #{ :rotulo => "Usuarios", :controlador => "usuarios"},
-                          { :rotulo => "Backup", :controlador => "backup"},
-                          { :rotulo => "Recuperar Objetos", :controlador => "perdidos" },
-			                    { :rotulo => "Parámetros", :controlador => "configuracion"},
-                          { :rotulo => "Formas de Pago", :controlador => "forma_pago"},
-                          { :rotulo => "Tipos de IVA", :controlador => "iva"},
-                          { :rotulo => "Familias de Productos", :controlador => "familia"},
-                          { :rotulo => "Materias", :controlador => "materia" },
-                          { :rotulo => "Editoriales", :controlador => "editorial" },
-                          { :rotulo => "Autores", :controlador => "autor" },
-                          { :rotulo => "Avisos", :controlador => "avisos"} ]
+                          { :rotulo => "Backup", controlador: "backup"},
+                          { :rotulo => "Recuperar Objetos", controlador: "perdidos" },
+			                    { :rotulo => "Parámetros", controlador: "configuracion"},
+                          { :rotulo => "Usuarios", controlador: "users"},
+                          { :rotulo => "Formas de Pago", controlador: "forma_pago"},
+                          { :rotulo => "Tipos de IVA", controlador: "iva"},
+                          { :rotulo => "Familias de Productos", controlador: "familia"},
+                          { :rotulo => "Materias", controlador: "materia" },
+                          { :rotulo => "Editoriales", controlador: "editorial" },
+                          { :rotulo => "Autores", controlador: "autor" },
+                          { :rotulo => "Avisos", controlador: "avisos"} ]
 
     end
     return controladores

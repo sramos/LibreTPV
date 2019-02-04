@@ -26,7 +26,7 @@ body {
   width: 100%;
   height: 20px;
   border-top-width: 1px;
-  border-color: #000; 
+  border-color: #000;
   border-top-style: groove;
 }
 
@@ -188,7 +188,7 @@ margin-top:15px;
     text-decoration: none;
  }
 
-.listadocabecera div a:link, .listadocabecera div a:visited, .listadocabecera div a  { 
+.listadocabecera div a:link, .listadocabecera div a:visited, .listadocabecera div a  {
     color: gray;
     text-decoration: none;
 }
@@ -262,7 +262,7 @@ margin-top:15px;
 
 .texto {
     height: 21px;
-    width:180px; 
+    width:180px;
 }
 
 .selector_x05 {
@@ -475,7 +475,7 @@ legend{
 
 #estado{
   float:left;
-  width:750px;
+  width:700px;
   font-size:25px;
   font-weight: bold;
   padding: 18px 0 0 0;
@@ -484,6 +484,10 @@ legend{
 #estado div {
   float: left;
   margin-left:15px;
+}
+
+#signed_user{
+
 }
 
 #noresaltado, #divisor {
@@ -535,6 +539,14 @@ legend{
 
 #seccion_productos div:hover, #seccion_productos div.seleccionado{
   background: url(/images/secciones/productos_seleccionado.png) no-repeat center top ; color: 0;
+}
+
+#seccion_distribuidora div {
+  background: url(/images/secciones/distribuidora.png) no-repeat center top ;
+}
+
+#seccion_distribuidora div:hover, #seccion_distribuidora div.seleccionado{
+  background: url(/images/secciones/distribuidora_seleccionado.png) no-repeat center top ; color: 0;
 }
 
 #seccion_tesoreria div {
