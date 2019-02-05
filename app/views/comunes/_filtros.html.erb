@@ -10,13 +10,33 @@
 <fieldset class="filtrado" id="filtro">
   <%= inicio_formulario( { :action => 'filtrado' }, false ) %>
     <div class="linea">
-      <%= selector("Fecha de:", "filtro", "tipo_fecha", [["Factura","factura"],["Vencimiento","vencimiento"]], cookies["filtrado_tipo_fecha"], "x1", false) if params[:seccion] == "productos" && params[:controller] == "factura" %>
+      <%= selector("Fecha de:", "filtro", "tipo_fecha",
+                   [["Factura","factura"],["Vencimiento","vencimiento"]],
+                   { valor: cookies["filtrado_tipo_fecha"],
+                     tipo: "x1",
+                     vacio: false }) if params[:seccion] == "productos" && params[:controller] == "factura" %>
       <%= fecha "Fecha Inicio (incluida)", "filtro", "fecha_inicio", cookies[("filtrado_fecha_inicio").to_sym].to_date %>
       <%= fecha "Fecha Fin (incluida)", "filtro", "fecha_fin", cookies[("filtrado_fecha_fin").to_sym].to_date %>
-      <%= selector("Proveedor", 'filtro', 'proveedor', Proveedor.order(:nombre).collect{|p| [p.nombre,p.id]}, session[("filtrado_proveedor").to_sym].to_i, "x15", true) if params[:seccion] == "productos" %>
-      <%= selector("Cliente", 'filtro', 'cliente', Cliente.order(:nombre).collect{|p| [p.nombre, p.id]}, session[("filtrado_cliente").to_sym].to_i, "x15", true) if params[:seccion] == "caja" %>
-      <%= selector("Pagada", 'filtro', 'pagado', [["Si","true"],["No","false"]], session[("filtrado_pagado").to_sym], "x05", true) if (params[:seccion] == "productos" && params[:controller] != "albaranes_cerrados") || params[:seccion] == "caja" %>
-      <%= selector("Facturado", 'filtro', 'facturado', [["Si","true"],["No","false"]], session[("filtrado_facturado").to_sym], "x05", true) if params[:seccion] == "productos" && params[:controller] == "albaranes_cerrados" %>
+      <%= selector("Proveedor", 'filtro', 'proveedor',
+                   Proveedor.order(:nombre).collect{|p| [p.nombre,p.id]},
+                   { valor: session[("filtrado_proveedor").to_sym].to_i,
+                     tipo: "x15",
+                     vacio: true }) if params[:seccion] == "productos" %>
+      <%= selector("Cliente", 'filtro', 'cliente',
+                   Cliente.order(:nombre).collect{|p| [p.nombre, p.id]},
+                   { valor: session[("filtrado_cliente").to_sym].to_i,
+                     tipo: "x15",
+                     vacio: true }) if params[:seccion] == "caja" %>
+      <%= selector("Pagada", 'filtro', 'pagado',
+                   [["Si","true"],["No","false"]],
+                   { valor: session[("filtrado_pagado").to_sym],
+                     tipo: "x05",
+                     vacio: true }) if (params[:seccion] == "productos" && params[:controller] != "albaranes_cerrados") || params[:seccion] == "caja" %>
+      <%= selector("Facturado", 'filtro', 'facturado',
+                   [["Si","true"],["No","false"]],
+                   { valor: session[("filtrado_facturado").to_sym],
+                     tipo: "x05",
+                     vacio: true }) if params[:seccion] == "productos" && params[:controller] == "albaranes_cerrados" %>
       <div class='elemento_derecha' id='boton_filtrado'><br/>
         <%= submit_tag( "Cambiar Filtro", :class => "boton", :onclick => "this.disabled=true") %>
       </div>

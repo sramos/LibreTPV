@@ -6,7 +6,7 @@
     <div class="linea"></div>
     <%= texto("Base Imponible", 'albaranlinea', 'precio_compra') if params[:seccion] == "productos" %>
     <div class="linea"></div>
-    <%= selector "IVA", 'albaranlinea', 'iva', Iva.all.map {|u| [u.nombre,u.valor]}, nil, "" %>
+    <%= selector "IVA", 'albaranlinea', 'iva', Iva.all.map {|u| [u.nombre,u.valor]} %>
     <div class="linea"></div>
     <%= texto("PVP", 'albaranlinea', 'precio_venta') unless params[:seccion] == "productos" %>
     <div class="linea"></div>
@@ -19,4 +19,3 @@
   <%= link_to_function("Cambiar a entrada por Código", nil, :id => "cambio_a_concepto") { |page| page.hide 'div_formulario_concepto'; page.show 'div_formulario_codigo'} %>
   </div>
 </div>
-

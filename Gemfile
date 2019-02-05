@@ -78,6 +78,8 @@ gem 'rufus-scheduler'
 gem 'hpricot'
 gem 'prawn'
 gem 'prawn-table'
+# Gemas para hacer mas bonitos los select (funciona con prototype y jquery)
+gem 'chosen-rails', git: 'https://github.com/tsechingho/chosen-rails.git'
 
 # Gestion de usuarios
 gem 'devise'

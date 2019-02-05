@@ -199,12 +199,15 @@ module ApplicationHelper
     fecha rotulo, objeto, atributo, valor, [true,true]
   end
 
-  def selector rotulo, objeto, atributo, valores, valor=nil, tipo=nil, vacio=false
-    cadena = ("<div class='elemento_" + (tipo || "x15") + "' id='selector_" + objeto + "_" + atributo + "'>" + rotulo + "<br/>").html_safe
-    if valor && valor != ""
-      cadena << select(objeto, atributo, valores, {:id => "formulario_campo_" + objeto + "_" + atributo, :selected => valor, :include_blank => vacio}, {:class => 'selector_' + (tipo || 'x15')})
+  #def selector rotulo, objeto, atributo, valores, valor=nil, tipo=nil, vacio=false
+  def selector rotulo, objeto, atributo, valores, opciones={}
+    cadena = ("<div class='elemento_" + (opciones[:tipo] || "x15") + "' id='selector_" + objeto + "_" + atributo + "'>" + rotulo + "<br/>").html_safe
+    clase = opciones[:enriquecido] ? "chosen_select " : ""
+    clase += (opciones[:tipo] || 'x15')
+    if opciones[:valor].blank?
+      cadena << select(objeto, atributo, valores, {:id => "formulario_campo_" + objeto + "_" + atributo, :include_blank => opciones[:vacio]}, {:class => clase})
     else
-      cadena << select(objeto, atributo, valores, {:id => "formulario_campo_" + objeto + "_" + atributo, :include_blank => vacio}, {:class => 'selector_' + (tipo || 'x15')})
+      cadena << select(objeto, atributo, valores, {:id => "formulario_campo_" + objeto + "_" + atributo, :selected => opciones[:valor], :include_blank => opciones[:vacio]}, {:class => clase})
     end
     cadena += "</div>".html_safe
     return cadena
@@ -229,6 +232,7 @@ module ApplicationHelper
     cadena += "</div></div>".html_safe
     cadena += "<div class='fila' id='spinner' style='display:none'></div>".html_safe
     cadena += "</form>".html_safe
+    cadena += javascript_tag("activaSelectoresChosen();")
     return cadena
   end
 

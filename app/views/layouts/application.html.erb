@@ -108,13 +108,10 @@ Esto es un aviso
   </div>
 <% end %>
 
-<!-- Cambia el logo del TPV pasados 5 segundos -->
-<script type="text/javascript">
-  var changeBackground = function() {
-    $('logo').setStyle({
-      backgroundImage: 'url(<%= ENV["TPV_LOGO"] %>)'
-    });
-  };
+<script type="text/javascript" charset="utf-8">
+  // Activa los selectores chosen tras cargar la pagina
+  activaSelectoresChosen();
+  // Cambia el logo del TPV pasados 5 segundos
   changeBackground.delay(5);
 </script>
 

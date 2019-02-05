@@ -1,1 +1,5 @@
-  <%= selector "Materia", "producto", "materia_id", (@materias||[]).map {|u| [u.nombre,u.id]}, @valor_materia_defecto, 'x15', false %>
+  <%= selector "Materia", "producto", "materia_id",
+               (@materias||[]).map {|u| [u.nombre,u.id]},
+               { valor: @valor_materia_defecto,
+                 tipo: 'x15',
+                 vacio: false } %>

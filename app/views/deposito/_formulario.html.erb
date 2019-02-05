@@ -11,6 +11,9 @@
     <div class="elemento_x2">
       Nombre<br><%= @albaran_linea.nombre_producto %>
     </div>
-    <%= selector "A reponer", 'selector', 'cantidad', 1.upto(@albaran_linea.cantidad).map {|i| [i,i]}, (@albaran_linea.cantidad - @albaran_linea.producto.cantidad), "elemento_x05" %>
+    <%= selector "A reponer", 'selector', 'cantidad',
+        1.upto(@albaran_linea.cantidad).map {|i| [i,i]},
+        { valor: (@albaran_linea.cantidad - @albaran_linea.producto.cantidad),
+          tipo: "elemento_x05" } %>
   </div>
 <%= final_formulario %>
