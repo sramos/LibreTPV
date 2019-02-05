@@ -3,21 +3,21 @@
 #
 #################################################################################
 # LibreTPV - Gestor TPV para Librerias
-# Copyright 2011-2013 Santiago Ramos <sramos@sitiodistinto.net> 
+# Copyright 2011-2013 Santiago Ramos <sramos@sitiodistinto.net>
 #
-#    Este programa es software libre: usted puede redistribuirlo y/o modificarlo 
-#    bajo los términos de la Licencia Pública General GNU publicada 
-#    por la Fundación para el Software Libre, ya sea la versión 3 
+#    Este programa es software libre: usted puede redistribuirlo y/o modificarlo
+#    bajo los términos de la Licencia Pública General GNU publicada
+#    por la Fundación para el Software Libre, ya sea la versión 3
 #    de la Licencia, o (a su elección) cualquier versión posterior.
 #
-#    Este programa se distribuye con la esperanza de que sea útil, pero 
-#    SIN GARANTÍA ALGUNA; ni siquiera la garantía implícita 
-#    MERCANTIL o de APTITUD PARA UN PROPÓSITO DETERMINADO. 
-#    Consulte los detalles de la Licencia Pública General GNU para obtener 
-#    una información más detallada. 
+#    Este programa se distribuye con la esperanza de que sea útil, pero
+#    SIN GARANTÍA ALGUNA; ni siquiera la garantía implícita
+#    MERCANTIL o de APTITUD PARA UN PROPÓSITO DETERMINADO.
+#    Consulte los detalles de la Licencia Pública General GNU para obtener
+#    una información más detallada.
 #
-#    Debería haber recibido una copia de la Licencia Pública General GNU 
-#    junto a este programa. 
+#    Debería haber recibido una copia de la Licencia Pública General GNU
+#    junto a este programa.
 #    En caso contrario, consulte <http://www.gnu.org/licenses/>.
 #################################################################################
 #
@@ -58,11 +58,11 @@ class Albaran < ActiveRecord::Base
         multiplicador = 1
       else
         multiplicador = -1
-      end 
+      end
       # Actualiza el inventario y el credito del cliente
       inventario_y_credito multiplicador
       # Cambia el estado del albaran a abierto
-      self.cerrado = true 
+      self.cerrado = true
       self.save
     end
   end
@@ -74,7 +74,7 @@ class Albaran < ActiveRecord::Base
         multiplicador = -1
       else
         multiplicador = 1
-      end 
+      end
       # Actualiza el inventario y el credito del cliente
       inventario_y_credito multiplicador
       # Cambia el estado del albaran a abierto
@@ -113,7 +113,7 @@ class Albaran < ActiveRecord::Base
       desglose[linea.iva.to_s][1] += (linea.total-linea.subtotal)*100.to_i.to_f/100
       desglose[linea.iva.to_s][2] += linea.total*100.to_i.to_f/100
     end
-    return desglose 
+    return desglose
   end
 
   # Devuelve la suma de los dos anteriores
@@ -154,11 +154,11 @@ class Albaran < ActiveRecord::Base
 
     # Borra las lineas de albaran relacionadas que no sean de descuento
     def borra_lineas_normales
-      self.albaran_lineas.all(:conditions => { :linea_descuento_id => nil }).each { |al| al.destroy }
+      albaran_lineas.where(linea_descuento_id: nil).destroy_all
     end
 
     def borra_lineas_descuento
-      self.albaran_lineas.all(:conditions => ["linea_descuento_id IS NOT NULL"]).each { |al| al.destroy }
+      albaran_lineas.where("linea_descuento_id IS NOT NULL").destroy_all
     end
 
     # Hace los calculos de las lineas de albaran
@@ -174,7 +174,7 @@ class Albaran < ActiveRecord::Base
           # En el caso de que sea una venta/devolucion, incluye el credito
           total_credito += (-1 * multiplicador * linea.total * (linea.producto.familia.acumulable||0)/100) if self.cliente
         end
-      end  
+      end
       # Actualiza el credito total si es una venta/devolucion y no es caja
       if self.cliente && self.cliente_id != 1 && self.cliente.credito_acumulado != total_credito
           self.cliente.credito_acumulado = total_credito
