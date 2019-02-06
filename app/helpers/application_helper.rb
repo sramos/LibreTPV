@@ -313,7 +313,7 @@ module ApplicationHelper
   end
 
   # Devuelve las secciones disponibles para el usuario
-  def secciones user
+  def secciones user=nil
      secciones = [ { seccion: "caja",          url: "/caja/albarans",        title: "Caja"},
                    { seccion: "productos",     url: "/productos/productos/", title: "Productos"},
                    { seccion: "tesoreria",     url: "/tesoreria/caja/",      title: "Tesorería"},

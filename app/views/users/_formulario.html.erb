@@ -4,4 +4,11 @@
     <%= texto "Nombre", 'user', 'name' %>
     <%= texto "email", 'user', 'email' %>
   </div>
+  <div class="linea">
+    <% secciones.each do |seccion| %>
+      <%= checkbox "Acceso a #{seccion[:title]}", 'user', "acceso_#{seccion[:seccion]}",
+                   {checked: @user.send("acceso_#{seccion[:seccion]}"),
+                    izquierda: true, abajo: true, clase: "2"} %>
+    <% end %>
+  </div>
 <%= final_formulario %>

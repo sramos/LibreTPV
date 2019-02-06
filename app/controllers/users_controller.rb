@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
-
-  before_filter :verificar_administrador
+  before_filter :verificar_administrador,
+	               only: [:index, :listado, :editar, :modificar, :borrar]
 
   def index
-    redirect_to :action => :listado
+    redirect_to action: :listado
   end
 
   def listado
@@ -22,21 +22,21 @@ class UsersController < ApplicationController
 
   def editar
     @user = User.find_by_id(params[:id]) || User.new
-    render :partial => "formulario"
+    render partial: "formulario"
   end
 
   def modificar
     @user = User.find_by_id(params[:id]) || User.new
-    proveedor.update_attributes params[:user]
+    @user.update_attributes params[:user]
     flash[:error] = @user
-    redirect_to :action => :listado
+    redirect_to action: :listado
   end
 
   def borrar
     @user = User.find_by_id(params[:id])
     @user.destroy
     flash[:error] = @user
-    redirect_to :action => :listado
+    redirect_to action: :listado
   end
 
   private

@@ -7,12 +7,13 @@ class User < ActiveRecord::Base
 
   validate :password_complexity
   validates :name, presence: true
+  before_update :prevent_disable_all_admins
   before_destroy :prevent_destroy_all_admins
 
   def user_sections
     permisos = []
     User.column_names.select{|n| n.match(/^acceso_/)}.each do |permiso|
-      permisos.push permiso.match(/^acceso_(.*)/)[1]
+      permisos.push(permiso.match(/^acceso_(.*)/)[1]) if self.send(permiso)
     end
     return permisos.join(", ")
   end
@@ -23,7 +24,15 @@ class User < ActiveRecord::Base
     end
   end
 
+  def prevent_disable_all_admins
+    if acceso_admin_was && !acceso_admin && User.where(acceso_admin: true).count == 1
+      self.errors[:base] << "No se puede deshabilitar a todos los administradores"
+      return false
+    end
+  end
+
   def prevent_destroy_all_admins
+    # Si somos los unicos administradores, evitamos el borrado
     if acceso_admin && User.where(acceso_admin: true).count == 1
       self.errors[:base] << "No se pueden borrar todos los administradores"
       return false
