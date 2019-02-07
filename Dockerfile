@@ -1,4 +1,4 @@
-FROM ruby:2.2
+FROM ruby:2.4
 
 # Set the base directory used in any further RUN, COPY, and ENTRYPOINT
 # commands.
