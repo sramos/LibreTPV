@@ -1,6 +1,6 @@
 <html>
 
-<head>
+  <head>
     <title>TPV: Terminal Punto de Venta - <%= controller.controller_name %></title>
     <%= stylesheet_link_tag 'application', :media => "all" %>
     <%= javascript_include_tag 'application' %>
@@ -10,111 +10,102 @@
     <META NAME="author" CONTENT="Santiago Ramos <sramos@sitiodistinto.net>">
     <META NAME="copyright" CONTENT="Copyright (C) 2011-2019 Santiago Ramos">
     <META NAME="generator" CONTENT="LibreTPV - Version <%= ENV['TPV_VERSION'] %>">
-</head>
-<body>
+  </head>
+  <body>
 
+    <div id="cabecera">
+      <div id="avisos" style="display:none;">Esto es un aviso</div>
 
-<div id="cabecera">
-
-<div id="avisos" style="display:none;">
-Esto es un aviso
-</div>
-
-<!-- BARRA SUPERIOR DE SECCIONES -->
-
-<div id="barrasuperior">
-  <div class="fila">
-    <% if params[:seccion] %>
-      <div>
-        <ul id="secciones">
-          <% secciones(current_user).each do |seccion| %>
-            <li><a id="seccion_<%= seccion[:seccion] %>" title="<%= seccion[:title] %>" href="<%= seccion[:url] %>">
-              <div class="<%= params[:seccion] == seccion[:seccion] ? 'seleccionado' : ''%>" >
-                <%= seccion[:title] %>
-              </div>
-            </a></li>
+      <!-- BARRA SUPERIOR DE SECCIONES -->
+      <div id="barrasuperior">
+        <div id="secciones">
+          <% if params[:seccion] %>
+            <ul id="listado-secciones">
+              <% secciones(current_user).each do |seccion| %>
+                <li><a id="seccion_<%= seccion[:seccion] %>" title="<%= seccion[:title] %>" href="<%= seccion[:url] %>">
+                  <div class="<%= params[:seccion] == seccion[:seccion] ? 'seleccionado' : ''%>" >
+                    <%= seccion[:title] %>
+                  </div>
+                </a></li>
+              <% end %>
+            </ul>
           <% end %>
-        </ul>
-      </div>
-      <div id="estado">
-        <%= params[:seccion].capitalize + " - " + controlador_rotulo(params[:controller]) %>
-      </div>
-    <% else %>
-      <div id="estado"><%= t("Acceso Restringido") %></div>
-    <% end %>
-    <div id="logo"></div>
-    <% if user_signed_in? %>
-      <div id="signed_user">
-        <%= current_user.name %> | <%= link_to "Salir", destroy_user_session_path %>
-      </div>
-    <% end %>
-  </div>
-</div>
-
-<!-- BARRA SUPERIOR DE ACCIONES -->
-
-<% unless controladores.empty? %>
-  <div id="menucontroladores" >
-     <div id="centromenucontroladores">
-      <% for controlador in controladores %>
-        <div id="controlador_<%= controlador[:controlador] %>" class="<%= (controlador[:controlador] == params[:controller]) ? "destacado"  : "fondo" %>" >
-          <%= link_to controlador[:rotulo], :controller => controlador[:controlador] %>
         </div>
-        <% unless controladores.last == controlador %>
-          <div class='separador'></div>
-        <% end %>
-      <% end %>
-     </div>
-  </div>
-<% end %>
-
-</div>
-
-<!-- CONTENIDO DE LAS ACCIONES -->
-
-<div id="centro" class="centro">
-
-  <!-- Mensajes de informacion -->
-  <%= mensaje_ok flash[:mensaje_ok] if flash[:mensaje_ok] %>
-  <%= mensaje_error(flash[:error]) if flash[:error]%>
-
-  <!-- Contenido de cada accion -->
-  <%= yield %>
-
-  <br/><br/>
-
-</div>
-
-<%= mensaje flash[:mensaje] if flash[:mensaje] %>
-
-<% if (avisos_activos=Avisos.activos).count > 0 %>
-  <div id="pie" class="fila">
-    <div class="contenido">Hay <%= avisos_activos.count %> aviso<%= "s" if avisos_activos.count > 1 %> pendiente<%= "s" if avisos_activos.count > 1 %>: </div>
-    <div id="carousel-wrapper"><div id="carousel-content">
-    <% avisos_activos.each do |aviso| %>
-      <div class="slide criticidad_<%= aviso.criticidad %>">
-        <%= link_to aviso.mensaje, (aviso.url || "") %>
+        <div id="estado"><p>
+          <% if params[:seccion] %>
+            <%= params[:seccion].capitalize + " - " + controlador_rotulo(params[:controller]) %>
+          <% else %>
+            <%= t("Acceso Restringido") %>
+          <% end %>
+        </p></div>
+        <div id="opciones-usuario">
+          <div id="logo"></div>
+          <% if user_signed_in? %>
+            <div id="signed_user">
+              <%= current_user.name %> | <%= link_to "Salir", destroy_user_session_path %>
+            </div>
+          <% end %>
+        </div>
       </div>
-    <% end %>
-    <div class="slide criticidad_<%= avisos_activos.first.criticidad %>">
-      <%= link_to avisos_activos.first.mensaje, (avisos_activos.first.url || "") %>
+
+      <!-- BARRA SUPERIOR DE ACCIONES -->
+      <% unless controladores.empty? %>
+        <div id="menucontroladores" >
+           <div id="centromenucontroladores">
+            <% for controlador in controladores %>
+              <div id="controlador_<%= controlador[:controlador] %>" class="<%= (controlador[:controlador] == params[:controller]) ? "destacado"  : "fondo" %>" >
+                <%= link_to controlador[:rotulo], :controller => controlador[:controlador] %>
+              </div>
+              <% unless controladores.last == controlador %>
+                <div class='separador'></div>
+              <% end %>
+            <% end %>
+           </div>
+        </div>
+      <% end %>
     </div>
-    </div></div>
-    <script>
-      new Carousel('carousel-wrapper', $$('#carousel-content .slide'), $$(), {
-        <%= '"auto": "true", "circular": "false", "duration": "3", "frequency": "5"' if avisos_activos.count > 1 %>
-      });
+
+    <!-- CONTENIDO DE LAS ACCIONES -->
+    <div id="centro" class="centro <%= 'unsigned-user' unless user_signed_in? %>">
+      <!-- Mensajes de informacion -->
+      <%= mensaje_ok flash[:mensaje_ok] if flash[:mensaje_ok] %>
+      <%= mensaje_error(flash[:error]) if flash[:error]%>
+      <!-- Contenido de cada accion -->
+      <%= yield %>
+      <br/><br/>
+    </div>
+
+    <!-- Mensajes de aviso -->
+    <%= mensaje flash[:mensaje] if flash[:mensaje] %>
+    <!-- Avisos activos -->
+    <% if user_signed_in? %>
+      <% if (avisos_activos=Avisos.activos).count > 0 %>
+      <div id="pie" class="fila">
+        <div class="contenido">Hay <%= avisos_activos.count %> aviso<%= "s" if avisos_activos.count > 1 %> pendiente<%= "s" if avisos_activos.count > 1 %>: </div>
+        <div id="carousel-wrapper"><div id="carousel-content">
+        <% avisos_activos.each do |aviso| %>
+          <div class="slide criticidad_<%= aviso.criticidad %>">
+            <%= link_to aviso.mensaje, (aviso.url || "") %>
+          </div>
+        <% end %>
+        <div class="slide criticidad_<%= avisos_activos.first.criticidad %>">
+          <%= link_to avisos_activos.first.mensaje, (avisos_activos.first.url || "") %>
+        </div>
+        </div></div>
+        <script>
+          new Carousel('carousel-wrapper', $$('#carousel-content .slide'), $$(), {
+            <%= '"auto": "true", "circular": "false", "duration": "3", "frequency": "5"' if avisos_activos.count > 1 %>
+          });
+        </script>
+      </div>
+      <% end %>
+      <script type="text/javascript" charset="utf-8">
+      // Activa los selectores chosen tras cargar la pagina
+      activaSelectoresChosen();
+      // Cambia el logo del TPV pasados 5 segundos
+      changeBackground.delay(5);
     </script>
-  </div>
-<% end %>
+    <% end %>
 
-<script type="text/javascript" charset="utf-8">
-  // Activa los selectores chosen tras cargar la pagina
-  activaSelectoresChosen();
-  // Cambia el logo del TPV pasados 5 segundos
-  changeBackground.delay(5);
-</script>
-
-
-</body>
+  </body>
 </html>
