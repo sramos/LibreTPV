@@ -41,6 +41,7 @@ class Producto < ActiveRecord::Base
   belongs_to :materia
   belongs_to :editorial
   has_many :albaran_linea
+  has_one :producto_editorial
   has_one :relacion_web, as: :elemento
 
   has_many :autor_x_producto, dependent: :destroy

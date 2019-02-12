@@ -475,13 +475,14 @@ legend{
 #estado{
   float:left;
   /* width:700px;*/
-  height:50px;
+  height:60px;
   min-width:600px;
   font-size:25px;
   font-weight: bold;
   padding: 18px 0 0 0;
   text-align: center;
-  /*margin: 0 310px;*/
+  /*margin: 0 315px;*/
+  top: 0px;
 }
 #estado p {
   margin: 0px;

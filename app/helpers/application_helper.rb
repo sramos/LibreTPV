@@ -314,11 +314,11 @@ module ApplicationHelper
 
   # Devuelve las secciones disponibles para el usuario
   def secciones user=nil
-     secciones = [ { seccion: "caja",          url: "/caja/albarans",        title: "Caja"},
-                   { seccion: "productos",     url: "/productos/productos/", title: "Productos"},
-                   { seccion: "tesoreria",     url: "/tesoreria/caja/",      title: "Tesorería"},
-                   { seccion: "distribuidora", url: "/",                     title: "Distribuidora"},
-                   { seccion: "admin",         url: "/admin/avisos/",        title: "Administración"} ]
+     secciones = [ { seccion: "caja",          url: "/caja/albarans",            title: "Caja"},
+                   { seccion: "productos",     url: "/productos/productos/",     title: "Productos"},
+                   { seccion: "tesoreria",     url: "/tesoreria/caja/",          title: "Tesorería"},
+                   { seccion: "distribuidora", url: "/distribuidora/productos/", title: "Distribuidora"},
+                   { seccion: "admin",         url: "/admin/avisos/",            title: "Administración"} ]
      if user && user.class.name == "User"
        return secciones.select{|sec| user.send("acceso_#{sec[:seccion]}") }
      else
@@ -350,7 +350,12 @@ module ApplicationHelper
                           { :rotulo => "Facturas de Servicios", :controlador => "factura"}  ]
       when "trueke"
         controladores = [ { :rotulo => "Cambios", :controlador => "cambio"} ]
-
+      when "distribuidora"
+        controladores = [ { rotulo: "Facturas librerías", controlador: "factura" },
+                          { rotulo: "Albaranes de envío", controlador: "albarans" },
+                          { rotulo: "Almacenes", controlador: "almacenes" },
+                          { rotulo: "Inventario", controlador: "productos_editorial" }
+                        ]
       when "admin"
         controladores = [ #{ :rotulo => "Usuarios", :controlador => "usuarios"},
                           { :rotulo => "Backup", controlador: "backup"},
