@@ -3,7 +3,7 @@
 #
 #################################################################################
 # LibreTPV - Gestor TPV para Librerias
-# Copyright 2011-2013 Santiago Ramos <sramos@sitiodistinto.net>
+# Copyright 2011-2019 Santiago Ramos <sramos@sitiodistinto.net>
 #
 #    Este programa es software libre: usted puede redistribuirlo y/o modificarlo
 #    bajo los términos de la Licencia Pública General GNU publicada
@@ -23,24 +23,11 @@
 #
 #++
 
+class ProductoEditorialXAlmacen < ActiveRecord::Base
+  belongs_to :producto_editorial
+  belongs_to :almacen
 
-class ProductoEditorial < ActiveRecord::Base
-  belongs_to :producto
-  has_many :producto_editorial_x_almacenes
-  has_many :productos_editorial, through: :producto_editorial_x_almacenes
-
-  validates_presence_of :producto_id, :message => "Producto inexistente."
-  before_destroy :valida_borrado
-
-  def cantidad
-    producto_editorial_x_almacenes.sum(:cantidad)
-  end
-
-  private
-
-  # Evita borrar un producto de la editorial del cual hay aún stock
-  def valida_borrado
-    cantidad = producto_editorial_x_almacenes.sum(:cantidad)
-    errors.add :base, "No se puede borrar un producto del cual hay aún ejemplares."
-  end
+  validates_presence_of :producto_editorial_id, message: "Producto inexistente."
+  validates_presence_of :almacen_id, message: "Almacen inexistente."
+  validates_uniqueness_of :producto_editorial_id, scope: :almacen_id, message: "El libro ya está en el almacén."
 end

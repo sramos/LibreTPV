@@ -4,14 +4,14 @@ class ProductosEditorialController < ApplicationController
   require 'net/http'
 
   def index
-    session[("productos_filtrado").to_sym] = ""
+    session[("productos_editorial_filtrado").to_sym] = ""
     redirect_to :action => :listado
   end
 
   def filtrado
-    session[("productos_filtrado_tipo").to_sym] = params[:filtro][:tipo] if params[:filtro]
-    session[("productos_filtrado_valor").to_sym] = ( params[:filtro] && params[:filtro][:valor] != "" ) ? params[:filtro][:valor] : nil
-    session[("productos_filtrado_condicion").to_sym] = params[:filtro] ? params[:filtro][:condicion] : nil
+    session[("productos_editorial_filtrado_tipo").to_sym] = params[:filtro][:tipo] if params[:filtro]
+    session[("productos_editorial_filtrado_valor").to_sym] = ( params[:filtro] && params[:filtro][:valor] != "" ) ? params[:filtro][:valor] : nil
+    session[("productos_editorial_filtrado_condicion").to_sym] = params[:filtro] ? params[:filtro][:condicion] : nil
     redirect_to :action => :listado
   end
 
@@ -28,17 +28,24 @@ class ProductosEditorialController < ApplicationController
       page = params[:page]
     end
 
-    if session[("productos_filtrado_tipo").to_sym] && session[("productos_filtrado_valor").to_sym]
-      @productos = case session[("productos_filtrado_tipo").to_sym]
+    if session[("productos_editorial_filtrado_tipo").to_sym] && session[("productos_editorial_filtrado_valor").to_sym]
+      @productos = case session[("productos_editorial_filtrado_tipo").to_sym]
         when "cantidad" then
+          if /^[><=]$/.match(session[("productos_editorial_filtrado_condicion").to_sym])
+            filtro_cantidad = ["sum(producto_editorial_x_almacenes.cantidad) #{session[("productos_editorial_filtrado_condicion").to_sym]} ?",
+                                session[("productos_editorial_filtrado_valor").to_sym].to_i]
+          else
+            filtro_cantidad = "1=1"
+          end
           Producto.joins(:producto_editorial).
-                   where(["cantidad " + session[("productos_filtrado_condicion").to_sym] + " ?", session[("productos_filtrado_valor").to_sym].to_i]).
+                   joins(producto_editorial: :producto_editorial_x_almacenes).
+                   having(filtro_cantidad).
                    order('productos.nombre ASC').
                    paginate(page: page, per_page: paginado)
         else
           Producto.joins(:producto_editorial).
                    joins(:familia, :editorial, :autor).
-                   where([ session[("productos_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("productos_filtrado_valor").to_sym] + "%" ]).
+                   where([ session[("productos_editorial_filtrado_tipo").to_sym] + ' LIKE ?', "%" + session[("productos_editorial_filtrado_valor").to_sym] + "%" ]).
                    order('productos.nombre ASC').
                    paginate(page: page, per_page: paginado)
       end
@@ -46,7 +53,7 @@ class ProductosEditorialController < ApplicationController
       @productos = Producto.joins(:producto_editorial).
                             order(:nombre).paginate(page: page, per_page: paginado)
     end
-    if session[("productos_filtrado_tipo").to_sym] == "deposito"
+    if session[("productos_editorial_filtrado_tipo").to_sym] == "deposito"
       render "listado_deposito"
     else
       @formato_xls = @productos.total_entries

@@ -317,7 +317,7 @@ module ApplicationHelper
      secciones = [ { seccion: "caja",          url: "/caja/albarans",            title: "Caja"},
                    { seccion: "productos",     url: "/productos/productos/",     title: "Productos"},
                    { seccion: "tesoreria",     url: "/tesoreria/caja/",          title: "Tesorería"},
-                   { seccion: "distribuidora", url: "/distribuidora/productos/", title: "Distribuidora"},
+                   { seccion: "distribuidora", url: "/distribuidora/productos_editorial/", title: "Distribuidora"},
                    { seccion: "admin",         url: "/admin/avisos/",            title: "Administración"} ]
      if user && user.class.name == "User"
        return secciones.select{|sec| user.send("acceso_#{sec[:seccion]}") }
@@ -358,17 +358,17 @@ module ApplicationHelper
                         ]
       when "admin"
         controladores = [ #{ :rotulo => "Usuarios", :controlador => "usuarios"},
-                          { :rotulo => "Backup", controlador: "backup"},
-                          { :rotulo => "Recuperar Objetos", controlador: "perdidos" },
-			                    { :rotulo => "Parámetros", controlador: "configuracion"},
-                          { :rotulo => "Usuarios", controlador: "users"},
-                          { :rotulo => "Formas de Pago", controlador: "forma_pago"},
-                          { :rotulo => "Tipos de IVA", controlador: "iva"},
-                          { :rotulo => "Familias de Productos", controlador: "familia"},
-                          { :rotulo => "Materias", controlador: "materia" },
-                          { :rotulo => "Editoriales", controlador: "editorial" },
-                          { :rotulo => "Autores", controlador: "autor" },
-                          { :rotulo => "Avisos", controlador: "avisos"} ]
+                          { rotulo: "Backup", controlador: "backup"},
+                          { rotulo: "Recuperar Objetos", controlador: "perdidos" },
+			                    { rotulo: "Parámetros", controlador: "configuracion"},
+                          { rotulo: "Usuarios", controlador: "users"},
+                          { rotulo: "Formas de Pago", controlador: "forma_pago"},
+                          { rotulo: "Tipos de IVA", controlador: "iva"},
+                          { rotulo: "Familias de Productos", controlador: "familia"},
+                          { rotulo: "Materias", controlador: "materia"},
+                          { rotulo: "Editoriales", controlador: "editorial"},
+                          { rotulo: "Autores", controlador: "autor"},
+                          { rotulo: "Avisos", controlador: "avisos"} ]
 
     end
     return controladores
@@ -380,6 +380,8 @@ module ApplicationHelper
         ["codigo", "familia.nombre", "nombre", "autores", "cantidad", "precio"]
       when "inventario_deposito"
         ["producto.cantidad", "cantidad", "producto.nombre", "producto.autores", "albaran.proveedor.nombre", "albaran.fecha_devolucion", "producto.precio"]
+      when "inventario_distribuidora"
+        ["codigo", "familia.nombre", "nombre", "autores", "producto_editorial.cantidad", "precio"]
       when "proveedores"
         ["cif", "nombre", "telefono", "email", "descuento"]
       when "clientes"
@@ -452,6 +454,8 @@ module ApplicationHelper
         ["codigo", "familia.nombre", "nombre", "autores", "cantidad"]
       when "formas_pago"
         ["nombre", "caja"]
+      when "almacen"
+        ["nombre"]
       when "users"
         ["name", "email", "user_sections"]
     end

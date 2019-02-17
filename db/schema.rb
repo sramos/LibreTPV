@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190211153506) do
+ActiveRecord::Schema.define(version: 20190217103006) do
 
   create_table "albaran_lineas", force: :cascade do |t|
     t.integer  "cantidad",           limit: 4,                           default: 1
@@ -45,6 +45,12 @@ ActiveRecord::Schema.define(version: 20190211153506) do
 
   add_index "albarans", ["factura_id"], name: "albarans_factura_idx", using: :btree
   add_index "albarans", ["proveedor_id", "cliente_id"], name: "albarans_idx", using: :btree
+
+  create_table "almacenes", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "autor", force: :cascade do |t|
     t.string   "nombre",     limit: 255, null: false
@@ -182,14 +188,13 @@ ActiveRecord::Schema.define(version: 20190211153506) do
     t.datetime "updated_at"
   end
 
-  create_table "producto_editorial", force: :cascade do |t|
-    t.integer  "producto_id", limit: 4
-    t.integer  "cantidad",    limit: 4, default: 0
+  create_table "producto_editorial_x_almacenes", force: :cascade do |t|
+    t.integer  "producto_editorial_id", limit: 4
+    t.integer  "almacen_id",            limit: 4
+    t.integer  "cantidad",              limit: 4, default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "producto_editorial", ["producto_id"], name: "fk_rails_66e526269a", using: :btree
 
   create_table "productos", force: :cascade do |t|
     t.string   "codigo",              limit: 255
@@ -209,6 +214,14 @@ ActiveRecord::Schema.define(version: 20190211153506) do
     t.integer  "imagen_file_size",    limit: 4
     t.datetime "imagen_updated_at"
   end
+
+  create_table "productos_editorial", force: :cascade do |t|
+    t.integer  "producto_id", limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "productos_editorial", ["producto_id"], name: "fk_rails_a12a0037b1", using: :btree
 
   create_table "proveedors", force: :cascade do |t|
     t.string   "nombre",     limit: 255
@@ -271,5 +284,5 @@ ActiveRecord::Schema.define(version: 20190211153506) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 
-  add_foreign_key "producto_editorial", "productos"
+  add_foreign_key "productos_editorial", "productos"
 end

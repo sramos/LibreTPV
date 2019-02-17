@@ -3,7 +3,7 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
 # Examples:
-#   
+#
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Major.create(:name => 'Daley', :city => cities.first)
 
@@ -14,6 +14,8 @@ if User.count == 0
 	      acceso_distribuidora: true, acceso_tesoreria: true,
 	      acceso_admin: true
 end
+
+Almacen.create(nombre: 'Almacen por defecto') if Almacen.count == 0
 
 Iva.create([		{ :nombre => 'Superreducido', :valor => 4},
 			{ :nombre => 'Reducido', :valor => 10},
