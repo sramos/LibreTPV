@@ -7,3 +7,6 @@ config/database.yml
 !/tmp/.keep
 .idea
 /public/assets/*
+
+# Ignore docker-compose env file
+/.env

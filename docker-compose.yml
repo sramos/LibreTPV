@@ -1,0 +1,15 @@
+version: "2"
+services:
+  app:
+    build: . 
+    restart: always
+    environment:
+      - RUN_MIGRATIONS=true
+    volumes:
+      - public:/railsapp/public
+    ports:
+      - "3000:3000"
+
+volumes:
+  public:
+
