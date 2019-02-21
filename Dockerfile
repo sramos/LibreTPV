@@ -1,4 +1,5 @@
 FROM ruby:2.4
+MANTEINER Santiago Ramos, sramos@sitiodistinto.net
 
 # Set the base directory used in any further RUN, COPY, and ENTRYPOINT
 # commands.
@@ -8,7 +9,7 @@ WORKDIR /railsapp
 
 # Copy dependencies into the container
 COPY Gemfile Gemfile.lock ./ 
-RUN gem install bundler && bundle install --jobs 20 --retry 5 --without development test
+RUN gem install bundler -v '~>1' && bundle install --jobs 20 --retry 5 --without development test
 
 # Set the Rails environment to production
 ENV RAILS_ENV production 
@@ -30,4 +31,7 @@ VOLUME ["/railsapp/public"]
 
 # Start the application with Puma
 EXPOSE 3000
-CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+
+# Run migrations and start the application with Puma
+ENTRYPOINT ["/railsapp/public/script/entrypoint"]
+CMD bundle exec puma -C config/puma.rb
