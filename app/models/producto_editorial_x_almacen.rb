@@ -25,6 +25,7 @@
 
 class ProductoEditorialXAlmacen < ActiveRecord::Base
   belongs_to :producto_editorial
+  has_one :producto, through: :producto_editorial
   belongs_to :almacen
 
   validates_presence_of :producto_editorial_id, message: "Producto inexistente."

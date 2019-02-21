@@ -382,6 +382,8 @@ module ApplicationHelper
         ["producto.cantidad", "cantidad", "producto.nombre", "producto.autores", "albaran.proveedor.nombre", "albaran.fecha_devolucion", "producto.precio"]
       when "inventario_distribuidora"
         ["codigo", "familia.nombre", "nombre", "autores", "producto_editorial.cantidad", "precio"]
+      when "inventario_almacen"
+        ["producto.codigo", "producto.familia.nombre", "producto.nombre", "producto.autores", "cantidad"]
       when "proveedores"
         ["cif", "nombre", "telefono", "email", "descuento"]
       when "clientes"
@@ -482,6 +484,7 @@ module ApplicationHelper
 			"producto.nombre"		=> ["Nombre/Título", "1", 36],
 			"producto.cantidad"		=> ["Stock", "1_5", 8, "d"],
 			"producto.autores"		=> ["Autor", "2_3", 20],
+      "producto.familia.nombre" => ["Familia", "1_2", 15],
 			"nombre_producto"		=> ["Nombre/Título", "1", 36],
 			"nombre"			=> ["Nombre/Título", "1", 36],
 			"autores"			=> ["Autor", "2_3", 20],
@@ -508,7 +511,7 @@ module ApplicationHelper
 			"fecha_devolucion"		=> ["Devolución", "1_2", 15],
 			"fecha_vencimiento"		=> ["Vencimiento", "1_2", 15],
 			"albaran.fecha_devolucion"	=> ["Devolución", "1_2", 15],
-			"email"				=> ["Email", "2_3", 20],
+			"email"			      	=> ["email", "2_3", 20],
 			"nombre_param"			=> ["Parámetro","1", 36],
 			"valor_param"			=> ["Valor", "1", 36],
 			"base_imponible"		=> ["Base Imp.", "1_3", 14, "f"],
@@ -540,7 +543,6 @@ module ApplicationHelper
       "autor_x_producto.count"        => ["Núm.Productos", "1_4", 14, "d"],
       "producto.count"                => ["Núm.Productos", "1_4", 14, "d"],
       "valor_defecto"                 => ["Valor por defecto", "2_3", 20],
-      "email"                         => ["email", "1", 48],
       "name"                          => ["Nombre", "1", 48],
       "user_sections"                 => ["Permisos", "1", 48],
 		}

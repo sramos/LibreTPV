@@ -7,9 +7,12 @@
     <%= fila_listado objeto %>
     <div class="listado_derecha">
       <%= modal icono("Write",{:title => "Editar"}), { :action => 'editar', :id => objeto.id }, "Editar Almacen" %>
+      <%= link_to_remote icono('Cart2',{:title => "Ver Stock"}), :url => { :action => 'listado_productos', :id => objeto.id, :update => "almacen_sub_#{objeto.id}" }, :loading => "Element.show('spinner_#{objeto.id}')", :complete => "Element.hide('spinner_#{objeto.id}')" %>
       <%= borrado icono('Trash',{:title => "Borrar"}), {:action => :borrar, :id => objeto}, 'Eliminar Almacen', "Almacen: " + objeto.nombre, :ajax => false %>
     </div>
   </div>
+  <div id="spinner_<%= objeto.id %>" class="spinner" style="display:none" ></div>
+  <div id="almacen_sub_<%= objeto.id %>"></div>
 <% end %>
 <%= final_listado %>
 </div>
