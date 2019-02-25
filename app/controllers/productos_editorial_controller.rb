@@ -57,7 +57,7 @@ class ProductosEditorialController < ApplicationController
       render "listado_deposito"
     else
       @formato_xls = @productos.total_entries
-      respond_to do |format|
+        respond_to do |format|
         format.html
         format.xls do
           @tipo = "inventario"
@@ -65,6 +65,17 @@ class ProductosEditorialController < ApplicationController
           render 'comunes_xls/listado', :layout => false
         end
       end
+    end
+  end
+
+
+  # Devuelve un listado de los almacenes con el producto y su cantidad
+  def listado_almacenes
+    @pexa = ProductoEditorialXAlmacen.where(producto_editorial_id: params[:id]).
+                                      joins(:almacen).
+                                      order("almacenes.nombre")
+    render :update do |page|
+      page.replace_html params[:update], :partial => "almacenes"
     end
   end
 

@@ -1,5 +1,6 @@
+
 <!--- Sublistado de productos de un almacen de distribuidora --->
-<%= cabecera_sublistado "Almacenes del Producto de Distribuidora", "almacen_productos", params[:update] %>
+<%= cabecera_sublistado "Ubicación de los Productos", "almacenes_de_producto_editorial", params[:update] %>
 <% for objeto in @pexa %>
   <div id="<%= params[:update] %>_linea_<%= objeto.id %>" class="fila" >
     <%= fila_sublistado objeto %>

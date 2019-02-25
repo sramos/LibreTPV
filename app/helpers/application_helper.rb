@@ -384,6 +384,8 @@ module ApplicationHelper
         ["codigo", "familia.nombre", "nombre", "autores", "producto_editorial.cantidad", "precio"]
       when "inventario_almacen"
         ["producto.codigo", "producto.familia.nombre", "producto.nombre", "producto.autores", "cantidad"]
+      when "almacenes_de_producto_editorial"
+        ["almacen.nombre", "cantidad"]
       when "proveedores"
         ["cif", "nombre", "telefono", "email", "descuento"]
       when "clientes"
@@ -475,6 +477,7 @@ module ApplicationHelper
 			"albaran.proveedor.nombre"	=> ["Proveedor", "2_3", 20],
 			"albarans.first.cliente.nombre"	=> ["Cliente", "1", 36],
 			"albarans.first.proveedor.nombre" => ["Proveedor", "2_3", 20],
+      "almacen.nombre" => ["Almacen", "1", 36],
 			"cliente.nombre"		=> ["Cliente", "1", 36],
 			"familia.nombre"		=> ["Familia", "1_2", 15],
 			"proveedor.nombre"		=> ["Proveedor", "1", 36],
