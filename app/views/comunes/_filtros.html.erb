@@ -21,7 +21,8 @@
                    Proveedor.order(:nombre).collect{|p| [p.nombre,p.id]},
                    { valor: session[("filtrado_proveedor").to_sym].to_i,
                      tipo: "x15",
-                     vacio: true }) if params[:seccion] == "productos" %>
+                     vacio: true,
+                     enriquecido: true }) if params[:seccion] == "productos" %>
       <%= selector("Cliente", 'filtro', 'cliente',
                    Cliente.order(:nombre).collect{|p| [p.nombre, p.id]},
                    { valor: session[("filtrado_cliente").to_sym].to_i,
