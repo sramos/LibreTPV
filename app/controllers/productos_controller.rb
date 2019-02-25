@@ -241,7 +241,7 @@ class ProductosController < ApplicationController
 
   # Devuelve sublistado de proveedores del producto
   def albaranes_compra
-    lineas = AlbaranLinea.find :all, :conditions=>{:producto_id => params[:id]}
+    lineas = AlbaranLinea.where producto_id: params[:id]
     # Obtiene los albaranes donde esta el producto
     @albaranes=[]
     lineas.each { |linea| @albaranes.push(linea.albaran) if linea.albaran && linea.albaran.proveedor && linea.albaran.cerrado }
