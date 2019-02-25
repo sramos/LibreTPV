@@ -16,7 +16,6 @@ class AlmacenesController < ApplicationController
                                       joins(producto_editorial: :producto).
                                       order("productos.nombre ASC").
                                       paginate(page: params[:page], per_page: Configuracion.valor('PAGINADO'))
-    puts "-----------> Parece que tenemos " + @pexa.inspect
     render :update do |page|
       page.replace_html params[:update], partial: "productos"
     end
