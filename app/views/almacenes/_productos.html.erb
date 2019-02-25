@@ -1,8 +1,11 @@
 <!--- Sublistado de productos de un almacen de distribuidora --->
-<%= cabecera_sublistado "Almacenes del Producto de Distribuidora", "inventario_almacen", params[:update] %>
-<% for objeto in @pexa %>
+<%= cabecera_sublistado "Productos de Distribuidora en el almacén", "inventario_almacen", params[:update] %>
+<% for objeto in @pexas %>
   <div id="<%= params[:update] %>_linea_<%= objeto.id %>" class="fila" >
     <%= fila_sublistado objeto %>
+    <div class="listado_derecha">
+      <%= modal icono("Go Out",{title: "Enviar ejemplares a otro almacen"}), { action: 'editar_mover_productos', pexa_id: objeto.id, update: "almacen_sub_#{objeto.almacen_id}"}, "Enviar ejemplares a otro almacen" %>
+    </div>
   </div>
 <% end %>
 <%= final_sublistado %>

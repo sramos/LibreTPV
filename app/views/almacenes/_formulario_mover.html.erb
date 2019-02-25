@@ -1,0 +1,9 @@
+
+<%= inicio_formulario( { :action => 'modificar_mover_productos', pexa_id: @pexa.id, update: "almacen_sub_#{@pexa.almacen_id}" }, true ) %>
+  <% if @almacenes.count == 0 %>
+    <p>No hay ningún almacén alternativo para enviar ejemplares</p>
+  <% else %>
+    <%= texto "Cantidad a mover", '', 'cantidad' %>
+    <%= selector "Almacén destino", '', "almacen_destino_id", @almacenes.collect{|a| [a.nombre,a.id]} %>
+  <% end %>
+<%= final_formulario %>
