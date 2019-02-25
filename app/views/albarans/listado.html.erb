@@ -1,7 +1,7 @@
 
-<div class='caja_completa'>
+<fieldset id='filtros' class='filtrado'>
   <%= render :partial => "nuevo_albaran" %>
-</div>
+</fieldset>
 
 <% if @albarans.size()>0 %>
 <!--- Listado de albaranes --->
@@ -28,4 +28,3 @@
 <%= final_listado %>
 </div>
 <% end %>
-

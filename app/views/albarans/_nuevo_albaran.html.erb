@@ -8,7 +8,7 @@
       <%= texto 'Código de Albaran', 'albaran', 'codigo' %>
   <% end %>
   <% if params[:seccion] == 'productos' %>
-    <%= selector 'Proveedor', 'albaran', 'proveedor_id', @proveedores.map {|u| [u.nombre,u.id]} %>
+    <%= selector 'Proveedor', 'albaran', 'proveedor_id', @proveedores.map {|u| [u.nombre,u.id]}, enriquecido: true %>
     <div class="elemento_x05">Depósito<br>
       <%= check_box( "albaran", "deposito") %>
     </div>
@@ -18,7 +18,7 @@
       <%= fecha 'Fecha de Devolución', 'albaran', 'fecha_devolucion' %>
     </div>
   <% else %>
-    <%= selector 'Cliente', 'albaran', 'cliente_id', @clientes.map {|u| [u.nombre,u.id]}, valor: (@albaran.nil? ? 1 : @albaran.cliente_id) %>
+    <%= selector 'Cliente', 'albaran', 'cliente_id', @clientes.map {|u| [u.nombre,u.id]}, valor: (@albaran.nil? ? 1 : @albaran.cliente_id), enriquecido: true %>
   <% end %>
   <br/>
 <%= final_formulario({:etiqueta => (@albaran.nil? ? (params[:seccion] == 'productos' ? "Nuevo Albaran" : "Nueva Venta") : "Modificar" ) })%>

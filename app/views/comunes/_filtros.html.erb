@@ -7,7 +7,7 @@
 <% cookies[("filtrado_fecha_fin").to_sym] = (Date.today + 3.month).to_date if cookies[("filtrado_fecha_fin").to_sym].nil? %>
 
 
-<fieldset class="filtrado" id="filtro">
+<fieldset class="filtrado" id="filtros">
   <%= inicio_formulario( { :action => 'filtrado' }, false ) %>
     <div class="linea">
       <%= selector("Fecha de:", "filtro", "tipo_fecha",
@@ -26,7 +26,8 @@
                    Cliente.order(:nombre).collect{|p| [p.nombre, p.id]},
                    { valor: session[("filtrado_cliente").to_sym].to_i,
                      tipo: "x15",
-                     vacio: true }) if params[:seccion] == "caja" %>
+                     vacio: true,
+                     enriquecido: true }) if params[:seccion] == "caja" %>
       <%= selector("Pagada", 'filtro', 'pagado',
                    [["Si","true"],["No","false"]],
                    { valor: session[("filtrado_pagado").to_sym],

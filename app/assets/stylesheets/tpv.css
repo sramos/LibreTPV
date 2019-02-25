@@ -408,6 +408,10 @@ fieldset {
   overflow-x: auto;
 }
 
+#filtros {
+  overflow-x: unset !important;
+}
+
 legend{
   font-weight:bold;
   color: gray;
