@@ -1,3 +1,11 @@
 /.bundle
-/db/*.sqlite3
-/db/*.sqlite3-journal
+/log/*
+!/log/.keep
+/tmp
+!/tmp/.keep
+/public/assets/*
+/public/cover/*
+!/public/cover/missing_cover.jpg
+/config/database.yml
+/.git
+/.env

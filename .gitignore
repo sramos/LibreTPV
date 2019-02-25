@@ -7,6 +7,8 @@ config/database.yml
 !/tmp/.keep
 .idea
 /public/assets/*
+/public/cover/*
+!/public/cover/missing_cover.jpg
 
 # Ignore docker-compose env file
 /.env
