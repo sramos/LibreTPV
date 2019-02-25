@@ -24,13 +24,13 @@
 #++
 
 class Almacen < ActiveRecord::Base
-  has_many :producto_editorial_x_almacenes
+  before_destroy :valida_borrado
+
+  has_many :producto_editorial_x_almacenes, dependent: :destroy
   has_many :productos_editorial, through: :producto_editorial_x_almacenes
 
   validates_presence_of :nombre, message: "El almacen debe tener un nombre."
   validates_uniqueness_of :nombre, message: "Ya existe un almacen con ese nombre."
-
-  before_destroy :valida_borrado
 
   private
 
@@ -38,7 +38,7 @@ class Almacen < ActiveRecord::Base
   def valida_borrado
     libros = []
     producto_editorial_x_almacenes.where("cantidad != 0").each do |pexa|
-      libros.push pexa.producto_editorial.nombre
+      libros.push pexa.producto_editorial.producto.nombre
     end
     errors.add :base, "No se puede borrar un almacen con libros: cambie primero la ubicación." unless libros.empty?
     return errors.empty?
