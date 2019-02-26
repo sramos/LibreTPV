@@ -478,14 +478,13 @@ legend{
 }
 #estado{
   float:left;
-  /* width:700px;*/
+  width:calc(100% - 620px);
   height:60px;
   min-width:600px;
   font-size:25px;
   font-weight: bold;
   padding: 18px 0 0 0;
   text-align: center;
-  /*margin: 0 315px;*/
   top: 0px;
 }
 #estado p {
@@ -494,7 +493,7 @@ legend{
 #opciones-usuario{
   width: 310px;
   height: 78px;
-  float: right;
+  float: left;
 }
 
 #logo{
