@@ -33,7 +33,11 @@ class InformeController < ApplicationController
           flash[:error] = "Informe no disponible"
         end
       else
-        flash[:error] = "La fecha de inicio debe ser mayor que la fecha de fin del informe." unless fecha_fin > fecha_inicio
+        if fecha_fin.nil? || fecha_fin.nil?
+          flash[:error] = "Se deben especificar fechas de inicio y de fin"
+        else
+          flash[:error] = "La fecha de inicio debe ser mayor que la fecha de fin del informe." unless fecha_fin > fecha_inicio
+        end
       end
     end
   end
@@ -105,26 +109,32 @@ class InformeController < ApplicationController
   end
 
   def facturas_venta fecha_inicio, fecha_fin
-    campos = [  ["Fecha", "fecha"], ["Codigo", "codigo"], ["Cliente", "albaran.cliente.nombre"],
+    campos = [  ["Fecha", "fecha"], ["Codigo", "codigo"], ["Cliente", "albaran_cliente_nombre"],
                 ["Base Imponible", "base_imponible", true], ["IVA", "iva_aplicado", true], ["Total", "importe", true] ]
-    condicion = "albarans.cliente_id IS NOT NULL AND facturas.fecha BETWEEN '" + fecha_inicio.to_s + "' AND '" + fecha_fin.to_s + "'"
-    objetos = Factura.joins(:albaran).where(condicion).order('facturas.fecha DESC')
+    condicion = "albarans.cliente_id IS NOT NULL"
+    objetos = Factura.joins(:albarans).
+                      where(condicion).where("facturas.fecha" => fecha_inicio..fecha_fin).
+                      order('facturas.fecha DESC')
     return genera_informe(objetos,campos)
   end
 
   def facturas_compra fecha_inicio, fecha_fin
-    campos = [	["Fecha", "fecha"], ["Codigo", "codigo"], ["Proveedor", "albaran.proveedor.nombre"],
-		["Base Imponible", "base_imponible", true], ["IVA", "iva_aplicado", true], ["Total", "importe", true] ]
-    condicion = "albarans.proveedor_id IS NOT NULL AND facturas.fecha BETWEEN '" + fecha_inicio.to_s + "' AND '" + fecha_fin.to_s + "'"
-    objetos = Factura.joins(:albaran).where(condicion).order('facturas.fecha DESC')
+    campos = [  ["Fecha", "fecha"], ["Codigo", "codigo"], ["Proveedor", "albaran_proveedor_nombre"],
+                ["Base Imponible", "base_imponible", true], ["IVA", "iva_aplicado", true], ["Total", "importe", true] ]
+    condicion = "albarans.proveedor_id IS NOT NULL"
+    objetos = Factura.joins(:albarans).
+                      where(condicion).where("facturas.fecha" => fecha_inicio..fecha_fin).
+                      order('facturas.fecha DESC')
     return genera_informe(objetos,campos)
   end
 
   def facturas_servicios fecha_inicio, fecha_fin
     campos = [  ["Fecha", "fecha"], ["Codigo", "codigo"], ["Proveedor", "proveedor.nombre"],
-		["Base Imponible", "base_imponible", true], ["IVA", "iva_aplicado", true], ["IRPF", "irpf"], ["Total", "importe", true] ]
-    condicion = "albaran_id IS NULL AND facturas.fecha BETWEEN '" + fecha_inicio.to_s + "' AND '" + fecha_fin.to_s + "'"
-    objetos = Factura.joins(:albaran).where(condicion).order('facturas.fecha DESC')
+                ["Base Imponible", "base_imponible", true], ["IVA", "iva_aplicado", true], ["IRPF", "irpf"], ["Total", "importe", true] ] 
+    condicion = "albaran.id IS NULL"
+    objetos = Factura.includes(:albarans).
+                      where(condicion).where("facturas.fecha" => fecha_inicio..fecha_fin).
+                      order('facturas.fecha DESC')
     return genera_informe(objetos,campos)
   end
 

@@ -81,6 +81,14 @@ class Factura < ActiveRecord::Base
     return concepto
   end
 
+  # devuelve el nombre del cliente o el proveedor (si el albaran asociado esta vinculado a uno)
+  def albaran_cliente_nombre
+    albarans.joins(:cliente).pluck("clientes.nombre").first
+  end
+  def albaran_proveedor_nombre
+    albarans.joins(:proveedor).pluck("proveedors.nombre").first
+  end
+
   # devuelve la base imponible tenga o no un albaran asociado
   def base_imponible
     # Si hay un iva asociado a la factura completa (aunque sea 0)
