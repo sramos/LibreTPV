@@ -20,6 +20,11 @@ group :assets do
   gem 'uglifier'
 end
 
+# Use esc/pos commands to generate cash tickets
+gem 'escpos'
+gem 'escpos-image'
+gem 'mini-magick'
+
 #gem 'jquery-rails'
 gem 'prototype-rails', git: 'https://github.com/rails/prototype-rails', branch: '4.2'
 gem 'prototype_legacy_helper', '0.0.0', :git => 'https://github.com/rails/prototype_legacy_helper.git' # Esto es para mantener soporte de form_remote_tag en Rails3

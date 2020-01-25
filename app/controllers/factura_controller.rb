@@ -209,9 +209,25 @@ private
       cadena += format " %-41s %6s\n", format("Iva ( %2s%% )",tipo.to_s), format("%.2f",parcial)
     end
     cadena += format "\n %-41s %6s\n\n.", "Total Euros (IVA incluido)", format("%.2f",precio_total.to_s)
-    File.open("/tmp/ticket", 'w') {|f| f.write(cadena) }
+
+    printer = Escpos::Printer.new
+    printer << Escpos::Helpers.set_printer_encoding(Escpos::CP_ISO8859_15)
+    printer << Escpos::Helpers.encode(cadena, encoding: "ISO-8859-2")
+    #printer << "Some text"
+    #printer << Escpos::Helpers.big "Big text"
+    printer << Escpos::Helpers.barcode(albaran.factura.codigo,
+                                       {format: Escpos::BARCODE_CODE39,
+                                        text_position: Escpos::BARCODE_TXT_BLW})
+    printer.cut!
+    escposdata = printer.to_escpos # returns ESC/POS data ready to be sent to printer
+    # on linux this can be piped directly to /dev/usb/lp0
+    # with network printer sent directly to printer socket (see example below)
+    # with serial port printer it can be sent directly to the serial port
+    #printer.to_base64 # returns base64 encoded ESC/POS data
+
+    #File.open("/tmp/ticket", 'w') {|f| f.write(cadena) }
     #system("lpr -P " + Configuracion.valor('IMPRESORA') + " -o cpi=20 " + " /tmp/ticket")
-    system(Configuracion.valor('COMANDO IMPRESION') + " /tmp/ticket")
+    #system(Configuracion.valor('COMANDO IMPRESION') + " /tmp/ticket")
   end
 
 end
