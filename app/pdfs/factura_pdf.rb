@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 class FacturaPdf < Prawn::Document
   # Inicializamos la clase
   def initialize(factura, view)
