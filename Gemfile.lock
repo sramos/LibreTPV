@@ -146,8 +146,6 @@ GEM
       prawn (>= 1.3.0, < 3.0.0)
     puma (4.3.1)
       nio4r (~> 2.0)
-    quiet_assets (1.1.0)
-      railties (>= 3.1, < 5.0)
     raabro (1.1.6)
     rack (1.6.12)
     rack-test (0.6.3)
@@ -243,7 +241,6 @@ DEPENDENCIES
   prototype-rails!
   prototype_legacy_helper (= 0.0.0)!
   puma
-  quiet_assets
   rails (~> 4.2)
   rufus-scheduler
   sass-rails

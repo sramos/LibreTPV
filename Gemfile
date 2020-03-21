@@ -50,8 +50,6 @@ gem 'prototype_legacy_helper', '0.0.0', :git => 'https://github.com/rails/protot
 
 # Solo para el entorno de desarrollo
 group :development do
-  # Para ocultar los logs de los assets en consola
-  gem 'quiet_assets'
   # Para buscar traducciones
   gem 'gettext'#, '>=1.9.3', :require => false
   # Para debug
