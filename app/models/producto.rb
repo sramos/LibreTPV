@@ -204,14 +204,15 @@ class Producto < ActiveRecord::Base
     logger.info  "-----------------> Buscando en TTL: " + search
     begin
       data = URI.parse("#{protocol}://#{host}/#{search}").read
-      enlace = Hpricot(data).search("//div[@class='details']//h2//a").first if data
+      enlace = Hpricot(data).search("div[@class~='book-details']//h2[@class='title']//a").first if data
       if enlace
-	doc = Hpricot URI.parse("#{protocol}://#{host}/#{enlace[:href]}").read
+        #puts "**** Estamos revisando el enlace " + enlace[:href].inspect
+	doc = Hpricot URI.parse(enlace[:href]).read
 	remote_name = html_inner_value doc, "h1[@class='title']"
 	remote_authors = html_inner_value doc, "h2[@class='author']//a"
+	remote_price = html_inner_value doc, "div[@class='book-price']//strong"
+	remote_description = html_inner_value doc, "//div[@id='synopsis']//div[@class~='synopsis']//p"
 	remote_publisher = html_inner_value doc, "//dd[@class='publisher']//a"
-	remote_price = html_inner_value doc, "//spam[@itemprop='price']"
-	remote_description = html_inner_value doc, "//p[@itemprop='description']"
 	remote_year = html_inner_value doc, "//dd[@class='publication-date']"
         remote_images = doc.search("//img[@class='portada']")
         remote_image = nil
@@ -221,12 +222,12 @@ class Producto < ActiveRecord::Base
         end
         if (remote_image || remote_description)
           return_data = Hash.new
+	  return_data[:price] = remote_price.to_f unless remote_price.blank?
 	  return_data[:image] = remote_image unless remote_image.blank?
           return_data[:description] = remote_description if remote_description
 	  return_data[:name] = sanetize_html_text remote_name unless remote_name.blank?
 	  return_data[:authors] = sanetize_html_text remote_authors unless remote_authors.blank?
-	  return_data[:publisher] = sanetize_html_text remote_publisher unless remote_authors.blank?
-	  return_data[:price] = remote_price.to_f unless remote_price.blank?
+	  return_data[:publisher] = sanetize_html_text remote_publisher unless remote_publisher.blank?
 	  unless remote_year.blank?
             remote_year =~/-([0-9]+)$/
 	    return_data[:year] = $1
