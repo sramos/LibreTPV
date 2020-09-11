@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 class FacturaController < ApplicationController
   # Incluimos esto para un trucate en los tickets
   include ActionView::Helpers::TextHelper

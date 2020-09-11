@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # Controlador encargado de backups de BBDD
 
 class BackupController < ApplicationController

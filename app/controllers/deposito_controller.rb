@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 class DepositoController < ApplicationController
 
   # Hace una busqueda de "albaranes" eliminando los vacios
