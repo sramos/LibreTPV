@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 class ProductosEditorialController < ApplicationController
 
   def index

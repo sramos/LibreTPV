@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 class ProductosController < ApplicationController
 
   #require 'json'
@@ -278,18 +276,19 @@ class ProductosController < ApplicationController
 
     # Si no existe el libro lo busca y se prepara para guardarlos
     else
+      puts "Nos llega una consulta de " + params.inspect
       @producto = producto_x_codigo_isbn params[:codigo]
       if @producto.familia
         @materias = @producto.familia.materia
 	materia_defecto = @producto.familia.materia.find_by_valor_defecto(true)
         @valor_materia_defecto = materia_defecto.id if materia_defecto
       end
-      render :partial => params[:template]
+      render partial: params[:template]
     end
   end
 
   def producto_x_titulo
-    puts "-----> nos llaman para meter el codigo ean " + params[:titulo]
+    #puts "-----> nos llaman para meter el codigo ean " + params[:titulo]
     if @producto = Producto.where(nombre: params[:titulo]).first
       render :update do |page|
         page.replace 'formulario_campo_producto_codigo', :inline => '<%= text_field("producto", "codigo", {:class => "texto", :id => "formulario_campo_producto_codigo", :type => "d", :value => @producto.codigo }) %>'
@@ -301,35 +300,39 @@ class ProductosController < ApplicationController
   end
 
   private
-    def producto_x_codigo_isbn isbn
-      producto = Producto.new
-      producto = producto_x_isbn_todostuslibros producto, isbn if producto.codigo.nil?
-      producto = producto_x_isbn_google producto, isbn if producto.codigo.nil?
-      producto.codigo = isbn if producto.codigo.nil?
-      return producto
-    end
+
+  # Obtiene la informacion de un libro segun su codigo ISBN
+  def producto_x_codigo_isbn isbn
+    producto = Producto.new
+    producto = producto_x_isbn_todostuslibros producto, isbn if producto.codigo.nil?
+    producto = producto_x_isbn_google producto, isbn if producto.codigo.nil?
+    producto.codigo = isbn if producto.codigo.nil?
+    return producto
+  end
 
     def producto_x_isbn_google producto, isbn
-      output = Net::HTTP.get('books.google.com', '/books/download/libro.ris?vid=' + isbn + '&output=ris').split("\r\n")
-      propiedades={}
-      output.each{|a|
-        a=~ /^([\S]{2})\s+-\s+(.+)$/
-        propiedades[$1]? propiedades[$1] += " / " + $2 : propiedades[$1] = $2
-      }
-      if propiedades["SN"]
-        producto.nombre = propiedades["T1"]
-        producto.autores = propiedades["A1"]
-        producto.anno = propiedades["Y1"]
-        producto.editor = propiedades["PB"]
-        producto.familia_id = 1
-        producto.codigo = isbn
+      if isbn
+        output = Net::HTTP.get('books.google.com', '/books/download/libro.ris?vid=' + isbn + '&output=ris').split("\r\n")
+        propiedades={}
+        output.each{|a|
+          a=~ /^([\S]{2})\s+-\s+(.+)$/
+          propiedades[$1]? propiedades[$1] += " / " + $2 : propiedades[$1] = $2
+        }
+        if propiedades["SN"]
+          producto.nombre = propiedades["T1"]
+          producto.autores = propiedades["A1"]
+          producto.anno = propiedades["Y1"]
+          producto.editor = propiedades["PB"]
+          producto.familia_id = 1
+          producto.codigo = isbn
+        end
       end
 
       return producto
     end
 
     def producto_x_isbn_todostuslibros producto, isbn
-      if data = Producto.new(codigo: isbn).get_data_from_todostuslibros
+      if isbn && (data = Producto.new(codigo: isbn).get_data_from_todostuslibros)
 	producto.nombre = data[:name]
 	producto.familia_id = 1
         producto.autores = data[:authors]
