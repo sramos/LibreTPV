@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -53,16 +54,16 @@ ActiveRecord::Schema.define(version: 20190217103006) do
 
   create_table "autor", force: :cascade do |t|
     t.string   "nombre",     limit: 255, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "autor_x_producto", force: :cascade do |t|
     t.integer  "autor_id",    limit: 4,   null: false
     t.integer  "producto_id", limit: 4,   null: false
     t.string   "rol",         limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "autor_x_producto", ["producto_id", "autor_id"], name: "autor_x_producto_idx", using: :btree
@@ -117,8 +118,8 @@ ActiveRecord::Schema.define(version: 20190217103006) do
 
   create_table "editorial", force: :cascade do |t|
     t.string   "nombre",     limit: 255, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "facturas", force: :cascade do |t|
@@ -141,6 +142,7 @@ ActiveRecord::Schema.define(version: 20190217103006) do
   create_table "familias", force: :cascade do |t|
     t.string   "nombre",         limit: 255
     t.integer  "iva_id",         limit: 4
+    t.integer  "campo_id",       limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "acumulable",     limit: 4,   default: 0
@@ -166,8 +168,8 @@ ActiveRecord::Schema.define(version: 20190217103006) do
     t.boolean  "status_ok",                 default: false, null: false
     t.integer  "actualizados",  limit: 4,   default: 0,     null: false
     t.integer  "eliminados",    limit: 4,   default: 0,     null: false
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "materia", force: :cascade do |t|
@@ -210,7 +212,7 @@ ActiveRecord::Schema.define(version: 20190217103006) do
     t.integer  "editorial_id",        limit: 4
     t.string   "imagen_file_name",    limit: 255
     t.string   "imagen_content_type", limit: 255
-    t.integer  "imagen_file_size",    limit: 4
+    t.integer  "imagen_file_size",    limit: 8
     t.datetime "imagen_updated_at"
   end
 
@@ -239,15 +241,15 @@ ActiveRecord::Schema.define(version: 20190217103006) do
     t.integer  "elemento_id",   limit: 4,                   null: false
     t.integer  "nid",           limit: 4,                   null: false
     t.boolean  "eliminar",                  default: false, null: false
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "relacion_web", ["elemento_id", "elemento_type"], name: "index_relacion_web_on_elemento_id_and_elemento_type", using: :btree
 
   create_table "sessions", force: :cascade do |t|
-    t.string   "session_id", limit: 255,        null: false
-    t.text     "data",       limit: 4294967295
+    t.string   "session_id", limit: 255,   null: false
+    t.text     "data",       limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
   end

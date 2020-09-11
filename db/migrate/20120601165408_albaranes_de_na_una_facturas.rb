@@ -1,7 +1,7 @@
 class AlbaranesDeNaUnaFacturas < ActiveRecord::Migration
   def self.up
     add_column :albarans, :factura_id, :integer
-    Factura.all(:conditions => ["albaran_id IS NOT NULL"]).each do |factura|
+    Factura.where(["albaran_id IS NOT NULL"]).each do |factura|
       albaran = Albaran.find_by_id factura.albaran_id
       if albaran
         albaran.factura_id = factura.id
@@ -16,7 +16,7 @@ class AlbaranesDeNaUnaFacturas < ActiveRecord::Migration
 
   def self.down
     add_column :facturas, :albaran_id, :integer
-    Albaran.all(:conditions => ["factura_id IS NOT NULL"]).each do |albaran|
+    Albaran.where(["factura_id IS NOT NULL"]).each do |albaran|
       factura = Factura.find_by_id albaran.factura_id
       if factura
         factura.albaran_id = albaran.id
