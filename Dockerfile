@@ -26,7 +26,7 @@ COPY . ./
 COPY config/database.yml.example ./config/database.yml
 
 # Precompile the Rails assets (with fake connection data)
-RUN bundle exec rake RAILS_ENV=production DB_HOST=127.0.0.1 DB_NAME=dbname DB_USER=dbuser DB_PASS=dbpass SECRET_KEY_BASE=blahblahblah assets:clean
+RUN bundle exec rake RAILS_ENV=production DB_HOST=127.0.0.1 DB_NAME=dbname DB_USER=dbuser DB_PASS=dbpass SECRET_KEY_BASE=blahblahblah assets:clobber
 RUN bundle exec rake RAILS_ENV=production DB_HOST=127.0.0.1 DB_NAME=dbname DB_USER=dbuser DB_PASS=dbpass SECRET_KEY_BASE=blahblahblah assets:precompile
 
 # Expose a volume so that nginx will be able to read in assets in production.
