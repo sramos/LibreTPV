@@ -1,4 +1,4 @@
-2019-xx-xx Santiago Ramos <sramos@sitiodistinto.net> Version 42.0.1.dev
+2020-xx-xx Santiago Ramos <sramos@sitiodistinto.net> Version 42.0.1.dev
 
   * Generacion de indices para acelerar las consultas
   * Migracion a ruby 2.2 (007lva)
@@ -10,6 +10,7 @@
   * Correccion de bugs
   * Migracion a ruby 2.4/rails 4.2
   * Aplicación autentificada
+  * Correccion de carga de js
 
 2013-07-xx Santiago Ramos <sramos@sitiodistinto.net> Version 0.7.0.01
 

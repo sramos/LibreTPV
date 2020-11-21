@@ -6,10 +6,10 @@ services:
     environment:
       - RUN_MIGRATIONS=true
     volumes:
-      - public:/railsapp/public
+      - covers:/railsapp/public/cover
     ports:
       - "3005:3000"
 
 volumes:
-  public:
+  covers:
 

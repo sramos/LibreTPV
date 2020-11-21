@@ -12,5 +12,10 @@
 //
 //= require prototype
 //= require prototype_ujs
+//= require scriptaculous
+//= require effects
+//= require controls
+//= require modalbox
+//= require popup
 //= require chosen-prototype
 //= require_tree .
