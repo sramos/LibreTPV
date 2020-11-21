@@ -12,14 +12,5 @@
 //
 //= require prototype
 //= require prototype_ujs
-//= require builder.js
-//= require scriptaculous.js
-//= require effects.js
-//= require controls.js
-//= require dragdrop.js
-//= require modalbox.js
-//= require popup.js
-//= require slider.js
-//= require sound.js
 //= require chosen-prototype
 //= require_tree .

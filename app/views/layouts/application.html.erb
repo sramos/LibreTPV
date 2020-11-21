@@ -4,11 +4,17 @@
     <title>TPV: Terminal Punto de Venta - <%= controller.controller_name %></title>
     <%= stylesheet_link_tag 'application', :media => "all" %>
     <%= javascript_include_tag 'application' %>
+    <!-- scriptaculous js files -->
+    <%= javascript_include_tag '/javascripts/scriptaculous' %>
+    <%= javascript_include_tag '/javascripts/effects' %>
+    <%= javascript_include_tag '/javascripts/controls' %>
+    <%= javascript_include_tag '/javascripts/modalbox' %>
+    <%= javascript_include_tag '/javascripts/popup' %>
 
     <!--<link rel="icon" type="image/ico" href="/images/favicon.ico" />-->
 
     <META NAME="author" CONTENT="Santiago Ramos <sramos@sitiodistinto.net>">
-    <META NAME="copyright" CONTENT="Copyright (C) 2011-2019 Santiago Ramos">
+    <META NAME="copyright" CONTENT="Copyright (C) 2011-2020 Santiago Ramos">
     <META NAME="generator" CONTENT="LibreTPV - Version <%= ENV['TPV_VERSION'] %>">
   </head>
   <body>
