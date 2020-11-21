@@ -6,7 +6,7 @@ var activaSelectoresChosen = function() {
     input.removeClassName('chosen_select');
     new Chosen(input, {width: '100%', allow_single_deselect: true, include_group_label_in_selected: true, no_results_text: "No se ha encontrado" });
   });
-}
+};
 // Cambia el logo de background
 var changeBackground = function() {
   $('logo').setStyle({
@@ -19,7 +19,7 @@ function stopRKey(evt) {
   if ((evt.keyCode == 13) && (node.id=="formulario_campo_producto_codigo"))  {
     return false;
   }
-}
+};
 
 document.onkeypress = stopRKey;
 
@@ -29,4 +29,4 @@ Event.observe(window, 'load', function() {
 });
 function fadeout(){
     new Effect.Opacity("mensaje", {duration:1.5, from:1.0, to:0.0});
-}
+};
