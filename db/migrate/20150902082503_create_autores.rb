@@ -22,7 +22,7 @@ class CreateAutores < ActiveRecord::Migration
         #  * Varios espacios se convierten en uno solo
         #  * Se eliminan espacios antes de la coma (separacion de apellido del nombre) 
         nom = str_autor.gsub(/\s.,\s./, ', ').gsub(/\s+/, ' ')
-        autor = Autor.find_or_create_by_nombre nom
+        autor = Autor.find_or_create_by nombre: nom
         puts "        ERROR: Hubo un problema creando el autor: " + nom unless autor.errors.empty? || nom == "&NBSP;"
         axp = AutorXProducto.create(autor_id: autor.id, producto_id: producto.id) if autor.errors.empty?
       end

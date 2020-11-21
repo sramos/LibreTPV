@@ -134,7 +134,7 @@ class Producto < ActiveRecord::Base
 
   # Actualiza la relacion con la editorial
   def actualiza_editorial
-    ed_id = @editor.nil? ? nil : Editorial.find_or_create_by_nombre(@editor.strip).id
+    ed_id = @editor.nil? ? nil : Editorial.find_or_create_by(nombre: @editor.strip).id
     self.update_column(:editorial_id, ed_id) unless ed_id == self.editorial_id
   end
 
@@ -149,7 +149,7 @@ class Producto < ActiveRecord::Base
         #  * Varios espacios se convierten en uno solo
         #  * Se eliminan espacios antes de la coma (separacion de apellido del nombre)
         nom = str_autor.gsub(/\s+,\s./, ', ').gsub(/\s+/, ' ')
-        aut = Autor.find_or_create_by_nombre nom
+        aut = Autor.find_or_create_by nombre: nom
         axp = AutorXProducto.create(autor_id: aut.id, producto_id: self.id) if aut.errors.empty?
       end
     end
