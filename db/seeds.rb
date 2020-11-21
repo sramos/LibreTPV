@@ -7,7 +7,7 @@
 #   Major.create(:name => 'Daley', :city => cities.first)
 
 if User.count == 0
-  User.create email: "admin@sitiodistinto.net", password: "Passw0rd", password_confirmation: "Passw0rd",
+  User.create email: "admin@example.org", password: "admin-demo", password_confirmation: "admin-demo",
               name: "Default Admin User",
 	      acceso_caja: true, acceso_productos: true,
 	      acceso_distribuidora: true, acceso_tesoreria: true,
