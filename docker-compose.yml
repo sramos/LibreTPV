@@ -2,8 +2,7 @@ version: '3.1'
 
 services:
   libretpv:
-    #image: sanraro/libretpv
-    build: .
+    image: sanraro/libretpv
     container_name: app 
     depends_on:
       - db
