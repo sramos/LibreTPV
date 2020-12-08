@@ -5,6 +5,8 @@ services:
     #image: sanraro/libretpv
     build: .
     container_name: app 
+    depends_on:
+      - db
     restart: always
     ports:
       - 3000:3000
