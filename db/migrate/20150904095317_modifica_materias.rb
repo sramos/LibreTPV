@@ -22,7 +22,7 @@ class ModificaMaterias < ActiveRecord::Migration
           producto.materia.update_column(:familia_id, producto.familia_id)
         # Si si tiene ya asignada una familia, crea una materia nueva para asignarla al producto
         else
-          nueva_materia = Materia.find_or_create_by (nombre: producto.materia.nombre, familia_id: producto.familia_id)
+          nueva_materia = Materia.find_or_create_by(nombre: producto.materia.nombre, familia_id: producto.familia_id)
           logger.info "---------> ERROR: No se ha podido crear la materia " + producto.materia.nombre + ": " + nueva_materia.errors.inspect unless nueva_materia.errors.empty?
           producto.update_column(:materia_id, nueva_materia) if nueva_materia.errors.empty? 
         end
