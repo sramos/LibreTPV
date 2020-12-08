@@ -17,7 +17,6 @@ RUN gem install bundler -v '~>1' && bundle install --jobs 20 --retry 5 --without
 # Set the Rails environment to production
 ENV RAILS_ENV production 
 ENV RAILS_SERVE_STATIC_FILES true
-ENV RAILS_LOG_TO_STDOUT true
 
 # Copy the main application into the container
 COPY . ./
