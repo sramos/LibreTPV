@@ -2,11 +2,12 @@ version: '3.1'
 
 services:
   libretpv:
-    image: sanraro/libretpv 
-    container_name: libretpv
+    #image: sanraro/libretpv
+    build: .
+    container_name: app 
     restart: always
     ports:
-      - 3005:3000
+      - 3000:3000
     environment:
       RUN_MIGRATIONS: 'true'
       DB_HOST: db
