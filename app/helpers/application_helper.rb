@@ -226,7 +226,8 @@ module ApplicationHelper
   def final_formulario boton={}
     cadena = '<div class="fila" id="botonguardar"> <div class="elemento_derecha">'.html_safe
     if boton[:submit_disabled] != true
-      cadena << submit_tag( boton[:etiqueta]?boton[:etiqueta]:"Guardar", :class => "boton", :onclick => "this.disabled=true")
+      etiqueta = boton[:etiqueta] || 'Guardar'
+      cadena << submit_tag( etiqueta, class: 'boton', 'data-disable-with' => "Enviando...")
     end
     cadena += "</div></div>".html_safe
     cadena += "<div class='fila' id='spinner' style='display:none'></div>".html_safe

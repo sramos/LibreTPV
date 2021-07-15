@@ -170,6 +170,13 @@ private
                                   per_page: (params[:format_xls_count] || Configuracion.valor('PAGINADO')) )
   end
 
+  # Revisar:
+  #  * Usando EpsonSDK: https://stackoverflow.com/questions/11463787/javascript-receipt-printing-using-pos-printer
+  #  * Usando Google USB-API: https://developer.chrome.com/docs/apps/app_usb/
+  #  * WebUSB API: https://www.chromestatus.com/feature/5651917954875392
+  #  * Chrome PrinterProvider: https://developer.chrome.com/docs/extensions/reference/printerProvider/
+  #  * https://github.com/neodynamic/js-escpos-builder
+  #  * (Impresión desde el servidor) https://github.com/escpos/escpos
   def imprime_ticket albaran_id, formadepago
     albaran = Albaran.find_by_id albaran_id
     lineas = albaran.albaran_lineas

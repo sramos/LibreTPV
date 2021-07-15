@@ -10,7 +10,7 @@
   <% if params[:seccion] == 'productos' %>
     <%= selector 'Proveedor', 'albaran', 'proveedor_id', @proveedores.map {|u| [u.nombre,u.id]}, enriquecido: true %>
     <div class="elemento_x05">Depósito<br>
-      <%= check_box( "albaran", "deposito") %>
+      <%= check_box( 'albaran', 'deposito') %>
     </div>
       <%= observe_field( "albaran_deposito" , :function => 'if( document.getElementById("albaran_deposito").checked ){ Element.show("devolucion"); } else { Element.hide("devolucion"); }' ) %>
     <div id="devolucion" <% if @albaran.nil? || !@albaran.deposito %>style="display:none;"<% end %> >
@@ -21,4 +21,4 @@
     <%= selector 'Cliente', 'albaran', 'cliente_id', @clientes.map {|u| [u.nombre,u.id]}, valor: (@albaran.nil? ? 1 : @albaran.cliente_id), enriquecido: true %>
   <% end %>
   <br/>
-<%= final_formulario({:etiqueta => (@albaran.nil? ? (params[:seccion] == 'productos' ? "Nuevo Albaran" : "Nueva Venta") : "Modificar" ) })%>
+<%= final_formulario({etiqueta: (@albaran.nil? ? (params[:seccion] == 'productos' ? 'Nuevo Albaran' : 'Nueva Venta') : 'Modificar' ) })%>
