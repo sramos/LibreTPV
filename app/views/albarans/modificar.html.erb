@@ -1,15 +1,17 @@
 <fieldset id='filtros' class='filtrado'>
-  <%= render :partial => "nuevo_albaran" %>
+  <%= render partial: 'nuevo_albaran' %>
 </fieldset>
 
 <div id='lineas_albaran' class='linea'>
   <div class='lateral'>
-    <div class='caja_lateral'><%= render :partial => "importe_total" %></div>
+    <div class='caja_lateral'><%= render partial: 'importe_total' %></div>
     <% if ! @albaran.cerrado %>
-      <div class='caja_lateral'><%= render :partial => "albaran_lineas/nuevo" %><%= render :partial => "albaran_lineas/nuevo_concepto" %></div>
+      <div class='caja_lateral'><%= render partial: 'albaran_lineas/nuevo' %>
+        <%= render partial: 'albaran_lineas/nuevo_concepto' %>
+      </div>
     <% end %>
   </div>
   <div class='contenido'>
-    <%= render :partial => "albaran_lineas/lineas", :locals => {:edicion => true} %>
+    <%= render partial: 'albaran_lineas/lineas', locals: {edicion: true} %>
   <div>
 </div>

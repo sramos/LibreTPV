@@ -202,7 +202,7 @@ module ApplicationHelper
   def selector rotulo, objeto, atributo, valores, opciones={}
     cadena = ("<div class='elemento_" + (opciones[:tipo] || "x15") + "' id='selector_" + objeto + "_" + atributo + "'>" + rotulo + "<br/>").html_safe
     clase = opciones[:enriquecido] ? "chosen_select " : ""
-    clase += (opciones[:tipo] || 'x15')
+    clase += (opciones[:tipo] || 'selector_x15')
     if opciones[:valor].blank?
       cadena << select(objeto, atributo, valores, {:id => "formulario_campo_" + objeto + "_" + atributo, :include_blank => opciones[:vacio]}, {:class => clase})
     else

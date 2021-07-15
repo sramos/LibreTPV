@@ -1,21 +1,21 @@
 class AlbaransController < ApplicationController
 
   # Hace una busqueda de "albaranes" eliminando los vacios
-  before_filter :obtiene_albaranes, :only => [ :listado ]
+  before_filter :obtiene_albaranes, only: [ :listado ]
 
   def index
-    flash[:mensaje] = "Listado de Albaranes de Proveedores pendientes de aceptar" if params[:seccion] == "productos"
-    flash[:mensaje] = "Ventas/Devoluciones Nuevas y Abiertas" if params[:seccion] == "caja"
-    flash[:mensaje] = "Listado de Truekes pendientes de aceptar" if params[:seccion] == "trueke"
-    redirect_to :action => :listado
+    flash[:mensaje] = 'Listado de Albaranes de Proveedores pendientes de aceptar' if params[:seccion] == 'productos'
+    flash[:mensaje] = 'Ventas/Devoluciones Nuevas y Abiertas' if params[:seccion] == 'caja'
+    flash[:mensaje] = 'Listado de Truekes pendientes de aceptar' if params[:seccion] == 'trueke'
+    redirect_to action: :listado
   end
 
   def listado
   end
 
   def editar
-    @proveedores = Proveedor.order(:nombre) if params[:seccion] == "productos"
-    @clientes = Cliente.order(:nombre) if params[:seccion] == "caja"
+    @proveedores = Proveedor.order(:nombre) if params[:seccion] == 'productos'
+    @clientes = Cliente.order(:nombre) if params[:seccion] == 'caja'
     if params[:id]
       @albaran = Albaran.find(params[:id])
       @albaran_lineas = @albaran.albaran_lineas
@@ -26,14 +26,14 @@ class AlbaransController < ApplicationController
       params[:update] = 'lineas_albaran'
       params[:albaran_id] = @albaran.id
       params[:descuento] = @albaran.cliente.nil? ? @albaran.proveedor.descuento : @albaran.cliente.descuento
-      render :action => :modificar
+      render action: :modificar
     end
   end
 
   def modificar
     @albaran = Albaran.find_by_id(params[:id]) || Albaran.new
     @albaran.update_attributes params[:albaran]
-    redirect_to :action => :editar, :id => @albaran.id
+    redirect_to action: :editar, id: @albaran.id
   end
 
   # Segun la seccion borramos productos o los incluimos
