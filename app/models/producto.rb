@@ -113,8 +113,8 @@ class Producto < ActiveRecord::Base
   # Actualiza la imagen a usar como cover
   def actualiza_imagen
     # Si se esta utilizando una imagen externa, la descarga a local
-    if Producto.column_names.include?("imagen_path") && !self.url_imagen.blank? && (self.imagen.blank? || self.url_imagen != self.imagen.to_s)
-      puts "------> (" + (self.id||"NEW").to_s + ") Descargando la imagen remota: " + url_imagen
+    if Producto.column_names.include?('imagen_file_name') && !self.url_imagen.blank? && (self.imagen.blank? || self.url_imagen != self.imagen.to_s)
+      #puts "------> (" + (self.id||"NEW").to_s + ") Descargando la imagen remota: " + url_imagen
       # Desactivamos el propio callback
       Producto.skip_callback :save, :after, :actualiza_imagen
       # Metemos la descarga en un try-catch para que se active el callback de nuevo en caso de error
@@ -124,7 +124,7 @@ class Producto < ActiveRecord::Base
         self.save
       rescue
         logger.error "----------------> ERRORES descargando la imagen " + url_imagen.to_s
-      end if Producto.column_names.include?("imagen_file_name")
+      end
       # Activamos de nuevo el callback
       Producto.set_callback :save, :after, :actualiza_imagen
     end

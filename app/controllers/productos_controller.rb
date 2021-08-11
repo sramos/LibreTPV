@@ -87,7 +87,7 @@ class ProductosController < ApplicationController
   def modificar
     @producto = params[:id] ?  Producto.find(params[:id]) : Producto.new
     @producto.update_attributes params[:producto]
-    # Aunque no guardemos, tenemos que hacer esto para que no casque al vincular a flash
+    # Aunque no guardemos, tenemos que hacer esto para que no casque al vincular a flash (?)
     @producto.imagen = nil
     # Y por fin, mostramos la salida
     if params[:inventario]
@@ -95,10 +95,10 @@ class ProductosController < ApplicationController
       redirect_to action: :listado, page: params[:page]
     else
       render :update do |page|
-        page.replace_html params[:update], :partial => "listado_propiedades"
-        page.visual_effect :highlight, params[:update] , :duration => 6
-        page.replace 'formulario_ajax', :inline => '<%= mensaje_error(@producto) %><br>'
-        page.call("Modalbox.resizeToContent")
+        page.replace_html params[:update], partial: 'listado_propiedades'
+        page.visual_effect :highlight, params[:update] , duration: 6
+        page.replace 'formulario_ajax', inline: '<%= mensaje_error(@producto) %><br>'
+        page.call('Modalbox.resizeToContent')
       end
     end
   end
@@ -171,7 +171,8 @@ class ProductosController < ApplicationController
 
   # Actualiza la imagen asociada al libro descargandosela si no esta ya
   def update_cover
-    # No actualizamos el producto, sino solo su imagen. Los datos se guardaran cuando se salve el texto
+    # No actualizamos el producto, sino solo la imagen en la vista.
+    # Los datos se guardaran cuando se salve el texto
     @producto = Producto.find_by_id(params[:id]) || Producto.new(codigo: params[:codigo])
     if @producto
       # Actualizamos la imagen segun el origen que tengamos
@@ -188,8 +189,8 @@ class ProductosController < ApplicationController
         @producto.url_imagen = params[:image]
       end
       render :update do |page|
-        page.replace params[:update], :partial => 'datos_externos_imagen'
-        page.call("Modalbox.resizeToContent")
+        page.replace params[:update], partial: 'datos_externos_imagen'
+        page.call('Modalbox.resizeToContent')
       end
     end
   end
