@@ -1,0 +1,21 @@
+#!/bin/bash
+
+HUB="docker.io"
+IMAGE="sanraro/libretpv"
+BRANCH=`git rev-parse --abbrev-ref HEAD`
+
+echo "*** Loging to ${HUB}"
+#docker login ${HUB}
+docker login
+
+echo "*** built ${HUB}/${IMAGE}/${BRANCH}<---"
+#docker build . -t ${HUB}/${IMAGE}
+#docker tag ${HUB}/${IMAGE} ${HUB}/${IMAGE}:${BRANCH}
+#docker push ${HUB}/${IMAGE}:${BRANCH}
+#docker tag ${HUB}/${IMAGE} ${HUB}/${IMAGE}:latest
+#docker push ${HUB}/${IMAGE}:latest
+docker build . -t ${IMAGE}
+docker tag ${IMAGE} ${IMAGE}:${BRANCH}
+docker push ${IMAGE}:${BRANCH}
+docker tag ${IMAGE} ${IMAGE}:latest
+docker push ${IMAGE}:latest
