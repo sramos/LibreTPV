@@ -23,22 +23,14 @@ end
 #gem 'jquery-rails'
 gem 'prototype-rails', git: 'https://github.com/rails/prototype-rails', branch: '4.2'
 gem 'prototype_legacy_helper', '0.0.0', :git => 'https://github.com/rails/prototype_legacy_helper.git' # Esto es para mantener soporte de form_remote_tag en Rails3
-#gem 'nokogiri', '~> 1.11.7'
+gem 'nokogiri', '~> 1.12.5'
+gem 'bigdecimal', '~> 1.4.0'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'
 
 # Traducciones
 #gem "locale"
@@ -71,7 +63,7 @@ end
 # Otras gemas
 gem "spreadsheet"
 gem "spreadsheet_on_rails", :git => 'https://github.com/10to1/spreadsheet_on_rails.git'
-gem "paperclip", "~> 6"
+gem 'kt-paperclip', '~> 6'
 gem 'will_paginate', '~> 3.1'
 gem 'rufus-scheduler'
 gem 'hpricot'
@@ -85,5 +77,5 @@ gem 'devise'
 gem 'devise-i18n'
 
 # Usamos puma para el servidor de aplicaciones
-gem 'puma'
+gem 'puma', '~> 5.5.1'
 gem 'non-stupid-digest-assets'
