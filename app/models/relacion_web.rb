@@ -23,7 +23,7 @@
 #++
 
 
-class RelacionWeb < ActiveRecord::Base
+class RelacionWeb < ApplicationRecord 
 
   belongs_to :elemento, polymorphic: true
   validates_presence_of :nid, message: "NID web no puede estar vacio."

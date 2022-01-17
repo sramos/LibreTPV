@@ -2,7 +2,7 @@
 #
 #################################################################################
 # LibreTPV - Gestor TPV para Librerias
-# Copyright 2011-2013 Santiago Ramos <sramos@sitiodistinto.net> 
+# Copyright 2011-2022 Santiago Ramos <sramos@sitiodistinto.net> 
 #
 #    Este programa es software libre: usted puede redistribuirlo y/o modificarlo 
 #    bajo los términos de la Licencia Pública General GNU publicada 
@@ -23,7 +23,7 @@
 #++
 
 
-class Iva < ActiveRecord::Base
+class Iva < ApplicationRecord 
 
   has_many :familia
 

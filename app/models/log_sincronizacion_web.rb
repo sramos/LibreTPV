@@ -23,6 +23,6 @@
 #++
 
 
-class LogSincronizacionWeb < ActiveRecord::Base
+class LogSincronizacionWeb < ApplicationRecord 
 
 end

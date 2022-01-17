@@ -23,7 +23,7 @@
 #++
 
 
-class Drupal < ActiveRecord::Base
+class Drupal < ApplicationRecord 
   # Para que no nos exija que exista una tabla en BBDD para esta clase
   self.abstract_class = true
 

@@ -2,7 +2,7 @@
 #
 #################################################################################
 # LibreTPV - Gestor TPV para Librerias
-# Copyright 2011-2013 Santiago Ramos <sramos@sitiodistinto.net>
+# Copyright 2011-2022 Santiago Ramos <sramos@sitiodistinto.net>
 #
 #    Este programa es software libre: usted puede redistribuirlo y/o modificarlo
 #    bajo los términos de la Licencia Pública General GNU publicada
@@ -23,7 +23,7 @@
 #++
 
 
-class Producto < ActiveRecord::Base
+class Producto < ApplicationRecord 
 
   # Definimos la imagen por defecto a utilizar
   DEFAULT_IMAGE_URL = '/cover/missing_cover.jpg'

@@ -2,7 +2,7 @@
 #
 #################################################################################
 # LibreTPV - Gestor TPV para Librerias
-# Copyright 2011-2013 Santiago Ramos <sramos@sitiodistinto.net>
+# Copyright 2011-2022 Santiago Ramos <sramos@sitiodistinto.net>
 #
 #    Este programa es software libre: usted puede redistribuirlo y/o modificarlo
 #    bajo los términos de la Licencia Pública General GNU publicada
@@ -22,7 +22,7 @@
 #
 #++
 
-class Albaran < ActiveRecord::Base
+class Albaran < ApplicationRecord 
 
   # No utilizamos el dependent por evitar borrados dobles en las lineas
   #has_many :albaran_lineas, :dependent => :destroy
