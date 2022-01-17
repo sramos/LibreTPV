@@ -51,7 +51,7 @@ module LibreTPV
     # This can be turned off per-association with optional: true.
     # This default will be automatically configured in new applications. If existing application
     # want to add this feature it will need to be turned on in an initializer.
-    config.active_record.belongs_to_required_by_default = true
+    #config.active_record.belongs_to_required_by_default = true
 
     # Enforce whitelist mode for mass assignment.
     # This will create an empty whitelist of attributes available for mass-assignment for all models
