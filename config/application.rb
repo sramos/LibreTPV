@@ -47,6 +47,12 @@ module LibreTPV
     # like if you have constraints or database-specific column types
     # config.active_record.schema_format = :sql
 
+    # belongs_to will now trigger a validation error by default if the association is not present.
+    # This can be turned off per-association with optional: true.
+    # This default will be automatically configured in new applications. If existing application
+    # want to add this feature it will need to be turned on in an initializer.
+    config.active_record.belongs_to_required_by_default = true
+
     # Enforce whitelist mode for mass assignment.
     # This will create an empty whitelist of attributes available for mass-assignment for all models
     # in your app. As such, your models will need to explicitly whitelist or blacklist accessible
