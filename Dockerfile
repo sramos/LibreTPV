@@ -1,4 +1,4 @@
-FROM ruby:2.6
+FROM ruby:2.7
 MAINTAINER Santiago Ramos, sramos@sitiodistinto.net
 
 # Set the base directory used in any further RUN, COPY, and ENTRYPOINT
@@ -12,7 +12,7 @@ WORKDIR /railsapp
 
 # Copy dependencies into the container
 COPY Gemfile Gemfile.lock ./ 
-RUN gem install bundler -v '~>1' && bundle install --jobs 20 --retry 5 --without development test
+RUN gem install bundler:1.17.3 && bundle _1.17.3_ install --jobs 20 --retry 5 --without development test
 
 # Set the Rails environment to production
 ENV RAILS_ENV production 
@@ -25,8 +25,8 @@ COPY . ./
 COPY config/database.yml.example ./config/database.yml
 
 # Precompile the Rails assets (with fake connection data)
-RUN bundle exec rake RAILS_ENV=production DB_HOST=127.0.0.1 DB_NAME=dbname DB_USER=dbuser DB_PASS=dbpass SECRET_KEY_BASE=blahblahblah assets:clobber
-RUN bundle exec rake RAILS_ENV=production DB_HOST=127.0.0.1 DB_NAME=dbname DB_USER=dbuser DB_PASS=dbpass SECRET_KEY_BASE=blahblahblah assets:precompile
+RUN bundle _1.17.3_ exec rake RAILS_ENV=production DB_HOST=127.0.0.1 DB_NAME=dbname DB_USER=dbuser DB_PASS=dbpass SECRET_KEY_BASE=blahblahblah assets:clobber
+RUN bundle _1.17.3_ exec rake RAILS_ENV=production DB_HOST=127.0.0.1 DB_NAME=dbname DB_USER=dbuser DB_PASS=dbpass SECRET_KEY_BASE=blahblahblah assets:precompile
 
 # Expose a volume so that nginx will be able to read in assets in production.
 # (now is defined in docker-compose file)
@@ -37,4 +37,4 @@ EXPOSE 3000
 
 # Run migrations and start the application with Puma
 ENTRYPOINT ["/railsapp/script/entrypoint"]
-CMD bundle exec puma -C config/puma.rb
+CMD bundle _1.17.3_ exec puma -C config/puma.rb
