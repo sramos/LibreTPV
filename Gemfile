@@ -77,5 +77,5 @@ gem 'devise'
 gem 'devise-i18n'
 
 # Usamos puma para el servidor de aplicaciones
-gem 'puma', '~> 5.5.1'
+gem 'puma', '~> 5.6.2'
 gem 'non-stupid-digest-assets'
