@@ -1,25 +1,21 @@
 <!--- Entrada de linea de albaran por codigo --->
+<% script_seleccion_titulo   = "$('#formulario_seleccion_codigo').hide();$('#formulario_seleccion_titulo').show();return false;"
+   script_seleccion_codigo   = "$('#formulario_seleccion_titulo').hide();$('#formulario_seleccion_codigo').show();return false;"
+   script_seleccion_concepto = "$('#div_formulario_codigo').hide();$('#div_formulario_concepto').show();return false;" %>
 
 <div id="div_formulario_codigo" class="formulario_izqda">
   <%= inicio_formulario( { :controller => :albaran_lineas, :action => :asignar_linea, :update => params[:update] }, false, :id => "formulario_codigo" ) %>
-    <%# texto "Código/ISBN", 'producto', 'codigo' %>
     <div id="formulario_seleccion_codigo" class="elemento">
-      <%= link_to_function("Código/ISBN", nil, :id => "cambio_a_titulo") do |page|
-           page.hide 'formulario_seleccion_codigo'
-           page.show 'formulario_seleccion_titulo' 
-          end %>
+      <%= link_to 'Código/ISBN', '#', onclick: script_seleccion_titulo, id: 'cambio_a_titulo' %>
       <br>
       <%= text_field("producto", "codigo", {:class => "texto", :id => "formulario_campo_producto_codigo", :type => "d" }) %>
-        <%= observe_field( "formulario_campo_producto_codigo", :frequency => 2, :update => "propiedades_producto", :with => :codigo, :url => {:controller => 'productos', :action => :producto_x_codigo, :template => 'listado_propiedades'}, :before => "Element.show('spinner')", :success => "Element.hide('spinner')") %>
+      <%= observe_field 'formulario_campo_producto_codigo', frequency: 2, update: 'propiedades_producto', with: :codigo, url: {controller: 'productos', action: :producto_x_codigo, template: 'listado_propiedades'} %>
     </div>
     <div id="formulario_seleccion_titulo" class="elemento" style="display:none;">
-      <%= link_to_function("Título/Nombre", nil, :id => "cambio_a_codigo") do |page|
-           page.hide 'formulario_seleccion_titulo' 
-           page.show 'formulario_seleccion_codigo' 
-          end %>
+      <%= link_to 'Código/ISBN', '#', onclick: script_seleccion_codigo, id: 'cambio_a_titulo' %>
       <br>
-      <%# text_field("titulo", "", {:class => "texto", :id => "formulario_campo_producto_titulo" }) %>
-      <%= text_field_with_auto_complete( "libro", "titulo", {:class => "texto"}, {:method => :get, :with => "'search=' + element.value", :after_update_element => "function(element,value){" + remote_function(:url => { :controller => 'productos', :action => :producto_x_titulo }, :with =>"'titulo='+element.value") + "}" } ) %>
+      <%#= text_field("libro", "titulo", {class: 'texto' }) %>
+      <%#= text_field_with_auto_complete( "libro", "titulo", {:class => "texto"}, {:method => :get, :with => "'search=' + element.value", :after_update_element => "function(element,value){" + remote_function(:url => { :controller => 'productos', :action => :producto_x_titulo }, :with =>"'titulo='+element.value") + "}" } ) %>
     </div>
 
     <% if params[:seccion] == "productos" %>
@@ -36,7 +32,7 @@
     <%= texto "% Descuento", 'albaranlinea', 'descuento', params[:descuento] %>
     <%= hidden_field('albaranlinea', 'albaran_id', :value => params[:albaran_id])%>
     <div class='linea'><br>
-      <%= link_to_function("Cambiar a entrada por Concepto", nil, :id => "cambio_a_concepto") { |page| page.show 'div_formulario_concepto'; page.hide 'div_formulario_codigo'} %>
+      <%= link_to 'Cambiar a entrada por Concepto', '#', onclick: script_seleccion_concepto, id: 'cambio_a_concepto' %>
     </div>
     <div id="propiedades_producto" class="formulario_izqda"></div>
   <%= final_formulario :submit_disabled => true %>

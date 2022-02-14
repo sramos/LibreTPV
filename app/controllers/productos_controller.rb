@@ -13,9 +13,9 @@ class ProductosController < ApplicationController
   end
 
   def filtrado
-    session[("productos_filtrado_tipo").to_sym] = params[:filtro][:tipo] if params[:filtro]
-    session[("productos_filtrado_valor").to_sym] = ( params[:filtro] && params[:filtro][:valor] != "" ) ? params[:filtro][:valor] : nil
-    session[("productos_filtrado_condicion").to_sym] = params[:filtro] ? params[:filtro][:condicion] : nil
+    session[:productos_filtrado_tipo] = params[:filtro][:tipo] if params[:filtro]
+    session[:productos_filtrado_valor] = ( params[:filtro] && !params[:filtro][:valor].blank? ) ? params[:filtro][:valor] : nil
+    session[:productos_filtrado_condicion] = params[:filtro] ? params[:filtro][:condicion] : nil
     redirect_to :action => :listado
   end
 
@@ -246,9 +246,7 @@ class ProductosController < ApplicationController
     lineas.each { |linea| @albaranes.push(linea.albaran) if linea.albaran && linea.albaran.proveedor && linea.albaran.cerrado }
     # Elimina los albaranes duplicados
     @albaranes.uniq!
-    render :update do |page|
-      page.replace_html params[:update], :partial => "albaranes", :locals => { :compra => true }
-    end
+    render 'albaranes', locals: {compra: true}
   end
 
   # Devuelve sublistado de ventas del producto
@@ -259,9 +257,7 @@ class ProductosController < ApplicationController
     lineas.each { |linea| @albaranes.push(linea.albaran) if linea.albaran && linea.albaran.cliente && linea.albaran.cerrado }
     # Elimina los albaranes duplicados
     @albaranes.uniq!
-    render :update do |page|
-      page.replace_html params[:update], :partial => "albaranes", :locals => { :compra => false }
-    end
+    render 'albaranes', locals: {compra: false}
   end
 
   def producto_x_codigo

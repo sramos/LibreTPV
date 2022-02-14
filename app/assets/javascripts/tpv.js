@@ -1,11 +1,11 @@
 
 // Activa los selectores chosen
 var activaSelectoresChosen = function() {
-  $$(".chosen_select").each( function(input) {
-    input.setAttribute("data-placeholder","Ningún elemento seleccionado...");
-    input.removeClassName('chosen_select');
-    new Chosen(input, {width: '100%', allow_single_deselect: true, include_group_label_in_selected: true, no_results_text: "No se ha encontrado" });
+  $(".chosen_select").each( function() {
+    $(this).attr('data-placeholder','Ningún elemento seleccionado...');
+    $(this).removeClass('chosen_select');
   });
+  $(".chosen_select").chosen()
 };
 // Cambia el logo de background
 var changeBackground = function() {
@@ -23,10 +23,16 @@ function stopRKey(evt) {
 
 document.onkeypress = stopRKey;
 
-Event.observe(window, 'load', function() {
-    var fade=setTimeout("fadeout()",3500);
-    var hide=setTimeout("$('mensaje').hide()",4800);
+$(document).ajaxStart(function() {
+  $(".spinner").fadeIn('slow');
+}).ajaxStop(function() {
+    $(".spinner").hide();
 });
-function fadeout(){
-    new Effect.Opacity("mensaje", {duration:1.5, from:1.0, to:0.0});
-};
+
+//Event.observe(window, 'load', function() {
+//    var fade=setTimeout("fadeout()",3500);
+//    var hide=setTimeout("$('mensaje').hide()",4800);
+//});
+//function fadeout(){
+//    new Effect.Opacity("mensaje", {duration:1.5, from:1.0, to:0.0});
+//};
