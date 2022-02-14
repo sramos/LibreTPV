@@ -1,11 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.11.3'
+#gem 'rails', '4.2.11.3'
+gem 'rails', '5.0.7.2'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
-#gem 'sqlite3'
 gem 'mysql2', '~> 0.4'
 gem 'activerecord-session_store'
 
@@ -21,16 +18,11 @@ group :assets do
 end
 
 #gem 'jquery-rails'
-gem 'prototype-rails', git: 'https://github.com/rails/prototype-rails', branch: '4.2'
-gem 'prototype_legacy_helper', '0.0.0', :git => 'https://github.com/rails/prototype_legacy_helper.git' # Esto es para mantener soporte de form_remote_tag en Rails3
-gem 'nokogiri', '~> 1.12.5'
+#gem 'prototype-rails', git: 'https://github.com/rails/prototype-rails', branch: '4.2'
+#gem 'prototype_legacy_helper', '0.0.0', :git => 'https://github.com/rails/prototype_legacy_helper.git' # Esto es para mantener soporte de form_remote_tag en Rails3
+#gem 'nokogiri', '~> 1.12.5'
+gem 'jquery-rails'
 gem 'bigdecimal', '~> 1.4.0'
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
 
 # Traducciones
 #gem "locale"
@@ -77,5 +69,5 @@ gem 'devise'
 gem 'devise-i18n'
 
 # Usamos puma para el servidor de aplicaciones
-gem 'puma', '~> 5.5.1'
+gem 'puma', '~> 5.5'
 gem 'non-stupid-digest-assets'

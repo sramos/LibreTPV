@@ -10,12 +10,7 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require prototype
-//= require prototype_ujs
-//= require scriptaculous
-//= require effects
-//= require controls
-//= require modalbox
-//= require popup
 //= require chosen-prototype
 //= require_tree .
+//= require jquery
+//= require jquery_ujs
