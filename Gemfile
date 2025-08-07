@@ -19,7 +19,7 @@ end
 
 gem 'jquery-rails'
 
-gem 'bigdecimal', '~> 1.4.0'
+gem 'bigdecimal'#, '~> 1.4.0'
 
 # Traducciones
 #gem "locale"
@@ -48,14 +48,15 @@ group :development do
   gem 'therubyracer'
 end
 
+gem 'ffi', '1.16.3'
 
 # Otras gemas
 gem "spreadsheet"
-gem "spreadsheet_on_rails", :git => 'https://github.com/10to1/spreadsheet_on_rails.git'
+#gem "spreadsheet_on_rails", :git => 'https://github.com/10to1/spreadsheet_on_rails.git'
 gem 'kt-paperclip', '~> 6'
 gem 'will_paginate', '~> 3.1'
 gem 'rufus-scheduler'
-gem 'hpricot'
+#gem 'hpricot'
 gem 'prawn'
 gem 'prawn-table'
 # Gemas para hacer mas bonitos los select (funciona con prototype y jquery)
@@ -66,5 +67,5 @@ gem 'devise'
 gem 'devise-i18n'
 
 # Usamos puma para el servidor de aplicaciones
-gem 'puma', '~> 5.5'
+gem 'puma'#, '~> 5.5'
 gem 'non-stupid-digest-assets'
